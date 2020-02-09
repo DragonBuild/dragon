@@ -1,0 +1,10 @@
+source DragonMake
+if [ "$TWEAK_TYPE" == "Prefs" ]; then
+cp -R Resources/ ../.dragon/_/Library/PreferenceBundles/${1}.bundle
+cp entry.plist ../.dragon/_/Library/PreferenceLoader/Preferences/${1}
+plutil -convert binary1 ../.dragon/_/Library/PreferenceLoader/Preferences/${1}
+fi
+
+if [ "$TWEAK_TYPE" == "SubTweak" ]; then
+cp ${1}.plist ../.dragon/_/Library/MobileSubstrate/DynamicLibraries/${1}.plist
+fi

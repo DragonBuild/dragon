@@ -1,0 +1,22 @@
+target = ../.dragon/_/Library/MobileSubstrate/DynamicLibraries/%%name%%.dylib
+builddir = .dragon/build
+objdir = .dragon/obj
+# We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
+theosdir = %%theos%%
+cc = clang
+ll = clang
+lf = -lsubstrate
+
+rule compile
+    command = clang -O2 -I$theosdir/include/ -fconstant-cfstrings -std=gnu99 -Wall -fobjc-arc -mios-version-min=11.0 -arch arm64e -arch arm64 -c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -c $in;mkdir -p $objdir; mv *.o $objdir;
+
+rule link
+    command = Files=$$(ls $objdir | egrep '\.o' | sed -e 's/^/.dragon\/obj\//' | xargs ); gcc -lobjc -lc++ %%libs%% -dynamiclib -bind_at_load -iframework/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/ -F%%theos%%/lib -framework CoreFoundation -framework Foundation -framework CoreGraphics -framework UIKit -framework QuartzCore %%frameworks%% -fobjc-arc -mios-version-min=11.0 -L/Users/kritanta/ios/tweaks/theos/lib -lsubstrate -arch arm64e -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -o $out $$Files; ldid -S $target
+
+build $builddir/%%name%%.o: $
+compile %%xmcname%% %%files%%
+
+build $target : link $builddir/%%name%%.o 
+
+default $target
+

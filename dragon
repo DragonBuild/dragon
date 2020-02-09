@@ -1,5 +1,4 @@
-PrefixColor='\033[0;34m'
-NC='\033[0m'
+source $DRAGONBUILD/dragoncolors
 install=0
 build=0
 gen=0
@@ -63,7 +62,10 @@ if [ $gen == 1 ]; then
     else
         xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
     fi
-    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/ninjatemplate > .dragon/ninja/build.ninja
+    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
+    if [ "$TWEAK_TYPE" == "Prefs" ]; then
+        exit 
+    fi
 fi
 
 if [ $build == 1 ]; then 
@@ -81,6 +83,23 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
         cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
         rm build.ninja
+
+        if [ -z "$SUBPROJECTS" ]; then
+            echo "yeet" > /dev/null 
+        else 
+            set -f
+            subsb=(${SUBPROJECTS})
+            set +f 
+            for i in "${subsb[@]}"; do
+                bash $DRAGONBUILD/dragonsubprep $i
+                cd $i
+                cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
+                rm build.ninja
+                bash $DRAGONBUILD/dragonsubbuild $i
+                cd ..
+            done
+        fi
+
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
         mkdir -p .dragon/_/DEBIAN 
         cp control .dragon/_/DEBIAN/control 
