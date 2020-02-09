@@ -57,12 +57,12 @@ if [ $gen == 1 ]; then
     generatedLIBS=$(echo $LIBS | sed '/^$/!s/[^ ]* */-l&/g')
     generatedFRAMEWORKS=$(echo $FRAMEWORKS | sed '/^$/!s/[^ ]* */-framework &/g')
     theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
-    if [ -z "$TWEAK_FILES" ]
+    if [ -z "$TWEAK_FILES" ]; then
         echo "yeet" > /dev/null
     else
-        xmcName=$(echo "${TWEAK_FILES}" | sed 's/.xm/.m/g')
+        xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
     fi
-    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${TWEAK_FILES}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%files%%/${TWEAK_FILES}/" -e "s/%%theos%%/${theosEscaped}/" "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/ninjatemplate > .dragon/ninja/build.ninja
+    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${TWEAK_FILES}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%files%%/${TWEAK_FILES}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/ninjatemplate > .dragon/ninja/build.ninja
 fi
 
 if [ $build == 1 ]; then 
