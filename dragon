@@ -58,7 +58,7 @@ if [ $gen == 1 ]; then
     generatedFRAMEWORKS=$(echo $FRAMEWORKS | sed '/^$/!s/[^ ]* */-framework &/g')
     theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
     filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
-    if [ -z "$TWEAK_FILES" ]; then
+    if [ -z "$LOGOS_FILE" ]; then
         echo "yeet" > /dev/null
     else
         xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
@@ -71,8 +71,13 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} No files changed since last build"
         echo -e "${PrefixColor}[Dragon]${NC} Nothing to be done..."
     else
-        echo -e "${PrefixColor}[Dragon]${NC} Processing ${TWEAK_NAME}.xm using Logos"
-        $THEOS/bin/logos.pl $LOGOS_FILE > $TWEAK_NAME.m
+        echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} using Logos"
+        if [ -z "$LOGOS_FILE" ]; then
+            echo "yeet" > /dev/null
+        else
+            xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
+        fi
+        $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
         cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
         rm build.ninja
@@ -93,12 +98,14 @@ if [ $build == 1 ]; then
     fi
 fi
 
-if [ -z "$DRAGONDEVICEIP" ]; then
-	echo -e "${PrefixColor}[Dragon]${NC} The DRAGONDEVICEIP variable is not set!"
-	exit
-fi
+
 
 if [ $install == 1 ]; then 
+    if [ -z "$DRAGONDEVICEIP" ]; then
+        echo -e "${PrefixColor}[Dragon]${NC} The DRAGONDEVICEIP variable is not set!"
+        rm -rf .dragon/packages > /dev/null
+        exit
+    fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
     echo -e "${PrefixColor}[Dragon]${NC} Installing..."
     scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/tmp/${OUTPUT}
