@@ -8,10 +8,10 @@ ll = clang
 lf = -lsubstrate
 
 rule compile
-    command = clang -O2 -F%%theos%%/sdks/iPhoneOS11.2.sdk/ -fconstant-cfstrings -std=gnu99 -Wall -fobjc-arc -mios-version-min=11.0 -arch arm64e -arch arm64 -c -isysroot %%theos%%/sdks/iPhoneOS11.2.sdk/ -I%%dragonbuild%%/headers/Preferences/ -c $in;mkdir -p $objdir; mv *.o $objdir;
+    command = clang -O2 -F%%theos%%/sdks/iPhoneOS12.2.sdk/ -fconstant-cfstrings -std=gnu99 -Wall -fobjc-arc -mios-version-min=11.0 -arch arm64e -arch arm64 -c -I%%dragonbuild%%/headers/Preferences/ -c $in;mkdir -p $objdir; mv *.o $objdir;
 
 rule link
-    command = mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/; Files=$$(ls $objdir | egrep '\.o' | sed -e 's/^/.dragon\/obj\//' | xargs ); gcc -lobjc -lc++  -dynamiclib -bind_at_load -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -iframework%%theos%%/sdks/iPhoneOS11.2.sdk/System/Library/PrivateFrameworks -framework CoreFoundation -framework Foundation -framework CoreGraphics -framework UIKit -framework QuartzCore -framework Preferences  -fobjc-arc -mios-version-min=11.0 -L%%theos%%/lib -lsubstrate -arch arm64e -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -o $out $$Files; ldid -S $target
+    command = mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/; Files=$$(ls $objdir | egrep '\.o' | sed -e 's/^/.dragon\/obj\//' | xargs ); gcc -lobjc -lc++  -dynamiclib -bind_at_load -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -iframework%%theos%%/sdks/iPhoneOS12.2.sdk/System/Library/PrivateFrameworks -framework CoreFoundation -framework Foundation -framework CoreGraphics -framework UIKit -framework QuartzCore -framework Preferences  -fobjc-arc -mios-version-min=11.0 -L%%theos%%/lib -lsubstrate -arch arm64e -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -o $out $$Files; ldid -S $target
 
 build $builddir/%%name%%.o: $
 compile %%files%%

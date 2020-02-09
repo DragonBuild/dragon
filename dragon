@@ -63,7 +63,7 @@ if [ $gen == 1 ]; then
         xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
     fi
     mkdir -p .dragon/ninja
-    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
+    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/\%%dragonbuild%%/${DRAGONBUILD}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
     if [ "$TWEAK_TYPE" == "Prefs" ]; then
         exit 
     fi
