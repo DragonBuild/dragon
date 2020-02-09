@@ -5,6 +5,20 @@ DragonBuild currently requires an existing Theos implementation. This will event
 
 DragonBuild uses logos.pl from Theos. You will need to import headers that theos auto-imports yourself. That will likely not change, as it's good practice to do so. 
 
+## Table of Contents
+
+- [DragonBuild](#dragonbuild)
+  * [Notes](#notes)
+  * [Basic Usage](#basic-usage)
+  * [Installing DragonBuild](#installing-dragonbuild)
+  * [Setting your project up for DragonBuild](#setting-your-project-up-for-dragonbuild)
+    + [Creating a DragonMake File](#creating-a-dragonmake-file)
+    + [Generating the build script](#generating-the-build-script)
+    + [Building and installing your Tweak](#building-and-installing-your-tweak)
+    + [Forcing a rebuild](#forcing-a-rebuild)
+  * [Under the Hood](#under-the-hood)
+    + [Ninja Build file gen Proccess](#ninja-build-file-gen-proccess)
+
 ## Notes
 
 * This was built for MacOS. It needs a lot of work and a lot less hard-coding to work on linux. We'll get there, I promise :)
@@ -20,6 +34,22 @@ DragonBuild uses logos.pl from Theos. You will need to import headers that theos
 `dragon clean` Force a rebuild even when no changes are detected
 
 `dragon install` Install the project to the device located at `$DRAGONDEVICEIP`
+
+# Installing DragonBuild
+
+`brew install ninja`
+
+Choose the directory to install DragonBuild in. cd to it, then:
+
+```bash
+git clone https://github.com/KritantaDev/DragonBuild.git
+```
+
+Then, add the following to your ~/.bash_profile (or whatever you use)  
+`export DRAGONBUILD=path/for/DragonBuild`  
+`alias dragon=$DRAGONBUILD/dragon`  
+
+DragonBuild currently requires a Theos installation at $THEOS
 
 ## Setting your project up for DragonBuild
 
@@ -48,22 +78,6 @@ You only need to do this when the DragonMake file is updated.
 ### Forcing a rebuild
 
 DragonBuild will hash the contents of your tweak directory and only rebuild whenever it detects a change. If you want to force a rebuild despite having no changes, append `clean` to your command. 
-
-# Installing DragonBuild
-
-`brew install ninja`
-
-Choose the directory to install DragonBuild in. cd to it, then:
-
-```bash
-git clone https://github.com/KritantaDev/DragonBuild.git
-```
-
-Then, add the following to your ~/.bash_profile (or whatever you use)  
-`export DRAGONBUILD=path/for/DragonBuild`  
-`alias dragon=$DRAGONBUILD/dragon`  
-
-DragonBuild currently requires a Theos installation at $THEOS
 
 # Under the Hood
 
