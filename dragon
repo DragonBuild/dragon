@@ -93,13 +93,18 @@ if [ $build == 1 ]; then
     fi
 fi
 
+if [ -z "$DRAGONDEVICEIP" ]; then
+	echo -e "${PrefixColor}[Dragon]${NC} The DRAGONDEVICEIP variable is not set!"
+	exit
+fi
+
 if [ $install == 1 ]; then 
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
     echo -e "${PrefixColor}[Dragon]${NC} Installing..."
-    scp packages/${OUTPUT} root@192.168.1.148:/tmp/${OUTPUT}
-    ssh root@192.168.1.148 "dpkg -i /tmp/${OUTPUT}"
-    ssh root@192.168.1.148 "rm -rf /tmp/${OUTPUT}"
+    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/tmp/${OUTPUT}
+    ssh root@$DRAGONDEVICEIP "dpkg -i /tmp/${OUTPUT}"
+    ssh root@$DRAGONDEVICEIP "rm -rf /tmp/${OUTPUT}"
     echo -e "${PrefixColor}[Dragon]${NC} Reloading Springboard"
-    ssh root@192.168.1.148 "sbreload"
+    ssh root@$DRAGONDEVICEIP "sbreload"
 fi
 rm -rf .dragon/packages > /dev/null
