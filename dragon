@@ -62,6 +62,7 @@ if [ $gen == 1 ]; then
     else
         xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
     fi
+    mkdir -p .dragon/ninja
     sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
     if [ "$TWEAK_TYPE" == "Prefs" ]; then
         exit 
@@ -83,7 +84,7 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
         cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
         rm build.ninja
-
+        find . -name '.DS_Store' -type f -delete
         if [ -z "$SUBPROJECTS" ]; then
             echo "yeet" > /dev/null 
         else 
@@ -99,7 +100,6 @@ if [ $build == 1 ]; then
                 cd ..
             done
         fi
-
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
         mkdir -p .dragon/_/DEBIAN 
         cp control .dragon/_/DEBIAN/control 
@@ -111,7 +111,7 @@ if [ $build == 1 ]; then
         GENOUTPUT="$(ls .dragon/packages)"
         cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-        rm ${TWEAK_NAME}.m
+        rm ${TWEAK_NAME}.m > /dev/null
         echo "${GENOUTPUT}" > .dragon/last_package
         tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
     fi
