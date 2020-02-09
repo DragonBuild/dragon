@@ -9,8 +9,6 @@ DragonBuild uses logos.pl from Theos. You will need to import headers that theos
 
 * This was built for MacOS. It needs a lot of work and a lot less hard-coding to work on linux. We'll get there, I promise :)
 
-* Preferences are not yet supported. Support is close to being finished, but I need to do more research on this so I actually know what I'm doing. 
-
 ## Basic Usage
 
 `dragon [gen] [build] [clean] [install]`
