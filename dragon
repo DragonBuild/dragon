@@ -55,7 +55,7 @@ lasthash=$(cat .dragon/hash | tr -d '\040\011\012\015')
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja
     generatedLIBS=$(echo $LIBS | sed '/^$/!s/[^ ]* */-l&/g')
-    generatedFRAMEWORKS=$(echo $FRAMEWORKS | sed '/^$/!s/[^ ]* */-framework &/g')
+    generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g' | sed '/^$/!s/[^ ]* */-framework &/g')
     theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
     filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
     if [ -z "$LOGOS_FILE" ]; then
