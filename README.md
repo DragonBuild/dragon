@@ -61,6 +61,6 @@ Choose the directory to install DragonBuild in. cd to it, then:
 git clone https://github.com/KritantaDev/DragonBuild.git
 ```
 
-Then, add the following to your ~/.bash_profile (or whatever you use)
-export DRAGONBUILD=path/for/DragonBuild
-alias dragon=$DRAGONBUILD/dragon
+Then, add the following to your ~/.bash_profile (or whatever you use)  
+`export DRAGONBUILD=path/for/DragonBuild`  
+`alias dragon=$DRAGONBUILD/dragon`  
