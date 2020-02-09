@@ -1,8 +1,11 @@
 source DragonMake
 if [ "$TWEAK_TYPE" == "Prefs" ]; then
 cp -R Resources/ ../.dragon/_/Library/PreferenceBundles/${1}.bundle
-cp entry.plist ../.dragon/_/Library/PreferenceLoader/Preferences/${1}
-plutil -convert binary1 ../.dragon/_/Library/PreferenceLoader/Preferences/${1}
+plutil -convert binary1 ../.dragon/_/Library/PreferenceBundles/${1}.bundle/Info.plist
+plutil -convert binary1 ../.dragon/_/Library/PreferenceBundles/${1}.bundle/Root.plist
+cp entry.plist ../.dragon/_/Library/PreferenceLoader/Preferences/${1}.plist
+plutil -convert binary1 ../.dragon/_/Library/PreferenceLoader/Preferences/${1}.plist
+# mv ../.dragon/_/Library/PreferenceBundles/${1}.bundle/${1}.dylib ../.dragon/_/Library/PreferenceBundles/${1}.bundle/${1}
 fi
 
 if [ "$TWEAK_TYPE" == "SubTweak" ]; then
