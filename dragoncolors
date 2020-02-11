@@ -1,2 +1,2 @@
-PrefixColor='\033[0;34m'
+PrefixColor='\033[1;34m'
 NC='\033[0m'
