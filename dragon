@@ -91,7 +91,7 @@ if [ $build == 1 ]; then
             for i in "${subsb[@]}"; do
                 bash $DRAGONBUILD/dragonsubprep $i
                 cd $i
-                cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
+                cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' ninja | cat
                 rm build.ninja
                 bash $DRAGONBUILD/dragonsubbuild $i
                 cd ..
