@@ -1,18 +1,25 @@
 # DragonMake, named after sharing similarities with GNU Make Makefiles; does not use GNU Make.
 
 # What will our generated dylib be named?
-TWEAK_NAME="GardenPrefs"
+TWEAK_NAME="GardenSpotifyIPC"
+# Minimum iOS
+MINIOS="11.0"
+# Archs supported?
+ARCHS="arm64 arm64e"
+# flags to pass to clang 
+CFLAGS=""
 # What type of project is this? (Tweak | Library | Prefs | SubTweak)
-TWEAK_TYPE="Prefs"
+TWEAK_TYPE="SubTweak"
 # What files should we preprocess into .m files?
-LOGOS_FILE=""
+LOGOS_FILE="Tweak.xm"
 # Rest of the shit we need?
-TWEAK_FILES="$(find . -name "*.m" | xargs)"
+TWEAK_FILES=""
 # What do we run over ssh after the deb has been installed?
-INSTALL_CMD=""
+INSTALL_CMD="sbreload"
 # Libraries to link
 # libobjc and libc++ are included by default
-LIBS="Cozy mryipc"
+LIBS="mryipc"
 # Frameworks
-# CoreFoundation, Foundation, UIKit, CoreGraphics, QuartzCore, and Preferences are included by default
+# CoreFoundation, Foundation, UIKit, CoreGraphics, and QuartzCore are included by default
 FRAMEWORKS=""
+SUBPROJECTS=""
