@@ -68,12 +68,13 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} No files changed since last build"
         echo -e "${PrefixColor}[Dragon]${NC} Nothing to be done..."
     else
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
         if [ "$TWEAK_TYPE" == "Tweak" ]; then
             if [ -z "$LOGOS_FILE" ]; then
                 echo "yeet" > /dev/null
             else
                 xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
-                echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} using Logos"
+                echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} with logos.pl"
                 
                 $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
             fi
@@ -89,10 +90,11 @@ if [ $build == 1 ]; then
             subsb=(${SUBPROJECTS})
             set +f 
             for i in "${subsb[@]}"; do
-                bash $DRAGONBUILD/dragonsubprep $i
                 cd $i
+                bash $DRAGONBUILD/dragonsubprep $i
                 cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' ninja | cat
                 rm build.ninja
+                rm $i/${TWEAK_NAME}.m 2>/dev/null
                 bash $DRAGONBUILD/dragonsubbuild $i
                 cd ..
             done
@@ -103,8 +105,8 @@ if [ $build == 1 ]; then
         cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist 2>/dev/null
         cp -R layout/* .dragon/_/ 2>/dev/null
         mkdir -p .dragon/packages
-        echo -e "${PrefixColor}[Dragon]${NC} Building Package"
-        dpkg-deb --build -Znone .dragon/_ .dragon/packages/
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
+        dpkg-deb --build -Znone .dragon/_ .dragon/packages/ > /dev/null
         GENOUTPUT="$(ls .dragon/packages)"
         cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
@@ -123,11 +125,11 @@ if [ $install == 1 ]; then
         exit
     fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
-    echo -e "${PrefixColor}[Dragon]${NC} Installing..."
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing...${NC}"
     scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/${OUTPUT}
     ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}"
     ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
-    echo -e "${PrefixColor}[Dragon]${NC} Reloading Springboard"
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Reloading Springboard ${NC}"
     ssh root@$DRAGONDEVICEIP "sbreload"
 fi
 rm -rf .dragon/packages > /dev/null

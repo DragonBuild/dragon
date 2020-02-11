@@ -1,12 +1,12 @@
 source $DRAGONBUILD/dragoncolors
 source DragonMake
-
+echo -e "${PrefixColor}[Dragon]${BoldColor} Building SubTweak ${TWEAK_NAME}${NC}"
 if [ "$TWEAK_TYPE" == "SubTweak" ]; then
-echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} using Logos"
+echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} with logos.pl"
 if [ -z "$LOGOS_FILE" ]; then
     echo "yeet" > /dev/null
 else
-    xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
+    xmcNamew=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
 fi
-$THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
+$THEOS/bin/logos.pl $LOGOS_FILE > $xmcNamew
 fi
