@@ -52,18 +52,11 @@ hash=$(tar --exclude .dragon -cf - ../$cwd | md5)
 lasthash=$(cat .dragon/hash | tr -d '\040\011\012\015')
 
 if [ $gen == 1 ]; then 
-    rm -rf .dragon/ninja/build.ninja
-    generatedLIBS=$(echo $LIBS | sed '/^$/!s/[^ ]* */-l&/g')
-    generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g' | sed '/^$/!s/[^ ]* */-framework &/g')
-    theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
-    filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
-    if [ -z "$LOGOS_FILE" ]; then
-        echo "yeet" > /dev/null
-    else
-        xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
-    fi
+    rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
-    sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/\%%dragonbuild%%/${DRAGONBUILD}/" -e "s/%%files%%/${filesEscaped}/" -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" -e "s/%%xmcname%%/${xmcName}/" $DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
+    if [ "$TWEAK_TYPE" == "Library" ]; then
+        source $DRAGONBUILD/LibraryGen
+    fi
     if [ "$TWEAK_TYPE" == "Prefs" ]; then
         exit 
     fi
@@ -113,7 +106,7 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
         rm ${TWEAK_NAME}.m > /dev/null
         echo "${GENOUTPUT}" > .dragon/last_package
-        tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
+        # tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
     fi
 fi
 

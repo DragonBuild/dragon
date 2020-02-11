@@ -1,0 +1,5 @@
+if [ -z "$LOGOS_FILE" ]; then
+        true
+    else
+        xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
+    fi

@@ -1,5 +1,6 @@
 source DragonMake
 if [ "$TWEAK_TYPE" == "Prefs" ]; then
+mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/;
 cp -R Resources/ ../.dragon/_/Library/PreferenceBundles/${1}.bundle
 plutil -convert binary1 ../.dragon/_/Library/PreferenceBundles/${1}.bundle/Info.plist
 plutil -convert binary1 ../.dragon/_/Library/PreferenceBundles/${1}.bundle/Root.plist

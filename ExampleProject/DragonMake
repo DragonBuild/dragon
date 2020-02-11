@@ -2,6 +2,12 @@
 
 # What will our generated dylib be named?
 TWEAK_NAME="Garden"
+# Minimum iOS?
+MINIOS="11.0"
+# Archs supported?
+ARCHS="arm64 arm64e"
+# flags to pass to clang 
+CFLAGS=""
 # What files should we preprocess into .m files?
 LOGOS_FILE="Garden.xm"
 # Rest of the shit we need?
