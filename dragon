@@ -106,8 +106,9 @@ if [ $build == 1 ]; then
         cp -R layout/* .dragon/_/ 2>/dev/null
         mkdir -p .dragon/packages
         echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
-        dpkg-deb --build -Znone .dragon/_ .dragon/packages/ > /dev/null
+        dpkg-deb --build -Znone .dragon/_ .dragon/packages/
         GENOUTPUT="$(ls .dragon/packages)"
+        mkdir -p packages 2> /dev/null
         cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
         rm ${TWEAK_NAME}.m 2>/dev/null
@@ -130,6 +131,6 @@ if [ $install == 1 ]; then
     ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}"
     ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
     echo -e "${PrefixColor}[Dragon]${BoldColor} Reloading Springboard ${NC}"
-    ssh root@$DRAGONDEVICEIP "sbreload"
+    ssh root@$DRAGONDEVICEIP "${INSTALL_CMD}"
 fi
 rm -rf .dragon/packages > /dev/null

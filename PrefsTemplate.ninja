@@ -1,22 +1,48 @@
 target = ../.dragon/_/Library/PreferenceBundles/GardenPrefs.bundle/%%name%%
 builddir = .dragon/build
 objdir = .dragon/obj
+signdir = .dragon/sign
+signtarget = $signdir/Library/PreferenceBundles/GardenPrefs.bundle/%%name%%.dylib
 # We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
 theosdir = %%theos%%
+
 cc = clang
 ll = clang
-lf = -lsubstrate
+optim = 2
+iosvers = %%minios%%
+arc = -fobjc-arc
+archs = %%archs%%
+lf = -lobjc -lc++ 
+sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
+frameworks = CoreFoundation Foundation CoreGraphics UIKit QuartzCore Preferences %%frameworks%%
+cflags = -fconstant-cfstrings -std=c99 -Wall -mios-version-min=$iosvers %%cflags%% -isysroot $sdk -iframework$sdk/System/Library/Frameworks/ -F%%dragonbuild%%/frameworks -fcolor-diagnostics
+lflags = -dynamiclib -bind_at_load -L$theosdir/lib
+
+pre = fwk=$$(echo $frameworks | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo $archs | sed '/^$$/!s/[^ ]* */-arch &/g'); mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/;  
+
 
 rule compile
-    command = clang -O2 -F%%theos%%/sdks/iPhoneOS12.2.sdk/ -fconstant-cfstrings -std=gnu99 -Wall -fobjc-arc -mios-version-min=11.0 -arch arm64e -arch arm64 -c -I%%dragonbuild%%/headers/Preferences/ -c $in;mkdir -p $objdir; mv *.o $objdir;
+    command = $pre clang -O$optim $cflags $arc $$arcs -c -I%%dragonbuild%%/headers/Preferences/ -c $in -o $out
 
 rule link
-    command = mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/; Files=$$(ls $objdir | egrep '\.o' | sed -e 's/^/.dragon\/obj\//' | xargs ); gcc -lobjc -lc++  -dynamiclib -bind_at_load -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -iframework%%theos%%/sdks/iPhoneOS12.2.sdk/System/Library/PrivateFrameworks -framework CoreFoundation -framework Foundation -framework CoreGraphics -framework UIKit -framework QuartzCore -framework Preferences  -fobjc-arc -mios-version-min=11.0 -L%%theos%%/lib -lsubstrate -arch arm64e -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -o $out $$Files; ldid -S $target
+    command = $pre clang $lf $lflags -F$sdk $cflags $$fwk $$arcs -isysroot $sdk -o $out
 
-build $builddir/%%name%%.o: $
-compile %%files%%
+rule sign
+    description = Signing $out
+    command = ldid -S $in; mv $in $out;
 
-build $target : link $builddir/%%name%%.o 
+rule clean
+    description = Cleaning Up
+    command = rm -rf .dragon/sign;
+
+%%gencomp%%
+
+%%genlink%%
+
+build $target : sign $signtarget
+
+build cleanup : clean $target
 
 default $target
 
+default cleanup

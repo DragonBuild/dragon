@@ -1,0 +1,32 @@
+
+generatedLIBS=$(echo $LIBS)
+generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g')
+theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
+filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
+dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
+
+genComp=""
+genLink="build \$signtarget : link "
+
+set -f
+subsbs=(${TWEAK_FILES})
+set +f 
+for i in "${subsbs[@]}"; do
+    e=$(echo "${i}" | sed 's/\.m/\.o/g')
+    genComp+="build \$builddir/${e} : compile ${i}ƒƒ"
+    genLink+="\$builddir/${e} "
+done
+
+
+gencompEscaped=$(echo "$genComp" | sed 's/\//\\\//g')
+genlinkEscaped=$(echo "$genLink" | sed 's/\//\\\//g')
+
+sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/\%%dragonbuild%%/${dragonEscaped}/" -e "s/%%files%%/${filesEscaped}/" \
+-e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" \
+-e "s/%%xmcname%%/${xmcName}/" -e "s/%%gencomp%%/${gencompEscaped}/" -e "s/%%genlink%%/${genlinkEscaped}/" \
+-e "s/%%cflags%%/${CFLAGS}/" -e "s/%%archs%%/${ARCHS}/" -e "s/%%minios%%/${MINIOS}/" \
+$DRAGONBUILD/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
+# bad hack
+tr 'ƒ' '\n' < .dragon/ninja/build.ninja > .dragon/ninja/bt
+
+mv .dragon/ninja/bt .dragon/ninja/build.ninja
