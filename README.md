@@ -1,7 +1,7 @@
 # DragonBuild
 Much faster ninja-based tweak compiler
 
-### This is in early stages. If you aren't familiar with clang, ldid, dysm, and similar tools, this projects is not currently something you want to use. 
+## This is in early stages. If you aren't familiar with clang, ldid, dysm, and similar tools, this projects is not currently something you want to use. 
 
 DragonBuild currently requires an existing Theos implementation. This will eventually be written out. Currently it will detect your installation via environment variables, so you shouldn't need to worry too much about this :)
 
