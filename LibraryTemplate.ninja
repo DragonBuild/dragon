@@ -18,21 +18,25 @@ archs = %%archs%%
 lf = -lobjc -lc++ 
 sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
 frameworks = CoreFoundation Foundation CoreGraphics UIKit QuartzCore %%frameworks%%
-cflags = -fconstant-cfstrings -std=c99 -Wall -mios-version-min=$iosvers %%cflags%% -isysroot $sdk -iframework$sdk/System/Library/Frameworks/ -F$theosdir/lib 
+cflags = -fconstant-cfstrings -std=c99 -Wall -mios-version-min=$iosvers %%cflags%% -isysroot $sdk -iframework$sdk/System/Library/Frameworks/ -F$theosdir/lib -fcolor-diagnostics
 lflags = -dynamiclib -bind_at_load -L$theosdir/lib
 
 pre = fwk=$$(echo $frameworks | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo $archs | sed '/^$$/!s/[^ ]* */-arch &/g'); 
 
 rule compile
+    description = Compiling $in
     command = $pre $cc -I$theosdir/include/ -O$optim $arc $$arcs $cflags -c $in -o $out;
 
 rule link
+    description = Linking for $out
     command = $pre $ll $lf $cflags $lflags $$fwk $arc $$arcs -o $out $in; 
 
 rule sign
+    description = Signing $out
     command = ldid -S $in; mv $in $out;
 
 rule clean
+    description = Cleaning Up
     command = rm -rf .dragon/sign;
 
 %%gencomp%%

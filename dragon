@@ -6,6 +6,8 @@ clean=0
 
 source DragonMake
 
+export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
+
 usage()
 {
     echo "usage: sysinfo_page [[[-f file ] [-i]] | [-h]]"
@@ -49,14 +51,13 @@ fi
 
 cwd=$(basename $PWD)
 hash=$(tar --exclude .dragon -cf - ../$cwd | md5)
-lasthash=$(cat .dragon/hash | tr -d '\040\011\012\015')
+#lasthash=$(cat .dragon/hash | tr -d '\040\011\012\015')
 
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
-    if [ "$TWEAK_TYPE" == "Library" ]; then
-        source $DRAGONBUILD/LibraryGen
-    fi
+    source $DRAGONBUILD/${TWEAK_TYPE}Gen
+    
     if [ "$TWEAK_TYPE" == "Prefs" ]; then
         exit 
     fi
@@ -67,16 +68,19 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} No files changed since last build"
         echo -e "${PrefixColor}[Dragon]${NC} Nothing to be done..."
     else
-        echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} using Logos"
-        if [ -z "$LOGOS_FILE" ]; then
-            echo "yeet" > /dev/null
-        else
-            xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
+        if [ "$TWEAK_TYPE" == "Tweak" ]; then
+            if [ -z "$LOGOS_FILE" ]; then
+                echo "yeet" > /dev/null
+            else
+                xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
+                echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} using Logos"
+                
+                $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
+            fi
         fi
-        $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
-        cp .dragon/ninja/build.ninja $PWD/build.ninja && ninja
-        rm build.ninja
+        cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' ninja | cat
+        rm build.ninja 
         find . -name '.DS_Store' -type f -delete
         if [ -z "$SUBPROJECTS" ]; then
             echo "yeet" > /dev/null 
@@ -96,15 +100,15 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
         mkdir -p .dragon/_/DEBIAN 
         cp control .dragon/_/DEBIAN/control 
-        cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist
-        cp -R layout/* .dragon/_/
+        cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist 2>/dev/null
+        cp -R layout/* .dragon/_/ 2>/dev/null
         mkdir -p .dragon/packages
         echo -e "${PrefixColor}[Dragon]${NC} Building Package"
         dpkg-deb --build -Znone .dragon/_ .dragon/packages/
         GENOUTPUT="$(ls .dragon/packages)"
         cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-        rm ${TWEAK_NAME}.m > /dev/null
+        rm ${TWEAK_NAME}.m 2>/dev/null
         echo "${GENOUTPUT}" > .dragon/last_package
         # tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
     fi

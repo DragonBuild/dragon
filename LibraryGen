@@ -1,6 +1,6 @@
 
-generatedLIBS=$(echo $LIBS | sed '/^$/!s/[^ ]* */-l&/g')
-generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g' | sed '/^$/!s/[^ ]* */-framework &/g')
+generatedLIBS=$(echo $LIBS)
+generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g')
 theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
 filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
