@@ -61,11 +61,15 @@ DragonBuild uses DragonMake files as a stand-in replacement for Makefiles.
 |---|---|---|
 |  TWEAK_NAME  |  * | Name of the tweak. Should match your tweak's plist name |
 | TWEAK_TYPE |  Tweak, Prefs, SubTweak, Library  | The type of file to build. SubTweak is a tweak to be packaged with the tweak in its superdirectory |
-| LOGOS_FILE |  *.x/*.xm  | A file that $THEOS/logos.pl should preprocess. If you have an .xm file put it here |
+| LOGOS_FILE |  *.x/*.xm  | A file that $THEOS/logos.pl should preprocess. If you have an .xm file put it here |  
+| ARCHS | arm7 / arm64 / arm64e | Typical ARCHS stuff you're used to with THEOS | 
+| MINIOS | *.* | e.g. 10.0; Target iOS Version |  
+| CFLAGS | * | Flags you wish to pass to clang |  
 |  TWEAK_FILES  |  *.m/*.mm |  Files to be compiled with your tweak. Anything compilable goes here. Bash syntax is supported |
 |  INSTALL_CMD  |  * |  What should be executed over ssh after installing the package |
 | LIBS | * | Libraries to link. objc and objc++ are automatically included. |
 | FRAMEWORKS | * | Frameworks to compile against. CoreFoundation, Foundation, UIKit, CoreGraphics, and QuartzCore are included by default, along with Preferences, if TWEAK_TYPE is "Prefs" |
+| SUBPROJECTS | * | Folder name of Subprojects (prefs, subtweaks, etc) 
 
 Example DragonMake files for a Tweak and a SubTweak can be found in ./ExampleProject
 
