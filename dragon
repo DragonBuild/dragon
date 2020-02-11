@@ -124,9 +124,9 @@ if [ $install == 1 ]; then
     fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
     echo -e "${PrefixColor}[Dragon]${NC} Installing..."
-    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/Documents/dragoninstall/${OUTPUT}
-    ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/Documents/dragoninstall/${OUTPUT}"
-    ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/Documents/dragoninstall/${OUTPUT}"
+    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/${OUTPUT}
+    ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}"
+    ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
     echo -e "${PrefixColor}[Dragon]${NC} Reloading Springboard"
     ssh root@$DRAGONDEVICEIP "sbreload"
 fi
