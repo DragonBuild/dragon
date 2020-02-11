@@ -7,8 +7,8 @@ dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
 xmcNameO=$(echo "${LOGOS_FILE}" | sed 's/.xm/.o/g')
 
-genComp="build ${xmcNameO} : compile ${xmcName}ƒƒ"
-genLink="build \$signtarget : link "
+genComp="build \$builddir/${xmcNameO} : compile ${xmcName}ƒƒ"
+genLink="build \$signtarget : link \$builddir/${xmcNameO} "
 
 set -f
 subsbs=(${TWEAK_FILES})
