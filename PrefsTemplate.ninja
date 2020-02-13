@@ -1,43 +1,53 @@
-target = ../.dragon/_/Library/PreferenceBundles/GardenPrefs.bundle/%%name%%
+##
+
+target = ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle/%%name%%
 builddir = .dragon/build
 objdir = .dragon/obj
 signdir = .dragon/sign
-signtarget = $signdir/Library/PreferenceBundles/GardenPrefs.bundle/%%name%%.dylib
+signtarget = $signdir/Library/PreferenceBundles/%%name%%.bundle/%%name%%.unsigned
+dsymtarget = $signdir/Library/PreferenceBundles/%%name%%.bundle/%%name%%.nosym
 # We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
 theosdir = %%theos%%
 
-cc = clang
-ll = clang
+ccloc = cc=$$(clang++ --version | grep "InstalledDir:*" | sed "s/InstalledDir: //g" | xargs);cc+="/clang++";
+cc = $$cc
+ll = $$cc
+
 optim = 2
 iosvers = %%minios%%
 arc = -fobjc-arc
 archs = %%archs%%
-lf = -lobjc -lc++ 
-sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
-frameworks = CoreFoundation Foundation CoreGraphics UIKit QuartzCore Preferences %%frameworks%%
-cflags = -fconstant-cfstrings -std=c99 -Wall -mios-version-min=$iosvers %%cflags%% -isysroot $sdk -iframework$sdk/System/Library/Frameworks/ -F%%dragonbuild%%/frameworks -fcolor-diagnostics
-lflags = -dynamiclib -bind_at_load -L$theosdir/lib
+lf = -lobjc -lc++
+sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk
+buildtarg = -DTARGET_IPHONE=1 
+frameworks = CoreFoundation Foundation UIKit Preferences %%frameworks%%
+cflags = -std=c99 -Wall -mios-version-min=$iosvers  -isysroot "$sdk" -iframework$sdk/System/Library/Frameworks/ -fcolor-diagnostics -O0 -Wall -ggdb -Werror -DDEBUG %%cflags%%
+lflags = -dynamiclib -ggdb -lsystem.b -L$theosdir/lib -Xlinker -segalign -Xlinker 4000 
 
-pre = fwk=$$(echo $frameworks | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo $archs | sed '/^$$/!s/[^ ]* */-arch &/g'); mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/;  
+pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo "$archs" | sed '/^$$/!s/[^ ]* */-arch &/g'); mkdir -p ../.dragon/_/Library/PreferenceBundles/%%name%%.bundle; mkdir -p ../.dragon/_/Library/PreferenceLoader/Preferences/;  
 
-
-rule compile
-    command = $pre clang -O$optim $cflags $arc $$arcs -c -I%%dragonbuild%%/headers/Preferences/ -c $in -o $out
+rule compile 
+    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework/ $$arcs -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/PrivateFrameworks $in -o $out
 
 rule link
-    command = $pre clang $lf $lflags -F$sdk $cflags $$fwk $$arcs -isysroot $sdk -o $out
+    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework/ $$arcs -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/PrivateFrameworks  -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework -I/Users/kritanta/ios/dragonbuild/headers/ -o $out $in 
+
+rule debug
+    command = dsymutil "$in"; mv $in $out
 
 rule sign
     description = Signing $out
-    command = ldid -S $in; mv $in $out;
+    command = ldid -S $in; mv $in $target
 
 rule clean
     description = Cleaning Up
-    command = rm -rf .dragon/sign;
+    command = rm -rf .dragon/sign
 
 %%gencomp%%
 
 %%genlink%%
+
+build $signtarget : debug $dsymtarget
 
 build $target : sign $signtarget
 
@@ -45,4 +55,3 @@ build cleanup : clean $target
 
 default $target
 
-default cleanup

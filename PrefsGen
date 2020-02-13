@@ -6,7 +6,7 @@ filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 
 genComp=""
-genLink="build \$signtarget : link "
+genLink="build \$dsymtarget : link "
 
 set -f
 subsbs=(${TWEAK_FILES})
@@ -21,7 +21,7 @@ done
 gencompEscaped=$(echo "$genComp" | sed 's/\//\\\//g')
 genlinkEscaped=$(echo "$genLink" | sed 's/\//\\\//g')
 
-sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/\%%dragonbuild%%/${dragonEscaped}/" -e "s/%%files%%/${filesEscaped}/" \
+sed -e "s/%%name%%/${TWEAK_NAME}/g" -e "s/%%dragonbuild%%/${dragonEscaped}/g" -e "s/%%files%%/${filesEscaped}/" \
 -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" \
 -e "s/%%xmcname%%/${xmcName}/" -e "s/%%gencomp%%/${gencompEscaped}/" -e "s/%%genlink%%/${genlinkEscaped}/" \
 -e "s/%%cflags%%/${CFLAGS}/" -e "s/%%archs%%/${ARCHS}/" -e "s/%%minios%%/${MINIOS}/" \
