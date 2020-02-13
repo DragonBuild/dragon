@@ -1,3 +1,5 @@
+
+
 source $DRAGONBUILD/dragoncolors
 install=0
 build=0
@@ -5,6 +7,15 @@ gen=0
 clean=0
 
 source DragonMake
+
+set -o pipefail
+
+function cleanbuildfail {
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
+    rm ${TWEAK_NAME}.m 2>/dev/null
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
+    exit
+}
 
 export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
@@ -80,7 +91,7 @@ if [ $build == 1 ]; then
             fi
         fi
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
-        cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' ninja | cat
+        cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
         rm build.ninja 
         find . -name '.DS_Store' -type f -delete
         if [ -z "$SUBPROJECTS" ]; then
@@ -92,7 +103,7 @@ if [ $build == 1 ]; then
             for i in "${subsb[@]}"; do
                 cd $i
                 bash $DRAGONBUILD/dragonsubprep $i
-                cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' ninja | cat
+                cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
                 rm build.ninja
                 rm $i/${TWEAK_NAME}.m 2>/dev/null
                 bash $DRAGONBUILD/dragonsubbuild $i
