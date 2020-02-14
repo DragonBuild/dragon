@@ -1,10 +1,12 @@
+#!/bin/bash
 
-
-source $DRAGONBUILD/dragoncolors
+source $DRAGONBUILD/internal/dragoncolors
 install=0
 build=0
 gen=0
 clean=0
+
+gen_tbd_from_lib=1
 
 source DragonMake
 
@@ -67,7 +69,7 @@ hash=$(tar --exclude .dragon -cf - ../$cwd | md5)
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
-    source $DRAGONBUILD/${TWEAK_TYPE}Gen
+    source $DRAGONBUILD/NinjaGenerators/${TWEAK_TYPE}Gen
     
     if [ "$TWEAK_TYPE" == "Prefs" ]; then
         exit 
@@ -92,6 +94,16 @@ if [ $build == 1 ]; then
         fi
         echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
         cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+        if [ "$TWEAK_TYPE" == "Library" ]; then
+            echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "
+            echo -e "${PrefixColor}[Dragon]${NC} Moving Dylib to root directory"
+            cp .dragon/_/usr/lib/$TWEAK_NAME.dylib $TWEAK_NAME.dylib
+            echo -e "${PrefixColor}[Dragon]${BoldColor} Creating a tbd file for ${TWEAK_NAME}${NC}"
+            [ -f $DRAGONBUILD/bin/tbdump ] && true || bash $DRAGONBUILD/internal/DragonCompileTBDump
+            $DRAGONBUILD/bin/tbdump $TWEAK_NAME.dylib > $TWEAK_NAME.tbd 
+            echo -e "${PrefixColor}[Dragon]${NC} Copying generated file to $DRAGONBUILD/lib/"
+            cp $TWEAK_NAME.tbd $DRAGONBUILD/lib/$TWEAK_NAME.tbd
+        fi
         rm build.ninja 
         find . -name '.DS_Store' -type f -delete
         if [ -z "$SUBPROJECTS" ]; then
@@ -102,11 +114,11 @@ if [ $build == 1 ]; then
             set +f 
             for i in "${subsb[@]}"; do
                 cd $i
-                bash $DRAGONBUILD/dragonsubprep $i
+                bash $DRAGONBUILD/internal/dragonsubprep $i
                 cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
                 rm build.ninja
                 rm $i/${TWEAK_NAME}.m 2>/dev/null
-                bash $DRAGONBUILD/dragonsubbuild $i
+                bash $DRAGONBUILD/internal/dragonsubbuild $i
                 cd ..
             done
         fi
@@ -122,7 +134,7 @@ if [ $build == 1 ]; then
         mkdir -p packages 2> /dev/null
         cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
         echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-        rm ${TWEAK_NAME}.m 2>/dev/null
+        # rm ${TWEAK_NAME}.m 2>/dev/null
         echo "${GENOUTPUT}" > .dragon/last_package
         # tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
     fi

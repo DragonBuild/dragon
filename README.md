@@ -16,6 +16,7 @@ DragonBuild uses logos.pl from Theos. You will need to import headers that theos
     + [Generating the build script](#generating-the-build-script)
     + [Building and installing your Tweak](#building-and-installing-your-tweak)
     + [Forcing a rebuild](#forcing-a-rebuild)
+  * **[Credits](#credits)**
   * [Under the Hood](#under-the-hood)
     + [Ninja Build file gen Proccess](#ninja-build-file-gen-proccess)
 
@@ -88,6 +89,16 @@ You only need to do this when the DragonMake file is updated.
 ### Forcing a rebuild
 
 DragonBuild will hash the contents of your tweak directory and only rebuild whenever it detects a change. If you want to force a rebuild despite having no changes, append `clean` to your command. 
+
+# Credits
+
+@theiostream, for [this](https://github.com/theiostream/Libhide/blob/1f7b2bbebc9df68bb781406f881eb28eac270989/library/Makefile) commit, which got me started on understanding how to compile tweaks with clang
+
+@Siguza, for writing ./bin/tbdump, the tool used to symbolicate libraries that can be compiled for this
+
+@sbinger, for patiently helping me add arm64e support to tbdump (turns out its easy when you know what you're doing :))
+
+@theos, and the badass team there, who created a good amount of the resources this project depends on. 
 
 # Under the Hood
 
