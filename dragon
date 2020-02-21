@@ -27,7 +27,7 @@ usage()
 }
 printBan()
 {
-    cat $DRAGONBUILD/banner.txt                                             
+    cat $DRAGONBUILD/internal/banner.txt                                             
 }
 
 mkdir -p .dragon/ninja > /dev/null
@@ -63,81 +63,80 @@ if [ $clean == 1 ]; then
 fi
 
 cwd=$(basename $PWD)
-hash=$(tar --exclude .dragon -cf - ../$cwd | md5)
-#lasthash=$(cat .dragon/hash | tr -d '\040\011\012\015')
+hash=$(md5 DragonMake)
+lasthash=$(cat .dragon/hash)
 
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
-    source $DRAGONBUILD/NinjaGenerators/${TWEAK_TYPE}Gen
+    source $DRAGONBUILD/DragonGen/DragonGen
     
-    if [ "$TWEAK_TYPE" == "Prefs" ]; then
-        exit 
-    fi
 fi
 
 if [ $build == 1 ]; then 
     if [ "$hash" == "$lasthash" ]; then
-        echo -e "${PrefixColor}[Dragon]${NC} No files changed since last build"
-        echo -e "${PrefixColor}[Dragon]${NC} Nothing to be done..."
-    else
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
-        if [ "$TWEAK_TYPE" == "Tweak" ]; then
-            if [ -z "$LOGOS_FILE" ]; then
-                echo "yeet" > /dev/null
-            else
-                xmcName=$(echo "${LOGOS_FILE}" | sed 's/.xm/.m/g')
-                echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} with logos.pl"
-                
-                $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
-            fi
-        fi
-        echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
-        cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
-        if [ "$TWEAK_TYPE" == "Library" ]; then
-            echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "
-            echo -e "${PrefixColor}[Dragon]${NC} Moving Dylib to root directory"
-            cp .dragon/_/usr/lib/$TWEAK_NAME.dylib $TWEAK_NAME.dylib
-            echo -e "${PrefixColor}[Dragon]${BoldColor} Creating a tbd file for ${TWEAK_NAME}${NC}"
-            [ -f $DRAGONBUILD/bin/tbdump ] && true || bash $DRAGONBUILD/internal/DragonCompileTBDump
-            $DRAGONBUILD/bin/tbdump $TWEAK_NAME.dylib > $TWEAK_NAME.tbd 
-            echo -e "${PrefixColor}[Dragon]${NC} Copying generated file to $DRAGONBUILD/lib/"
-            cp $TWEAK_NAME.tbd $DRAGONBUILD/lib/$TWEAK_NAME.tbd
-        fi
-        rm build.ninja 
-        find . -name '.DS_Store' -type f -delete
-        if [ -z "$SUBPROJECTS" ]; then
-            echo "yeet" > /dev/null 
-        else 
-            set -f
-            subsb=(${SUBPROJECTS})
-            set +f 
-            for i in "${subsb[@]}"; do
-                cd $i
-                bash $DRAGONBUILD/internal/dragonsubprep $i
-                cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
-                rm build.ninja
-                rm $i/${TWEAK_NAME}.m 2>/dev/null
-                bash $DRAGONBUILD/internal/dragonsubbuild $i
-                cd ..
-            done
-        fi
-        echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
-        mkdir -p .dragon/_/DEBIAN 
-        cp control .dragon/_/DEBIAN/control 
-        cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist 2>/dev/null
-        cp -R layout/* .dragon/_/ 2>/dev/null
-        mkdir -p .dragon/packages
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
-        dpkg-deb --build -Znone .dragon/_ .dragon/packages/
-        GENOUTPUT="$(ls .dragon/packages)"
-        mkdir -p packages 2> /dev/null
-        cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
-        echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-        # rm ${TWEAK_NAME}.m 2>/dev/null
-        echo "${GENOUTPUT}" > .dragon/last_package
-        # tar --exclude .dragon -cf - ../$cwd | md5 > .dragon/hash
+        true 
+    else 
+        rm -rf .dragon/ninja/build.ninja 
+        mkdir -p .dragon/ninja
+        source $DRAGONBUILD/DragonGen/DragonGen
     fi
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
+    if [ "$TWEAK_TYPE" == "Tweak" ]; then
+        if [ -z "$LOGOS_FILE" ]; then
+            echo "yeet" > /dev/null
+        else
+            xmcName="$LOGOS_FILE.m"
+            echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} with logos.pl"
+            
+            $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
+        fi
+    fi
+    echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
+    cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+    if [ "$TWEAK_TYPE" == "Library" ]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "
+        echo -e "${PrefixColor}[Dragon]${NC} Moving Dylib to root directory"
+        cp .dragon/_/usr/lib/$TWEAK_NAME.dylib $TWEAK_NAME.dylib
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Creating a tbd file for ${TWEAK_NAME}${NC}"
+        [ -f $DRAGONBUILD/bin/tbdump ] && true || bash $DRAGONBUILD/internal/DragonCompileTBDump
+        $DRAGONBUILD/bin/tbdump $TWEAK_NAME.dylib > $TWEAK_NAME.tbd 
+        echo -e "${PrefixColor}[Dragon]${NC} Copying generated file to $DRAGONBUILD/lib/"
+        cp $TWEAK_NAME.tbd $DRAGONBUILD/lib/$TWEAK_NAME.tbd
+    fi
+    rm build.ninja 
+    find . -name '.DS_Store' -type f -delete
+    if [ -z "$SUBPROJECTS" ]; then
+        echo "yeet" > /dev/null 
+    else 
+        set -f
+        subsb=(${SUBPROJECTS})
+        set +f 
+        for i in "${subsb[@]}"; do
+            cd $i
+            bash $DRAGONBUILD/internal/dragonsubprep $i
+            cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+            rm build.ninja
+            rm $i/${TWEAK_NAME}.m 2>/dev/null
+            bash $DRAGONBUILD/internal/dragonsubbuild $i
+            cd ..
+        done
+    fi
+    echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
+    mkdir -p .dragon/_/DEBIAN 
+    cp control .dragon/_/DEBIAN/control 
+    cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist 2>/dev/null
+    cp -R layout/* .dragon/_/ 2>/dev/null
+    mkdir -p .dragon/packages
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
+    dpkg-deb --build -Zgzip .dragon/_ .dragon/packages/
+    GENOUTPUT="$(ls .dragon/packages)"
+    mkdir -p packages 2> /dev/null
+    cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
+    mv ${LOGOS_FILE}.m .dragon/build/${LOGOS_FILE}.m 2>/dev/null
+    echo "${GENOUTPUT}" > .dragon/last_package
+    md5 DragonMake > .dragon/hash
 fi
 
 
@@ -149,11 +148,18 @@ if [ $install == 1 ]; then
         exit
     fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing...${NC}"
-    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/${OUTPUT}
-    ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}"
-    ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Reloading Springboard ${NC}"
+
+    # This check wasn't always here; accidentally wiped /var/mobile on one of my phones :)
+    if [ -z "$OUTPUT" ]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
+        exit 
+    fi
+
+    # Chain our commands, so if one fails, the others dont do anything drastic
+    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/${OUTPUT} && ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
+    
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
     ssh root@$DRAGONDEVICEIP "${INSTALL_CMD}"
 fi
+
 rm -rf .dragon/packages > /dev/null

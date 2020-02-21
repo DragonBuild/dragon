@@ -1,3 +1,5 @@
+#!/bin/sh
+
 generatedLIBS=$(echo "$LIBS" | sed '/^$$/!s/[^ ]* */-l&/g' | sed 's/\//\\\//g')
 generatedFRAMEWORKS=$(echo $FRAMEWORKS |  sed 's/\//\\\//g')
 theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')

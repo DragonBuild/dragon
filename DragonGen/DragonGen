@@ -1,0 +1,31 @@
+#!/bin/sh
+
+source $DRAGONBUILD/internal/dragoncolors
+
+if [ -f "DragonMake" ]; then  
+    source DragonMake   
+    echo -e "${GenColor}[DragonGen]${BoldColor} Generating Build Scripts for ${TWEAK_NAME}${NC}"
+    source $DRAGONBUILD/DragonGen/${TWEAK_TYPE}Gen
+    if [ -z "$SUBPROJECTS" ]; then
+            true
+        else 
+            set -f
+            subsb=(${SUBPROJECTS})
+            set +f 
+            for i in "${subsb[@]}"; do
+                cd $i
+                bash $DRAGONBUILD/DragonGen/DragonGen
+                cd ..
+            done
+        fi
+    echo -e "${GenColor}[DragonGen]${NC} Done"
+fi
+
+function DragonMakeNotFound()
+{
+    if [ -f "Makefile" ]; then  
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Attempting to generate DragonMake file from existing Makefile${NC}"
+        source MakefileProcessor
+    fi
+}
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+source $DRAGONBUILD/internal/dragoncolors
+
+
+function get_make_var()
+{
+    echo 'unique123:;@echo ${'"$1"'}' | 
+      make -f - -f "$2" --no-print-directory unique123
+}
+
+echo -e "${PrefixColor}[DragonGen]${NC} Invoking GNU Make to process variables${NC}"
+tweakNameVar="get_make_var TWEAK_NAME Makefile"
+targetVar="get_make_var TARGET Makefile"
