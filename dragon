@@ -134,7 +134,7 @@ if [ $build == 1 ]; then
     mkdir -p packages 2> /dev/null
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
     echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-    #mv ${LOGOS_FILE}.m .dragon/${LOGOS_FILE}.m 2>/dev/null
+    rm ${LOGOS_FILE}.m 2>/dev/null
     echo "${GENOUTPUT}" > .dragon/last_package
     md5 DragonMake > .dragon/hash
 fi
