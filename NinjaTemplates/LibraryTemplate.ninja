@@ -18,7 +18,7 @@ iosvers = %%minios%%
 arc = -fobjc-arc
 archs = %%archs%%
 lf = -lobjc -lc++
-sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk
+sdk = $$DRAGONBUILD/sdks/iPhoneOS13.2.sdk
 buildtarg = -DTARGET_IPHONE=1 
 frameworks = CoreFoundation Foundation UIKit CoreGraphics QuartzCore %%frameworks%%
 cflags = -std=c99 -Wall -mios-version-min=$iosvers  -isysroot "$sdk" -iframework$sdk/System/Library/Frameworks/ -fcolor-diagnostics -O0 -Wall -ggdb -Werror -DDEBUG %%cflags%%

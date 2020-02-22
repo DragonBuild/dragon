@@ -7,7 +7,7 @@ signdir = .dragon/sign
 signtarget = $signdir/_/Library/MobileSubstrate/DynamicLibraries/%%name%%.unsigned
 dsymtarget = $signdir/_/Library/MobileSubstrate/DynamicLibraries/%%name%%.nosym
 # We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
-theosdir = %%theos%%
+theosdir = $$DRAGONBUILD
 
 ccloc = cc=$$(clang++ --version | grep "InstalledDir:*" | sed "s/InstalledDir: //g" | xargs);cc+="/clang++";
 cc = $$cc

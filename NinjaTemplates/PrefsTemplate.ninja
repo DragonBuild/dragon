@@ -7,7 +7,7 @@ signdir = .dragon/sign
 signtarget = $signdir/Library/PreferenceBundles/%%name%%.bundle/%%name%%.unsigned
 dsymtarget = $signdir/Library/PreferenceBundles/%%name%%.bundle/%%name%%.nosym
 # We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
-theosdir = %%theos%%
+theosdir = $$DRAGONBUILD
 
 ccloc = cc=$$(clang++ --version | grep "InstalledDir:*" | sed "s/InstalledDir: //g" | xargs);cc+="/clang++";
 cc = $$cc
@@ -18,7 +18,7 @@ iosvers = %%minios%%
 arc = -fobjc-arc
 archs = %%archs%%
 lf = -lobjc -lc++
-sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk
+sdk = $$DRAGonbuILD/sdks/iPhoneOS.sdk
 buildtarg = -DTARGET_IPHONE=1 
 frameworks = CoreFoundation Foundation UIKit Preferences CoreGraphics QuartzCore %%frameworks%%
 cflags = -std=c99 -Wall -mios-version-min=$iosvers  -isysroot "$sdk" -iframework$sdk/System/Library/Frameworks/ -fcolor-diagnostics -O0 -Wall -ggdb -Werror -DDEBUG %%cflags%%
