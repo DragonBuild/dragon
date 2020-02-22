@@ -26,6 +26,15 @@ lflags = -dynamiclib -ggdb -lsystem.b -L$$DRAGONBUILD/lib -Xlinker -segalign -Xl
 
 pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo "$archs" | sed '/^$$/!s/[^ ]* */-arch &/g');
 
+
+rule logos 
+    description = Processing $in with Logos 
+    command = $theosdir/bin/logos.pl $in > $out
+
+rule lint
+    description = Linting $in
+    command = oclint $in -- $ccloc $pre $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc $$arcs -F$$DRAGONBUILD/lib
+
 rule compile 
     description = Compiling $in
     command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework/ $$arcs -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/PrivateFrameworks $in -o $out
@@ -45,6 +54,8 @@ rule sign
 rule clean
     description = Cleaning Up
     command = rm -rf .dragon/sign
+
+%%logosgen%%
 
 %%gencomp%%
 

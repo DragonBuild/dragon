@@ -82,17 +82,6 @@ if [ $build == 1 ]; then
         source $DRAGONBUILD/DragonGen/DragonGen
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
-    if [ "$TWEAK_TYPE" == "Tweak" ]; then
-        if [ -z "$LOGOS_FILE" ]; then
-            echo "yeet" > /dev/null
-        else
-            xmcName="$LOGOS_FILE.m"
-            echo -e "${PrefixColor}[Dragon]${NC} Processing ${LOGOS_FILE} with logos.pl"
-            
-            $THEOS/bin/logos.pl $LOGOS_FILE > $xmcName
-        fi
-    fi
-    echo -e "${PrefixColor}[Dragon]${NC} Building with Ninja"
     cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
     if [ "$TWEAK_TYPE" == "Library" ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "

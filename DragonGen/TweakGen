@@ -10,11 +10,11 @@ theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
 filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 cfesc=$(echo "$CFLAGS" | sed 's/\//\\\//g')
-xmcName="${LOGOS_FILE}.m"
+xmcName=$(echo "${LOGOS_FILE}" | sed 's/.x/.m/g')
 xmcName0="${LOGOS_FILE}.o"
 
-
-genComp="build \$builddir/${xmcName0} : compile ${xmcName}ƒƒ"
+genLogos="build \$builddir/${xmcName} : logos ${LOGOS_FILE}"
+genComp="build \$builddir/${xmcName0} : compile \$builddir/${xmcName}ƒƒ"
 genLink="build \$dsymtarget : link \$builddir/${xmcName0} "
 
 set -f
@@ -30,13 +30,14 @@ echo -e "${GenColor}[DragonGen]${NC} Generating input files"
 
 gencompEscaped=$(echo "$genComp" | sed 's/\//\\\//g')
 genlinkEscaped=$(echo "$genLink" | sed 's/\//\\\//g')
+genlogosEscaped=$(echo "$genLogos" | sed 's/\//\\\//g')
 
 echo -e "${GenColor}[DragonGen]${NC} Writing build.ninja"
 
 sed -e "s/\%%name%%/${TWEAK_NAME}/" -e "s/\%%dragonbuild%%/${dragonEscaped}/" -e "s/%%files%%/${filesEscaped}/" \
 -e "s/%%libs%%/${generatedLIBS}/" -e "s/%%frameworks%%/${generatedFRAMEWORKS}/" -e "s/%%theos%%/${theosEscaped}/" \
 -e "s/%%xmcname%%/${xmcName}/" -e "s/%%gencomp%%/${gencompEscaped}/" -e "s/%%genlink%%/${genlinkEscaped}/" \
--e "s/%%cflags%%/${cfesc}/" -e "s/%%archs%%/${ARCHS}/" -e "s/%%minios%%/${MINIOS}/" \
+-e "s/%%cflags%%/${cfesc}/" -e "s/%%archs%%/${ARCHS}/" -e "s/%%minios%%/${MINIOS}/" -e "s/%%logosgen%%/${genlogosEscaped}/" \
 $DRAGONBUILD/NinjaTemplates/${TWEAK_TYPE}Template.ninja > .dragon/ninja/build.ninja
 # bad hack
 tr 'ƒ' '\n' < .dragon/ninja/build.ninja > .dragon/ninja/bt
