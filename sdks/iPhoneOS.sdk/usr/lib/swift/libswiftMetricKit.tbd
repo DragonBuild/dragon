@@ -1,0 +1,12 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: D7CF6820-D095-30A5-8F72-97D4A4EC3392', 'arm64e: D31AC3E7-4861-3DC4-9AEE-5CFBE05D190B' ]
+platform:        ios
+install-name:    '/usr/lib/swift/libswiftMetricKit.dylib'
+current-version: 0
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ '_$s9MetricKit10mxSignpost_3dso3log4name10signpostID__ySo03os_H7_type_ta_SVSo03OS_j1_F0Cs12StaticStringV0J0010OSSignpostI0VALSays7CVarArg_pGtF', 
+                       '__swift_FORCE_LOAD_$_swiftMetricKit' ]
+...

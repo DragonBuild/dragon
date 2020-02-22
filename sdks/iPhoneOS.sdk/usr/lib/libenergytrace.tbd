@@ -1,0 +1,11 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: D3C478E2-EA9E-313C-9AD8-5FCEC2B236EF', 'armv7s: 3A694477-0BBE-3AE8-A7F1-02207172123F', 
+                   'arm64: 880929AB-11FC-32BA-BAF3-FDCE48329218', 'arm64e: D74B3B6D-18D8-3EDC-BA7C-E2499B5423D6' ]
+platform:        ios
+install-name:    '/usr/lib/libenergytrace.dylib'
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _entr_act_associate, _entr_act_begin, _entr_act_end, _entr_act_modify, 
+                       _entr_act_set, _entr_act_setd, _entr_event, _entr_shouldtrace ]
+...
