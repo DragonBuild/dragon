@@ -141,7 +141,7 @@ fi
 
 if [ $install == 1 ]; then 
     if [ -z "$DRBIP" ]; then
-        echo -e "${PrefixColor}[Dragon]${NC} The DRBIP variable is not set!"
+        echo -e "${PrefixColor}[Dragon]${NC} The \$DRBIP variable is not set!"
         rm -rf .dragon/packages > /dev/null
         exit
     fi
