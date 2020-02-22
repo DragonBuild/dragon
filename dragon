@@ -14,7 +14,7 @@ set -o pipefail
 
 function cleanbuildfail {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
-    rm ${LOGOS_FILE}.m 2>/dev/null
+    # rm ${LOGOS_FILE}.m 2>/dev/null
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
     exit
 }
@@ -23,7 +23,14 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
 usage()
 {
-    echo "usage: sysinfo_page [[[-f file ] [-i]] | [-h]]"
+    echo "-=-=-"
+    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean]"
+    echo "-=-=-"
+    echo "d|do - Build and Install"
+    echo "g|gen|generate - DEPRECATED. Generation is automatic."
+    echo "b|build|make - Compile, link, and package your project"
+    echo "i|install - Install to device located at \$DRBIP"
+    echo "-=-=-"
 }
 printBan()
 {
@@ -36,6 +43,9 @@ mkdir -p .dragon/ninja > /dev/null
 
 while [ "$1" != "" ]; do
     case $1 in
+        d | do)                 build=1
+                                install=1
+                                ;;
         g | gen | generate)     gen=1
                                 ;;
         b | build | make)       build=1
@@ -70,7 +80,6 @@ if [ $gen == 1 ]; then
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
     source $DRAGONBUILD/DragonGen/DragonGen
-    
 fi
 
 if [ $build == 1 ]; then 
@@ -106,7 +115,7 @@ if [ $build == 1 ]; then
             bash $DRAGONBUILD/internal/dragonsubprep $i
             cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
             rm build.ninja
-            rm $i/${LOGOS_FILE}.m 2>/dev/null
+            # rm $i/${LOGOS_FILE}.m 2>/dev/null
             bash $DRAGONBUILD/internal/dragonsubbuild $i
             cd ..
         done
@@ -131,8 +140,8 @@ fi
 
 
 if [ $install == 1 ]; then 
-    if [ -z "$DRAGONDEVICEIP" ]; then
-        echo -e "${PrefixColor}[Dragon]${NC} The DRAGONDEVICEIP variable is not set!"
+    if [ -z "$DRBIP" ]; then
+        echo -e "${PrefixColor}[Dragon]${NC} The DRBIP variable is not set!"
         rm -rf .dragon/packages > /dev/null
         exit
     fi
@@ -145,10 +154,10 @@ if [ $install == 1 ]; then
     fi
 
     # Chain our commands, so if one fails, the others dont do anything drastic
-    scp packages/${OUTPUT} root@$DRAGONDEVICEIP:/var/mobile/${OUTPUT} && ssh root@$DRAGONDEVICEIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRAGONDEVICEIP "rm -rf /var/mobile/${OUTPUT}"
+    scp packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
     
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
-    ssh root@$DRAGONDEVICEIP "${INSTALL_CMD}"
+    ssh root@$DRBIP "${INSTALL_CMD}"
 fi
 
 rm -rf .dragon/packages > /dev/null
