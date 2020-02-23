@@ -1,13 +1,15 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/MediaStream.framework/MediaStream
-current-version:       1
+current-version:       3502.21.150
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _MSAlbumSharingInitialize, _MSMSLocalizedString, _MSMediaStreamInitialize, __MSASSetDaemon,
-                          __MSSetDaemon, _kMSASConnectionErrorDomain, _kMSASNoWakeServiceName, _kMSASServiceName,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _MSAlbumSharingInitialize, _MSMSLocalizedString, _MSMediaStreamInitialize, _MediaStreamVersionNumber,
+                          _MediaStreamVersionString, _XPCSetLogBlocks, __MSASSetDaemon, __MSSetDaemon, __XPCLog, __XPCShouldLog,
+                          _kMSASConnectionErrorDomain, _kMSASNoWakeServiceName, _kMSASServiceName,
                           _kMSAuthenticationManagerDidReceiveAuthenticationChangeNotification,
                           _kMSBatteryPowerMonitorExternalPowerSourceChangedNotification,
                           _kMSCServerSideConfigurationDidChangeNotification, _kMSCXPCReplyError, _kMSCXPCReplyRetval,
@@ -16,10 +18,12 @@ exports:
                           _kMSPowerBudgetDidBeginAllowingFileTransferNotification,
                           _kMSPowerBudgetDidEndAllowingFileTransferNotification,
                           _kMSServerSideConfigurationDidChangeNotification, _kMSSharedStreamFacility, _kMSmstreamdErrorDomain,
-                          _kMSmstreamdFacility ]
+                          _kMSmstreamdFacility, _kXPCSequenceKey ]
     objc-classes:       [ _MSAMNotificationInfo, _MSASConnection, _MSASPlatformImplementation, _MSAlertManager,
                           _MSAuthenticationManager, _MSBatteryPowerMonitor, _MSClientSidePauseContext, _MSConnection,
-                          _MSMSPlatform, _MSPBTimerContext, _MSPauseManager, _MSPowerAssertionManager, _MSPowerBudget ]
+                          _MSMSPlatform, _MSPBTimerContext, _MSPauseManager, _MSPowerAssertionManager, _MSPowerBudget,
+                          _XPCClientConnection, _XPCNSClientConnection, _XPCNSRequest, _XPCNSServiceConnection,
+                          _XPCNSServiceListener, _XPCRequest, _XPCServiceConnection, _XPCServiceListener ]
     objc-ivars:         [ _MSAMNotificationInfo._completionBlock, _MSAMNotificationInfo._owner, _MSAMNotificationInfo._personID,
                           _MSAMNotificationInfo._runLoopSource, _MSAMNotificationInfo._userNotification,
                           _MSASConnection._connection, _MSASConnection._focusAlbumGUIDByPersonID,
@@ -46,5 +50,16 @@ exports:
                           _MSPowerBudget._maxActiveTimeAfterPush, _MSPowerBudget._personID, _MSPowerBudget._workQueue,
                           _MSPowerBudget._workQueueGlobalResetSyncTimerContext, _MSPowerBudget._workQueueIsExternalPowered,
                           _MSPowerBudget._workQueueIsFileTransferAllowed, _MSPowerBudget._workQueueIsForeground,
-                          _MSPowerBudget._workQueuePostForegroundTimerContext, _MSPowerBudget._workQueuePushTimerContext ]
+                          _MSPowerBudget._workQueuePostForegroundTimerContext, _MSPowerBudget._workQueuePushTimerContext,
+                          _XPCClientConnection._connection, _XPCClientConnection._delegate, _XPCClientConnection._queue,
+                          _XPCClientConnection._serviceName, _XPCNSClientConnection._clientConnection,
+                          _XPCNSClientConnection._delegate, _XPCNSRequest._data, _XPCNSRequest._message, _XPCNSRequest._request,
+                          _XPCNSServiceConnection._context, _XPCNSServiceConnection._delegate,
+                          _XPCNSServiceConnection._serviceConnection, _XPCNSServiceListener._delegate,
+                          _XPCNSServiceListener._serviceListener, _XPCRequest._handler, _XPCRequest._message, _XPCRequest._reply,
+                          _XPCRequest._sequence, _XPCServiceConnection._client, _XPCServiceConnection._context,
+                          _XPCServiceConnection._delegate, _XPCServiceConnection._serviceListener,
+                          _XPCServiceConnection._serviceName, _XPCServiceConnection._workQueue, _XPCServiceListener._clientCount,
+                          _XPCServiceListener._delegate, _XPCServiceListener._listener, _XPCServiceListener._serviceConnections,
+                          _XPCServiceListener._serviceName, _XPCServiceListener._workQueue ]
 ...

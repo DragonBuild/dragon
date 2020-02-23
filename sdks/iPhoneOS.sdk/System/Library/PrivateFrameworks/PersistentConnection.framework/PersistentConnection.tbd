@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PersistentConnection.framework/PersistentConnection
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PCForceDemoMaxKeepAliveIntervalKey, _PCForceMinKeepAliveIntervalKey, _PCIntervalCacheAddressFamilyKey,
                           _PCIntervalCacheChangedNotification, _PCIntervalCacheDateKey, _PCIntervalCacheKeepAliveIntervalKey,
                           _PCPersistentConnectionBundleIdentifier, _PCPreferencesDidChangeNotification,
@@ -21,12 +22,13 @@ exports:
                           _PCLogging, _PCMultiStageGrowthAlgorithm, _PCNonCellularUsabilityMonitor, _PCPersistentIdentifiers,
                           _PCPersistentInterfaceManager, _PCPersistentTimer, _PCScheduleSystemWakeOperation, _PCSimpleTimer,
                           _PCSystemWakeManager, _PCWWANUsabilityMonitor ]
-    objc-ivars:         [ _PCCarrierBundleHelper._bundle, _PCCarrierBundleHelper._ctClient,
-                          _PCCarrierBundleHelper._currentDataContext, _PCCarrierBundleHelper._delegates,
-                          _PCCarrierBundleHelper._queue, _PCConnectionManager._alwaysWantsInterfaceChangeCallbacks,
-                          _PCConnectionManager._connectionClass, _PCConnectionManager._currentAddressFamily,
-                          _PCConnectionManager._currentGrowthStage, _PCConnectionManager._defaultPollingInterval,
-                          _PCConnectionManager._delayTimer, _PCConnectionManager._delegate, _PCConnectionManager._delegateQueue,
+    objc-ivars:         [ _PCCarrierBundleHelper._bundle, _PCCarrierBundleHelper._cachedPushSettings,
+                          _PCCarrierBundleHelper._ctClient, _PCCarrierBundleHelper._currentDataContext,
+                          _PCCarrierBundleHelper._delegates, _PCCarrierBundleHelper._queue,
+                          _PCConnectionManager._alwaysWantsInterfaceChangeCallbacks, _PCConnectionManager._connectionClass,
+                          _PCConnectionManager._currentAddressFamily, _PCConnectionManager._currentGrowthStage,
+                          _PCConnectionManager._defaultPollingInterval, _PCConnectionManager._delayTimer,
+                          _PCConnectionManager._delegate, _PCConnectionManager._delegateQueue,
                           _PCConnectionManager._delegateRunLoop, _PCConnectionManager._deviceUnderGoodCondition,
                           _PCConnectionManager._disableEarlyFire, _PCConnectionManager._duetContextRegistration,
                           _PCConnectionManager._duetIdentifier, _PCConnectionManager._enableNonCellularConnections,
@@ -58,18 +60,21 @@ exports:
                           _PCDistributedLock._fd, _PCDistributedLock._path, _PCInterfaceMonitor._delegateMap,
                           _PCInterfaceMonitor._internal, _PCInterfaceUsabilityMonitor._delegateQueue,
                           _PCInterfaceUsabilityMonitor._delegateReference, _PCInterfaceUsabilityMonitor._dynamicStore,
-                          _PCInterfaceUsabilityMonitor._interfaceIdentifier, _PCInterfaceUsabilityMonitor._interfaceName,
-                          _PCInterfaceUsabilityMonitor._isInternetReachable, _PCInterfaceUsabilityMonitor._ivarQueue,
-                          _PCInterfaceUsabilityMonitor._linkQuality, _PCInterfaceUsabilityMonitor._linkQualitySource,
-                          _PCInterfaceUsabilityMonitor._lqKey, _PCInterfaceUsabilityMonitor._offTransitions,
-                          _PCInterfaceUsabilityMonitor._reachability, _PCInterfaceUsabilityMonitor._thresholdOffTransitionCount,
+                          _PCInterfaceUsabilityMonitor._evaluator, _PCInterfaceUsabilityMonitor._interfaceIdentifier,
+                          _PCInterfaceUsabilityMonitor._isPathSatisfied, _PCInterfaceUsabilityMonitor._lastDelegateInterface,
+                          _PCInterfaceUsabilityMonitor._lastInterface, _PCInterfaceUsabilityMonitor._linkQuality,
+                          _PCInterfaceUsabilityMonitor._linkQualitySource, _PCInterfaceUsabilityMonitor._lqKey,
+                          _PCInterfaceUsabilityMonitor._offTransitions, _PCInterfaceUsabilityMonitor._pathParameters,
+                          _PCInterfaceUsabilityMonitor._recursiveLock, _PCInterfaceUsabilityMonitor._thresholdOffTransitionCount,
                           _PCInterfaceUsabilityMonitor._trackUsability, _PCInterfaceUsabilityMonitor._trackedTimeInterval,
                           _PCMultiStageGrowthAlgorithm._algorithmName, _PCMultiStageGrowthAlgorithm._countOfGrowthActions,
+                          _PCMultiStageGrowthAlgorithm._currentKeepAliveAlgorithmMode,
                           _PCMultiStageGrowthAlgorithm._currentKeepAliveInterval, _PCMultiStageGrowthAlgorithm._growthStage,
                           _PCMultiStageGrowthAlgorithm._highWatermark,
                           _PCMultiStageGrowthAlgorithm._initialGrowthStageHighWatermark,
                           _PCMultiStageGrowthAlgorithm._initialGrowthStageLastAttempt,
                           _PCMultiStageGrowthAlgorithm._isServerOriginatedKeepAlive,
+                          _PCMultiStageGrowthAlgorithm._lastKeepAliveAlgorithmMode,
                           _PCMultiStageGrowthAlgorithm._lastKeepAliveInterval,
                           _PCMultiStageGrowthAlgorithm._lastSuccessfulKeepAliveInterval,
                           _PCMultiStageGrowthAlgorithm._leaveMinimumIntervalFallbackStateDate,
@@ -78,14 +83,17 @@ exports:
                           _PCMultiStageGrowthAlgorithm._minimumIntervalFallbackEnabled,
                           _PCMultiStageGrowthAlgorithm._minimumKeepAliveInterval,
                           _PCMultiStageGrowthAlgorithm._previousMaximumKeepAliveInterval,
+                          _PCMultiStageGrowthAlgorithm._serverStatsExpectedKeepAliveInterval,
+                          _PCMultiStageGrowthAlgorithm._serverStatsMaxKeepAliveInterval,
+                          _PCMultiStageGrowthAlgorithm._serverStatsMinKeepAliveInterval,
+                          _PCMultiStageGrowthAlgorithm._usingServerStatsAggressively,
                           _PCNonCellularUsabilityMonitor._delegateQueue, _PCNonCellularUsabilityMonitor._delegateReference,
-                          _PCNonCellularUsabilityMonitor._demoOverrideInterface,
-                          _PCNonCellularUsabilityMonitor._interfaceMonitors, _PCNonCellularUsabilityMonitor._ivarQueue,
-                          _PCNonCellularUsabilityMonitor._monitorDelegateQueue,
+                          _PCNonCellularUsabilityMonitor._demoOverrideInterface, _PCNonCellularUsabilityMonitor._ivarQueue,
+                          _PCNonCellularUsabilityMonitor._monitor, _PCNonCellularUsabilityMonitor._monitorDelegateQueue,
                           _PCNonCellularUsabilityMonitor._previousLinkQuality,
                           _PCNonCellularUsabilityMonitor._thresholdOffTransitionCount,
                           _PCNonCellularUsabilityMonitor._trackUsability, _PCNonCellularUsabilityMonitor._trackedTimeInterval,
-                          _PCPersistentInterfaceManager._WWANContextIdentifier, _PCPersistentInterfaceManager._WWANInterfaceName,
+                          _PCPersistentInterfaceManager._WWANInterfaceName,
                           _PCPersistentInterfaceManager._WiFiAutoAssociationDelegates,
                           _PCPersistentInterfaceManager._WiFiAutoAssociationDisableTimer,
                           _PCPersistentInterfaceManager._ctClient, _PCPersistentInterfaceManager._ctIsWWANInHomeCountry,
@@ -103,7 +111,6 @@ exports:
                           _PCPersistentInterfaceManager._isWWANInterfaceUp, _PCPersistentInterfaceManager._isWakeOnWiFiEnabled,
                           _PCPersistentInterfaceManager._isWakeOnWiFiSupported,
                           _PCPersistentInterfaceManager._lastActivationTime, _PCPersistentInterfaceManager._lock,
-                          _PCPersistentInterfaceManager._shouldOverrideOnCallBehavior,
                           _PCPersistentInterfaceManager._wakeOnWiFiDelegates,
                           _PCPersistentInterfaceManager._wakeOnWiFiDisableTimer, _PCPersistentTimer._disableSystemWaking,
                           _PCPersistentTimer._earlyFireConstantInterval, _PCPersistentTimer._fireTime,

@@ -1,12 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CoreCDPUI.framework/CoreCDPUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _CDPKeychainSyncSecurityCodePeerApprovalResult, _CDPKeychainSyncSecurityCodeResetKeychainResult,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _CDPEnrollmentCancelled, _CDPEnrollmentCompleted, _CDPEnrollmentDismissUI, _CDPEnrollmentInProgress,
+                          _CDPKeychainSyncSecurityCodePeerApprovalResult, _CDPKeychainSyncSecurityCodeResetKeychainResult,
                           _CoreCDPUIVersionNumber, _CoreCDPUIVersionString ]
     objc-classes:       [ _CDPDevicePickerViewController, _CDPEscapeOption, _CDPExtensionContext, _CDPLocalSecretEntryPane,
                           _CDPPaneHeaderView, _CDPPassphraseEntryPane, _CDPPassphraseEntryViewController,
@@ -15,7 +17,8 @@ exports:
                           _CDPRemoteUILocalSecretEntryViewController, _CDPRemoteValidationEscapeOffer, _CDPServiceViewController,
                           _CDPSingleICSCEntryPane, _CDPSingleICSCEntryViewController, _CDPTableViewController,
                           _CDPUIAccountRecoveryController, _CDPUIBaseController, _CDPUIController,
-                          _CDPWaitingApprovalViewController, __CDPExtensionHostContext, __CDPHostViewController ]
+                          _CDPUIDeviceToDeviceEncryptionHelper, _CDPWaitingApprovalViewController, __CDPExtensionHostContext,
+                          __CDPHostViewController ]
     objc-ivars:         [ _CDPDevicePickerViewController._delegate, _CDPDevicePickerViewController._devices,
                           _CDPDevicePickerViewController._escapeOffers, _CDPDevicePickerViewController._remoteApprovalButton,
                           _CDPEscapeOption._escapeAction, _CDPEscapeOption._progressLabel, _CDPEscapeOption._progressTitle,
@@ -49,7 +52,10 @@ exports:
                           _CDPUIController._icscNumericLength, _CDPUIController._isNumericICSC, _CDPUIController._isRandomICSC,
                           _CDPUIController._isUsingMultipleICSC, _CDPUIController._navController,
                           _CDPUIController._recoveryKeyViewModel, _CDPUIController._remoteSecretValidator,
-                          _CDPUIController._rootViewController, _CDPWaitingApprovalViewController._escapeButton,
-                          _CDPWaitingApprovalViewController._escapeOffer, _CDPWaitingApprovalViewController._spinner,
-                          _CDPWaitingApprovalViewController._waitingLabel, __CDPHostViewController._viewServiceTerminationBlock ]
+                          _CDPUIController._rootViewController, _CDPUIDeviceToDeviceEncryptionHelper._authController,
+                          _CDPUIDeviceToDeviceEncryptionHelper._delegate,
+                          _CDPUIDeviceToDeviceEncryptionHelper._presentingViewController,
+                          _CDPWaitingApprovalViewController._escapeButton, _CDPWaitingApprovalViewController._escapeOffer,
+                          _CDPWaitingApprovalViewController._spinner, _CDPWaitingApprovalViewController._waitingLabel,
+                          __CDPHostViewController._viewServiceTerminationBlock ]
 ...

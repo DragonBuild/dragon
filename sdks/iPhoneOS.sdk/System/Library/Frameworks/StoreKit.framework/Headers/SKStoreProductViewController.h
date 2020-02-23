@@ -38,7 +38,7 @@ SK_EXTERN_CLASS API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(macos) __TVOS_PROHIBITED
 
 @optional
 
-// Sent after the page is dismissed
+// Sent if the user requests that the page be dismissed
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(macos) __TVOS_PROHIBITED;
 
 @end

@@ -62,7 +62,6 @@
 #define PDFKitPlatformButton                                    UIButton
 #define PDFKitPlatformButtonCell                                UICollectionViewCell
 #define PDFKitPlatformAccessibilityElement                      UIAccessibilityElement
-#define PDFKitResponder                                         UIResponder
 
 // Geometry types
 #define PDFPoint                                                CGPoint

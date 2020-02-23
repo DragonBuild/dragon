@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: C649DB42-6CD5-34F5-97EC-F665FB8C664C', 'armv7s: A88E8C87-0EA7-3AB3-8C1B-6110229754CF', 
-                   'arm64: 1E6DB5C3-3673-335A-9B29-E882E0850F71', 'arm64e: B9AB7F2C-86A6-3D42-B57F-A5238A551893' ]
+                   'arm64: B2B29B7D-547A-363E-BF72-DA1AD736AADA', 'arm64e: 23A030B3-8892-38A9-A287-3447216AE045' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CoreSpotlight.framework/CoreSpotlight'
 exports:         
@@ -193,7 +193,7 @@ exports:
                        _MDSearchQueryErrorDomain, _MDSearchQueryOptionFetchAttributes, 
                        _MDSearchQueryOptionGrouped, _MDSearchQueryOptionMaxCount, 
                        _MDSearchQueryOptionRankingQueries, __MDIndexExtensionsLoadedNotification, 
-                       __MDPlainTextFromHTMLData, _addExtensionToken, _csindex_xpc_dictionary_decode_status_with_error, 
+                       __MDPlainTextFromHTMLData, _csindex_xpc_dictionary_decode_status_with_error, 
                        _csindex_xpc_dictionary_encode_status_with_error, _csquery_xpc_dictionary_decode_status_with_error, 
                        _csquery_xpc_dictionary_encode_status, _csquery_xpc_dictionary_encode_status_with_error, 
                        _hasInternalCSEntitlement, _hasPrivateIndexUnsandboxEntitlement, 

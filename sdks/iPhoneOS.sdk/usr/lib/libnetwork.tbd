@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: D45EB43B-09F4-3047-8468-9468893F113C', 'armv7s: E6832CC4-72B0-3820-82BC-4124496389E5', 
-                   'arm64: D882A56F-4E76-353C-9E6B-B10506130EB2', 'arm64e: E6F40A18-DE14-3275-BB98-6BF8FB3569C6' ]
+                   'arm64: 2BB56BFC-3CBB-3FCB-9D29-54FA9E3B060A', 'arm64e: CF4E97BB-9EA2-3AE2-9E4E-22A2AEF514E6' ]
 platform:        ios
 install-name:    '/usr/lib/libnetwork.dylib'
 exports:         
@@ -176,17 +176,17 @@ exports:
                        _netcore_create_control_socket, _netcore_delta_ms, _netcore_delta_nanos, 
                        _netcore_dispatch_data_copyout, _netcore_dispatch_data_copyout_from_offset, 
                        _netcore_dispatch_data_to_iovec, _netcore_dispatch_data_to_iovec_partial, 
-                       _netcore_get_future_continuous_time, _netcore_get_future_time_from, 
-                       _netcore_is_cellular_fallback_enabled_in_metrics_testing, 
-                       _netcore_is_ip_address, _netcore_mach_continuous_time, _netcore_queue, 
-                       _netcore_stats_tcp_report_copy_description, _netcore_xpc_array_get_value_of_type, 
-                       _netcore_xpc_dictionary_get_value_of_type, _network_config_cellular_blocked_observer_cancel, 
-                       _network_config_cellular_blocked_observer_create, _network_config_cellular_failed_observer_create, 
-                       _network_config_check_interface_settings, _network_config_copy_setting, 
-                       _network_config_get_bool_setting, _network_config_get_bool_setting_with_default, 
-                       _network_config_get_default_multipath_service_type, _network_config_get_int64_setting, 
-                       _network_config_get_int64_setting_with_default, _network_config_get_multipath_allow_aggregation, 
-                       _network_config_has_cellular_fallback_enabled_in_metrics_testing, 
+                       _netcore_get_future_continuous_time, _netcore_get_future_time, 
+                       _netcore_get_future_time_from, _netcore_is_cellular_fallback_enabled_in_metrics_testing, 
+                       _netcore_is_ip_address, _netcore_mach_absolute_time, _netcore_nanos_since_start, 
+                       _netcore_queue, _netcore_stats_tcp_report_copy_description, 
+                       _netcore_xpc_array_get_value_of_type, _netcore_xpc_dictionary_get_value_of_type, 
+                       _network_config_cellular_blocked_observer_cancel, _network_config_cellular_blocked_observer_create, 
+                       _network_config_cellular_failed_observer_create, _network_config_check_interface_settings, 
+                       _network_config_copy_setting, _network_config_get_bool_setting, 
+                       _network_config_get_bool_setting_with_default, _network_config_get_default_multipath_service_type, 
+                       _network_config_get_int64_setting, _network_config_get_int64_setting_with_default, 
+                       _network_config_get_multipath_allow_aggregation, _network_config_has_cellular_fallback_enabled_in_metrics_testing, 
                        _network_config_mptcp_cell_in_use, _network_config_mptcp_watcher_create, 
                        _network_config_mptcp_watcher_destroy, _network_config_open_kernel_network_advisory_socket, 
                        _network_config_register_boringssl_log_debug_updates, _network_config_register_quic_log_debug_updates, 
@@ -662,7 +662,6 @@ exports:
                        _nw_parameters_set_service_class, _nw_parameters_set_should_trust_invalid_certificates, 
                        _nw_parameters_set_sleep_keepalive_interval, _nw_parameters_set_source_application, 
                        _nw_parameters_set_source_application_by_bundle_id, _nw_parameters_set_source_application_by_bundle_id_internal, 
-                       _nw_parameters_set_source_application_by_external_bundle_id, 
                        _nw_parameters_set_ssl_cipher_suites, _nw_parameters_set_tfo, 
                        _nw_parameters_set_tfo_no_cookie, _nw_parameters_set_tls, 
                        _nw_parameters_set_tls13_enabled, _nw_parameters_set_tls_enforce_ev, 
@@ -1021,7 +1020,6 @@ exports:
                        _nw_txt_record_set_key, _nw_udp_create_metadata, _nw_udp_create_options, 
                        _nw_udp_options_get_no_metadata, _nw_udp_options_set_no_metadata, 
                        _nw_udp_options_set_prefer_no_checksum, _nw_unordered_xpc_array_is_equal, 
-                       _nw_utf8_validator_init, _nw_utf8_validator_is_parsing, _nw_utf8_validator_parse, 
                        _nw_utilities_cidr_string_to_subnet_and_mask, _nw_utilities_copy_local_entitlement_value, 
                        _nw_utilities_copy_sanitized_url, _nw_utilities_create_c_string_from_cfstring, 
                        _nw_wifi_advantage_per_rtt_delay_ms, _nw_ws_copy_response_for_challenge, 

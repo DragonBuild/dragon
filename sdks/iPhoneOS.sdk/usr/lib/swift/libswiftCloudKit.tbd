@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 4ED9BA62-EB4F-3F88-9F4C-B54FF2A44978', 'armv7s: A9BF6E25-F3CF-31D9-AEBB-67A6834A0E9B', 
-                   'arm64: 5F1486C4-6797-398F-BB64-2B48DB21BF5C', 'arm64e: FEFB903F-5D3C-393B-B567-1AF61CAA26E8' ]
+                   'arm64: 95DF3E32-5B9C-305A-BD85-55BB276820E3', 'arm64e: 452C7A1F-3055-3023-86F5-E2BE75F64DA6' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftCloudKit.dylib'
 current-version: 0

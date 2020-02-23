@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B74878DA-C236-3353-A766-F28F1BC97FB1', 'armv7s: 455F53AD-7A7F-3A51-BD40-3C216A26FACC', 
-                   'arm64: F83D3602-015F-39B5-8E18-9D1105AE862E', 'arm64e: 8245F27C-A0D1-3238-88D8-79FE15EC8A2D' ]
+                   'arm64: D4419536-2FF4-35ED-8DCD-47A2DEC3FD0F', 'arm64e: 51840430-534B-3A31-953F-BD1AC40F5AB4' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Accelerate'
 current-version: 4
@@ -14,10 +14,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 0DE6909A-CC46-37E7-B5E8-AC935783DA22', 'armv7s: 9D472187-D187-367E-8978-DFA9D657B320', 
-                   'arm64: 6E8C87A6-9478-3628-A45D-28B27AF397AD', 'arm64e: C56BC642-EFFF-3F4E-9360-618D97C7810D' ]
+                   'arm64: A97F6128-0F87-3BA4-9ED2-28B044B91F73', 'arm64e: 36849AC1-BC95-37C6-BBB1-209F467A6E77' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vImage.framework/vImage'
-current-version: 524.2
+current-version: 524
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _Init_vImage, _SetvImageThreadCount, _SetvImageThreadState, 
@@ -307,7 +307,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 6F6E802D-8618-30FB-B068-14498FB34524', 'armv7s: BECB8CD1-B3C6-3D66-90F2-8561202B75E3', 
-                   'arm64: DAF63AB2-7947-31BE-9604-4791A1ADD8B9', 'arm64e: 9F8E10B7-3367-35B0-93D5-414410E0D1EC' ]
+                   'arm64: 97018EDA-A938-3CC5-9799-33232FE53E3F', 'arm64e: 4EBB1A8C-BB2A-3688-A734-8D19403C57ED' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libBLAS.dylib'
 exports:         
@@ -388,7 +388,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F75A1591-A1C1-314E-9F2E-54B00DE752D8', 'armv7s: 3B883CC0-CDA3-3488-9893-6B86E80B19F4', 
-                   'arm64: C6A3FF25-C3F7-3058-AFB8-A86DB0186EA2', 'arm64e: 95CB5C75-46F2-3381-ACDA-ED7A08AD2D5B' ]
+                   'arm64: AB051D6B-C71A-366C-9202-7202DE0C0553', 'arm64e: 25690B10-4C9B-3CEF-BE16-6DBF6254BD86' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libBNNS.dylib'
 exports:         
@@ -396,10 +396,10 @@ exports:
     allowable-clients: [ vecLib ]
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _BNNSApplyVectorActivationLayer, _BNNSBatchNormFilterApplyBackwardBatch, 
-                       _BNNSBatchNormFilterApplyBatch, _BNNSClearNetwork, _BNNSDequantize, 
-                       _BNNSDirectApplyActivationBatch, _BNNSDirectApplyBroadcastMatMul, 
-                       _BNNSDirectApplyConvolutionBatch, _BNNSDirectApplyFullyConnectedBatch, 
-                       _BNNSDirectApplyLossBatch, _BNNSDirectApplyPoolingBatch, _BNNSDirectApplyTransposedConvolutionBatch, 
+                       _BNNSBatchNormFilterApplyBatch, _BNNSDequantize, _BNNSDirectApplyActivationBatch, 
+                       _BNNSDirectApplyBroadcastMatMul, _BNNSDirectApplyConvolutionBatch, 
+                       _BNNSDirectApplyFullyConnectedBatch, _BNNSDirectApplyLossBatch, 
+                       _BNNSDirectApplyPoolingBatch, _BNNSDirectApplyTransposedConvolutionBatch, 
                        _BNNSFilterApply, _BNNSFilterApplyBackwardBatch, _BNNSFilterApplyBatch, 
                        _BNNSFilterCreateConvolutionLayer, _BNNSFilterCreateFullyConnectedLayer, 
                        _BNNSFilterCreateFusedLayer, _BNNSFilterCreateLayerActivation, 
@@ -410,11 +410,11 @@ exports:
                        _BNNSFilterCreatePoolingLayer, _BNNSFilterCreateVectorActivationLayer, 
                        _BNNSFilterDestroy, _BNNSFunctionGRUFusedGates, _BNNSFusedFilterApplyBackwardBatch, 
                        _BNNSFusedFilterApplyBatch, _BNNSInitGumbel, _BNNSLossFilterApplyBatch, 
-                       _BNNSOptimizerFilterApply, _BNNSSetNetwork ]
+                       _BNNSOptimizerFilterApply ]
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 4BDD749F-4F80-309F-B67D-4B68A8DDF624', 'armv7s: F0A46921-6807-320B-9F1D-48C685F38CF4', 
-                   'arm64: 59E036E8-7331-319E-8832-88D9A5963E69', 'arm64e: BF470A13-D93A-3316-8979-FB2384F3066B' ]
+                   'arm64: 3332A11B-E653-371A-9F91-609C0DF1C50C', 'arm64e: D519E66E-1203-38BE-A20C-A11E08A73855' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libLAPACK.dylib'
 exports:         
@@ -666,7 +666,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 84939656-E155-3E34-B4E3-1710CC8F7FF2', 'armv7s: 900DA9D2-C582-3496-8924-26B77579382A', 
-                   'arm64: 5A50AFA1-3112-3FA7-A033-EC008976EEA7', 'arm64e: B5FAC4CC-59AA-3CC7-BB51-0EBB10EF1B1B' ]
+                   'arm64: 93015806-50F6-374E-B187-8E82DEBDCBCB', 'arm64e: DF8E3D2D-7A99-3044-BABE-EEBD02264C68' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libLinearAlgebra.dylib'
 exports:         
@@ -690,7 +690,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 5588685D-B1E0-3E03-8867-CE4B5AEDAAF1', 'armv7s: F7CE6407-95E2-3203-B4ED-E2B4F796476B', 
-                   'arm64: 60804A1B-FEF8-367A-9E37-399F204FAF4F', 'arm64e: 6E8E0414-C2A8-3578-AB2A-5AD6BB68BF90' ]
+                   'arm64: F7A544E8-B937-3A49-A715-FFA190D74A6F', 'arm64e: BCD2AD50-D6EB-3547-B30C-FB8B2F98CCA0' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libQuadrature.dylib'
 exports:         
@@ -701,7 +701,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 0F905C1C-94B2-3364-BCB8-F0E928440805', 'arm64e: 7676B663-A675-3417-9F80-5E5F5DEBDA03' ]
+                   'arm64: 040D231D-24EA-39A6-B86E-4DD5FD8676FB', 'arm64e: 66B2E976-B77F-36BF-9C24-6F6DAAF093B7' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libSparse.dylib'
 exports:         
@@ -867,7 +867,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 18A3ECDE-089B-3F15-9530-0B28CC15455B', 'armv7s: A55866C3-8435-3D66-A45D-B6BDC450767B', 
-                   'arm64: 43C124F2-14C3-3239-A886-785C6832195D', 'arm64e: CDD29531-CBFA-3EA9-8321-C619AE5F4061' ]
+                   'arm64: 45304D13-2B7F-3F2A-A6C1-2A35AC42A6EB', 'arm64e: CB54F265-1F83-30D5-A710-AFC14B20B235' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libSparseBLAS.dylib'
 exports:         
@@ -908,10 +908,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 98289678-2C57-3894-B22A-F1561BF902FC', 'armv7s: 2E031273-231F-3004-8FD9-F3D1E0617267', 
-                   'arm64: 1F3865E6-59AD-36D5-A46C-06B0A3AF5230', 'arm64e: D8E0FFB0-B3FB-309A-AEA1-E13EE1B4F9D5' ]
+                   'arm64: C37ED49F-5EFE-3B8C-B99B-28E28A0E6A92', 'arm64e: 19996B5B-4F84-3BA6-AFA2-C6252A611E3A' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libvDSP.dylib'
-current-version: 735.40.1
+current-version: 735
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _vDSP_DCT_CreateSetup, _vDSP_DCT_Execute, _vDSP_DFT_CreateSetup, 
@@ -1024,10 +1024,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1A59A9BE-1710-3211-8250-8B639A480535', 'armv7s: C1111F4C-FE2D-3E2A-9B6F-6A9489CAA8BD', 
-                   'arm64: 779219A4-BA74-3C3A-8D69-9B8A8A142EA9', 'arm64e: 79924E4F-EED9-3D93-8142-CAD7DEA871AF' ]
+                   'arm64: 2F803273-C2EF-366B-895F-5F5E9ABBA9D6', 'arm64e: EF65A903-EC6D-3D4E-B1E1-9AD47A88C332' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libvMisc.dylib'
-current-version: 735.40.1
+current-version: 735
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _VVACOS, _VVACOSF, _VVACOSF_, _VVACOSH, _VVACOSHF, _VVACOSHF_, 
@@ -1097,10 +1097,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 83A8EEEA-6BD0-3B13-9D56-886A9A487341', 'armv7s: F34CFB86-6407-3888-A9A8-A8BF73DB0C36', 
-                   'arm64: F238FD3C-4989-3FD2-AF74-F2DB8331F722', 'arm64e: 864B784B-26FA-34F2-A08E-99D738F964AB' ]
+                   'arm64: 81410D00-8159-373A-89ED-0DCF354A2470', 'arm64e: AC6B2643-2DC1-343F-A827-0DBBE68AE9B9' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/vecLib'
-current-version: 735.40.1
+current-version: 735
 exports:         
   - archs:           [ arm64, arm64e ]
     allowable-clients: [ Accelerate ]

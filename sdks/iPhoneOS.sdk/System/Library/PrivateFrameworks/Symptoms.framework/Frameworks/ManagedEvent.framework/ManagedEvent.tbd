@@ -1,12 +1,31 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/Symptoms.framework/Frameworks/ManagedEvent.framework/ManagedEvent
-current-version:       820.252.1
+current-version:       1238
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _kSymptomConfigKeyChangeTarget, _kSymptomConfigKeyConditionDNS,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _kManagedEventKeyBackgroundCombinedFlowProperties,
+                          _kManagedEventKeyBackgroundSpecificFlowClassifications, _kManagedEventKeyForegroundApps,
+                          _kManagedEventKeyForegroundCombinedFlowProperties,
+                          _kManagedEventKeyForegroundSpecificFlowClassifications,
+                          _kManagedEventKeyHumanReadableBackgroundDurationValues,
+                          _kManagedEventKeyHumanReadableBackgroundJitterValues,
+                          _kManagedEventKeyHumanReadableBackgroundLatencyValues,
+                          _kManagedEventKeyHumanReadableBackgroundLossToleranceValues,
+                          _kManagedEventKeyHumanReadableBackgroundPrefBandwidthValues,
+                          _kManagedEventKeyHumanReadableBackgroundReqdBandwidthValues,
+                          _kManagedEventKeyHumanReadableBackgroundSpecificFlowClassifications,
+                          _kManagedEventKeyHumanReadableForegroundDurationValues,
+                          _kManagedEventKeyHumanReadableForegroundJitterValues,
+                          _kManagedEventKeyHumanReadableForegroundLatencyValues,
+                          _kManagedEventKeyHumanReadableForegroundLossToleranceValues,
+                          _kManagedEventKeyHumanReadableForegroundPrefBandwidthValues,
+                          _kManagedEventKeyHumanReadableForegroundReqdBandwidthValues,
+                          _kManagedEventKeyHumanReadableForegroundSpecificFlowClassifications, _kManagedEventKeyRelevantState,
+                          _kSymptomConfigKeyAnnotation, _kSymptomConfigKeyChangeTarget, _kSymptomConfigKeyConditionDNS,
                           _kSymptomConfigKeyConditionPresenceTime, _kSymptomConfigKeyConditionSymptom1Counts,
                           _kSymptomConfigKeyConditionSymptom2Counts, _kSymptomConfigKeyConditionThreshold,
                           _kSymptomConfigKeyDNSPresenceTime, _kSymptomConfigKeyDNSThreshold,
@@ -16,10 +35,11 @@ exports:
                           _kSymptomConfigValNotificationDNS, _kSymptomConfigValNotificationDisconnectTrigger,
                           _kSymptomConfigValNotificationPassthroughDemo, _kSymptomConfigValNotificationThroughputDrop,
                           _kSymptomManagedEventARPAliveNotification, _kSymptomManagedEventARPFailureNotification,
-                          _kSymptomManagedEventCaptivityNotification, _kSymptomManagedEventCellWhileWiFiNotification,
-                          _kSymptomManagedEventDNSAliveNotification, _kSymptomManagedEventDNSFailureNotification,
-                          _kSymptomManagedEventKeyAWDARPFailureCount, _kSymptomManagedEventKeyAWDDataStallsScore,
-                          _kSymptomManagedEventKeyAWDGateOpenDuration, _kSymptomManagedEventKeyAWDRNFDenialsScore,
+                          _kSymptomManagedEventBrokenBackhaulNotification, _kSymptomManagedEventCaptivityNotification,
+                          _kSymptomManagedEventCellWhileWiFiNotification, _kSymptomManagedEventDNSAliveNotification,
+                          _kSymptomManagedEventDNSFailureNotification, _kSymptomManagedEventKeyAWDARPFailureCount,
+                          _kSymptomManagedEventKeyAWDDataStallsScore, _kSymptomManagedEventKeyAWDGateOpenDuration,
+                          _kSymptomManagedEventKeyAWDND6FailureCount, _kSymptomManagedEventKeyAWDRNFDenialsScore,
                           _kSymptomManagedEventKeyAWDTrafficWatchDuration, _kSymptomManagedEventKeyAWDTrafficWatchRxCount,
                           _kSymptomManagedEventKeyAWDTrafficWatchTimeSince, _kSymptomManagedEventKeyAWDValidState,
                           _kSymptomManagedEventKeyAWDWiFiDNSImpactedServers, _kSymptomManagedEventKeyAWDWiFiDNSTotalServers,
@@ -36,7 +56,7 @@ exports:
                           _kSymptomManagedEventKeyTriggerScore, _kSymptomManagedEventKeyTriggerScoreInfo,
                           _kSymptomManagedEventKeyTriggerTCP3WHSStuck, _kSymptomManagedEventKeyTriggerTCPExtraState,
                           _kSymptomManagedEventKeyTriggerTCPReadStuck, _kSymptomManagedEventKeyTriggerTCPWriteStuck,
-                          _kSymptomManagedEventWiFiDNSTriggerNotification,
+                          _kSymptomManagedEventWiFiAppAwareNotification, _kSymptomManagedEventWiFiDNSTriggerNotification,
                           _kSymptomManagedEventWiFiShortFlowsTriggerNotification,
                           _kSymptomManagedEventWiFiTriggerDisconnectNotification, _managed_event_fetch,
                           _managed_event_fetch_series, _managed_event_param_change, _managed_event_param_change_multiple,

@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/ACTFramework.framework/ACTFramework
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ABRegComputeShift, _ABRegDisposeContext, _ABRegInitContext, _ABRegRegisterSlices,
                           _ABRegRegisterSlicesRobust, _ABRegUpdateIntegralImage, _ACTAddCSVMetadata,
                           _ACTAttachRegistrationMetadata, _ACTFinalThreadedNoiseReduction, _ACTLogAddListener, _ACTLogMessageImp,
@@ -40,13 +41,13 @@ exports:
                           _BlendingCtrl_resetBlendingContext, _BlendingCtrl_resetBlendingContext_v2,
                           _BlendingCtrl_setBlendingForceMaxComputation, _BlendingCtrl_setBlendingForceMaxComputation_v2,
                           _BlendingCtrl_setEdgeBlendingErrorMetricLogging, _BlendingCtrl_setEdgeBlendingErrorMetricLogging_v2,
-                          _BlendingCtrl_setOptions, _BlendingCtrl_setOptions_v2, _BlendingCtrl_setPanoramaDirection,
-                          _BlendingCtrl_setPanoramaDirection_v2, _BlendingCtrl_zero, _BlendingCtrl_zero_v2,
-                          _BlendingDefaults_constructor, _BlendingDefaults_copy, _BlendingDefaults_destructor,
-                          _BlendingDefaults_reset, _Blending_addImage, _Blending_addImage_v2, _Blending_constructor,
-                          _Blending_constructor_v2, _Blending_destructor, _Blending_destructor_v2, _Blending_end,
-                          _Blending_end_v2, _Blending_overlap, _Blending_overlap_v2, _Blending_post, _Blending_reset,
-                          _Blending_reset_v2, _Blending_setDefaults, _Blending_setDefaults_v2, _Blending_start,
+                          _BlendingCtrl_setMaxOverlapPercent, _BlendingCtrl_setMaxOverlapPercent_v2, _BlendingCtrl_setOptions,
+                          _BlendingCtrl_setOptions_v2, _BlendingCtrl_setPanoramaDirection, _BlendingCtrl_setPanoramaDirection_v2,
+                          _BlendingCtrl_zero, _BlendingCtrl_zero_v2, _BlendingDefaults_constructor, _BlendingDefaults_copy,
+                          _BlendingDefaults_destructor, _BlendingDefaults_reset, _Blending_addImage, _Blending_addImage_v2,
+                          _Blending_constructor, _Blending_constructor_v2, _Blending_destructor, _Blending_destructor_v2,
+                          _Blending_end, _Blending_end_v2, _Blending_overlap, _Blending_overlap_v2, _Blending_post,
+                          _Blending_reset, _Blending_reset_v2, _Blending_setDefaults, _Blending_setDefaults_v2, _Blending_start,
                           _Blending_start_v2, _Blending_storeIOSurfaceIDs, _Blending_storeIOSurfaceIDs_v2,
                           _Blending_storeM2MTime, _Blending_storeM2MTime_v2, _Blending_updateBlendingMode, _Blending_zero,
                           _Blending_zero_v2, _CVPixelBufferToJPEG, _Contrast_globalEnhance, _CreatePixelBufferPool,
@@ -148,8 +149,8 @@ exports:
                           _kACTPanoramaGhostingSpeedScaleBrightLightIntegrationTime, _kACTPanoramaGhostingSpeedScaleLowLight,
                           _kACTPanoramaGhostingSpeedScaleLowLightIntegrationTime, _kACTPanoramaJPEGSizeAttachmentKey,
                           _kACTPanoramaJitter, _kACTPanoramaMaxFrameRate, _kACTPanoramaMaxSizeReached,
-                          _kACTPanoramaMaxWidthProperty, _kACTPanoramaMinFrameRate, _kACTPanoramaOptions,
-                          _kACTPanoramaPowerBlurBiasProperty, _kACTPanoramaPowerBlurSlopeProperty,
+                          _kACTPanoramaMaxWidthPerCamera, _kACTPanoramaMaxWidthProperty, _kACTPanoramaMinFrameRate,
+                          _kACTPanoramaOptions, _kACTPanoramaPowerBlurBiasProperty, _kACTPanoramaPowerBlurSlopeProperty,
                           _kACTPanoramaPreviewCropRectAttachmentKey, _kACTPanoramaPreviewCropXAttachmentKey,
                           _kACTPanoramaPreviewHeightProperty, _kACTPanoramaPreviewIdealAdvancementAttachmentKey,
                           _kACTPanoramaPreviewMotionSpeedScaleAttachmentKey, _kACTPanoramaPreviewScaleProperty,
@@ -182,8 +183,8 @@ exports:
                           _setACTRegistrationForceMaxComputation, _setACTRegistrationInvokeFallback, _setACTRegistrationLogLevel,
                           _setACTRegistrationMFDriftCorrectorFlag, _setACTRegistrationMethod, _setACTRegistrationMethodUsed,
                           _setACTRegistrationSyslogLevel, _setACTRegistrationUsePrediction, _setBlendingContextOptions,
-                          _setBlendingForceMaxComputation, _setEdgeBlendingErrorMetricLogging, _setPanoramaDirection,
-                          _setPowerBlurTuning, _set_Defaults_ACTBlendingConfig, _signatureDerivative,
+                          _setBlendingForceMaxComputation, _setEdgeBlendingErrorMetricLogging, _setMaxOverlapPercent,
+                          _setPanoramaDirection, _setPowerBlurTuning, _set_Defaults_ACTBlendingConfig, _signatureDerivative,
                           _signatureLineRegressionQuality, _smoothSignature, _timeElapsedSinceInit, _timestampToSeconds,
                           _updateACTNoiseReductionContext, _updateBandPassNoiseReductionCropRect,
                           _updateMultiBandNoiseReductionCropRect, _updateMultiBandNoiseReductionMetadata, _vmdLog ]

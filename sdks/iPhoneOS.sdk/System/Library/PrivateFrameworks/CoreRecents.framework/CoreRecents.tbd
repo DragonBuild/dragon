@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CoreRecents.framework/CoreRecents
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CRAddressKindEmail, _CRAddressKindGroup, _CRAddressKindInstantMessage, _CRAddressKindMapLocation,
                           _CRAddressKindPhoneNumber, _CRAddressKindURL, _CRIsInternalDevice,
                           _CRRecentContactMetadataCreationTime, _CRRecentContactMetadataEventTime, _CRRecentContactMetadataFrom,
@@ -37,6 +38,6 @@ exports:
                           _CRRecentContact._recentDates, _CRRecentContact._recentID, _CRRecentContact._recentsDomain,
                           _CRRecentContact._weight, _CRRecentContactsLibrary._connection, _CRRecentContactsLibrary._replyQueue,
                           _CRSQLRow._stmt, _CRSearchQuery._comparator, _CRSearchQuery._domains,
-                          _CRSearchQuery._implicitGroupThreshold, _CRSearchQuery._options, _CRSearchQuery._predicate,
-                          _CRSearchQuery._weightDecayer ]
+                          _CRSearchQuery._implicitGroupThreshold, _CRSearchQuery._options, _CRSearchQuery._pageRange,
+                          _CRSearchQuery._predicate, _CRSearchQuery._uuid, _CRSearchQuery._weightDecayer ]
 ...

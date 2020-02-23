@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 9CF30590-DB96-385B-9074-D903772FEE3C', 'arm64e: 21793959-DE60-3A65-BC58-57BB2E3CC785' ]
+                   'arm64: 761D4C96-13E1-376F-A369-33951E782640', 'arm64e: 55FB14EE-00EE-3CFD-A0C9-E857B45A7CBE' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CoreServices.framework/CoreServices'
-current-version: 1069.12
+current-version: 1061.3
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ '$ld$install_name$os10.0$/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices', 

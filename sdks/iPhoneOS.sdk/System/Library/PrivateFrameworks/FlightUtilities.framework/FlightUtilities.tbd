@@ -1,18 +1,20 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/FlightUtilities.framework/FlightUtilities
-current-version:       115.11
+current-version:       133
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _FUFactoryProvider_Default, _FUFactoryProvider_FlightStats, _FUFactoryProvider_FlyteComm ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _FUFactoryProvider_Default, _FUFactoryProvider_FlightStats, _FUFactoryProvider_FlyteComm,
+                          _FUFactoryProvider_Parsec ]
     objc-classes:       [ _FUAirline, _FUAirport, _FUErrorView, _FUFLightTrack, _FUFlight, _FUFlightCodeShare, _FUFlightFactory,
-                          _FUFlightFactory_Parsec, _FUFlightInfoView, _FUFlightInfoViewController, _FUFlightLeg, _FUFlightStep,
-                          _FUFlightView, _FUFlightViewController, _FUFlightViewMainView, _FULabel, _FULoadingView,
-                          _FUPlaneTrackerAnnotationLayer, _FUPlaneTrackerAnnotationView, _FUSeparator, _FUStepTime,
-                          _FUStyleProvider, _FUStyleProviderLight, _FUStyleProviderVibrantDark, _FUStyleProviderVibrantLight,
-                          _FUUtils ]
+                          _FUFlightFactory_Parsec, _FUFlightInfoView, _FUFlightInfoViewController, _FUFlightLeg,
+                          _FUFlightPreviewController, _FUFlightStep, _FUFlightView, _FUFlightViewController,
+                          _FUFlightViewMainView, _FULabel, _FULoadingView, _FUPlaneTrackerAnnotationLayer,
+                          _FUPlaneTrackerAnnotationView, _FUSeparator, _FUStepTime, _FUStyleProvider, _FUStyleProviderLight,
+                          _FUStyleProviderVibrantDark, _FUStyleProviderVibrantLight, _FUUtils ]
     objc-ivars:         [ _FUAirline._FAACode, _FUAirline._IATACode, _FUAirline._URL, _FUAirline._name, _FUAirline._phoneNumber,
                           _FUAirport._IATACode, _FUAirport._city, _FUAirport._location, _FUAirport._name, _FUAirport._placemark,
                           _FUAirport._timeZone, _FUErrorView._errorLabel, _FUFLightTrack._leg, _FUFLightTrack._polyline,
@@ -39,8 +41,7 @@ exports:
                           _FUFlightInfoView._labelDurationComplete, _FUFlightInfoView._labelDurationTitle,
                           _FUFlightInfoView._labelDurationValue, _FUFlightInfoView._labelFlightCode,
                           _FUFlightInfoView._labelStatus, _FUFlightInfoView._labelStatusTitle, _FUFlightInfoView._leadingInset,
-                          _FUFlightInfoView._leg, _FUFlightInfoView._multiFlights, _FUFlightInfoView._sep1,
-                          _FUFlightInfoView._sep2, _FUFlightInfoView._sep3, _FUFlightInfoView._sep4, _FUFlightInfoView._sep5,
+                          _FUFlightInfoView._leg, _FUFlightInfoView._multiFlights, _FUFlightInfoView._sep5,
                           _FUFlightInfoView._style, _FUFlightInfoView._styleProvider, _FUFlightInfoView._trailingInset,
                           _FUFlightInfoViewController._flight, _FUFlightInfoViewController._style, _FUFlightLeg._arrival,
                           _FUFlightLeg._baggageClaim, _FUFlightLeg._departure, _FUFlightLeg._duration, _FUFlightLeg._status,
@@ -52,21 +53,22 @@ exports:
                           _FUFlightView._bottomMapConstraint, _FUFlightView._controllers, _FUFlightView._currentFocus,
                           _FUFlightView._currentTrack, _FUFlightView._delegate, _FUFlightView._displayStyle,
                           _FUFlightView._errorView, _FUFlightView._flights, _FUFlightView._highlightCurrentFlightLeg,
-                          _FUFlightView._ignoreMapUpdate, _FUFlightView._lanscapeConstraint1, _FUFlightView._lanscapeConstraint2,
-                          _FUFlightView._lanscapeConstraint3, _FUFlightView._leadingMapConstraint, _FUFlightView._loadingView,
-                          _FUFlightView._mapInsets, _FUFlightView._mapView, _FUFlightView._pageContainerHeightConstraint,
-                          _FUFlightView._pageControl, _FUFlightView._pageControllerHeightConstraint,
-                          _FUFlightView._pageViewContainer, _FUFlightView._pageViewController, _FUFlightView._planeTracker,
-                          _FUFlightView._portraitConstraint1, _FUFlightView._selectedFlight, _FUFlightView._selectedLeg,
-                          _FUFlightView._showInfoPanel, _FUFlightView._spotlightMode, _FUFlightView._tracks,
-                          _FUFlightViewController._airlineCode, _FUFlightViewController._compactFlightView,
+                          _FUFlightView._ignoreMapUpdate, _FUFlightView._landscapeMode, _FUFlightView._lanscapeConstraint1,
+                          _FUFlightView._lanscapeConstraint2, _FUFlightView._lanscapeConstraint3,
+                          _FUFlightView._leadingMapConstraint, _FUFlightView._loadingView, _FUFlightView._mapInsets,
+                          _FUFlightView._mapView, _FUFlightView._pageContainerHeightConstraint, _FUFlightView._pageControl,
+                          _FUFlightView._pageControllerHeightConstraint, _FUFlightView._pageViewContainer,
+                          _FUFlightView._pageViewController, _FUFlightView._planeTracker, _FUFlightView._portraitConstraint1,
+                          _FUFlightView._selectedFlight, _FUFlightView._selectedLeg, _FUFlightView._showInfoPanel,
+                          _FUFlightView._spotlightMode, _FUFlightView._tracks, _FUFlightViewController._airlineCode,
                           _FUFlightViewController._delegate, _FUFlightViewController._displayStyle,
                           _FUFlightViewController._flightCode, _FUFlightViewController._flights,
                           _FUFlightViewController._highlightCurrentFlightLeg, _FUFlightViewController._loadingFlight,
-                          _FUFlightViewController._regularFlightView, _FUFlightViewController._requiresDataLoad,
-                          _FUFlightViewController._showInfoPanel, _FUFlightViewController._startLoadingDate,
-                          _FUFlightViewController._viewLoaded, _FULabel._associatedScalingLabel, _FULabel._attributedStringValue,
-                          _FULabel._onTap, _FULabel._realAssociatedScalingLabel, _FULabel._stringValue, _FULabel._uppercase,
+                          _FUFlightViewController._previewFlightView, _FUFlightViewController._regularFlightView,
+                          _FUFlightViewController._requiresDataLoad, _FUFlightViewController._showInfoPanel,
+                          _FUFlightViewController._startLoadingDate, _FUFlightViewController._viewLoaded,
+                          _FULabel._associatedScalingLabel, _FULabel._attributedStringValue, _FULabel._onTap,
+                          _FULabel._realAssociatedScalingLabel, _FULabel._stringValue, _FULabel._uppercase,
                           _FULabel._useCurrentLocale, _FULoadingView._loadingLabel, _FUPlaneTrackerAnnotationLayer._endLocation,
                           _FUPlaneTrackerAnnotationLayer._planeImageLayer, _FUPlaneTrackerAnnotationLayer._startLocation,
                           _FUPlaneTrackerAnnotationView._coordinate, _FUPlaneTrackerAnnotationView._showsPlane,

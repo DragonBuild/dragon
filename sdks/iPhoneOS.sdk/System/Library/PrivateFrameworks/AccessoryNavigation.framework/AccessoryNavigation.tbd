@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/AccessoryNavigation.framework/AccessoryNavigation
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ACCNav_DispComp_ComponentID, _ACCNav_DispComp_MaxAfterManeuverRoadNameLength,
                           _ACCNav_DispComp_MaxCurRoadNameLength, _ACCNav_DispComp_MaxDestinationNameLength,
                           _ACCNav_DispComp_MaxLaneGuidanceDescriptionLength, _ACCNav_DispComp_MaxLaneGuidanceStorageCapacity,
@@ -18,7 +19,7 @@ exports:
                           _ACCNav_MIUpdate_AfterManeuverRoadName, _ACCNav_MIUpdate_DistanceBetweenManeuver,
                           _ACCNav_MIUpdate_DistanceBetweenManeuverDisplayString,
                           _ACCNav_MIUpdate_DistanceBetweenManeuverDisplayUnits, _ACCNav_MIUpdate_DrivingSide,
-                          _ACCNav_MIUpdate_Index, _ACCNav_MIUpdate_JunctionElementAngle,
+                          _ACCNav_MIUpdate_ExitInfo, _ACCNav_MIUpdate_Index, _ACCNav_MIUpdate_JunctionElementAngle,
                           _ACCNav_MIUpdate_JunctionElementExitAngle, _ACCNav_MIUpdate_JunctionType,
                           _ACCNav_MIUpdate_LinkedLaneGuidanceInfo, _ACCNav_MIUpdate_ManeuverDescription,
                           _ACCNav_MIUpdate_ManeuverType, _ACCNav_RGUpdate_AccessoryID, _ACCNav_RGUpdate_CurrentRoadName,
@@ -66,6 +67,7 @@ exports:
                           _ACCNavigationAccessoryComponent._maxLength_PostManeuverRoadName,
                           _ACCNavigationAccessoryComponent._name, _ACCNavigationAccessoryComponent._requestSourceName,
                           _ACCNavigationAccessoryComponent._requestSourceSupportsRouteGuidance,
+                          _ACCNavigationAccessoryComponent._supportsExitInfo,
                           _ACCNavigationAccessoryObjectDetectionComponent._identifier,
                           _ACCNavigationAccessoryObjectDetectionComponent._isEnabled,
                           _ACCNavigationAccessoryObjectDetectionComponent._name,

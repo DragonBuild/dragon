@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/Netrb.framework/Netrb
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _NETRBClientSendNotification, _NETRBDebugLog, _NETRBEndPointCleanup, _NETRBErrorLog, _NETRBInfoLog,
                           _NETRBLogCreate, _NETRBNoticeLog, _NETRBXPCCleanup, _NETRBXPCCreate, _NETRBXPCEndPointCreate,
                           _NETRBXPCSetupAndSend, _NetrbVersionNumber, _NetrbVersionString, __NETRBClientAddHost,
@@ -17,6 +18,6 @@ exports:
                           _netrbClientDns64Prefix, _netrbClientForwardedHighPort, _netrbClientForwardedLowPort,
                           _netrbClientInterfaceEndAddress, _netrbClientInterfaceInstance, _netrbClientInterfaceMTU,
                           _netrbClientInterfaceName, _netrbClientInterfaceNetworkMask, _netrbClientInterfaceSpeed,
-                          _netrbClientInterfaceStartAddress, _netrbClientNat64Param, _netrbClientNatType,
-                          _netrbClientNotificationKey, _netrbClientRaPrefix ]
+                          _netrbClientInterfaceStartAddress, _netrbClientNat64Param, _netrbClientNat66Param, _netrbClientNatType,
+                          _netrbClientNotificationKey, _netrbClientRaPrefix, _netrbClientRaPrefixLen ]
 ...

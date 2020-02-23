@@ -1,14 +1,16 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/ATFoundation.framework/ATFoundation
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _ATAssetLinkControllerDidFinishAllAssets, _ATInternalErrorDomain, _ATPErrorReadFrom,
-                          _ATPMessageReadFrom, _ATPRequestReadFrom, _ATPResponseReadFrom, _kATEventIntervalKey,
-                          _kATEventIsRecurringKey, _kATEventNameKey, _kATEventTimeKey, _kATEventUserDataKey ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _ATAssetLinkControllerDidFinishAllAssets, _ATInternalErrorDomain, _ATIsPendingDownloadError,
+                          _ATPErrorReadFrom, _ATPMessageReadFrom, _ATPRequestReadFrom, _ATPResponseReadFrom,
+                          _kATEventIntervalKey, _kATEventIsRecurringKey, _kATEventNameKey, _kATEventTimeKey,
+                          _kATEventUserDataKey ]
     objc-classes:       [ _ATAssetLinkController, _ATAssetLinkPowerLogger, _ATAssetLinkPowerLoggerAggregationKey,
                           _ATConcreteAssetLink, _ATConcreteMessageLink, _ATConcreteService, _ATCountSessionTask,
                           _ATDownloadProgressManager, _ATEnvironmentMonitor, _ATEventScheduler, _ATInternalError,
@@ -18,11 +20,15 @@ exports:
                           _ATServiceProxyListener, _ATSessionProxyConnection, _ATSessionProxyListener, _ATSessionServerListener,
                           _ATSignatureProvider, _ATSimpleProvisioningHandler, _ATSocket, _ATStatusMonitor,
                           _ATStatusObserverConnection, _ATStatusObserverListener, _ATThroughputCalculator ]
-    objc-ivars:         [ _ATAssetLinkController._activeDownLoadsKeepAliveTransaction, _ATAssetLinkController._assetLinks,
+    objc-ivars:         [ _ATAssetLinkController._activeDownLoadsKeepAliveTransaction,
+                          _ATAssetLinkController._activeTrackAssetsByAssetType, _ATAssetLinkController._assetLinks,
                           _ATAssetLinkController._assetQueue, _ATAssetLinkController._assetsToFailedLinks,
-                          _ATAssetLinkController._assetsToLinks, _ATAssetLinkController._callbackQueue,
-                          _ATAssetLinkController._lastThermalPressureLevel, _ATAssetLinkController._observers,
-                          _ATAssetLinkController._queue, _ATAssetLinkPowerLogger._aggregation,
+                          _ATAssetLinkController._assetsToLinks, _ATAssetLinkController._cachedThermalLevel,
+                          _ATAssetLinkController._callbackQueue, _ATAssetLinkController._currentNetworkIsCellularType,
+                          _ATAssetLinkController._isNetworkConstrained,
+                          _ATAssetLinkController._nonTrackAssetsPendingInstallByAssetType, _ATAssetLinkController._observers,
+                          _ATAssetLinkController._progressBlocksForAssetsInFlight, _ATAssetLinkController._queue,
+                          _ATAssetLinkController._trackAssetsPendingInstallByAssetType, _ATAssetLinkPowerLogger._aggregation,
                           _ATAssetLinkPowerLogger._flushTimer, _ATAssetLinkPowerLogger._loggerQueue,
                           _ATAssetLinkPowerLoggerAggregationKey._assetType, _ATAssetLinkPowerLoggerAggregationKey._dataclass,
                           _ATAssetLinkPowerLoggerAggregationKey._linkType, _ATConcreteAssetLink._accessQueue,
@@ -54,16 +60,15 @@ exports:
                           _ATEnvironmentMonitor._internetReachable, _ATEnvironmentMonitor._internetReachableViaOnlyWWAN,
                           _ATEnvironmentMonitor._observers, _ATEnvironmentMonitor._power,
                           _ATEnvironmentMonitor._powerNotification, _ATEnvironmentMonitor._queue,
-                          _ATEnvironmentMonitor._reachability, _ATEnvironmentMonitor._thermalNotificationToken,
-                          _ATEnvironmentMonitor._thermalPressureLevel, _ATEventScheduler._eventAccessQueue,
-                          _ATEventScheduler._events, _ATEventScheduler._queue, _ATEventScheduler._started,
-                          _ATMessageLinkListener._delegate, _ATMessageLinkProxyConnection._connection,
-                          _ATMessageLinkProxyConnection._messageLink, _ATMessageLinkProxyListener._listener,
-                          _ATMessageLinkProxyListener._messageLink, _ATMessageParser._curObjectLength,
-                          _ATMessageParser._messageClass, _ATMessageParser._objectDataBuffer, _ATMessageParser._objectDataLen,
-                          _ATMessageParser._objectParsedBlock, _ATMessageParser._parserData, _ATMessageParser._parserError,
-                          _ATMessageParser._varIntBuf, _ATMessageParser._varIntDataLen, _ATMovingAverage._count,
-                          _ATMovingAverage._index, _ATMovingAverage._values, _ATMovingAverage._window,
+                          _ATEnvironmentMonitor._reachability, _ATEnvironmentMonitor._thermalPressureLevel,
+                          _ATEventScheduler._eventAccessQueue, _ATEventScheduler._events, _ATEventScheduler._queue,
+                          _ATEventScheduler._started, _ATMessageLinkListener._delegate,
+                          _ATMessageLinkProxyConnection._connection, _ATMessageLinkProxyConnection._messageLink,
+                          _ATMessageLinkProxyListener._listener, _ATMessageLinkProxyListener._messageLink,
+                          _ATMessageParser._curObjectLength, _ATMessageParser._messageClass, _ATMessageParser._objectDataBuffer,
+                          _ATMessageParser._objectDataLen, _ATMessageParser._objectParsedBlock, _ATMessageParser._parserData,
+                          _ATMessageParser._parserError, _ATMessageParser._varIntBuf, _ATMessageParser._varIntDataLen,
+                          _ATMovingAverage._count, _ATMovingAverage._index, _ATMovingAverage._values, _ATMovingAverage._window,
                           _ATNetServiceListener._enableTLS, _ATNetServiceListener._interfaceName, _ATNetServiceListener._queue,
                           _ATNetServiceListener._serviceDomain, _ATNetServiceListener._serviceName,
                           _ATNetServiceListener._serviceType, _ATNetServiceListener._tcpListener, _ATNetServiceSocket._connected,

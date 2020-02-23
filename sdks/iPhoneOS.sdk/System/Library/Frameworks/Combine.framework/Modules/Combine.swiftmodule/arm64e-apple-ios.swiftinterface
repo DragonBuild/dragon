@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.1.1 (swiftlang-1100.2.274.2 clang-1100.2.32.1)
-// swift-module-flags: -target arm64e-apple-ios13.2 -enable-objc-interop -swift-version 5 -enforce-exclusivity=checked -O -enable-library-evolution -module-name Combine
+// swift-compiler-version: Apple Swift version 5.1 (swiftlang-1100.2.259.50 clang-1100.2.32.1)
+// swift-module-flags: -target arm64e-apple-ios13.0 -enable-objc-interop -swift-version 5 -enforce-exclusivity=checked -O -enable-library-evolution -module-name Combine
 import Darwin
 import Swift
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -16,9 +16,9 @@ extension Publishers {
     final public let upstream: Upstream
     final public let createSubject: () -> SubjectType
     public init(upstream: Upstream, createSubject: @escaping () -> SubjectType)
-    @objc deinit
     final public func receive<S>(subscriber: S) where S : Combine.Subscriber, SubjectType.Failure == S.Failure, SubjectType.Output == S.Input
     final public func connect() -> Combine.Cancellable
+    @objc deinit
   }
 }
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

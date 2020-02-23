@@ -24,21 +24,20 @@ NS_ASSUME_NONNULL_BEGIN
  @enum MTLSparseTextureMappingMode
  @abstract Type of mapping operation for sparse texture
  */
-typedef NS_ENUM(NSUInteger, MTLSparseTextureMappingMode)
+typedef NS_OPTIONS(NSUInteger, MTLSparseTextureMappingMode)
 {
-    MTLSparseTextureMappingModeMap   = 0,
-    MTLSparseTextureMappingModeUnmap = 1,
+    MTLSparseTextureMappingModeMap= 0,
+    MTLSparseTextureMappingModeUnmap = 0x1,
 } API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst);
 
 /*!
  @enum MTLMapIndirectArguments
- @abstract Structure describing indirect mapping region. This structure is used to populate a buffer for the method  'MTLResourceStateCommandEncoder updateTextureMapping:indirectBuffer:indirectBufferOffset:'
- @discussion The correct data format for the buffer used in 'MTLResourceStateCommandEncoder updateTextureMapping:indirectBuffer:indirectBufferOffset: is the following:
+ @abstract Structure describing indirect mapping region.
+ Correct layout of indirect mapping buffer:
  
- struct MTLMapIndirectBufferFormat{
-     uint32_t numMappings;
-     MTLMapIndirectArguments mappings[numMappings];
- }
+ uint32_t numMappings;
+ MTLMapIndirectArguments mappings[numMappings];
+ 
  */
 typedef struct {
     uint32_t regionOriginX;
@@ -78,12 +77,24 @@ API_AVAILABLE(macos(10.15), ios(13.0))
 
 /*!
  @method updateTextureMapping:indirectBuffer:indirectBufferOffset:
- @abstract Updates mapping for given sparse texture. Updates are driven via a MTLBuffer with the structure format defined by MTLMapIndirectBufferFormat.
- 
+ @abstract Updates mapping for given sparse texture. Updates are driven via a MTLBuffer with the structure format defined by MTLMapIndirectBufferFormat:
+ @TODO: Should we expose these in the header for CPU generation?
+  struct {
+      uint32_t regionOriginX;
+      uint32_t regionOriginY;
+      uint32_t regionOriginZ;
+      uint32_t regionSizeWidth;
+      uint32_t regionSizeHeight;
+      uint32_t regionSizeDepth;
+      uint32_t mipMapLevel;
+      uint32_t sliceId;
+  } MTLMapIndirectArguments;
+  
   struct MTLMapIndirectBufferFormat{
       uint32_t numMappings;
       MTLMapIndirectArguments mappings[numMappings]; 
   }
+
  */
 -(void) updateTextureMapping:(id<MTLTexture>) texture
                         mode:(const MTLSparseTextureMappingMode)mode

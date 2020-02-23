@@ -1,15 +1,16 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/DrawingKit.framework/DrawingKit
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CGPointIsUnrepresentable, _CGRectIsUnrepresentable, _DKDistanceBetweenPoints, _DKDrawingIsValid,
                           _DKInkViewTouchesBeganNotification, _DKInkViewTouchesEndedLocationInViewUserInfoKey,
-                          _DKInkViewTouchesEndedNotification, _DKRenderPointWidthForPoint, _MaxForceValue, _MaxVelocityValue,
-                          _NSStringFromVectorFloat4 ]
+                          _DKInkViewTouchesEndedNotification, _DKIsDarkMode, _DKRenderPointWidthForPoint, _MaxForceValue,
+                          _MaxVelocityValue, _NSStringFromVectorFloat4 ]
     objc-classes:       [ _DKDrawing, _DKDrawingStroke, _DKDrawingStrokePoint, _DKGLUtilities, _DKInkRendererCG,
                           _DKInkRendererGL, _DKInkThumbnailRenderer, _DKInkView, _DKOpenGLRenderer, _DKPointSmoothing ]
     objc-ivars:         [ _DKDrawing._canvasBounds, _DKDrawing._strokes, _DKDrawing._strokesFrame,
@@ -25,7 +26,7 @@ exports:
                           _DKInkRendererGL.scaleDrawingToFitCanvas, _DKInkView._aggregateInvalid, _DKInkView._allowInput,
                           _DKInkView._animationCompletionHandler, _DKInkView._animationType,
                           _DKInkView._cachedInterpolatedAnimationPoints, _DKInkView._cachedInterpolatedAnimationStrokes,
-                          _DKInkView._cachedInterpolatedBrushStrokes, _DKInkView._cgColor, _DKInkView._computedAnimationFrames,
+                          _DKInkView._cachedInterpolatedBrushStrokes, _DKInkView._computedAnimationFrames,
                           _DKInkView._currentBrushStroke, _DKInkView._currentDrawing, _DKInkView._currentInterpolatedBrushStroke,
                           _DKInkView._currentWeight, _DKInkView._displayLink, _DKInkView._drawingScale, _DKInkView._inputFIFO,
                           _DKInkView._isAddingPointWithoutSmoothing, _DKInkView._isRenderingPaused, _DKInkView._lastPoint,
@@ -43,14 +44,16 @@ exports:
                           _DKOpenGLRenderer._numPages, _DKOpenGLRenderer._undoEnabled, _DKOpenGLRenderer.mAttributes,
                           _DKOpenGLRenderer.mBufferSize, _DKOpenGLRenderer.mCanvasOffset, _DKOpenGLRenderer.mCanvasSize,
                           _DKOpenGLRenderer.mColorProg, _DKOpenGLRenderer.mColorProgColorUniformLocation,
-                          _DKOpenGLRenderer.mColorProgModelViewProjectionUniformLocation, _DKOpenGLRenderer.mCompositeProg,
+                          _DKOpenGLRenderer.mColorProgModelViewProjectionUniformLocation,
+                          _DKOpenGLRenderer.mCompositeColorUniformLocation, _DKOpenGLRenderer.mCompositeProg,
                           _DKOpenGLRenderer.mCompositeProgViewportUniformLocation, _DKOpenGLRenderer.mContiguousVertexStorage,
                           _DKOpenGLRenderer.mDirtyCanvasRegion, _DKOpenGLRenderer.mDryPaintProg,
                           _DKOpenGLRenderer.mDryPaintProgXCoordOffsetUniformLocation, _DKOpenGLRenderer.mNonCollisionSegments,
-                          _DKOpenGLRenderer.mPages, _DKOpenGLRenderer.mPaperTex, _DKOpenGLRenderer.mParticleLifespan,
-                          _DKOpenGLRenderer.mTextureProg, _DKOpenGLRenderer.mTextureProgModelViewProjectionUniformLocation,
-                          _DKOpenGLRenderer.mTime, _DKOpenGLRenderer.mTimeWetBecameDirty, _DKOpenGLRenderer.mVbo,
-                          _DKOpenGLRenderer.mVertexHistory, _DKOpenGLRenderer.mVertexRange, _DKOpenGLRenderer.mWetPaintBufferFBO,
+                          _DKOpenGLRenderer.mPages, _DKOpenGLRenderer.mPaperTex, _DKOpenGLRenderer.mPaperTexIsShared,
+                          _DKOpenGLRenderer.mParticleLifespan, _DKOpenGLRenderer.mSharedContext, _DKOpenGLRenderer.mTextureProg,
+                          _DKOpenGLRenderer.mTextureProgModelViewProjectionUniformLocation, _DKOpenGLRenderer.mTime,
+                          _DKOpenGLRenderer.mTimeWetBecameDirty, _DKOpenGLRenderer.mVbo, _DKOpenGLRenderer.mVertexHistory,
+                          _DKOpenGLRenderer.mVertexRange, _DKOpenGLRenderer.mWetPaintBufferFBO,
                           _DKOpenGLRenderer.mWetPaintBufferSize, _DKOpenGLRenderer.mWetPaintBufferT,
                           _DKOpenGLRenderer.mWetPaintProg, _DKOpenGLRenderer.mWetPaintProgLifespanUniformLocation,
                           _DKOpenGLRenderer.mWetPaintProgSubtractEndPointsOnlyUniformLocation,

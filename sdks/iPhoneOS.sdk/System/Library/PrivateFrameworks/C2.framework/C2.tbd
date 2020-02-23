@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/C2.framework/C2
-current-version:       438.212
+current-version:       471
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _C2VersionNumber, _C2VersionString, _kServerTimeBeginning ]
     objc-classes:       [ _C2DeviceInfo, _C2Logging, _C2MPCloudKitInfo, _C2MPCloudKitOperationGroupInfo,
                           _C2MPCloudKitOperationInfo, _C2MPDeviceInfo, _C2MPError, _C2MPGenericEvent, _C2MPGenericEventMetric,
@@ -44,14 +45,16 @@ exports:
                           _C2MPMetric._triggers, _C2MPNetworkEvent._has, _C2MPNetworkEvent._networkConnectionReused,
                           _C2MPNetworkEvent._networkConnectionUuid, _C2MPNetworkEvent._networkFatalError,
                           _C2MPNetworkEvent._networkHostname, _C2MPNetworkEvent._networkInterfaceIdentifier,
-                          _C2MPNetworkEvent._networkPreviousAttemptCount, _C2MPNetworkEvent._networkProtocolName,
-                          _C2MPNetworkEvent._networkRemoteAddresssAndPort, _C2MPNetworkEvent._networkRequestBodyBytesSent,
-                          _C2MPNetworkEvent._networkRequestHeaderSize, _C2MPNetworkEvent._networkRequestUri,
-                          _C2MPNetworkEvent._networkResponseBodyBytesReceived, _C2MPNetworkEvent._networkResponseHeaderSize,
-                          _C2MPNetworkEvent._networkStatusCode, _C2MPNetworkEvent._networkTaskDescription,
-                          _C2MPNetworkEvent._optionsAllowExpensiveAccess, _C2MPNetworkEvent._optionsAllowPowerNapScheduling,
-                          _C2MPNetworkEvent._optionsAppleIdContext, _C2MPNetworkEvent._optionsOutOfProcess,
-                          _C2MPNetworkEvent._optionsOutOfProcessForceDiscretionary, _C2MPNetworkEvent._optionsQualityOfService,
+                          _C2MPNetworkEvent._networkIsDiscretionary, _C2MPNetworkEvent._networkPreviousAttemptCount,
+                          _C2MPNetworkEvent._networkProtocolName, _C2MPNetworkEvent._networkRemoteAddresssAndPort,
+                          _C2MPNetworkEvent._networkRequestBodyBytesSent, _C2MPNetworkEvent._networkRequestHeaderSize,
+                          _C2MPNetworkEvent._networkRequestUri, _C2MPNetworkEvent._networkResponseBodyBytesReceived,
+                          _C2MPNetworkEvent._networkResponseHeaderSize, _C2MPNetworkEvent._networkStatusCode,
+                          _C2MPNetworkEvent._networkTaskDescription, _C2MPNetworkEvent._optionsAllowExpensiveAccess,
+                          _C2MPNetworkEvent._optionsAllowPowerNapScheduling, _C2MPNetworkEvent._optionsAppleIdContext,
+                          _C2MPNetworkEvent._optionsDiscretionaryNetworkBehavior, _C2MPNetworkEvent._optionsDuetPreClearedMode,
+                          _C2MPNetworkEvent._optionsOutOfProcess, _C2MPNetworkEvent._optionsOutOfProcessForceDiscretionary,
+                          _C2MPNetworkEvent._optionsQualityOfService,
                           _C2MPNetworkEvent._optionsSourceApplicationBundleIdentifier,
                           _C2MPNetworkEvent._optionsSourceApplicationSecondaryIdentifier,
                           _C2MPNetworkEvent._optionsTimeoutIntervalForRequest,
@@ -69,16 +72,17 @@ exports:
                           _C2MetricOperationOptions._operationId, _C2MetricOperationOptions._operationType,
                           _C2MetricOptions._anonymous, _C2MetricOptions._c2MetricsEndpoint, _C2MetricOptions._clientOperations,
                           _C2MetricOptions._clientProcessBundleId, _C2MetricOptions._clientProcessVersion,
-                          _C2MetricOptions._container, _C2MetricOptions._environment, _C2MetricOptions._operationGroups,
-                          _C2MetricOptions._pushTrigger, _C2MetricOptions._reportClientOperationFrequency,
-                          _C2MetricOptions._reportClientOperationFrequencyBase, _C2MetricOptions._reportFrequency,
-                          _C2MetricOptions._reportFrequencyBase, _C2MetricOptions._reportOperationGroupFrequency,
-                          _C2MetricOptions._reportOperationGroupFrequencyBase, _C2MetricOptions._testBehavior_reportMetric,
-                          _C2MetricRequestOptions.__allowsExpensiveAccess, _C2MetricRequestOptions.__allowsPowerNapScheduling,
+                          _C2MetricOptions._container, _C2MetricOptions._didCompleteWithError, _C2MetricOptions._environment,
+                          _C2MetricOptions._operationGroups, _C2MetricOptions._pushTrigger, _C2MetricOptions._randomValue,
+                          _C2MetricOptions._reportClientOperationFrequency, _C2MetricOptions._reportClientOperationFrequencyBase,
+                          _C2MetricOptions._reportFrequency, _C2MetricOptions._reportFrequencyBase,
+                          _C2MetricOptions._reportOperationGroupFrequency, _C2MetricOptions._reportOperationGroupFrequencyBase,
+                          _C2MetricOptions._testBehavior_reportMetric, _C2MetricRequestOptions.__allowsExpensiveAccess,
+                          _C2MetricRequestOptions.__allowsPowerNapScheduling,
                           _C2MetricRequestOptions.__sourceApplicationBundleIdentifier,
                           _C2MetricRequestOptions.__sourceApplicationSecondaryIdentifier, _C2MetricRequestOptions._metricOptions,
                           _C2MetricRequestOptions._metricUUID, _C2ReportMetrics._ignoreRequestThrottle,
-                          _C2ReportMetrics._metricRequest, _C2ReportMetrics._metricTask,
+                          _C2ReportMetrics._metricOptions, _C2ReportMetrics._metricRequest, _C2ReportMetrics._metricTask,
                           _C2ReportMetrics._metricsTransportRequestOptions, _C2ReportMetrics._requestThrottleIdentifier,
                           _C2ReportMetrics._requestThrottleLimit, _C2ReportMetrics._testBehavior_didCompleteWithError,
                           _C2ReportMetrics._testBehavior_tooManyTasksRunning, _C2RequestManager._sessionPool,
@@ -91,15 +95,16 @@ exports:
                           _C2RequestOptions._allowExpiredDNSBehavior, _C2RequestOptions._allowRouting,
                           _C2RequestOptions._c2MetricsEndpoint, _C2RequestOptions._c2MetricsReportFrequency,
                           _C2RequestOptions._c2MetricsReportFrequencyBase, _C2RequestOptions._discretionaryNetworkBehavior,
-                          _C2RequestOptions._identifier, _C2RequestOptions._invokedURL, _C2RequestOptions._metricOptions,
-                          _C2RequestOptions._metricRequest, _C2RequestOptions._originalHost,
+                          _C2RequestOptions._duetPreClearedMode, _C2RequestOptions._identifier, _C2RequestOptions._invokedURL,
+                          _C2RequestOptions._metricOptions, _C2RequestOptions._metricRequest, _C2RequestOptions._originalHost,
                           _C2RequestOptions._outOfProcessDiscretionary, _C2RequestOptions._outOfProcessPoolName,
-                          _C2RequestOptions._qualityOfService, _C2RequestOptions._resolvedEndpointsWithHostname,
-                          _C2RequestOptions._testBehavior_sessionGroupCreated, _C2RequestOptions._tlsPinning,
-                          _C2RequestOptions._useAdaptiveTimeouts, _C2Route._destination, _C2Route._lastUpdated,
-                          _C2RoutingTable._routingTable, _C2Session._emptyTimestamp, _C2Session._isComplete, _C2Session._options,
-                          _C2Session._originalHost, _C2Session._queue, _C2Session._routeHost, _C2Session._routeLastUpdated,
-                          _C2Session._session, _C2Session._sessionConfigurationName, _C2Session._sessionDelegate,
+                          _C2RequestOptions._qualityOfService, _C2RequestOptions._redactRemoteEndpointFromNetworkMetrics,
+                          _C2RequestOptions._resolvedEndpointsWithHostname, _C2RequestOptions._testBehavior_sessionGroupCreated,
+                          _C2RequestOptions._tlsPinning, _C2RequestOptions._useAdaptiveTimeouts, _C2Route._destination,
+                          _C2Route._lastUpdated, _C2RoutingTable._routingTable, _C2Session._emptyTimestamp,
+                          _C2Session._isComplete, _C2Session._options, _C2Session._originalHost, _C2Session._queue,
+                          _C2Session._routeHost, _C2Session._routeLastUpdated, _C2Session._session,
+                          _C2Session._sessionConfigurationName, _C2Session._sessionDelegate,
                           _C2Session._testBehavior_cleanupRetainCycle, _C2Session._testBehavior_sessionInvalidated_cfnetwork,
                           _C2Session._testBehavior_sessionInvalidated_shouldInvalidate, _C2Session._wrappedTaskByTaskDescription,
                           _C2SessionGroup._configurationName, _C2SessionGroup._pinnedSession,
@@ -107,9 +112,9 @@ exports:
                           _C2SessionPool._cleanUp_queue, _C2SessionPool._cleanUp_running, _C2SessionPool._routingTable,
                           _C2SessionPool._sessionCreation_queue, _C2SessionPool._sessionGroupForSessionConfigurationName,
                           _C2SessionPool._sessionTLSCache, _C2SessionPool._testBehavior_disableAutomaticCleanup,
-                          _C2SessionPool._useCountByObject, _C2SessionTLSCache._pinnedSession,
-                          _C2SessionTLSCache._unpinnedSession, _C2SessionTask._activity, _C2SessionTask._attemptCount,
-                          _C2SessionTask._delegate, _C2SessionTask._initTime, _C2SessionTask._isComplete,
-                          _C2SessionTask._options, _C2SessionTask._resetTime, _C2SessionTask._sessionTaskDelegate,
-                          _C2SessionTask._task ]
+                          _C2SessionPool._underlyingDelegateQueue, _C2SessionPool._useCountByObject,
+                          _C2SessionTLSCache._pinnedSession, _C2SessionTLSCache._unpinnedSession, _C2SessionTask._activity,
+                          _C2SessionTask._attemptCount, _C2SessionTask._delegate, _C2SessionTask._initTime,
+                          _C2SessionTask._isComplete, _C2SessionTask._options, _C2SessionTask._resetTime,
+                          _C2SessionTask._sessionTaskDelegate, _C2SessionTask._task ]
 ...

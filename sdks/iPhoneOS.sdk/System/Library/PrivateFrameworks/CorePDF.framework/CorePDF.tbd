@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CorePDF.framework/CorePDF
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CGPDFArchiveAddSelection, _CGPDFArchiveCreate, _CGPDFArchiveGetHTML, _CGPDFArchiveGetPlainText,
                           _CGPDFArchiveGetRTFDData, _CGPDFArchiveGetStructuredString, _CGPDFArchiveGetWebArchiveData,
                           _CGPDFArchiveRelease, _CGPDFArchiveRetain, _CGPDFLayoutBufferUnicodeAndBoundsForRange,
@@ -21,11 +22,12 @@ exports:
                           _CGPDFLayoutCreateSelectionFromPointWithOptions, _CGPDFLayoutCreateSelectionToPointWithOptions,
                           _CGPDFLayoutCreateString, _CGPDFLayoutCreateStringForRanges, _CGPDFLayoutDebugLineElement,
                           _CGPDFLayoutGetBoundsForTextRange, _CGPDFLayoutGetCGFont, _CGPDFLayoutGetCharacterAnchorY,
-                          _CGPDFLayoutGetCharacterBounds, _CGPDFLayoutGetCharacterMarker, _CGPDFLayoutGetCharacterRotation,
-                          _CGPDFLayoutGetCharacterUnicode, _CGPDFLayoutGetGlyph, _CGPDFLayoutGetLineRangesForTextRange,
-                          _CGPDFLayoutGetNumberOfTextElements, _CGPDFLayoutGetOffsetInLine, _CGPDFLayoutGetPage,
-                          _CGPDFLayoutGetRectForTextRange, _CGPDFLayoutGetRootNode, _CGPDFLayoutGetRootTaggedNode,
-                          _CGPDFLayoutGetTextMatrix, _CGPDFLayoutGetTypeID, _CGPDFLayoutHasRTL, _CGPDFLayoutIntersectionPoint,
+                          _CGPDFLayoutGetCharacterBBox, _CGPDFLayoutGetCharacterBounds, _CGPDFLayoutGetCharacterMarker,
+                          _CGPDFLayoutGetCharacterRotation, _CGPDFLayoutGetCharacterUnicode, _CGPDFLayoutGetGlyph,
+                          _CGPDFLayoutGetLineRangesForTextRange, _CGPDFLayoutGetNumberOfTextElements,
+                          _CGPDFLayoutGetOffsetInLine, _CGPDFLayoutGetPage, _CGPDFLayoutGetRectForTextRange,
+                          _CGPDFLayoutGetRootNode, _CGPDFLayoutGetRootTaggedNode, _CGPDFLayoutGetTextMatrix,
+                          _CGPDFLayoutGetTypeID, _CGPDFLayoutHasRTL, _CGPDFLayoutIntersectionPoint,
                           _CGPDFLayoutIsAttachmentCharacter, _CGPDFLayoutIsWhiteSpaceCharacter, _CGPDFLayoutRangeIsOfType,
                           _CGPDFLayoutRelease, _CGPDFLayoutRetain, _CGPDFLayoutSetHasRTL, _CGPDFNodeClipCreatePath,
                           _CGPDFNodeClipGetNextClip, _CGPDFNodeClipIsEvenOdd, _CGPDFNodeCompareReadingOrder,

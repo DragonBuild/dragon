@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: C893A4B9-6027-3008-8099-7179A596FE5E', 'armv7s: 5D5A030C-0A00-3554-847C-7F32257C8331', 
-                   'arm64: 80DCDC0C-0B85-3BA4-85DC-DB32D136796D', 'arm64e: 399C814C-2659-372C-9591-1B63F1487A8D' ]
+                   'arm64: BDCE2CF9-EEB6-383A-96B0-216DDCD4B730', 'arm64e: D06223A1-6E37-3F29-8804-2DDC036AC34B' ]
 platform:        ios
 install-name:    '/usr/lib/libnfrestore.dylib'
 exports:         

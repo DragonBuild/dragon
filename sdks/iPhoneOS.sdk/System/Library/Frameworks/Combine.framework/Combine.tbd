@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 78DE9615-0D7F-3F1E-8E2E-8911A0BFF331', 'arm64e: 545B56EA-EB1D-30C7-94F3-FD680CD63DB0' ]
+                   'arm64: EDB5A983-1F5B-3BB6-BE6E-C321E2DE393E', 'arm64e: 256DF534-5AE6-35AB-AA22-302C68961841' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/Combine.framework/Combine'
-current-version: 132.10
+current-version: 128.10
 compatibility-version: 0
 exports:         
   - archs:           [ arm64, arm64e ]

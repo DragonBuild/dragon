@@ -22,6 +22,13 @@
 
 CF_ASSUME_NONNULL_BEGIN
 
+//----------------------------------------------------------------------------------------------------------------- ICCameraItem
+/*!
+  @class ICCameraItem
+  @abstract ICCameraItem is an abstract class that represents an item in an ICCameraDevice object. ICCameraDevice object creates
+  instances of two concrete subclasses of ICCameraItem: ICCameraFolder and ICCameraFile.
+*/
+
 @protocol ICCameraDeviceDownloadDelegate;
 
 typedef NSString* ICCameraItemMetadataOption NS_TYPED_ENUM IC_AVAILABLE(macos(10.15), ios(13.0));
@@ -84,12 +91,6 @@ IMAGECAPTURE_EXTERN ICDownloadOption const ICDeleteAfterSuccessfulDownload IC_AV
 */
 IMAGECAPTURE_EXTERN ICDownloadOption const ICDownloadSidecarFiles IC_AVAILABLE(macos(10.4), ios(13.0));
 
-//----------------------------------------------------------------------------------------------------------------- ICCameraItem
-/*!
- @class ICCameraItem
- @abstract ICCameraItem is an abstract class that represents an item in an ICCameraDevice object. ICCameraDevice object creates
- instances of two concrete subclasses of ICCameraItem: ICCameraFolder and ICCameraFile.
- */
 IC_AVAILABLE(macos(10.4), ios(13.0))
 @interface ICCameraItem : NSObject
 {
@@ -123,7 +124,7 @@ IC_AVAILABLE(macos(10.4), ios(13.0))
   @property fileSystemPath
   @abstract ￼The file system path of the item for items on a device with transportType of ICTransportTypeMassStorage.
 */
-@property (nonatomic, readonly, nullable) NSString* fileSystemPath IC_AVAILABLE(macos(10.4)) IC_UNAVAILABLE(ios);
+@property (nonatomic, readonly, nullable) NSString* fileSystemPath IC_AVAILABLE(macos(10.4),ios(13.0));
 
 /*!
   @property locked
@@ -201,19 +202,19 @@ IC_AVAILABLE(macos(10.4), ios(13.0))
  @abstract ￼Metadata for the file if one is readily available. If one is not readily available, accessing this property will send a message to the device requesting metadata for the file. The delegate of the device will be notified via method "cameraDevice:didReceiveMetadata:forItem:error:", if this method is implemented by the delegate.
  @note Execution of the delegate callback will occur on the main thread.
 */
-- (void)requestMetadata IC_AVAILABLE(macos(10.15), ios(13.0));
+- (void)requestMetadata  IC_AVAILABLE(macos(10.15), ios(13.0));
 
 /*!
  @method flushThumbnailCache
  @abstract ￼Deletes cached thumbnail for the item.
 */
-- (void)flushThumbnailCache IC_AVAILABLE(macos(10.15), ios(13.0));
+- (void)flushThumbnailCache  IC_AVAILABLE(macos(10.15), ios(13.0));
 
 /*!
-   @method flushMetadataCache
-   @abstract ￼Deletes cached metadata for the item.
- */
-- (void) flushMetadataCache IC_AVAILABLE(macos(10.15), ios(13.0));
+ @method flushMetadataCache
+ @abstract ￼Deletes cached metadata for the item.
+*/
+- (void)flushMetadataCache IC_AVAILABLE(macos(10.15), ios(13.0));
 
 #pragma mark - Deprecated
 

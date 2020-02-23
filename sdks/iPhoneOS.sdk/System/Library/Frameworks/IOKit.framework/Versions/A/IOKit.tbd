@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: BD23F5CF-3083-3A2E-B16C-64D805C9879A', 'armv7s: 130B8EED-1C40-3BCC-9E39-D150FF05728D', 
-                   'arm64: 76D4D88F-C89F-379C-81B2-D82A0F88B8A0', 'arm64e: B2469A31-0BCF-3F8E-8657-EAF3A621AFF0' ]
+                   'arm64: 26F21069-E729-30D1-A9A4-830F750CCAB7', 'arm64e: 0A42C8B1-079A-3AB2-91D5-4AFE6965A7C6' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit'
 current-version: 275
@@ -894,9 +894,9 @@ exports:
                        _kOSKextDiagnosticFileAccessKey, _kOSKextDiagnosticFileNotFoundKey, 
                        _kOSKextDiagnosticIdentifierOrVersionTooLongKey, _kOSKextDiagnosticIneligibleInSafeBoot, 
                        _kOSKextDiagnosticInfoKeyIneligibleForDriverKit, _kOSKextDiagnosticKernelComponentNotInterfaceKey, 
-                       _kOSKextDiagnosticKextIneligibleForDriverKit, _kOSKextDiagnosticMissingDesignatedKernelClass, 
-                       _kOSKextDiagnosticMissingPropertyKey, _kOSKextDiagnosticNoExplicitKernelDependencyKey, 
-                       _kOSKextDiagnosticNoFileKey, _kOSKextDiagnosticNonAppleKextDeclaresPrivateKPIDependencyKey, 
+                       _kOSKextDiagnosticKextIneligibleForDriverKit, _kOSKextDiagnosticMissingPropertyKey, 
+                       _kOSKextDiagnosticNoExplicitKernelDependencyKey, _kOSKextDiagnosticNoFileKey, 
+                       _kOSKextDiagnosticNonAppleKextDeclaresPrivateKPIDependencyKey, 
                        _kOSKextDiagnosticNonuniqueIOResourcesMatchKey, _kOSKextDiagnosticNotABundleKey, 
                        _kOSKextDiagnosticNotSignedKey, _kOSKextDiagnosticOSBundleRequiredValueIneligibleForDriverKit, 
                        _kOSKextDiagnosticOwnerPermissionKey, _kOSKextDiagnosticPersonalityHasDifferentBundleIdentifierKey, 

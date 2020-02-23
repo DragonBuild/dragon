@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 4A1577D0-71A1-3D53-B1BF-5029F5A23C3C', 'arm64e: 91A7A806-622F-351C-B81B-5BC2E5EEAE70' ]
+                   'arm64: 17E3D393-AD3F-3D1B-8D8F-CBBA15B237F3', 'arm64e: C2991090-8B38-3877-AF67-A12C9D415963' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/NaturalLanguage.framework/NaturalLanguage'
-current-version: 57
+current-version: 54
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _NLAssetsHaveChangedNotification, _NLLanguageAmharic, _NLLanguageArabic, 

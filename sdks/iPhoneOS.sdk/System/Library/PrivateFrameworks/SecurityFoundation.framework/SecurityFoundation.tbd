@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SecurityFoundation.framework/SecurityFoundation
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SFAccessibilityMakeWithMode, _SFCryptoServicesErrorDecryptionFailed,
                           _SFCryptoServicesErrorDeserializationFailed, _SFCryptoServicesErrorDigest,
                           _SFCryptoServicesErrorDomain, _SFCryptoServicesErrorEncryptionFailed,
@@ -16,10 +17,10 @@ exports:
                           _SFKeychainErrorInvalidAccessGroup, _SFKeychainErrorInvalidKeyData, _SFKeychainErrorInvalidParameter,
                           _SFKeychainErrorInvalidPersistentIdentifier, _SFKeychainErrorItemDecryptionFailed,
                           _SFKeychainErrorItemNotFound, _SFKeychainErrorKeyType, _SFKeychainErrorMissingAccessGroup,
-                          _SFKeychainErrorRNGFailure, _SFKeychainErrorSaveFailed, _SFKeychainErrorSecureDecodeFailed,
-                          _SFKeychainErrorUnknownKeyType, _SFKeychainServerXPCInterface, _SecurityFoundationVersionNumber,
-                          _SecurityFoundationVersionString, __defaultDigestOperation, __defaultMaskGenerationFunction,
-                          __defaultPseudoRandomFunction ]
+                          _SFKeychainErrorOutOfDateChangeToken, _SFKeychainErrorRNGFailure, _SFKeychainErrorSaveFailed,
+                          _SFKeychainErrorSecureDecodeFailed, _SFKeychainErrorUnknownKeyType, _SFKeychainServerXPCInterface,
+                          _SecurityFoundationVersionNumber, _SecurityFoundationVersionString, __defaultDigestOperation,
+                          __defaultMaskGenerationFunction, __defaultPseudoRandomFunction ]
     objc-classes:       [ _SFAESEncryptionOperation, _SFAESKeySpecifier_Ivars, _SFAccessControlEntry,
                           _SFAccessControlEntry_Ivars, _SFAuthenticatedCiphertext_Ivars,
                           _SFAuthenticatedEncryptionOperation_Ivars, _SFCMACOperation, _SFCMACOperation_Ivars,
@@ -87,10 +88,11 @@ exports:
                           _SFIESCiphertext_Ivars.ephemeralSenderPublicKey, _SFIESOperation_Ivars.curve,
                           _SFIESOperation_Ivars.diffieHellmanOperation, _SFIESOperation_Ivars.digestOperation,
                           _SFIESOperation_Ivars.encryptionOperation, _SFIdentityAttributes._identityAttributesInternal,
-                          _SFIdentityAttributes._privateKeyDomain, _SFIdentityAttributes_Ivars.hasCertificate,
-                          _SFIdentityAttributes_Ivars.identityName, _SFIdentityAttributes_Ivars.keySpecifier,
-                          _SFIdentityAttributes_Ivars.localizedDescription, _SFIdentityAttributes_Ivars.localizedLabel,
-                          _SFIdentityAttributes_Ivars.privateKeyDomain, _SFIdentitySearchFilter._identitySearchFilterInternal,
+                          _SFIdentityAttributes._privateKeyDomain, _SFIdentityAttributes.persistentIdentifier,
+                          _SFIdentityAttributes_Ivars.hasCertificate, _SFIdentityAttributes_Ivars.identityName,
+                          _SFIdentityAttributes_Ivars.keySpecifier, _SFIdentityAttributes_Ivars.localizedDescription,
+                          _SFIdentityAttributes_Ivars.localizedLabel, _SFIdentityAttributes_Ivars.privateKeyDomain,
+                          _SFIdentitySearchFilter._identitySearchFilterInternal,
                           _SFIdentitySearchFilter_Ivars.certificateSerialNumbers, _SFIdentitySearchFilter_Ivars.certificateTypes,
                           _SFIdentitySearchFilter_Ivars.keySpecifiers, _SFIdentity_Ivars.attributes,
                           _SFIdentity_Ivars.certificate, _SFIdentity_Ivars.keyPair, _SFIdentity_Ivars.publicKey,
@@ -131,7 +133,8 @@ exports:
                           _SFServiceIdentifier_Ivars.serviceID, _SFServiceIdentifier_Ivars.type, _SFSignedData_Ivars.data,
                           _SFSignedData_Ivars.signature, _SFSymmetricEncryptionOperation._symmetricEncryptionOperationInternal,
                           _SFSymmetricEncryptionOperation_Ivars.keySpecifier, _SFSymmetricEncryptionOperation_Ivars.mode,
-                          _SFSymmetricKeyAttributes._symmetricKeyAttributesInternal, _SFSymmetricKeyAttributes_Ivars.keyDomain,
+                          _SFSymmetricKeyAttributes._symmetricKeyAttributesInternal,
+                          _SFSymmetricKeyAttributes.persistentIdentifier, _SFSymmetricKeyAttributes_Ivars.keyDomain,
                           _SFSymmetricKeyAttributes_Ivars.keySpecifier, _SFSymmetricKeyAttributes_Ivars.localizedDescription,
                           _SFSymmetricKeyAttributes_Ivars.localizedLabel, _SFSymmetricKey_Ivars.keyData,
                           _SFTripleDESEncryptionOperation._tripleDESEncryptionOperationInternal,
@@ -152,8 +155,9 @@ exports:
                           __SFAsymmetricKeySpecifier._asymmetricKeySpecifierInternal,
                           __SFAuthenticatedCiphertext._authenticatedCiphertextInternal,
                           __SFAuthenticatedEncryptionOperation._authenticatedEncryptionOperationInternal,
-                          __SFCertificate._certificateInternal, __SFCiphertext._ciphertextInternal, __SFCredential._creationDate,
-                          __SFCredential._customAttributes, __SFCredential._description, __SFCredential._label,
+                          __SFCertificate._certificateInternal, __SFCiphertext._ciphertextInternal, __SFCredential._accessGroup,
+                          __SFCredential._changeToken, __SFCredential._creationDate, __SFCredential._customAttributes,
+                          __SFCredential._description, __SFCredential._keyclass, __SFCredential._label,
                           __SFCredential._modificationDate, __SFCredential._persistentIdentifier,
                           __SFCredential._primaryServiceIdentifier, __SFCredential._supplementaryServiceIdentifiers,
                           __SFCredentialStore._credentialStoreInternal, __SFCredentialStore._serverConnection,

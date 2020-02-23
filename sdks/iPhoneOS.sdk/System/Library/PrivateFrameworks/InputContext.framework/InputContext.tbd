@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/InputContext.framework/InputContext
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _InputContextVersionNumber, _InputContextVersionString, __ICMachTimeToNanoseconds,
                           _isEquivalentDictionary ]
     objc-classes:       [ __ICContact, __ICContactRecord, __ICInputContextManager, __ICInternalSource, __ICLexiconManager,
@@ -26,13 +27,16 @@ exports:
                           __ICLexiconManager._namedEntityLoadState, __ICLexiconManager._namedEntityStore,
                           __ICLexiconManager._serialQueue, __ICLexiconManager._sources, __ICLexiconView._lexicon,
                           __ICLexiconView._name, __ICLexiconView._typeFlags, __ICNamedEntityRecord._changeType,
-                          __ICNamedEntityRecord._name, __ICNamedEntityRecord._source, __ICNamedEntityRecord._type,
+                          __ICNamedEntityRecord._contentCreationDate, __ICNamedEntityRecord._detectionAlgorithm,
+                          __ICNamedEntityRecord._detectionDate, __ICNamedEntityRecord._donorBundleIdentifier,
+                          __ICNamedEntityRecord._identifier, __ICNamedEntityRecord._languageIdentifier,
+                          __ICNamedEntityRecord._name, __ICNamedEntityRecord._phoneticName, __ICNamedEntityRecord._score,
+                          __ICNamedEntityRecord._source, __ICNamedEntityRecord._sourceIdentifier, __ICNamedEntityRecord._type,
                           __ICNamedEntityStore._filteringBlock, __ICNamedEntityStore._lexicons,
                           __ICNamedEntityStore._phraseLexicon, __ICNamedEntityStore._recentNamedEntityQueue,
                           __ICNamedEntityStore._wordFilteringBlock, __ICNamedEntityStore._wordLexicon,
                           __ICNullLexiconManager._contactObservers, __ICPortraitLexiconSource._contactDelegate,
-                          __ICPortraitLexiconSource._contactStore, __ICPortraitLexiconSource._eventDelegate,
-                          __ICPortraitLexiconSource._eventStore, __ICPortraitLexiconSource._manager,
+                          __ICPortraitLexiconSource._contactStore, __ICPortraitLexiconSource._manager,
                           __ICPortraitLexiconSource._namedEntityDelegate, __ICPortraitLexiconSource._namedEntityStore,
                           __ICPortraitPredictionSource._contacts, __ICPortraitPredictionSource._ppBroker,
                           __ICPortraitPredictionSource._ppBrokerLoadedCondition, __ICPredictedItem._date,

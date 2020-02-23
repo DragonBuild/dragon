@@ -1,30 +1,33 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WebContentAnalysis.framework/WebContentAnalysis
 current-version:       12.1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _WFUserWhiteListAllowedSitesAddress, _WFUserWhiteListAllowedSitesBookmarkPath,
                           _WFUserWhiteListAllowedSitesPageTitle ]
     objc-classes:       [ _WFBlockPage, _WFCategoryJudgement, _WFContentSniffer, _WFDocumentStructureTag, _WFImg,
                           _WFImgArrayCache, _WFJapanDatingTag, _WFJavascriptStripper, _WFJudge, _WFLSMMap, _WFLSMResult,
                           _WFLSMScoreNormalizedMap, _WFLink, _WFNodeWrapper, _WFPINEntryViewController, _WFPostprocessor,
-                          _WFRemotePINEntryViewController, _WFSlangTag, _WFTagFactory, _WFTagFlyweight, _WFTreeHTMLStripper,
-                          _WFTreeXMLDocumentStripper, _WFUSC2257Tag, _WFUserSettings, _WFVerdict, _WFWebPageDecorator,
-                          _WFWebPageToFilterText, _WFWebPageToTrainingText, _WFWhitelistSiteBuffer, _WFWhitelistUserPreferences,
-                          _WebFilterEvaluator, _XMLNode ]
+                          _WFRemotePINEntryViewController, _WFSlangTag, _WFSystemContentWhitelist, _WFSystemContentWhitelistItem,
+                          _WFTagFactory, _WFTagFlyweight, _WFTreeHTMLStripper, _WFTreeXMLDocumentStripper, _WFUSC2257Tag,
+                          _WFUserSettings, _WFVerdict, _WFWebPageDecorator, _WFWebPageToFilterText, _WFWebPageToTrainingText,
+                          _WFWhitelistSiteBuffer, _WFWhitelistUserPreferences, _WebFilterEvaluator, _XMLNode ]
     objc-ivars:         [ _WFBlockPage.formActionURLString, _WFBlockPage.pageTemplateURL, _WFBlockPage.preferredLanguage,
                           _WFBlockPage.userVisibleURLString, _WFCategoryJudgement.category, _WFCategoryJudgement.score,
                           _WFImgArrayCache.imageAlternativeDescriptions, _WFImgArrayCache.numberOfKnownImagePixels,
-                          _WFImgArrayCache.numberOfUnknownSizedImages, _WFJudge.map, _WFLSMMap.map, _WFLSMMap.threshold,
-                          _WFLSMResult.categoryJudgements, _WFLSMResult.threshold, _WFLSMScoreNormalizedMap.maxScore,
-                          _WFLSMScoreNormalizedMap.minScore, _WFNodeWrapper._node, _WFPINEntryViewController._URL,
-                          _WFPINEntryViewController._completion, _WFPINEntryViewController._dismissCompletionHandler,
-                          _WFPINEntryViewController._fallbackPresentationVC, _WFPINEntryViewController._pageTitle,
-                          _WFPINEntryViewController._remoteViewController, _WFPINEntryViewController._rootViewControllerToUse,
+                          _WFImgArrayCache.numberOfUnknownSizedImages, _WFJudge.map, _WFJudge.whitelist, _WFLSMMap.map,
+                          _WFLSMMap.threshold, _WFLSMResult.categoryJudgements, _WFLSMResult.threshold,
+                          _WFLSMScoreNormalizedMap.maxScore, _WFLSMScoreNormalizedMap.minScore, _WFNodeWrapper._node,
+                          _WFPINEntryViewController._URL, _WFPINEntryViewController._completion,
+                          _WFPINEntryViewController._dismissCompletionHandler, _WFPINEntryViewController._fallbackPresentationVC,
+                          _WFPINEntryViewController._pageTitle, _WFPINEntryViewController._remoteViewController,
+                          _WFPINEntryViewController._rootViewControllerToUse,
                           _WFPINEntryViewController._windowsWithDisabledRotation, _WFRemotePINEntryViewController._delegate,
+                          _WFSystemContentWhitelist._whitelistItems, _WFSystemContentWhitelistItem._utf8DomainGlob,
                           _WFTagFactory.sharedTags, _WFTreeXMLDocumentStripper.hasFrameset,
                           _WFTreeXMLDocumentStripper.hasShortRefresh, _WFTreeXMLDocumentStripper.images,
                           _WFTreeXMLDocumentStripper.links, _WFTreeXMLDocumentStripper.metaTagsLabeled,

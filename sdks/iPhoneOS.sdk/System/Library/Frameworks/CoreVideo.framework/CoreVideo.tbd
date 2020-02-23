@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B90FCB75-BF17-3A5C-9344-F6C6CBC24064', 'armv7s: EF3F2F5B-69B1-3684-A36A-CD3D347EF187', 
-                   'arm64: 9380B0D8-5A73-3463-A51F-AD885B994118', 'arm64e: 1B31096F-B4AB-3B48-B368-C1BFF38251A2' ]
+                   'arm64: A66EECDC-C40C-39CE-B6BB-CADAA274F73B', 'arm64e: 6070E00B-B1F2-3EB0-9D1C-4EB818F12D6F' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CoreVideo.framework/CoreVideo'
 current-version: 1.5

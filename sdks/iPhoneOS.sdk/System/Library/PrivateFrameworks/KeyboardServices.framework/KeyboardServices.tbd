@@ -1,32 +1,33 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/KeyboardServices.framework/KeyboardServices
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _KSCKErrorDomain, _KSCloudKitAccountDidChange, _KSCloudKitAccountDidChangeAccountChangedKey,
                           _KSCloudKitAccountDidChangeDeviceToDeviceKey, _KSCloudKitAccountDidChangeStatusKey,
                           _KSCloudKitAccountDidChangeUserChangedKey, _KSCloudKitAccountDidSuccessfullyCreateZone,
                           _KSCloudKitIdentitiesDidChange, _KSDeviceProtectionClassDidChange,
                           _KSTextReplacementDidChangeNotification, _KeyboardServicesVersionNumber,
-                          _KeyboardServicesVersionString, _TIBuddySetupFinishedNotification_Private,
-                          __KSDevicesMigrationStateDidChange, __KSGetSetting, __KSReachabilityDidChange,
-                          __KSTIBuddySetupDidFinishNotification_Private, __KSTRCKStoreDidReceiveChangesNotification,
-                          __KSTRLegacyStoreDidImportChangesNotification, __KSTRLegacyStoreDidImportUbiquitousChanges,
-                          __KSTRShouldCleanupResources, __KSTextReplacementDeleteDidFailEntriesKey,
-                          __KSTextReplacementDeleteDidFailErrorsKey, __KSTextReplacementEntryDidFailErrorKey,
-                          __KSTextReplacementErrorDomain, __KSTextReplacementServerInterface,
-                          __KSTextReplacementUpdateDidFailEntriesKey, __KSTextReplacementUpdateDidFailErrorsKey,
-                          __KSUserWordsWereDownloadedFilesKey, __KSUserWordsWereDownloadedLanguageKey,
-                          __KSUserWordsWereDownloadedNotification, _dataModelName, _kKSApplePreferencesDomain,
-                          _kKeyboardServicesCloudKitContainerID, _kMaxOperationRetryCount, _kRetryWaitInSeconds,
-                          _kTextReplacementEntitlement, _kiOSMajorVersForCloudKitSync, _kiOSMinorVersForCloudKitSync,
-                          _kosxMajorVersForCloudKitSync, _kosxMinorSubversionForCloudKitSync, _kosxMinorVersForCloudKitSync,
-                          _ksDefaultDateNormalise, _ksDefaultEnabled, _ksDefaultPullTime, _ksDefaultPushTime,
-                          _ksDefaultSaveDynamicData, _ksDefaultSaveLanguageModel, _ksDefaultSizeNormalise,
-                          _ksDefaultSortDynamicData, _ksDefaultSortLanguageModel ]
+                          _KeyboardServicesVersionString, __KSDevicesMigrationStateDidChange, __KSGetSetting,
+                          __KSReachabilityDidChange, __KSTIBuddySetupDidFinishNotification_Private,
+                          __KSTRCKStoreDidReceiveChangesNotification, __KSTRLegacyStoreDidImportChangesNotification,
+                          __KSTRLegacyStoreDidImportUbiquitousChanges, __KSTRShouldCleanupResources,
+                          __KSTextReplacementDeleteDidFailEntriesKey, __KSTextReplacementDeleteDidFailErrorsKey,
+                          __KSTextReplacementEntryDidFailErrorKey, __KSTextReplacementErrorDomain,
+                          __KSTextReplacementServerInterface, __KSTextReplacementUpdateDidFailEntriesKey,
+                          __KSTextReplacementUpdateDidFailErrorsKey, __KSUserWordsWereDownloadedFilesKey,
+                          __KSUserWordsWereDownloadedLanguageKey, __KSUserWordsWereDownloadedNotification, _dataModelName,
+                          _kKSApplePreferencesDomain, _kKeyboardServicesCloudKitContainerID, _kMaxOperationRetryCount,
+                          _kMaxTextReplacementLength, _kRetryWaitInSeconds, _kTextReplacementEntitlement,
+                          _kiOSMajorVersForCloudKitSync, _kiOSMinorVersForCloudKitSync, _kosxMajorVersForCloudKitSync,
+                          _kosxMinorSubversionForCloudKitSync, _kosxMinorVersForCloudKitSync, _ksDefaultDateNormalise,
+                          _ksDefaultEnabled, _ksDefaultPullTime, _ksDefaultPushTime, _ksDefaultSaveDynamicData,
+                          _ksDefaultSaveLanguageModel, _ksDefaultSizeNormalise, _ksDefaultSortDynamicData,
+                          _ksDefaultSortLanguageModel ]
     objc-classes:       [ _ArraySlice, _ArraySlicer, __KSAggdLogger, __KSCKSyncStateManagedObject, __KSCloudKitManager,
                           __KSControlFileController, __KSDeviceInfo, __KSDeviceStateMonitor, __KSFileDirectory, __KSFileEntry,
                           __KSFileFile, __KSReachabilityMonitor, __KSRequestThrottle, __KSSystemTask,
@@ -53,8 +54,9 @@ exports:
                           __KSReachabilityMonitor._isInternetReachable, __KSReachabilityMonitor._queue,
                           __KSReachabilityMonitor._reachabilityRef, __KSRequestThrottle._curveFunction,
                           __KSRequestThrottle._debugIdentifier, __KSRequestThrottle._maximum, __KSRequestThrottle._queue,
-                          __KSRequestThrottle._request, __KSRequestThrottle._retryCount, __KSSystemTask._executionCriteria,
-                          __KSSystemTask._handler, __KSSystemTask._name, __KSSystemTask._periodSeconds, __KSSystemTask._queue,
+                          __KSRequestThrottle._request, __KSRequestThrottle._retryCount, __KSSystemTask._checkInTime,
+                          __KSSystemTask._executionCriteria, __KSSystemTask._handler, __KSSystemTask._maxRunTime,
+                          __KSSystemTask._name, __KSSystemTask._periodSeconds, __KSSystemTask._queue,
                           __KSTIUserDictionaryEntryValue._phrase, __KSTIUserDictionaryEntryValue._shortcut,
                           __KSTIUserDictionaryEntryValue._timestamp, __KSTIUserDictionaryTransaction._valueToDelete,
                           __KSTIUserDictionaryTransaction._valueToInsert, __KSTRClient._generation, __KSTRClient._hasReadAccess,

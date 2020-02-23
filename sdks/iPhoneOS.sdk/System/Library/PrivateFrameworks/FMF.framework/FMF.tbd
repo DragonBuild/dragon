@@ -1,16 +1,19 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/FMF.framework/FMF
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _FMFDevicesChangedNotification, _FMFErrorDomain, _FMFFenceErrorDomain, _FMFFenceTriggerArriving,
-                          _FMFFenceTriggerImmediate, _FMFFenceTriggerLeaving, _FMFFenceTypeNotifyMe, _FMFFenceTypeNotifyOther,
-                          _FMFGroupIdDefault, _FMFGroupIdGroup, _FMFGroupIdOneToOne,
-                          _FMFHomeKitAutomationDeviceChangedNotification, _FMFMeDeviceChangedNotification, _kFMFSyncXPCTimeout,
-                          _kMapImageKey ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _FMFDevicesChangedNotification, _FMFErrorDomain, _FMFFenceAcceptanceStatusAccepted,
+                          _FMFFenceAcceptanceStatusPending, _FMFFenceAcceptanceStatusPendingHidden, _FMFFenceErrorDomain,
+                          _FMFFenceTriggerArriving, _FMFFenceTriggerImmediate, _FMFFenceTriggerLeaving,
+                          _FMFFenceTriggerStatusEnter, _FMFFenceTriggerStatusExit, _FMFFenceTriggerStatusUndetermined,
+                          _FMFFenceTypeNotifyMe, _FMFFenceTypeNotifyOther, _FMFFollowersChangedNotification, _FMFGroupIdDefault,
+                          _FMFGroupIdGroup, _FMFGroupIdOneToOne, _FMFHomeKitAutomationDeviceChangedNotification,
+                          _FMFMeDeviceChangedNotification, _kFMFSyncXPCTimeout, _kMapImageKey ]
     objc-classes:       [ _FMFAppAccountInfo, _FMFContactUtility, _FMFDevice, _FMFFence, _FMFFriendshipRequest, _FMFHandle,
                           _FMFLabelUtil, _FMFLocation, _FMFMapCache, _FMFMapCacheImage, _FMFMapImageRequest, _FMFMapSession,
                           _FMFPlacemark, _FMFSession, _FMFSessionDataManager, _FMFSessionProxy, _FMFSynchronizer ]
@@ -19,15 +22,16 @@ exports:
                           _FMFAppAccountInfo._legacyUsername, _FMFAppAccountInfo._username, _FMFContactUtility._contactFormatter,
                           _FMFContactUtility._contactStore, _FMFDevice._deviceId, _FMFDevice._deviceName,
                           _FMFDevice._idsDeviceId, _FMFDevice._isActiveDevice, _FMFDevice._isAutoMeCapable,
-                          _FMFDevice._isThisDevice, _FMFFence._active, _FMFFence._createdByIdentifier, _FMFFence._followerIds,
-                          _FMFFence._friendIdentifier, _FMFFence._fromMe, _FMFFence._identifier, _FMFFence._label,
-                          _FMFFence._location, _FMFFence._locationType, _FMFFence._pending, _FMFFence._pendingIdentifier,
-                          _FMFFence._placemark, _FMFFence._recipients, _FMFFence._recurring, _FMFFence._timestamp,
-                          _FMFFence._trigger, _FMFFence._type, _FMFFriendshipRequest._endDate, _FMFFriendshipRequest._fromHandle,
-                          _FMFFriendshipRequest._groupId, _FMFFriendshipRequest._requestId, _FMFFriendshipRequest._requestType,
-                          _FMFFriendshipRequest._toHandles, _FMFHandle.__prettyNameInternal, _FMFHandle._aliasServerIds,
-                          _FMFHandle._dsid, _FMFHandle._expiresByGroupId, _FMFHandle._favoriteOrder, _FMFHandle._hashedDSID,
-                          _FMFHandle._identifier, _FMFHandle._idsStatus, _FMFHandle._invitationSentToIds,
+                          _FMFDevice._isCompanionDevice, _FMFDevice._isThisDevice, _FMFFence._acceptanceStatus,
+                          _FMFFence._active, _FMFFence._ckRecordName, _FMFFence._ckRecordZoneOwnerName,
+                          _FMFFence._createdByIdentifier, _FMFFence._followerIds, _FMFFence._friendIdentifier, _FMFFence._fromMe,
+                          _FMFFence._identifier, _FMFFence._label, _FMFFence._location, _FMFFence._locationType,
+                          _FMFFence._pendingIdentifier, _FMFFence._placemark, _FMFFence._recipients, _FMFFence._recurring,
+                          _FMFFence._timestamp, _FMFFence._trigger, _FMFFence._type, _FMFFriendshipRequest._endDate,
+                          _FMFFriendshipRequest._fromHandle, _FMFFriendshipRequest._groupId, _FMFFriendshipRequest._requestId,
+                          _FMFFriendshipRequest._requestType, _FMFFriendshipRequest._toHandles, _FMFHandle.__prettyNameInternal,
+                          _FMFHandle._aliasServerIds, _FMFHandle._dsid, _FMFHandle._expiresByGroupId, _FMFHandle._favoriteOrder,
+                          _FMFHandle._hashedDSID, _FMFHandle._identifier, _FMFHandle._idsStatus, _FMFHandle._invitationSentToIds,
                           _FMFHandle._isFamilyMember, _FMFHandle._pending, _FMFHandle._qualifiedIdentifier,
                           _FMFHandle._reachable, _FMFHandle._serverId, _FMFHandle._trackingTimestamp, _FMFLocation._TTL,
                           _FMFLocation._age, _FMFLocation._coordinate, _FMFLocation._distance, _FMFLocation._distanceDescription,

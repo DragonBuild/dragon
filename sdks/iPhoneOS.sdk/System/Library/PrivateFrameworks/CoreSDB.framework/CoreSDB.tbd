@@ -1,15 +1,16 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CoreSDB.framework/CoreSDB
 current-version:       800
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _CSDBCheckResultWithStatement, _CSDBConfigLookaside, _CSDBCreateDirectoriesToPath,
-                          _CSDBCreateDirectoriesToPathWithOwnership, _CSDBCreateThreadedRecordStore,
-                          _CSDBCreateThreadedRecordStoreWithQOSClass, _CSDBCreateUTF8StringFromCFString, _CSDBDataMethods,
-                          _CSDBDatabasePassesIntegrityCheckAtPath, _CSDBDefaultCorruptedDatabaseHandler,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _CSDBCheckResultWithStatement, _CSDBCreateDirectoriesToPath, _CSDBCreateDirectoriesToPathWithOwnership,
+                          _CSDBCreateThreadedRecordStore, _CSDBCreateThreadedRecordStoreWithQOSClass,
+                          _CSDBCreateThreadedRecordStoreWithQOSClassAndLookAsideBufferConfig, _CSDBCreateUTF8StringFromCFString,
+                          _CSDBDataMethods, _CSDBDatabasePassesIntegrityCheckAtPath, _CSDBDefaultCorruptedDatabaseHandler,
                           _CSDBDeregisterReconnectBlockWithIdentifier, _CSDBGenerateInClauseForCount,
                           _CSDBGetCorruptDatabaseHandler, _CSDBGetLastSQLCommands, _CSDBGetMobileUserDirectory,
                           _CSDBGetMobileUserGID, _CSDBGetMobileUserUID, _CSDBIntegerMethods, _CSDBLogLastCommandsForError,
@@ -79,22 +80,22 @@ exports:
                           _CSDBSqliteDatabasePath, _CSDBSqliteDatabaseRegisterFunctionForDB,
                           _CSDBSqliteDatabaseReleaseSqliteConnection, _CSDBSqliteDatabaseReleaseSqliteStatement,
                           _CSDBSqliteDatabaseSetConnectionInitializer, _CSDBSqliteDatabaseSetDataProtectionClass,
-                          _CSDBSqliteDatabaseSetLoggingEnabled, _CSDBSqliteDatabaseSetMigrationHandlers,
-                          _CSDBSqliteDatabaseSetSetupHandler, _CSDBSqliteDatabaseSetShouldMigrateInExternalProcess,
-                          _CSDBSqliteDatabaseSetValueForProperty, _CSDBSqliteDatabaseSetVersion,
-                          _CSDBSqliteDatabaseStatementForReading, _CSDBSqliteDatabaseStatementForWriting,
-                          _CSDBSqliteDatabaseVacuum, _CSDBSqliteDeleteDatabase, _CSDBSqliteErrMsg, _CSDBSqlitePreparedStatement,
-                          _CSDBSqliteSetDefaultPageCacheSize, _CSDBSqliteSetupLoggingForDatabaseHandle,
-                          _CSDBSqliteStatementApplyValuesFromRecord, _CSDBSqliteStatementApplyValuesFromRecordWithNullValue,
-                          _CSDBSqliteStatementBindValuesForColumns, _CSDBSqliteStatementCopyAllRowsStringsForColumnsAtIndices,
-                          _CSDBSqliteStatementCopyDataResult, _CSDBSqliteStatementCopyStringResult,
-                          _CSDBSqliteStatementCopyStringsForColumnsAtIndices, _CSDBSqliteStatementInteger64Result,
-                          _CSDBSqliteStatementInteger64ResultColumn, _CSDBSqliteStatementIntegerResult,
-                          _CSDBSqliteStatementPerform, _CSDBSqliteStatementReset, _CSDBSqliteStatementSendResults,
-                          _CSDBSqliteStep, _CSDBSqliteStepWithConnection, _CSDBSqliteUtilitiesGetSchemaVersionAtPath,
-                          _CSDBSqliteUtilitiesGetSchemaVersionAtPathWithProtection, _CSDBStringMethods,
-                          _CSDBThreadedRecordStoreEnsureDatabaseSetup, _CSDBThreadedRecordStoreEnsureDatabaseSetupWithProtection,
-                          _CSDBThreadedRecordStoreGetSequenceNumber, _CSDBThreadedRecordStoreOwnsCurrentThread,
-                          _CSDBThreadedRecordStoreRegisterClass, _CSDBThreadedRecordStoreTeardownDatabase,
-                          _kCSDBRecordErrorDomain, _kCSDBRecordSQLiteErrorDomain ]
+                          _CSDBSqliteDatabaseSetLoggingEnabled, _CSDBSqliteDatabaseSetLookAsideConfig,
+                          _CSDBSqliteDatabaseSetMigrationHandlers, _CSDBSqliteDatabaseSetSetupHandler,
+                          _CSDBSqliteDatabaseSetShouldMigrateInExternalProcess, _CSDBSqliteDatabaseSetValueForProperty,
+                          _CSDBSqliteDatabaseSetVersion, _CSDBSqliteDatabaseStatementForReading,
+                          _CSDBSqliteDatabaseStatementForWriting, _CSDBSqliteDatabaseVacuum, _CSDBSqliteDeleteDatabase,
+                          _CSDBSqliteErrMsg, _CSDBSqlitePreparedStatement, _CSDBSqliteSetDefaultPageCacheSize,
+                          _CSDBSqliteSetupLoggingForDatabaseHandle, _CSDBSqliteStatementApplyValuesFromRecord,
+                          _CSDBSqliteStatementApplyValuesFromRecordWithNullValue, _CSDBSqliteStatementBindValuesForColumns,
+                          _CSDBSqliteStatementCopyAllRowsStringsForColumnsAtIndices, _CSDBSqliteStatementCopyDataResult,
+                          _CSDBSqliteStatementCopyStringResult, _CSDBSqliteStatementCopyStringsForColumnsAtIndices,
+                          _CSDBSqliteStatementInteger64Result, _CSDBSqliteStatementInteger64ResultColumn,
+                          _CSDBSqliteStatementIntegerResult, _CSDBSqliteStatementPerform, _CSDBSqliteStatementReset,
+                          _CSDBSqliteStatementSendResults, _CSDBSqliteStep, _CSDBSqliteStepWithConnection,
+                          _CSDBSqliteUtilitiesGetSchemaVersionAtPath, _CSDBSqliteUtilitiesGetSchemaVersionAtPathWithProtection,
+                          _CSDBStringMethods, _CSDBThreadedRecordStoreEnsureDatabaseSetup,
+                          _CSDBThreadedRecordStoreEnsureDatabaseSetupWithProtection, _CSDBThreadedRecordStoreGetSequenceNumber,
+                          _CSDBThreadedRecordStoreOwnsCurrentThread, _CSDBThreadedRecordStoreRegisterClass,
+                          _CSDBThreadedRecordStoreTeardownDatabase, _kCSDBRecordErrorDomain, _kCSDBRecordSQLiteErrorDomain ]
 ...

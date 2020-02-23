@@ -1383,6 +1383,8 @@ Globals:
   Availability: nonswift
 - Name: UISceneWillConnectNotification
   SwiftName: UIScene.willConnectNotification
+- Name: UISceneDidConnectNotification
+  SwiftName: UIScene.didConnectNotification
 - Name: UISceneWillDisconnectNotification
   SwiftName: UIScene.willDisconnectNotification
 - Name: UISceneDidDisconnectNotification

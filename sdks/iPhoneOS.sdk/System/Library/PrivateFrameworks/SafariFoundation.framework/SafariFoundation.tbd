@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SafariFoundation.framework/SafariFoundation
-current-version:       607.1.40
+current-version:       608.1.48
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SFAutoFillFromAddressBookPreferenceKey, _SFAutoFillHelperErrorDomain,
                           _SFCredentialProviderDeveloperEntitlement, _SFCredentialProviderExtensionPointIdentifier,
                           _SFCredentialProviderShowsConfigurationUIKey, _SFCredentialProviderSystemEntitlement,
@@ -24,8 +25,9 @@ exports:
                           _SFCredentialProviderExtensionHelperProxy._connection,
                           _SFCredentialProviderExtensionManager._errorEncounteredDuringLastExtensionDiscovery,
                           _SFCredentialProviderExtensionManager._extensionMatchingToken,
-                          _SFCredentialProviderExtensionManager._extensions, _SFCredentialProviderExtensionManager._observers,
-                          _SFCredentialProviderExtensionManager._queue,
+                          _SFCredentialProviderExtensionManager._extensions,
+                          _SFCredentialProviderExtensionManager._extensionsSync,
+                          _SFCredentialProviderExtensionManager._observers, _SFCredentialProviderExtensionManager._queue,
                           _SFCredentialProviderExtensionState._containingAppBundleIdentifier,
                           _SFCredentialProviderExtensionState._enabled,
                           _SFCredentialProviderExtensionState._localizedDisplayName,

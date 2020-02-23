@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 14084CCC-7BCA-3FF5-A413-98E3FE33A728', 'armv7s: 74AD1314-46E5-3B45-9A54-814C63D27378', 
-                   'arm64: 6B68B0F4-6419-34E2-9A38-3DA45F7C2634', 'arm64e: E0E68EA0-B00F-3EA5-822B-389F3037E894' ]
+                   'arm64: 98E62568-7C5F-3F08-A929-8DB9B1CBF6EC', 'arm64e: 7D210439-B457-34F0-8514-26942633C2A3' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox'
 current-version: 1000
@@ -258,7 +258,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 0C5CEE7C-1718-34CC-BE35-F22CD8DE7566', 'arm64e: 006C91F6-A83E-3EC7-BCAA-D6FEE1386BEA' ]
+                   'arm64: 4F535727-C7A8-3A28-9C3F-C79C8B5132E9', 'arm64e: E2C0ECEB-3850-3BB6-8459-1C58E8A7DFD1' ]
 platform:        ios
 install-name:    '/System/Library/PrivateFrameworks/AudioToolboxCore.framework/AudioToolboxCore'
 exports:         

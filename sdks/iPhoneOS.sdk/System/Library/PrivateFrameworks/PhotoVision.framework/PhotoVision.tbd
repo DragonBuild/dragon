@@ -1,13 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PhotoVision.framework/PhotoVision
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    allowed-clients:    [ PhotoAnalysis, MediaMiningKit, PhotosGraph, AXMediaUtilities, AXMediaUtilitiesService, VideoProcessing,
-                          PhotoLibraryPrivate, assetsd, duetknowledged, coreduetd, CoreDuet ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    allowable-clients:  [ AXMediaUtilities, AXMediaUtilitiesService, CoreDuet, MediaMiningKit, PhotoAnalysis, PhotoVisionTool,
+                          PhotosGraph, VideoProcessing, assetsd, coreduetd, duetknowledged ]
     symbols:            [ _AlgorithmRevisionForRequestClass, _CentroidForLandmarkRegion,
                           _GetFaceAlgorithmRevisionDictionaryByAlgorithmUmbrellaVersion,
                           _GetSceneAlgorithmRevisionDictionaryByAlgorithmUmbrellaVersion, _GroupingIdentifierFromDate,
@@ -23,7 +24,8 @@ exports:
                           _PVClusteringStatusIsClusteringKey, _PVClusteringStatusPendingFacesCountKey,
                           _PVCompareLibraryClustersWithVisionClusters, _PVDefaultAdvancedStatusMergeCandidateLimit,
                           _PVDefaultAdvancedStatusVerifiedPersonLimit, _PVDefaultFaceAlgorithmUmbrellaVersion,
-                          _PVDefaultFaceClusteringDisabled, _PVDefaultFaceClusteringThreshold,
+                          _PVDefaultFaceClusteringAgeThreshold, _PVDefaultFaceClusteringDisabled,
+                          _PVDefaultFaceClusteringJunkThreshold, _PVDefaultFaceClusteringThreshold,
                           _PVDefaultFaceIDModelAlwaysRebuild, _PVDefaultFaceIDModelRebuildPeriod,
                           _PVDefaultFaceMergeFaceprintDistanceThreshold, _PVDefaultFacePrimarySuggestionsThreshold,
                           _PVDefaultMaxFaceCountForClustering, _PVDefaultMinFaceCountToTriggerClustering,
@@ -81,7 +83,7 @@ exports:
                           _PVPersonDeduperSocialGroupComplementStep, _PVPersonDeduperSocialGroupOverlaps,
                           _PVPersonDeduperSocialGroupTimeWarpingStep, _PVPersonDeduperStep, _PVPersonDeduperTimeStep,
                           _PVPersonPromoter, _PVPersonPromoterProfile, _PVQueue, _PVSceneTaxonomy, _PVSceneTaxonomyNode,
-                          _PVSuggestionRequest, _PVUserDefaults, _PVVisionAnalyzer, _PVVisionHelper, _PhotoVision ]
+                          _PVSuggestionRequest, _PVUserDefaults, _PVUtils, _PVVisionAnalyzer, _PVVisionHelper, _PhotoVision ]
     objc-ivars:         [ _PVAggregate._primaryDomain, _PVCanceler._canceled, _PVCanceler._updateBlock,
                           _PVClusterer._accumulatedChangesCount, _PVClusterer._cacheDirUrl, _PVClusterer._cacheFileUrl,
                           _PVClusterer._clusterBuilder, _PVClusterer._clustererBringUpState, _PVClusterer._clusteringCanceler,
@@ -94,7 +96,8 @@ exports:
                           _PVClusterer._propertyDictionary, _PVClusterer._propertyDictionaryLock, _PVClusterer._rebuildClusterer,
                           _PVClusterer._suggestionLock, _PVClusterer._threshold, _PVClusterer._timestampOfLastClusterComparison,
                           _PVClusterer._visionCanceler, _PVClusterer._visionIntegration,
-                          _PVContext._faceAlgorithmUmbrellaVersion, _PVContext._faceClusteringDisabled,
+                          _PVContext._faceAlgorithmUmbrellaVersion, _PVContext._faceClusteringAgeThreshold,
+                          _PVContext._faceClusteringDisabled, _PVContext._faceClusteringJunkThreshold,
                           _PVContext._faceClusteringThreshold, _PVContext._faceMergeFaceprintDistanceThreshold,
                           _PVContext._facePrimarySuggestionsThreshold, _PVContext._maxFaceCountForClustering,
                           _PVContext._minFaceCountToTriggerClustering,
@@ -104,25 +107,27 @@ exports:
                           _PVDataAccessor._faceAlgorithmUmbrellaVersion, _PVDataAccessor._persistenceDelegate,
                           _PVDataAccessor._sceneAlgorithmUmbrellaVersion, _PVEvent._details, _PVEvent._name,
                           _PVEventManager._context, _PVEventManager._notificationListeners, _PVFace._adjustmentVersion,
-                          _PVFace._blurScore, _PVFace._centerX, _PVFace._centerY, _PVFace._clusterSequenceNumber,
-                          _PVFace._exposureScore, _PVFace._faceAlgorithmVersion, _PVFace._faceprint, _PVFace._groupingIdentifier,
-                          _PVFace._hasSmile, _PVFace._hidden, _PVFace._isInTrash, _PVFace._isLeftEyeClosed,
-                          _PVFace._isRightEyeClosed, _PVFace._isTooSmall, _PVFace._leftEyeX, _PVFace._leftEyeY, _PVFace._manual,
+                          _PVFace._ageType, _PVFace._baldType, _PVFace._blurScore, _PVFace._centerX, _PVFace._centerY,
+                          _PVFace._clusterSequenceNumber, _PVFace._exposureScore, _PVFace._eyeMakeupType, _PVFace._eyesState,
+                          _PVFace._faceAlgorithmVersion, _PVFace._faceprint, _PVFace._facialHairType, _PVFace._genderType,
+                          _PVFace._glassesType, _PVFace._groupingIdentifier, _PVFace._hairColorType, _PVFace._hasSmile,
+                          _PVFace._hidden, _PVFace._isInTrash, _PVFace._isLeftEyeClosed, _PVFace._isRightEyeClosed,
+                          _PVFace._isTooSmall, _PVFace._leftEyeX, _PVFace._leftEyeY, _PVFace._lipMakeupType, _PVFace._manual,
                           _PVFace._mouthX, _PVFace._mouthY, _PVFace._nameSource, _PVFace._personLocalIdentifier,
-                          _PVFace._poseYaw, _PVFace._qualityMeasure, _PVFace._rightEyeX, _PVFace._rightEyeY, _PVFace._size,
-                          _PVFace._sourceHeight, _PVFace._sourceWidth, _PVFace._trainingType, _PVFaceCrop._cachedImageDimensions,
-                          _PVFaceCrop._faceCropData, _PVFaceCrop._originatingFace, _PVFaceCrop._state,
-                          _PVFaceCropSourceDescriptor._face, _PVFaceCropSourceDescriptor._image, _PVFaceGroup._faces,
-                          _PVFaceGroup._personBuilderState, _PVFaceGroup._personLocalIdentifier,
-                          _PVFaceGroup._representativeFaceLocalIdentifier, _PVFaceMerger._context,
-                          _PVFaceMerger._visionIntegration, _PVFacePair._face1, _PVFacePair._face2, _PVFacePair._score,
-                          _PVFaceprint._faceprintData, _PVFaceprint._faceprintVersion, _PVImage._CGImage, _PVImage._CIImage,
-                          _PVImage._adjustmentVersion, _PVImage._assetHeight, _PVImage._assetWidth, _PVImage._bytesPerRow,
-                          _PVImage._groupingIdentifier, _PVImage._height, _PVImage._imageData, _PVImage._imageURL,
-                          _PVImage._orientation, _PVImage._orientedHeight, _PVImage._orientedWidth, _PVImage._width,
-                          _PVNotification._details, _PVNotification._name, _PVObject._localIdentifier, _PVPerson._faceCount,
-                          _PVPerson._inPersonNamingModel, _PVPerson._manualOrder, _PVPerson._name, _PVPerson._type,
-                          _PVPerson._uri, _PVPerson._verified, _PVPersonCluster._backingAssetIdentifiers,
+                          _PVFace._poseYaw, _PVFace._quality, _PVFace._qualityMeasure, _PVFace._rightEyeX, _PVFace._rightEyeY,
+                          _PVFace._roll, _PVFace._size, _PVFace._smileType, _PVFace._sourceHeight, _PVFace._sourceWidth,
+                          _PVFace._trainingType, _PVFaceCrop._cachedImageDimensions, _PVFaceCrop._faceCropData,
+                          _PVFaceCrop._originatingFace, _PVFaceCrop._state, _PVFaceCropSourceDescriptor._face,
+                          _PVFaceCropSourceDescriptor._image, _PVFaceGroup._faces, _PVFaceGroup._personBuilderState,
+                          _PVFaceGroup._personLocalIdentifier, _PVFaceGroup._representativeFaceLocalIdentifier,
+                          _PVFaceMerger._context, _PVFaceMerger._visionIntegration, _PVFacePair._face1, _PVFacePair._face2,
+                          _PVFacePair._score, _PVFaceprint._faceprintData, _PVFaceprint._faceprintVersion, _PVImage._CGImage,
+                          _PVImage._CIImage, _PVImage._adjustmentVersion, _PVImage._assetHeight, _PVImage._assetWidth,
+                          _PVImage._bytesPerRow, _PVImage._groupingIdentifier, _PVImage._height, _PVImage._imageData,
+                          _PVImage._imageURL, _PVImage._orientation, _PVImage._orientedHeight, _PVImage._orientedWidth,
+                          _PVImage._width, _PVNotification._details, _PVNotification._name, _PVObject._localIdentifier,
+                          _PVPerson._faceCount, _PVPerson._inPersonNamingModel, _PVPerson._manualOrder, _PVPerson._name,
+                          _PVPerson._type, _PVPerson._uri, _PVPerson._verified, _PVPersonCluster._backingAssetIdentifiers,
                           _PVPersonCluster._backingFaceIdentifiers, _PVPersonCluster._backingFaceIdentifiersByMomentIdentifiers,
                           _PVPersonCluster._backingMomentIdentifiers, _PVPersonCluster._firstSeenDate, _PVPersonCluster._hash,
                           _PVPersonCluster._highlyInteresting, _PVPersonCluster._interestingScore,

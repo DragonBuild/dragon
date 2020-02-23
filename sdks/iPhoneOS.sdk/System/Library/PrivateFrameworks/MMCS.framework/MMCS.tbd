@@ -1,12 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/MMCS.framework/MMCS
-current-version:       438.212
+current-version:       471
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _C3BaseRelease, _C3BaseRetain, _IsValidCFDictionary,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _C3BaseRelease, _C3BaseRetain, _CKChunkSchemeAndEncryptionKeySize, _CKChunkSchemeAndSignatureSize,
+                          _CKFileSchemeAndSignatureSize, _CKRegisteredChunkKey, _CKRegisteredChunkLength, _IsValidCFDictionary,
                           _MMCSComputeSignatureAndRegisterItemWithDescriptor, _MMCSEngineCancelRequests,
                           _MMCSEngineCopyStatusReport, _MMCSEngineCreate, _MMCSEngineDestroy, _MMCSEngineGetRequestMetrics,
                           _MMCSEngineIsActive, _MMCSEngineSetMetricsEnabled, _MMCSFlattenError, _MMCSGetCacheBlobFd,
@@ -58,15 +60,15 @@ exports:
                           _kMMCSRequestOptionAllowsRetryForBackgroundDataTasks, _kMMCSRequestOptionAuthTokenTimeout,
                           _kMMCSRequestOptionBackgroundConnectionPoolName, _kMMCSRequestOptionBackgroundConnectionPoolSize,
                           _kMMCSRequestOptionBoundInterfaceIdentifier, _kMMCSRequestOptionCallerRequestUUID,
-                          _kMMCSRequestOptionClientLocation, _kMMCSRequestOptionContainerIdentifier,
-                          _kMMCSRequestOptionDiscretionaryNetworkBehavior, _kMMCSRequestOptionForceGetChunks,
-                          _kMMCSRequestOptionHTTPClass, _kMMCSRequestOptionHttpAdaptiveReadTimeout,
-                          _kMMCSRequestOptionHttpAdaptiveWriteTimeout, _kMMCSRequestOptionInlineCompleteLogicInvertedMode,
-                          _kMMCSRequestOptionInsertHeaders, _kMMCSRequestOptionItemOptions,
-                          _kMMCSRequestOptionMetaserverAllowedHostnamesOverride,
-                          _kMMCSRequestOptionMetaserverAllowedSchemesOverride, _kMMCSRequestOptionMetricOptions,
-                          _kMMCSRequestOptionNetworkServiceType, _kMMCSRequestOptionPreauthorization,
-                          _kMMCSRequestOptionPriority, _kMMCSRequestOptionQoS,
+                          _kMMCSRequestOptionChunkingLibraryCorruptionMode, _kMMCSRequestOptionClientLocation,
+                          _kMMCSRequestOptionContainerIdentifier, _kMMCSRequestOptionDiscretionaryNetworkBehavior,
+                          _kMMCSRequestOptionDuetPreClearedMode, _kMMCSRequestOptionForceGetChunks, _kMMCSRequestOptionHTTPClass,
+                          _kMMCSRequestOptionHttpAdaptiveReadTimeout, _kMMCSRequestOptionHttpAdaptiveWriteTimeout,
+                          _kMMCSRequestOptionInlineCompleteLogicInvertedMode, _kMMCSRequestOptionInsertHeaders,
+                          _kMMCSRequestOptionItemOptions, _kMMCSRequestOptionMetaserverAllowedHostnamesOverride,
+                          _kMMCSRequestOptionMetaserverAllowedSchemesOverride, _kMMCSRequestOptionMetaserverCheckDisabled,
+                          _kMMCSRequestOptionMetricOptions, _kMMCSRequestOptionNetworkServiceType,
+                          _kMMCSRequestOptionPreauthorization, _kMMCSRequestOptionPriority, _kMMCSRequestOptionQoS,
                           _kMMCSRequestOptionReaderWriterCallbackForDownloads, _kMMCSRequestOptionRequireInlineComplete,
                           _kMMCSRequestOptionRequiresPowerPluggedIn, _kMMCSRequestOptionResumableContainerLimpMode,
                           _kMMCSRequestOptionRetrievePastRegistration, _kMMCSRequestOptionReturnPreauthorizationRequestObject,
@@ -118,9 +120,12 @@ exports:
                           _mmcs_index_set_count, _mmcs_index_set_create, _mmcs_index_set_create_with_string,
                           _mmcs_is_apple_internal_install, _mmcs_item_generic_item_callbacks, _mmcs_item_needs_auth_get_chunks,
                           _mmcs_item_needs_put, _mmcs_item_padded_chunk_length, _mmcs_key_description_create_with_bytes,
-                          _mmcs_key_description_create_with_cfdata, _mmcs_library_init, _mmcs_metrics_harvest_http_info,
-                          _mmcs_mockhttp_set_callbacks, _mmcs_padded_chunk_length_with_policy_and_chunk_length,
-                          _mmcs_proxy_locator_exists, _mmcs_read_stream_pool_close, _mmcs_read_stream_pool_create,
+                          _mmcs_key_description_create_with_cfdata, _mmcs_library_init, _mmcs_logging_log_header_level,
+                          _mmcs_logging_logger_awd, _mmcs_logging_logger_chunk, _mmcs_logging_logger_default,
+                          _mmcs_logging_logger_network_performance, _mmcs_logging_logger_summary,
+                          _mmcs_metrics_harvest_http_info, _mmcs_mockhttp_set_callbacks,
+                          _mmcs_padded_chunk_length_with_policy_and_chunk_length, _mmcs_proxy_locator_exists,
+                          _mmcs_read_stream_pool_close, _mmcs_read_stream_pool_create,
                           _mmcs_read_stream_pool_parameters_make_pool, _mmcs_read_stream_pool_parameters_make_pool_timeout_max,
                           _mmcs_read_stream_pool_schedule, _mmcs_register_item_generic_item_callbacks,
                           _mmcs_register_item_padded_chunk_length, _mmcs_report_copy_headers_from_vendor_response,
@@ -138,15 +143,16 @@ exports:
     objc-ivars:         [ _C2WarmRequest._callback, _C2WarmRequest._warmOptions, _C2WarmRequest._warmRequest,
                           _C2WarmRequest._warmTask, _MMCSBoundedQueue._boundsExceeded, _MMCSBoundedQueue._bytesErrorLevel,
                           _MMCSBoundedQueue._bytesUpperBound, _MMCSBoundedQueue._entries, _MMCSBoundedQueue._isValid,
-                          _MMCSHTTPContext._activityMarker, _MMCSHTTPContext._boundedQueue, _MMCSHTTPContext._dataTask,
-                          _MMCSHTTPContext._didOpen, _MMCSHTTPContext._hc, _MMCSHTTPContext._inputStream,
-                          _MMCSHTTPContext._isHandlingError, _MMCSHTTPContext._isTaskDone, _MMCSHTTPContext._isValid,
-                          _MMCSHTTPContext._outputStream, _MMCSHTTPContext._requestIsStreamed, _MMCSHTTPContext._timingData,
-                          _MMCSHTTPContext._urlSession, _MMCSOperationMetric._bytesDownloaded,
-                          _MMCSOperationMetric._bytesUploaded, _MMCSOperationMetric._connections,
+                          _MMCSHTTPContext._activityMarker, _MMCSHTTPContext._dataTask, _MMCSHTTPContext._didOpen,
+                          _MMCSHTTPContext._hc, _MMCSHTTPContext._inputStream, _MMCSHTTPContext._isHandlingError,
+                          _MMCSHTTPContext._isTaskDone, _MMCSHTTPContext._isValid, _MMCSHTTPContext._outputStream,
+                          _MMCSHTTPContext._requestIsStreamed, _MMCSHTTPContext._timingData, _MMCSHTTPContext._urlSession,
+                          _MMCSOperationMetric._bytesDownloaded, _MMCSOperationMetric._bytesUploaded,
+                          _MMCSOperationMetric._chunkCountByChunkProfile, _MMCSOperationMetric._connections,
                           _MMCSOperationMetric._connectionsCreated, _MMCSOperationMetric._duration,
-                          _MMCSOperationMetric._executing, _MMCSOperationMetric._queueing, _MMCSOperationMetric._ranges,
-                          _MMCSOperationMetric._requestUUIDs, _MMCSOperationMetric._startDate,
+                          _MMCSOperationMetric._executing, _MMCSOperationMetric._fileCountByChunkProfile,
+                          _MMCSOperationMetric._queueing, _MMCSOperationMetric._ranges, _MMCSOperationMetric._requestUUIDs,
+                          _MMCSOperationMetric._startDate, _MMCSOperationMetric._totalBytesByChunkProfile,
                           _MMCSOperationStateTimeRange._duration, _MMCSOperationStateTimeRange._operationState,
                           _MMCSOperationStateTimeRange._startDate ]
 ...

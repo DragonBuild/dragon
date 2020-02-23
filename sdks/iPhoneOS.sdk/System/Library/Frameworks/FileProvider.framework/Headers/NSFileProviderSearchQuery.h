@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(ios, macos, macCatalyst)
+API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(ios)
 @interface NSFileProviderSearchQuery : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

@@ -1,12 +1,21 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 6C32D0D2-FF47-3FF9-BF7E-44FD02C75DA4', 'arm64e: 8F092467-764B-3EFB-8660-34E0DF0AC8FE' ]
+                   'arm64: 1618B675-6520-321B-B3AB-5504CB099587', 'arm64e: E1F27645-6848-3DC6-A3C3-A2D40A96636E' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/PencilKit.framework/PencilKit'
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
-    symbols:         [ _PKAppleDrawingTypeIdentifier, _PKAppleStrokeSelectionTypeIdentifier, 
+    symbols:         [ '$ld$install_name$os11.0$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os11.1$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os11.2$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os11.3$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os11.4$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os12.0$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os12.1$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os12.2$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       '$ld$install_name$os12.3$/System/Library/PrivateFrameworks/PencilKit.framework/PencilKit', 
+                       _PKAppleDrawingTypeIdentifier, _PKAppleStrokeSelectionTypeIdentifier, 
                        _PKAttachmentViewDefaultDrawingWidth, _PKClipperScaling, _PKDidSelectStrokesNotification, 
                        _PKHandwritingFeedbackActivityType, _PKInkBlueComponentProperty, 
                        _PKInkColorProperty, _PKInkGreenComponentProperty, _PKInkIdentifierCharcoal, 

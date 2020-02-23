@@ -1,27 +1,24 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/FMFUI.framework/FMFUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ActiveDeviceLinkDetailsKey, _ActiveDeviceLinkNameKey, _PSFollowerDetailsTitleTextColorKey ]
-    objc-classes:       [ _ActiveDeviceLinkCell, _FMFActiveDeviceSelectionViewController, _FMFLocationSharingViewController,
-                          _FMFMapImageCache, _FMFMapOptionsViewController, _FMFMapUtilities, _FMFMapViewController,
-                          _FMFMapViewDelegateInternal, _FMFMonogramUtility, _FMFNoLocationView, _FMFNoNetworkAlert,
-                          _FMFNoNetworkAlertInfo, _FMFRefreshBarButtonItem, _FMFRefreshWrapperButton, _FMFSpecifierProvider,
+    objc-classes:       [ _ActiveDeviceLinkCell, _FMFLocationSharingViewController, _FMFMapImageCache,
+                          _FMFMapOptionsViewController, _FMFMapUtilities, _FMFMapViewController, _FMFMapViewDelegateInternal,
+                          _FMFMonogramUtility, _FMFNoLocationView, _FMFNoNetworkAlert, _FMFNoNetworkAlertInfo,
+                          _FMFRefreshBarButtonItem, _FMFRefreshWrapperButton, _FMFSpecifierProvider,
                           _FMFTintedActivityIndicatorView, _FMFTitleView, _FMFWildcardGestureRecognizer,
                           _FollowerDetailsLinkCell ]
     objc-ivars:         [ _ActiveDeviceLinkCell._detailsHeightContraint, _ActiveDeviceLinkCell._detailsLabel,
                           _ActiveDeviceLinkCell._deviceNameLabel, _ActiveDeviceLinkCell._fromLabel,
                           _ActiveDeviceLinkCell._fromLabelLeadingConstraint,
-                          _FMFActiveDeviceSelectionViewController._currentActiveDevice,
-                          _FMFActiveDeviceSelectionViewController._deviceList,
-                          _FMFActiveDeviceSelectionViewController._fmfSession,
-                          _FMFActiveDeviceSelectionViewController._nowActiveDevice,
-                          _FMFActiveDeviceSelectionViewController._specifierStartIndex,
                           _FMFLocationSharingViewController._allFollowersHandles,
+                          _FMFLocationSharingViewController._areMeDeviceInfoLoaded,
                           _FMFLocationSharingViewController._areSpecifiersLoaded,
                           _FMFLocationSharingViewController._deviceSpecifiers,
                           _FMFLocationSharingViewController._dsidToFamilyPhoto, _FMFLocationSharingViewController._familyMembers,
@@ -30,8 +27,11 @@ exports:
                           _FMFLocationSharingViewController._followersSpecifiers,
                           _FMFLocationSharingViewController._genericErrorAlert,
                           _FMFLocationSharingViewController._hashedFamilyDsids,
+                          _FMFLocationSharingViewController._isAccessibilitySize,
+                          _FMFLocationSharingViewController._isFindMyDeviceOn,
                           _FMFLocationSharingViewController._isMyLocationEnabled,
                           _FMFLocationSharingViewController._lastSelectedHandle,
+                          _FMFLocationSharingViewController._meDeviceChangePending, _FMFLocationSharingViewController._meDevices,
                           _FMFLocationSharingViewController._specifiersQueue,
                           _FMFLocationSharingViewController._useFamilyCirclePhotos,
                           _FMFLocationSharingViewController._useFamilyCirclePhotosLoaded, _FMFMapImageCache.__cache,

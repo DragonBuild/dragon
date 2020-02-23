@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 68D0E820-D2DF-3F2C-BA08-E70CA222D4CC', 'arm64e: 7BC05B1E-E40E-3F40-942C-A8C289A6BF59' ]
+                   'arm64: C50E10F2-92B6-338F-AF2A-BA38D035B2AA', 'arm64e: BBB9B6DF-B381-357E-BA01-0C940A096BBE' ]
 platform:        ios
 install-name:    '/usr/lib/libWirelessAudioIPC.dylib'
 exports:         

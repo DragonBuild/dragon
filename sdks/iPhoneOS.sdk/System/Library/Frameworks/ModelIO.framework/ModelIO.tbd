@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 69348675-B65B-3D32-903C-1FA8611B0EA2', 'armv7s: 3BAAB38B-10E2-3E0B-BF54-6F305A957B0A', 
-                   'arm64: F8FE9DA0-606C-3F90-A920-7F9E34F5F7F7', 'arm64e: D86E6169-0AA0-3382-AA89-0755F261A37C' ]
+                   'arm64: 0B9B710A-E285-3526-A7AF-9C89BB75C5A9', 'arm64e: 85132A09-746A-3DD7-8DF4-B5405997F4AA' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/ModelIO.framework/ModelIO'
 current-version: 216

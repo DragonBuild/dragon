@@ -1,15 +1,16 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/NewsServicesInternal.framework/NewsServicesInternal
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    allowed-clients:    [ NewsServices, NewsToday, News, NVCDemo, ArticleNotificationExtension,
-                          ArticleNotificationServiceExtension, MarketingNotificationExtension, OpenInNews, Feldspar Tests,
-                          NewsInternalSettings, NewsSettings, NewsUI, newsd, com.apple.news, Stocks, StocksAnalytics, Rancho,
-                          NewsAnalyticsUpload, NewsDES, NewsAnalytics, NewsAnalyticsTests ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    allowable-clients:  [ ArticleNotificationExtension, ArticleNotificationServiceExtension, Feldspar Tests,
+                          MarketingNotificationExtension, NVCDemo, News, NewsAnalytics, NewsAnalyticsTests, NewsAnalyticsUpload,
+                          NewsArticles, NewsDES, NewsFeed, NewsInternalSettings, NewsServices, NewsSettings, NewsSubscription,
+                          NewsToday, NewsUI, NewsUI2, OpenInNews, Rancho, Stocks, StocksAnalytics, TeaUI, com.apple.news, newsd ]
     symbols:            [ _NSSBundleInternal, _NSSCampaignIdentifierPathComponent, _NSSDestroyDataContainersWithItems,
                           _NSSDestroyUserDefaultsDataWithItems, _NSSExternalEventURLQueryParameterANFArticle,
                           _NSSExternalEventURLQueryParameterArticleID, _NSSExternalEventURLQueryParameterArticleType,
@@ -39,7 +40,8 @@ exports:
                           _NSSNewsHistoryComponent, _NSSNewsMagazinesPathComponent, _NSSNewsMyMagazinesPathComponent,
                           _NSSNewsNotificationsPathComponent, _NSSNewsSavedComponent, _NSSNewsSecureURLScheme,
                           _NSSNewsSubscribeToTagQueryItemName, _NSSNewsSubscribeToTagQueryItemValue, _NSSNewsTodayWidgetBundleID,
-                          _NSSNewsTodayWidgetProductName, _NSSNewsURLScheme, _NSSNewsWidgetMessageForAppOrOSObsolescence,
+                          _NSSNewsTodayWidgetProductName, _NSSNewsURLRefreshQueryItemName, _NSSNewsURLRefreshQueryItemValue,
+                          _NSSNewsURLScheme, _NSSNewsWidgetMessageForAppOrOSObsolescence,
                           _NSSNewsWidgetMessageForDeviceObsolescence, _NSSNewsWidgetMessageForDiscoverMoreGreatContentInNews,
                           _NSSNewsWidgetMessageForDiscoverMoreTitle, _NSSNewsWidgetMessageForFailureToLoadEmbed,
                           _NSSNewsWidgetMessageForNetworkNotAvailable, _NSSNewsWidgetMessageForNoContent,
@@ -48,10 +50,11 @@ exports:
                           _NSSNewsWidgetMessageForStaticNewsSection, _NSSNewsWidgetMessageForUnsupportedRegion,
                           _NSSNewsWidgetNewsModeCampaignID, _NSSNewsWidgetParsecModeCampaignID,
                           _NSSNotificationAttachmentPublisherLogoCompactKey, _NSSNotificationAttachmentPublisherLogoKey,
-                          _NSSNotificationAttachmentThumbnailKey, _NSSNotificationUserInfoExcerptKey,
-                          _NSSNotificationUserInfoNewsKey, _NSSNotificationUserInfoPublishDateKey,
-                          _NSSNotificationUserInfoPublisherNameKey, _NSSNotificationUserInfoThumbnailDataKey,
-                          _NSSNotificationUserInfoTitleKey, _NSSOpenedFromPathComponent, _NSSSecurityApplicationGroupIdentifier,
+                          _NSSNotificationAttachmentPublisherLogoMaskKey, _NSSNotificationAttachmentThumbnailKey,
+                          _NSSNotificationUserInfoExcerptKey, _NSSNotificationUserInfoNewsKey,
+                          _NSSNotificationUserInfoPublishDateKey, _NSSNotificationUserInfoPublisherNameKey,
+                          _NSSNotificationUserInfoThumbnailDataKey, _NSSNotificationUserInfoTitleKey,
+                          _NSSOpenedFromPathComponent, _NSSSecurityApplicationGroupIdentifier,
                           _NSSSpotlightArticleDomainIdentifier, _NSSStocksNewsDataContainerIdentifier,
                           _NSSTerminateAppsAndAllPluginsWithBundleIDs, _NSSTerminateNewsProcessesWithItems,
                           _NSSTerminateNewsWithCompletion, _NSSTerminateNewsd, _NSSWidgetVideoPlaylistReferralItemQueryItemName,
@@ -68,16 +71,17 @@ exports:
                           _NSSNewsAnalyticsSessionAnnotator, _NSSNewsAnalyticsSubmitEnvelopesOperation,
                           _NSSNewsAvailabilityMonitor, _NSSNewsTerminationItem, _NSSUserDefaultsDataDestructionItem ]
     objc-ivars:         [ _NSSArticleInternal._publishDate, _NSSArticleInternal._publisherLogoImage,
-                          _NSSArticleInternal._publisherName, _NSSArticleInternal._shortExcerpt,
-                          _NSSArticleInternal._thumbnailImage, _NSSArticleInternal._title, _NSSArticleView._article,
-                          _NSSArticleView._dateLabel, _NSSArticleView._excerptLabel, _NSSArticleView._preferredSize,
-                          _NSSArticleView._publisherLabel, _NSSArticleView._publisherLogoImageView,
-                          _NSSArticleView._thumbnailContainerView, _NSSArticleView._thumbnailImageView,
-                          _NSSArticleView._titleLabel, _NSSArticleViewControllerInternal._article,
-                          _NSSArticleViewControllerInternal._articleLoading, _NSSArticleViewControllerInternal._articleView,
-                          _NSSArticleViewControllerInternal._spinner, _NSSDataContainerDataDestructionItem._containerClass,
-                          _NSSDataContainerDataDestructionItem._identifier, _NSSExternalAnalyticsEvent._requestQueryParameters,
-                          _NSSExternalAnalyticsEvent._session, _NSSExternalAnalyticsPaneldentifierProvider._hostNames,
+                          _NSSArticleInternal._publisherLogoMaskImage, _NSSArticleInternal._publisherName,
+                          _NSSArticleInternal._shortExcerpt, _NSSArticleInternal._thumbnailImage, _NSSArticleInternal._title,
+                          _NSSArticleView._article, _NSSArticleView._dateLabel, _NSSArticleView._excerptLabel,
+                          _NSSArticleView._preferredSize, _NSSArticleView._publisherLabel,
+                          _NSSArticleView._publisherLogoImageView, _NSSArticleView._thumbnailContainerView,
+                          _NSSArticleView._thumbnailImageView, _NSSArticleView._titleLabel,
+                          _NSSArticleViewControllerInternal._article, _NSSArticleViewControllerInternal._articleLoading,
+                          _NSSArticleViewControllerInternal._articleView, _NSSArticleViewControllerInternal._spinner,
+                          _NSSDataContainerDataDestructionItem._containerClass, _NSSDataContainerDataDestructionItem._identifier,
+                          _NSSExternalAnalyticsEvent._requestQueryParameters, _NSSExternalAnalyticsEvent._session,
+                          _NSSExternalAnalyticsPaneldentifierProvider._hostNames,
                           _NSSExternalAnalyticsPaneldentifierProvider._panelIdentifier, _NSSExternalAnalyticsRequest._URL,
                           _NSSExternalAnalyticsRequest._metadata, _NSSExternalAnalyticsRequestMetadata._contentViewedIdentifier,
                           _NSSExternalAnalyticsRequestMetadata._eventIdentifier, _NSSExternalAnalyticsRequestMetadata._eventType,
@@ -92,6 +96,7 @@ exports:
                           _NSSNewsAnalyticsPBEventAccumulator._sessionManager,
                           _NSSNewsAnalyticsSubmitEnvelopesOperation._appConfigurationManager,
                           _NSSNewsAnalyticsSubmitEnvelopesOperation._envelopes,
+                          _NSSNewsAnalyticsSubmitEnvelopesOperation._handoffCompletion,
                           _NSSNewsAnalyticsSubmitEnvelopesOperation._submissionCompletion,
                           _NSSNewsAvailabilityMonitor._NewsIsAvailable, _NSSNewsAvailabilityMonitor._applicationProxy,
                           _NSSNewsAvailabilityMonitor._blocks, _NSSNewsAvailabilityMonitor._queue,

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 25566BAD-7844-3EC2-AE91-944B8A8BFC33', 'arm64e: 7ADB2AA7-6524-32A1-AD12-A5DD512C54E4' ]
+                   'arm64: CD9294E4-0298-3607-8D0F-3CCAB92B6837', 'arm64e: AC63B546-523D-30C8-881D-84EAEDF65C2B' ]
 platform:        ios
 install-name:    '/usr/lib/libSystem.B.dylib'
 current-version: 1281
@@ -29,7 +29,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 6DB7B113-62A3-3605-83C1-FF92D31196E8', 'armv7s: 11CB05D6-C046-37BA-B7C5-1C1BADD95B39', 
-                   'arm64: 8894F651-B66C-3F45-A14A-5060549CD195', 'arm64e: A4F4B091-D52C-3BE9-A997-713BAD54121F' ]
+                   'arm64: B09DF2D4-A695-3619-98F4-7AE391C5C23C', 'arm64e: 39BF3508-0049-3704-8E2A-005330E4C80C' ]
 platform:        ios
 install-name:    '/usr/lib/system/libcache.dylib'
 current-version: 83
@@ -52,7 +52,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 40C8E12E-3F12-3A3B-B8F2-309CB9E06D64', 'armv7s: 5BD62AEE-D607-3380-8D45-762C12B92DDE', 
-                   'arm64: E41A6D54-E4DC-3B60-BBCD-C6E237882431', 'arm64e: 3A53630C-7B25-3DB1-80B3-E610EF7812FA' ]
+                   'arm64: 61020242-E527-34D7-99D3-0DE199F887E0', 'arm64e: 266C16F5-2A39-3AF2-A8A7-E09C0A076AEA' ]
 platform:        ios
 install-name:    '/usr/lib/system/libcommonCrypto.dylib'
 current-version: 60165
@@ -137,7 +137,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: DF4980E1-83D7-36F5-96A4-41FD628DB10E', 'armv7s: 2B54E3FC-364B-3B3B-9A88-B0C26D54AB60', 
-                   'arm64: 2FBFC559-8009-3021-8F4B-D8185E905F1A', 'arm64e: 793F1795-C47C-30C9-B6C5-69755D927B7F' ]
+                   'arm64: 24D68D84-9832-3F00-96D9-BBA7F88928B7', 'arm64e: F849930D-CB6B-38CD-A207-2B16EBD377E2' ]
 platform:        ios
 install-name:    '/usr/lib/system/libcompiler_rt.dylib'
 current-version: 101.1
@@ -682,7 +682,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3A19C691-E409-3E68-BA02-ED8C51E4004D', 'armv7s: ED8F773D-B1EB-30AB-9D40-8A0795F1FC33', 
-                   'arm64: 1AD85C41-4C28-3DDE-A0C4-47B1B53504B5', 'arm64e: CD72F2D2-E0F2-343C-B9CE-22E15518A5D7' ]
+                   'arm64: 9ACBEAB8-1D98-33AF-8E1D-058DEB594BB8', 'arm64e: 5C7D311C-5AF1-33CD-BFCF-F65A5873D414' ]
 platform:        ios
 install-name:    '/usr/lib/system/libcopyfile.dylib'
 exports:         
@@ -695,10 +695,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: AE2B0645-24AE-3709-A8E7-8DD6A3F1EC9E', 'armv7s: CFDF5DC2-C1AF-399E-BB27-C2236163BFE7', 
-                   'arm64: 8494E00D-CE22-3BC7-985A-573533E5E5C5', 'arm64e: 3181FE49-E517-3AF4-918F-2936DC9007E4' ]
+                   'arm64: 51D6AAFD-E3EE-3E1B-8335-670260B8B91E', 'arm64e: 547F9800-138B-3AF0-9E72-D8FC86FA6458' ]
 platform:        ios
 install-name:    '/usr/lib/system/libcorecrypto.dylib'
-current-version: 866.40.8
+current-version: 866.0.2
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -905,10 +905,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 7FD33C41-E503-3E07-9EE4-D75435928582', 'armv7s: EAF0EC01-9FF2-3051-8699-D60C32205836', 
-                   'arm64: B7EED4C7-560D-3DA6-9B50-ED52A150AAC6', 'arm64e: D174E751-B542-3A69-A593-7AA69CF30F23' ]
+                   'arm64: 721C34EF-4ABD-395F-8285-FECAA2457BA3', 'arm64e: 1266FC1D-1C06-3A03-9DD9-11A3C5C1C3BB' ]
 platform:        ios
 install-name:    '/usr/lib/system/libdispatch.dylib'
-current-version: 1173.40.5
+current-version: 1173.0.1
 parent-umbrella: System
 exports:         
   - archs:           [ armv7 ]
@@ -1075,10 +1075,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 9855EF44-F09A-3696-9163-AA33F8ECF3BD', 'armv7s: 9F2D090D-C7B0-3840-AC9E-7E9E6688C334', 
-                   'arm64: 1DB44CE7-7030-3D97-9461-6EC743F47783', 'arm64e: 2DE87B30-2CB1-30C2-9C0E-4BB9022D71E8' ]
+                   'arm64: 8F3A474D-45CC-3991-829F-77B3B151BA86', 'arm64e: B4D308AE-C33B-33ED-A2D3-D362FFC4327D' ]
 platform:        ios
 install-name:    '/usr/lib/system/libdyld.dylib'
-current-version: 733.3.1
+current-version: 731.4
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1121,10 +1121,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1FCE8D4D-D5C7-3B96-A2E8-8907FA6F2FB7', 'armv7s: ADCC3F46-E9F7-32FB-B172-A271F10B83F5', 
-                   'arm64: FC8F7D96-2AAD-36E7-A8FE-3AFAC3CDD7B0', 'arm64e: A99B9F1F-EB83-38FD-BCFC-C042CD2E9632' ]
+                   'arm64: 96FBF28E-7D18-3B28-A2D1-5E44200DF0BB', 'arm64e: 3151B2CD-3253-3299-B32F-82E29263FA80' ]
 platform:        ios
 install-name:    '/usr/lib/system/liblaunch.dylib'
-current-version: 1738.40.10
+current-version: 1738.0.3
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1171,10 +1171,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: A2F13711-D220-3CA3-BF20-D221AA30D798', 'armv7s: CB4E45FD-545F-3206-B031-7D54974355E1', 
-                   'arm64: 4A4189B2-8893-381D-AE2D-2A0A11986354', 'arm64e: A223F34A-8441-39BE-BFE8-D3AC42CDCDAE' ]
+                   'arm64: CD960C39-E2DD-3615-AC1D-E814F6328E7B', 'arm64e: F3D10637-5BAB-3EEA-A99B-5FC8BD54FB51' ]
 platform:        ios
 install-name:    '/usr/lib/system/libmacho.dylib'
-current-version: 949.0.1
+current-version: 949
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1219,7 +1219,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 27C4459D-7A6B-305F-B4A5-E9DE97268CB0', 'armv7s: 42EBC762-F5F9-359C-9F78-21805F274080', 
-                   'arm64: DBC0C76D-C1B5-3848-97ED-8EDBAA5BA0C8', 'arm64e: C45AB025-C00D-3611-B0A6-EEC5D4D86517' ]
+                   'arm64: B0B753C0-E398-37E9-84F7-DC7AE6B56601', 'arm64e: 41FAFEDE-F697-3E4A-9306-9B1847DC79B2' ]
 platform:        ios
 install-name:    '/usr/lib/system/libremovefile.dylib'
 current-version: 48
@@ -1234,10 +1234,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 170B02CD-46D3-34B9-A1FA-C94E00EF7343', 'armv7s: B862AD9B-938F-392D-B97C-85278F7514A3', 
-                   'arm64: BC0F92BB-0B5E-37BD-9FC6-43AEF5862B6E', 'arm64e: 1F471E26-43E5-31C6-A20A-72CA7A120419' ]
+                   'arm64: E3DB50FE-359D-3614-8661-2157B9755B4D', 'arm64e: D3213360-5549-32B1-95BE-5998D07F1131' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_asl.dylib'
-current-version: 377.40.1
+current-version: 377
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1314,7 +1314,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 777876E7-A03A-355B-BE5C-5CA5689ACFD7', 'armv7s: 553BFEDB-0FBD-3F62-A1D8-85EDF34AFD38', 
-                   'arm64: 2EAB84CA-F1AC-382C-BBFB-B030A73BCE0A', 'arm64e: FD2EC47D-B236-3EF4-9E21-E1EC3062E70E' ]
+                   'arm64: 64700FAF-961E-31AE-808A-67760C2ED0D9', 'arm64e: A723AF0F-1250-3217-93B6-CBA0A09EB2CE' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_blocks.dylib'
 current-version: 73
@@ -1331,10 +1331,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: E24FB645-8CE5-342F-8201-64A88688602C', 'armv7s: 196C065A-ED30-30AF-9A00-0D2FEFA25463', 
-                   'arm64: 40313D64-DC07-3E63-9FB3-97F3DD02C5D4', 'arm64e: 7915A501-6279-3BEB-9EDA-380D001391F4' ]
+                   'arm64: ECF31943-BF22-3776-A215-AA33323DC1E6', 'arm64e: 45AB23CC-4CC8-3292-A010-6103E1B106FD' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_c.dylib'
-current-version: 1353.42.1
+current-version: 1353.0.2
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1535,8 +1535,8 @@ exports:
                        _regexec, _regfree, _register_printf_domain_function, _register_printf_domain_render_std, 
                        _regncomp, _regncomp_l, _regnexec, _regwcomp, _regwcomp_l, 
                        _regwexec, _regwncomp, _regwncomp_l, _regwnexec, _remove, 
-                       _remque, _rewind, _rewinddir, _rindex, _rpmatch, _sbrk, _scandir, 
-                       _scandir_b, _scanf, _scanf_l, _seed48, _seekdir, _send, '_send$NOCANCEL', 
+                       _remque, _rewind, _rewinddir, _rindex, _sbrk, _scandir, _scandir_b, 
+                       _scanf, _scanf_l, _seed48, _seekdir, _send, '_send$NOCANCEL', 
                        _setbuf, _setbuffer, _setenv, _sethostid, _sethostname, _setipv4sourcefilter, 
                        _setkey, _setlinebuf, _setlocale, _setlogin, _setmode, _setpgrp, 
                        _setprogname, _setrgid, _setruid, _setsourcefilter, _setstate, 
@@ -1613,10 +1613,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: A47C3D54-705D-3780-8AB5-DE3539397AFE', 'armv7s: 932E9AD3-F03B-37A5-A251-A8524CA9E47A', 
-                   'arm64: 8CBC08C8-6F09-3054-B66D-18730D4D9376', 'arm64e: 24CFD1EE-9687-3F92-9B35-3B2514770736' ]
+                   'arm64: B6EE37E6-298F-3337-BA33-379A7C08DA6D', 'arm64e: 756025B0-F8B0-3605-891D-4098CF0B8F4D' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_configuration.dylib'
-current-version: 1061.40.2
+current-version: 1061
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1639,7 +1639,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 9CECD36C-FDFC-3DAD-B361-C43189D960F8', 'armv7s: 2623C691-8A9E-3751-AA21-0FFF90324217', 
-                   'arm64: 1F15A707-DD0D-392B-B8F0-CD7275410FD0', 'arm64e: E23A07E3-1223-37AB-BE05-BB99BAFBAAA8' ]
+                   'arm64: 211ECE51-B682-3E6C-BF3D-9AC2758B0E73', 'arm64e: 30B855EF-3F35-321E-AD9A-698786C0DED2' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_containermanager.dylib'
 parent-umbrella: System
@@ -1655,12 +1655,10 @@ exports:
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _CONTAINER_CURRENT_MOBILE_UID, _CONTAINER_INSTALLATION_UID, 
                        _CONTAINER_NOTIFY_CLEANUP_COMPLETE, _CONTAINER_NOTIFY_REBOOT_CLEANUP_COMPLETE, 
-                       _CONTAINER_NOTIFY_USER_INVALIDATED, _CONTAINER_SYSTEM_UID, 
-                       __container_init, _container_copy_code_signing_info_for_identifier, 
+                       _CONTAINER_SYSTEM_UID, __container_init, _container_copy_code_signing_info_for_identifier, 
                        _container_copy_info, _container_copy_info_value_for_key, 
-                       _container_copy_object, _container_copy_path, _container_copy_persona_unique_strings, 
-                       _container_create_or_lookup, _container_create_or_lookup_app_group_paths, 
-                       _container_create_or_lookup_app_group_paths_for_current_user, 
+                       _container_copy_object, _container_copy_path, _container_create_or_lookup, 
+                       _container_create_or_lookup_app_group_paths, _container_create_or_lookup_app_group_paths_for_current_user, 
                        _container_create_or_lookup_for_current_user, _container_create_or_lookup_group_container_paths_for_current_user, 
                        _container_create_or_lookup_path, _container_create_or_lookup_path_for_current_user, 
                        _container_create_or_lookup_system_group_paths, _container_create_or_lookup_user_managed_assets_path, 
@@ -1672,7 +1670,7 @@ exports:
                        _container_delete_with_uid_class_and_identifier, _container_disk_usage, 
                        _container_free_array_of_containers, _container_free_object, 
                        _container_get_all_with_class, _container_get_all_with_class_for_current_user, 
-                       _container_get_class, _container_get_identifier, _container_get_persona_unique_string, 
+                       _container_get_identifier, _container_get_persona_unique_string, 
                        _container_group_container_identifiers_for_current_user, _container_invalidate_code_signing_cache, 
                        _container_is_transient, _container_perform_data_migration, 
                        _container_perform_data_migration_for_current_user, _container_process_restored_container, 
@@ -1685,10 +1683,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: D37E4B83-38CE-3D51-B6D2-F0B10141C575', 'armv7s: 62FC4F50-E172-3FFD-9708-D7EE1C53F45F', 
-                   'arm64: A5A3E4F0-7157-3C2A-BF17-2B17B772D828', 'arm64e: 61F91275-F9C8-3A2E-99D8-AD585D469212' ]
+                   'arm64: 3DC8BD5D-9913-3927-98CF-B0C1D392DA83', 'arm64e: 50F2D6E5-AB6A-39BC-A1C7-6D65392FEF43' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_coreservices.dylib'
-current-version: 114
+current-version: 112.1
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1702,7 +1700,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 0F959B9F-822B-3277-B1F4-4ABC4C8EEE51', 'arm64e: 8D80CF5A-BC1F-3137-B27C-D14B45D0F18E' ]
+                   'arm64: 8D86CB0E-41CB-33BA-A9FD-777627C0EE02', 'arm64e: BDE17C13-D319-36E1-B054-706F424124E2' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_darwin.dylib'
 parent-umbrella: System
@@ -1729,10 +1727,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 0A95DD2A-278E-302F-9A98-CDCA54E08739', 'armv7s: 4C26F683-7F61-3584-8A24-C335840CFA81', 
-                   'arm64: 1C67D30E-4FF4-388E-875D-7CFC1F531C81', 'arm64e: F0B7AE15-8BC8-3657-A302-8316C74A177C' ]
+                   'arm64: CBA4F649-A62E-37DB-97B7-7F43053C7511', 'arm64e: 28D6B8D5-8A8E-3466-82B8-98D05AC4BC8E' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_dnssd.dylib'
-current-version: 1096.42.1
+current-version: 1096
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -1758,7 +1756,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 75A7BE5B-70BC-3222-BAEB-3E0B0284D2C7', 'arm64e: 2765C759-AC03-3E71-B751-07D94C06EC01' ]
+                   'arm64: C9F730A2-7AF2-37B4-A8C8-202C8BEB90C7', 'arm64e: D827F870-D7E8-3A7F-831F-BB805DD4EFF7' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_featureflags.dylib'
 current-version: 17
@@ -1769,7 +1767,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1D219083-B6ED-3F11-8051-F412D0B86894', 'armv7s: 9BA3E695-76ED-321F-85B4-4A76FC7C8360', 
-                   'arm64: F55115A4-F7A5-3FE7-9A7B-8AD4DD3A82B6', 'arm64e: 11FE0A87-E542-3983-9A89-D21B50139B3F' ]
+                   'arm64: 2CE669FF-8D9A-3BBD-98CC-CDC0E2189D09', 'arm64e: 96808EC3-501A-35AF-B9CD-4FBAB49B87E7' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_info.dylib'
 parent-umbrella: System
@@ -1923,10 +1921,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3DA61D8A-25E0-3245-A2D2-9730222DB170', 'armv7s: 1D016397-21E9-3301-9C41-AF919F4C139A', 
-                   'arm64: AE4C3D7A-7D08-33E7-BCC6-11AC821B4E48', 'arm64e: C6184BC6-A348-391A-B791-173C343A5CE5' ]
+                   'arm64: 6450FB9E-2329-3CFA-A69C-56F94532A4AD', 'arm64e: DF62439B-141A-3D68-B1A6-2B9CFF698A05' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_kernel.dylib'
-current-version: 6153.42.1
+current-version: 6153.0.103
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -2346,7 +2344,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F5FD847F-48D5-381F-91D8-5D712A9CC151', 'armv7s: 481BFE43-8625-315E-9715-DDD8614A263D', 
-                   'arm64: FC925F3A-997E-3E36-84B3-F3491AE24C29', 'arm64e: 742CE2F0-AC12-3C7E-9222-8F4E85B24793' ]
+                   'arm64: DCBE7998-FF0B-3AB7-B955-6A094AC85324', 'arm64e: B84DF8FC-1A3B-3E85-8DA3-60EAFD2E6B20' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_m.dylib'
 current-version: 3178
@@ -2434,10 +2432,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 0C1CC73C-09D6-3E26-AE25-4B61DFB251D1', 'armv7s: A41A6436-E2FE-3BA8-AD29-60C4379CB244', 
-                   'arm64: DC2AD8AA-6857-399F-963B-7128CFDDD4B6', 'arm64e: 4001CD16-E1D1-3A03-BDA2-6CD62F2C20A3' ]
+                   'arm64: 30A590EF-478B-367F-A772-21E905D08FEA', 'arm64e: 8A047566-53FA-3A68-9AF6-311B31426125' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_malloc.dylib'
-current-version: 283.40.1
+current-version: 283
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -2491,7 +2489,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 850D819D-3B3E-39FF-90DB-257C6C589B11', 'armv7s: 191401F4-A397-354C-BC47-8F22E3CA9477', 
-                   'arm64: 672995A3-E65A-381A-8FE1-A2577DF31832', 'arm64e: 8277A33A-C5E7-3D52-8286-5BDFADEA167B' ]
+                   'arm64: 9B25C2C6-494E-36E8-BBAD-9BA925EDF84C', 'arm64e: FA0F4FD7-ABAC-340E-AFE7-4B0F28713D3F' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_networkextension.dylib'
 parent-umbrella: System
@@ -2556,7 +2554,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: E77BA957-877B-3BE3-AF7C-F7051CCB96BC', 'armv7s: CB2F1B65-FAF1-31D8-AFC7-44B553EA4B4D', 
-                   'arm64: C9136C37-2A3A-3D40-8C0D-8DF900207B18', 'arm64e: F13AB60D-3F5D-3F04-B973-B41338B1DC0A' ]
+                   'arm64: FA2E95AA-2DC8-3587-830D-8B1E1DD5CFE1', 'arm64e: 18C47451-83F5-385D-9AC1-0B5E075298E4' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_notify.dylib'
 current-version: 241
@@ -2607,7 +2605,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 7F10A130-B90A-38DD-AE7C-105FA5D7194B', 'armv7s: A38A1A8A-B1FE-32D6-90AE-3060A5080E8E', 
-                   'arm64: 4D8CF271-94F7-3D09-8E5E-5E462A8B3B17', 'arm64e: 68C3EE8A-BA36-32D7-88D9-B4E2FCCE7CF5' ]
+                   'arm64: 99A37BA2-FA9D-3214-ACF9-2C7F7F8269B7', 'arm64e: 1E203A52-6766-3072-B304-0871E8DC0F56' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_platform.dylib'
 current-version: 220
@@ -2673,10 +2671,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 913C4CF3-134F-3726-93FD-B2B30256DB4F', 'armv7s: CAF77935-3142-3229-B339-79620433527C', 
-                   'arm64: F8B082D8-24D9-3B1E-B80B-645FC8A88E14', 'arm64e: E539AD86-198D-3473-BA07-54B6A03ECD57' ]
+                   'arm64: BBAE706A-650C-3CE3-8F16-CF068F398DF0', 'arm64e: E6F73813-E99B-397C-BF1E-1001EC1E325A' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_pthread.dylib'
-current-version: 416.40.3
+current-version: 416.0.1
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -2742,17 +2740,16 @@ exports:
                        _pthread_mutexattr_setprioceiling, _pthread_mutexattr_setprotocol, 
                        _pthread_mutexattr_setpshared, _pthread_mutexattr_settype, 
                        _pthread_once, _pthread_override_qos_class_end_np, _pthread_override_qos_class_start_np, 
-                       _pthread_prefer_alternate_amx_self, _pthread_qos_max_parallelism, 
-                       _pthread_rwlock_destroy, _pthread_rwlock_init, _pthread_rwlock_rdlock, 
-                       _pthread_rwlock_tryrdlock, _pthread_rwlock_trywrlock, _pthread_rwlock_unlock, 
-                       _pthread_rwlock_wrlock, _pthread_rwlockattr_destroy, _pthread_rwlockattr_getpshared, 
-                       _pthread_rwlockattr_init, _pthread_rwlockattr_setpshared, 
-                       _pthread_self, _pthread_set_fixedpriority_self, _pthread_set_qos_class_np, 
-                       _pthread_set_qos_class_self_np, _pthread_set_timeshare_self, 
-                       _pthread_setcancelstate, _pthread_setcanceltype, _pthread_setconcurrency, 
-                       _pthread_setname_np, _pthread_setschedparam, _pthread_setspecific, 
-                       _pthread_sigmask, _pthread_stack_frame_decode_np, _pthread_testcancel, 
-                       _pthread_threadid_np, _pthread_time_constraint_max_parallelism, 
+                       _pthread_qos_max_parallelism, _pthread_rwlock_destroy, _pthread_rwlock_init, 
+                       _pthread_rwlock_rdlock, _pthread_rwlock_tryrdlock, _pthread_rwlock_trywrlock, 
+                       _pthread_rwlock_unlock, _pthread_rwlock_wrlock, _pthread_rwlockattr_destroy, 
+                       _pthread_rwlockattr_getpshared, _pthread_rwlockattr_init, 
+                       _pthread_rwlockattr_setpshared, _pthread_self, _pthread_set_fixedpriority_self, 
+                       _pthread_set_qos_class_np, _pthread_set_qos_class_self_np, 
+                       _pthread_set_timeshare_self, _pthread_setcancelstate, _pthread_setcanceltype, 
+                       _pthread_setconcurrency, _pthread_setname_np, _pthread_setschedparam, 
+                       _pthread_setspecific, _pthread_sigmask, _pthread_stack_frame_decode_np, 
+                       _pthread_testcancel, _pthread_threadid_np, _pthread_time_constraint_max_parallelism, 
                        _pthread_workqueue_addthreads_np, _pthread_workqueue_setdispatch_np, 
                        _pthread_workqueue_setdispatchoffset_np, _pthread_workqueue_setup, 
                        _pthread_yield_np, _qos_class_main, _qos_class_self, _sched_get_priority_max, 
@@ -2761,11 +2758,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: AC72E543-5453-35FA-AAC1-6D872E295899', 'armv7s: 5347183B-DF90-3F47-8E4C-9A353E899928', 
-                   'arm64: 1DFCC0B8-A438-3A87-896A-75B4B33655FC', 'arm64e: AC940B77-5E20-39C6-8B91-CB0DDF4872FF' ]
+                   'arm64: EA334041-2815-338B-B9A4-8C16DF9818B0', 'arm64e: 283769EE-332E-3A93-9E5B-CD050AC9381F' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_sandbox.dylib'
-current-version: 1217.40.25
-parent-umbrella: System
+current-version: 1217.0.3
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _IOS_SANDBOX_EXECUTABLE, _IOS_SANDBOX_SYSTEM_CONTAINER, _IOS_SANDBOX_SYSTEM_GROUP, 
@@ -2810,10 +2806,8 @@ exports:
                        _sandbox_init_from_pid, _sandbox_init_with_extensions, _sandbox_init_with_parameters, 
                        _sandbox_issue_extension, _sandbox_issue_fs_extension, _sandbox_issue_fs_rw_extension, 
                        _sandbox_issue_mach_extension, _sandbox_note, _sandbox_passthrough_access, 
-                       _sandbox_proc_getcontainer, _sandbox_proc_getprofilename, 
-                       _sandbox_query_approval_policy_for_path, _sandbox_query_user_intent_for_process_with_audit_token, 
-                       _sandbox_reference_release, _sandbox_reference_retain_by_audit_token, 
-                       _sandbox_release_fs_extension, _sandbox_requests_integrity_protection_for_preference_domain, 
+                       _sandbox_query_approval_policy_for_path, _sandbox_reference_release, 
+                       _sandbox_reference_retain_by_audit_token, _sandbox_release_fs_extension, 
                        _sandbox_set_container_path_for_application_group, _sandbox_set_container_path_for_application_group_with_persona, 
                        _sandbox_set_container_path_for_signing_id, _sandbox_set_container_path_for_signing_id_with_persona, 
                        _sandbox_spawnattrs_getcontainer, _sandbox_spawnattrs_getprofilename, 
@@ -2822,7 +2816,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 2FF0DC9C-BA00-332D-A6D7-BB2024609D5F', 'armv7s: 1A692F13-995B-3BC9-8E4C-2BF495EEFB28', 
-                   'arm64: 9ABB15DA-C7B5-3E3B-9D16-4DB0229011EE', 'arm64e: 58B7628F-6312-359C-93B7-23C16C56A394' ]
+                   'arm64: 200BEF10-D9DA-3057-8C67-646435A0F637', 'arm64e: 689DD33A-5610-3369-A079-4F5D3D3BEACC' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_symptoms.dylib'
 exports:         
@@ -2835,10 +2829,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 88856B4C-4143-3041-AA9C-6D8ACD27D6D0', 'armv7s: E560B418-651E-3A68-83DF-0134D5F9E5DE', 
-                   'arm64: 4EB9C273-180A-3301-AA68-262A68EB0028', 'arm64e: 0A180B42-8ADA-3596-8B86-432D24B45E23' ]
+                   'arm64: 79D4DE4B-947F-311B-BCDA-E9C4CD2F7008', 'arm64e: 167E168A-ACCE-31DE-9549-3800B85FF72F' ]
 platform:        ios
 install-name:    '/usr/lib/system/libsystem_trace.dylib'
-current-version: 1147.40.13
+current-version: 1147.0.1
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -2898,7 +2892,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: C008D2DA-B3CF-32AB-B674-B0F9903420DA', 'armv7s: 59CFEED3-8058-3ABD-B439-E9ED6EC8246A', 
-                   'arm64: BB994BCF-A7F4-3E8C-8C83-1EA84AA02596', 'arm64e: DE48AC10-3DA5-300B-BCDF-D7727E920E1C' ]
+                   'arm64: E79EE682-2337-31CD-A077-F1311D1084E5', 'arm64e: F1A61A3C-680F-36BF-A577-581983A2D62E' ]
 platform:        ios
 install-name:    '/usr/lib/system/libunwind.dylib'
 current-version: 128.2
@@ -2971,10 +2965,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: BE8DD723-B5F9-3A04-B9E6-41532627B159', 'armv7s: B54FF365-886C-35DF-AFC4-588E38B5F8E5', 
-                   'arm64: 219DEC3C-E62E-395D-8911-FB74F73A5598', 'arm64e: 30C739E9-B96C-3CBE-9ED8-DB1BDA3F804E' ]
+                   'arm64: A6E2B3C7-5179-382E-AA9A-0BAF370CA00E', 'arm64e: 79A1F1AD-9CB4-3334-91D9-E1ED6B1032A3' ]
 platform:        ios
 install-name:    '/usr/lib/system/libxpc.dylib'
-current-version: 1738.40.10
+current-version: 1738.0.3
 parent-umbrella: System
 exports:         
   - archs:           [ armv7, armv7s ]

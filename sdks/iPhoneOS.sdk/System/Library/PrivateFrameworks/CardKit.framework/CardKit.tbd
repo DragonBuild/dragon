@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CardKit.framework/CardKit
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CRKIsLargeDevice, _CRKIsRTL, _CardKitVersionNumber, _CardKitVersionString, __CRKIsRTLWithApp,
                           __CRKSystemRootDirectory ]
     objc-classes:       [ _CRKCardPresentation, _CRKCardPresentationConfiguration, _CRKCardSectionViewConfiguration,
@@ -31,11 +32,11 @@ exports:
                           _CRKCardSectionViewConfiguration._feedbackDelegateProxy,
                           _CRKCardSectionViewConfiguration._providerIdentifier,
                           _CRKCardSectionViewController.__remoteViewController, _CRKCardSectionViewController._cardSection,
-                          _CRKCardSectionViewController._dataSource, _CRKCardSectionViewController._delegate,
-                          _CRKCardSectionViewController._extraCommands, _CRKCardSectionViewController._loading,
-                          _CRKCardSectionViewController._overlayButton, _CRKCardSectionViewController._viewConfiguration,
-                          _CRKCardViewController._builtInCardSectionViewProviderManager, _CRKCardViewController._card,
-                          _CRKCardViewController._cardSectionViewControllers, _CRKCardViewController._cardSectionViewSource,
+                          _CRKCardSectionViewController._delegate, _CRKCardSectionViewController._extraCommands,
+                          _CRKCardSectionViewController._loading, _CRKCardSectionViewController._overlayButton,
+                          _CRKCardSectionViewController._viewConfiguration, _CRKCardViewController._builtInCardSectionViewSource,
+                          _CRKCardViewController._card, _CRKCardViewController._cardSectionViewControllers,
+                          _CRKCardViewController._cardSectionViewSource,
                           _CRKCardViewController._cardSectionsToCardSectionViewControllersMapTable,
                           _CRKCardViewController._cardViewControllerDelegate,
                           _CRKCardViewController._handledParametersForInteraction, _CRKCardViewController._indicatingActivity,

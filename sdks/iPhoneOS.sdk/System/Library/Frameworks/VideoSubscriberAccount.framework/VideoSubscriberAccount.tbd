@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: EF039D34-68F0-34F8-918E-D1EE9A3300E5', 'armv7s: 7E17A1E2-DF00-346C-9700-36C35FB22283', 
-                   'arm64: 46100B51-DD40-307D-A055-C5336AEFEC90', 'arm64e: EC4F0A9D-7870-3BFF-9E39-58CF978C5AA6' ]
+                   'arm64: 638613B0-4567-3D4C-849A-9318424320EF', 'arm64e: 1DC1549A-C85E-3A40-836A-3E2A9A949CCB' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/VideoSubscriberAccount.framework/VideoSubscriberAccount'
-current-version: 316.20.3
+current-version: 309
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _VSStoreProviderResponseKeyAppStoreIdentifier, _VSSubscriptionFetchOptionIncludeUninstalledApps ]

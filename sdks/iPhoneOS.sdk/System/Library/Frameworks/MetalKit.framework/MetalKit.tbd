@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F2FF5092-78F3-39B3-A66A-B38482B7BDBF', 'armv7s: E5BA9754-B4B5-377F-8DEE-2BDAB7A9EBBF', 
-                   'arm64: 7EA0A136-58C8-3146-B877-FC69927F0C70', 'arm64e: 8396965A-4A0F-335B-A32E-2BA9A3DA425B' ]
+                   'arm64: 37D84571-13D7-3101-B170-3848EFF4D4A7', 'arm64e: 1FA8F900-A279-3531-8F7D-CD2BE39FBAFC' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalKit.framework/MetalKit'
-current-version: 141
+current-version: 136
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _MTKTextureLoaderOptionCubeFromVerticalTexture, _MetalKitVersionNumber, 

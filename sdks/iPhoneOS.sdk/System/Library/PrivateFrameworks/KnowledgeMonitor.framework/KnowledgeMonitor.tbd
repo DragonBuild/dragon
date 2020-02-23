@@ -1,27 +1,30 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/KnowledgeMonitor.framework/KnowledgeMonitor
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ __DKMotionStateAny, __DKMotionStateAutomotive, __DKMotionStateAutomotiveStationary,
-                          __DKMotionStateCycling, __DKMotionStateRunning, __DKMotionStateStationary, __DKMotionStateWalking,
-                          _kDominantActivityInterval, _kMotionStateBuffer ]
-    objc-classes:       [ __DKAppInstallMonitor, __DKApplicationMonitor, __DKApplicationUsageMonitor,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _KnowledgeMonitorVersionNumber, _KnowledgeMonitorVersionString, __DKMotionStateAny,
+                          __DKMotionStateAutomotive, __DKMotionStateAutomotiveStationary, __DKMotionStateCycling,
+                          __DKMotionStateRunning, __DKMotionStateStationary, __DKMotionStateWalking, _kDominantActivityInterval,
+                          _kMotionStateBuffer ]
+    objc-classes:       [ __DKAirplaneModeMonitor, __DKAppInstallMonitor, __DKApplicationMonitor, __DKApplicationUsageMonitor,
                           __DKAssertionsPreventingRestartMonitor, __DKAudioInputMonitor, __DKAudioOutputMonitor,
                           __DKBacklightMonitor, __DKBatteryMonitor, __DKBluetoothMonitor, __DKCPUUsageMonitor,
-                          __DKCalendarMonitor, __DKCallMonitor, __DKCellNetworkingQualityMonitor, __DKDeviceActivityLevelMonitor,
-                          __DKDeviceSleepMonitor, __DKDoNotDisturbMonitor, __DKInCarMonitor, __DKInteractionUtility,
-                          __DKLocationMonitor, __DKMonitor, __DKMonitorManager, __DKMotionMonitor, __DKNavigationMonitor,
-                          __DKNetworkQualityMonitor, __DKNextAlarmForTopOffProtectionMonitor, __DKNotificationKeybagLockMonitor,
+                          __DKCalendarMonitor, __DKCellNetworkingQualityMonitor, __DKDeviceActivityLevelMonitor,
+                          __DKDoNotDisturbMonitor, __DKInCarMonitor, __DKLocationMonitor, __DKLowPowerModeMonitor, __DKMonitor,
+                          __DKMotionMonitor, __DKNavigationMonitor, __DKNetworkQualityMonitor,
+                          __DKNextAlarmForTopOffProtectionMonitor, __DKNotificationKeybagLockMonitor,
                           __DKNotificationScreenLockMonitor, __DKNotificationWatchNearbyMonitor, __DKNowPlayingMonitor,
                           __DKOrientationMonitor, __DKPeriod, __DKPluggedInMonitor, __DKStarkMonitor, __DKSunriseSunsetMonitor,
                           __DKTemporalNumericState, __DKThermalPressureMonitor, __DKUserIsFirstBacklightOnAfterWakeupMonitor,
-                          __DKWakeRequestMonitor, __DKWatchActiveMonitor, __DKWifiNetworkQualityMonitor,
+                          __DKWakeRequestMonitor, __DKWiFiConnectionMonitor, __DKWifiNetworkQualityMonitor,
                           __DKWiredNetworkQualityMonitor ]
-    objc-ivars:         [ __DKAppInstallMonitor._appWorkspace, __DKAppInstallMonitor.historicalDeletingHandler,
+    objc-ivars:         [ __DKAirplaneModeMonitor._airplaneModeStatus, __DKAirplaneModeMonitor._radioPrefs,
+                          __DKAppInstallMonitor._appWorkspace, __DKAppInstallMonitor.historicalDeletingHandler,
                           __DKApplicationMonitor._activeExtensions, __DKApplicationMonitor._bksMonitor,
                           __DKApplicationMonitor._lastIdentifierSet, __DKApplicationMonitor._monitor,
                           __DKApplicationMonitor._previouslyForegroundServices,
@@ -33,27 +36,29 @@ exports:
                           __DKAssertionsPreventingRestartMonitor._systemAssertionsToken,
                           __DKAssertionsPreventingRestartMonitor._userspaceAssertionsToken, __DKAudioInputMonitor._inputMonitor,
                           __DKAudioOutputMonitor._outputMonitor, __DKBacklightMonitor.notifyToken,
-                          __DKBatteryMonitor._batteryNotification, __DKBatteryMonitor._immediateShutdownThreshold,
-                          __DKBatteryMonitor._log, __DKBatteryMonitor._notifyPort, __DKBatteryMonitor._powerService,
-                          __DKBatteryMonitor._previousBatteryState, __DKBatteryMonitor._previousPercentage,
+                          __DKBatteryMonitor._batteryNotification, __DKBatteryMonitor._hasInternalBattery,
+                          __DKBatteryMonitor._immediateShutdownThreshold, __DKBatteryMonitor._notifyPort,
+                          __DKBatteryMonitor._powerService, __DKBatteryMonitor._previousBatteryState,
+                          __DKBatteryMonitor._previousPercentage, __DKBatteryMonitor._previouslyFullyCharged,
                           __DKCPUUsageMonitor._lastCPUUsageLevel, __DKCPUUsageMonitor._lastIdleTick,
                           __DKCPUUsageMonitor._lastSysTick, __DKCPUUsageMonitor._lastUserTick, __DKCPUUsageMonitor._timer,
-                          __DKCalendarMonitor._enabled, __DKCallMonitor._callInProgress, __DKCallMonitor._enabled,
-                          __DKCallMonitor._observer, __DKDeviceActivityLevelMonitor._context,
+                          __DKCalendarMonitor._enabled, __DKDeviceActivityLevelMonitor._context,
                           __DKDeviceActivityLevelMonitor._currentInUseStatus, __DKDeviceActivityLevelMonitor._debounceTimer,
                           __DKDeviceActivityLevelMonitor._enabled, __DKDeviceActivityLevelMonitor._inUseStatus,
                           __DKDeviceActivityLevelMonitor._initialized,
+                          __DKDeviceActivityLevelMonitor._keyPathForDeviceToppingOff,
                           __DKDeviceActivityLevelMonitor._keyPathForReducedPerfStateStatus,
                           __DKDeviceActivityLevelMonitor._lastInUseStatus, __DKDeviceActivityLevelMonitor._lastSetActiveDate,
                           __DKDeviceActivityLevelMonitor._lastUseDate, __DKDeviceActivityLevelMonitor._limitsImposed,
                           __DKDeviceActivityLevelMonitor._limitsInitialized, __DKDeviceActivityLevelMonitor._siriToken,
-                          __DKDeviceActivityLevelMonitor._userActivityNotificationHandle, __DKDeviceSleepMonitor._enabled,
+                          __DKDeviceActivityLevelMonitor._userActivityNotificationHandle,
                           __DKDoNotDisturbMonitor._dndStateService, __DKInCarMonitor._connected,
                           __DKInCarMonitor._connectedToken, __DKInCarMonitor._disconnectedToken, __DKInCarMonitor._enabled,
-                          __DKLocationMonitor._locationManager, __DKLocationMonitor._recordGeodesicClusterCenter,
+                          __DKLocationMonitor._locationEnabled, __DKLocationMonitor._locationManager,
                           __DKLocationMonitor._routineManager, __DKMonitor._bootSessionUUID, __DKMonitor._currentEvent,
-                          __DKMonitor._eventComparator, __DKMonitor._eventQueue, __DKMonitor._filter,
-                          __DKMonitor._historicalState, __DKMonitor._instantState, __DKMonitor._queue, __DKMonitor._references,
+                          __DKMonitor._dateAtLastClockChange, __DKMonitor._eventComparator, __DKMonitor._eventQueue,
+                          __DKMonitor._filter, __DKMonitor._historicalState, __DKMonitor._instantState,
+                          __DKMonitor._machTimeAtLastClockChange, __DKMonitor._queue, __DKMonitor._references,
                           __DKMonitor._state, __DKMonitor.historicalHandler, __DKMonitor.instantHandler, __DKMonitor.lastUpdate,
                           __DKMonitor.shutdownHandler, __DKMotionMonitor._activateTimer, __DKMotionMonitor._activityManager,
                           __DKMotionMonitor._currentDominantMotionState, __DKMotionMonitor._dominantActivityInterval,
@@ -77,7 +82,7 @@ exports:
                           __DKNotificationWatchNearbyMonitor._token, __DKNowPlayingMonitor._lastPlaybackState,
                           __DKNowPlayingMonitor._outputContext, __DKOrientationMonitor._monitor, __DKPeriod._endDate,
                           __DKPeriod._startDate, __DKPluggedInMonitor._enabled, __DKPluggedInMonitor._pluggedInToken,
-                          __DKSunriseSunsetMonitor._authorizationStatus,
+                          __DKStarkMonitor._sessionStatus, __DKSunriseSunsetMonitor._authorizationStatus,
                           __DKSunriseSunsetMonitor._awaitingLocationAfterDisabledAirplaneMode, __DKSunriseSunsetMonitor._enabled,
                           __DKSunriseSunsetMonitor._log, __DKSunriseSunsetMonitor._manager,
                           __DKSunriseSunsetMonitor._previousDataDictionary, __DKSunriseSunsetMonitor._radioPrefs,
@@ -94,6 +99,7 @@ exports:
                           __DKUserIsFirstBacklightOnAfterWakeupMonitor.internalSettingChangedNotificationToken,
                           __DKWakeRequestMonitor._nextUserVisibleWakeRequestDate,
                           __DKWakeRequestMonitor._nextUserVisibleWakeRequestor, __DKWakeRequestMonitor._updateTimer,
-                          __DKWakeRequestMonitor._wakeRequestToken, __DKWatchActiveMonitor._enabled,
-                          __DKWatchActiveMonitor._service, __DKWatchActiveMonitor.idsServiceQueue ]
+                          __DKWakeRequestMonitor._updateTimerResumed, __DKWakeRequestMonitor._wakeRequestToken,
+                          __DKWiFiConnectionMonitor._currentWirelessSSID, __DKWiFiConnectionMonitor._pathEvaluator,
+                          __DKWiFiConnectionMonitor._wifiManager ]
 ...

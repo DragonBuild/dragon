@@ -1,16 +1,19 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CoreFollowUp.framework/CoreFollowUp
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CoreFollowUpVersionNumber, _CoreFollowUpVersionString, _FLDaemonExportedInterface, _FLError,
                           _FLErrorDomain, _FLFollowUpActionLaunchArgumentsKey, _FLFollowUpBridgeBundleIdentifier,
-                          _FLFollowUpBridgeUrlPrefix, _FLFollowUpItemsKey, _FLFollowUpPreferencesBundleIdentifier,
-                          _FLFollowUpPreferencesIdentifierPrefix, _FLFollowUpPreferencesUrlPrefix, _FLFollowUpSingleActionKey,
-                          _FLFollowUpSingleItemKey, _FLFollowUpViewModelKey, _FLGroupIdentifierAccount, _FLGroupIdentifierDevice,
+                          _FLFollowUpBridgeUrlPrefix, _FLFollowUpItemsKey, _FLFollowUpNotificationBundleIdentifier,
+                          _FLFollowUpNotificationDefaultCategory, _FLFollowUpNotificationSampleCategory,
+                          _FLFollowUpPreferencesBundleIdentifier, _FLFollowUpPreferencesIdentifierPrefix,
+                          _FLFollowUpPreferencesUrlPrefix, _FLFollowUpSingleActionKey, _FLFollowUpSingleItemKey,
+                          _FLFollowUpViewModelKey, _FLGroupIdentifierAccount, _FLGroupIdentifierDevice,
                           _FLGroupIdentifierUnknown, _FLHSA2ActionChangePassword, _FLInternalItemWhitelistWarning,
                           _FLItemRefreshResultFailure, _FLItemRefreshResultRemoved, _FLItemRefreshResultSuccess, _FLLoc,
                           _FLLocDeviceSpecific, _FLNotificationOptionBannerAlert, _FLNotificationOptionExtensionActions,
@@ -30,8 +33,9 @@ exports:
                           _FLFollowUpAction._url, _FLFollowUpAction._userInfo, _FLFollowUpController._clientIdentifier,
                           _FLFollowUpController._delegate, _FLFollowUpController._listener,
                           _FLFollowUpController._machServiceName, _FLFollowUpItem._actions, _FLFollowUpItem._bundleIconName,
-                          _FLFollowUpItem._clientIdentifier, _FLFollowUpItem._delegateMachServiceName,
-                          _FLFollowUpItem._displayStyle, _FLFollowUpItem._extensionIdentifier, _FLFollowUpItem._groupIdentifier,
+                          _FLFollowUpItem._categoryIdentifier, _FLFollowUpItem._clientIdentifier,
+                          _FLFollowUpItem._delegateMachServiceName, _FLFollowUpItem._displayStyle,
+                          _FLFollowUpItem._extensionIdentifier, _FLFollowUpItem._groupIdentifier,
                           _FLFollowUpItem._informativeFooterText, _FLFollowUpItem._informativeText,
                           _FLFollowUpItem._notification, _FLFollowUpItem._representingBundlePath,
                           _FLFollowUpItem._shouldPersistWhenActivated, _FLFollowUpItem._shouldPersistWhenDismissed,

@@ -1,14 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/EmojiKit.framework/EmojiKit
-current-version:       15.1
+current-version:       20
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _EMKEmojiConversionDisabledNotificationName, _EMKEmojiConversionLanguageAttributeName,
-                          _EMKEmojiSignifierAttributeName, _EMKEmojiTokenListAttributeName, _EMKStartTimerNotificationName,
-                          _EMKStopTimerNotificationName, _EmojiKitVersionNumber, _EmojiKitVersionString ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     objc-classes:       [ _EMKEmojiSignifier, _EMKEmojiTokenList, _EMKGestureRecognizerDelegate, _EMKGlyphRippler,
                           _EMKLayoutManager, _EMKOverlayView, _EMKTextEnumerator, _EMKTextView ]
     objc-ivars:         [ _EMKEmojiSignifier._string, _EMKEmojiTokenList._emojiTokenArray, _EMKGlyphRippler._animateFrames,

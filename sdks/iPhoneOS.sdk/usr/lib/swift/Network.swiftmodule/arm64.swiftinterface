@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.1.1 (swiftlang-1100.2.274.2 clang-1100.2.32.1)
-// swift-module-flags: -target arm64-apple-ios13.2 -enable-objc-interop -autolink-force-load -enable-library-evolution -module-link-name swiftNetwork -swift-version 5 -O -enforce-exclusivity=unchecked -module-name Network
+// swift-compiler-version: Apple Swift version 5.1 (swiftlang-1100.2.259.50 clang-1100.2.32.1)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -autolink-force-load -enable-library-evolution -module-link-name swiftNetwork -swift-version 5 -O -enforce-exclusivity=unchecked -module-name Network
 import Darwin
 import Dispatch
 import Foundation
@@ -110,7 +110,7 @@ final public class NWBrowser : Swift.CustomDebugStringConvertible {
     get
     set
   }
-  @available(OSX 10.15, iOS 13, watchOS 6, tvOS 13, *)
+  @available(OSX 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   final public var maximumDatagramSize: Swift.Int {
     get
   }

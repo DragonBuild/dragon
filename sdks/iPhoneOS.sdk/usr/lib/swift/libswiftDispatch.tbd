@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 64D851F9-A078-339B-9505-9743BAC12B07', 'armv7s: D0EB14F2-E195-3221-ABA4-AB30C7F3CB1C', 
-                   'arm64: 51EB1220-DD2D-3F10-A630-0500AA13526D', 'arm64e: DC78B0BB-B283-36B9-B542-906C91D28827' ]
+                   'arm64: 952C3749-A167-34F7-926E-69C5F252D251', 'arm64e: FB460A87-2D9F-35F2-B830-D431F04E8AAB' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftDispatch.dylib'
 current-version: 0

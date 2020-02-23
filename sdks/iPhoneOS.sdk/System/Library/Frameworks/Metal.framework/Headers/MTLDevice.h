@@ -135,8 +135,8 @@ typedef NS_ENUM(NSInteger, MTLGPUFamily)
     MTLGPUFamilyCommon2 = 3002,
     MTLGPUFamilyCommon3 = 3003,
     
-    MTLGPUFamilyMacCatalyst1 = 4001,
-    MTLGPUFamilyMacCatalyst2 = 4002,
+    MTLGPUFamilyiOSMac1 = 4001,
+    MTLGPUFamilyiOSMac2 = 4002,
 } API_AVAILABLE(macos(10.15), ios(13.0));
 
 
@@ -177,10 +177,10 @@ typedef NS_ENUM(NSUInteger, MTLArgumentBuffersTier)
  @enum MTLSparseTextureRegionAlignmentMode
  @abstract MTLSparseTextureRegionAlignmentMode determines type of alignment used when converting from pixel region to tile region.
  */
-typedef NS_ENUM(NSUInteger, MTLSparseTextureRegionAlignmentMode)
+typedef NS_OPTIONS(NSUInteger, MTLSparseTextureRegionAlignmentMode)
 {
     MTLSparseTextureRegionAlignmentModeOutward   = 0,
-    MTLSparseTextureRegionAlignmentModeInward    = 1,
+    MTLSparseTextureRegionAlignmentModeInward = 0x1,
 } API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst);
 
 /*!

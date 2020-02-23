@@ -1,31 +1,31 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/TelephonyUI.framework/TelephonyUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _TPCreateImageWithDrawing, _TPDefaultLog, _TPDialerSoundControllerDidEndSoundsNotification,
-                          _TPDialerSoundControllerWillBeginSoundsNotification,
-                          _TPFavoritesControllerFavoritesEntriesDidChangeNotification, _TPFrameworkBundleIdentifier,
-                          _TPImageDrawingCreateCGContext, _TPIsUnknown, _TPMainScreenScale, _TPNumberPadKeyInitializeMetrics,
-                          _TPNumberPadKeyResetLocale, _TPPixelCGCeiling, _TPPixelCGFloor, _TPRectIntegral,
-                          _TPRemoteAlertAcivationReasonNone, _TPRemoteAlertActivationReasonActivatingForSOSWithClicks,
-                          _TPRemoteAlertActivationReasonActivatingForSOSWithVolumeLockHold, _TPShouldHideVoicemailUI,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _TPDialerSoundControllerDidEndSoundsNotification, _TPDialerSoundControllerWillBeginSoundsNotification,
+                          _TPFavoritesControllerFavoritesEntriesDidChangeNotification, _TPIsUnknown, _TPPixelCGCeiling,
+                          _TPPixelCGFloor, _TPRectIntegral, _TPRemoteAlertActivationContextUserInfoRequestURLStringKey,
+                          _TPRemoteAlertActivationReasonActivatingForSOSWithClicks,
+                          _TPRemoteAlertActivationReasonActivatingForSOSWithVolumeLockHold,
+                          _TPRemoteAlertActivationReasonActivatingForScreenTime, _TPShouldHideVoicemailUI,
                           _TPStatusBarManagerStringChangedNotification, _TPStringForNumberPadCharacter, _TelephonyUIBundle,
-                          _kCarrierDomain, _kTPSuperBottomBarImageNameAudio, _kTPSuperBottomBarImageNameCamera,
-                          _kTPSuperBottomBarImageNameMute, _kVMShouldHideVoicemailUI ]
+                          _kTPSuperBottomBarImageNameAudio, _kTPSuperBottomBarImageNameCamera, _kTPSuperBottomBarImageNameMute ]
     objc-classes:       [ _TPActionButton, _TPAlert, _TPAlertAction, _TPAlertViewHelper, _TPBadgeView, _TPBottomBar,
                           _TPBottomDoubleButtonBar, _TPBottomSingleButtonBar, _TPButton, _TPDialPromptAlert, _TPDialerNumberPad,
                           _TPDialerSoundController, _TPFavoritesCollectionViewFlowLayout, _TPFavoritesController,
                           _TPFavoritesEntryCell, _TPFavoritesViewController, _TPFileStorageManager, _TPInCallUILauncher,
                           _TPLCDBar, _TPLCDSubImageView, _TPLCDTextView, _TPLCDTextViewScrollingView, _TPLCDView, _TPNumberPad,
-                          _TPNumberPadButton, _TPNumberPadDarkStyleButton, _TPNumberPadKey, _TPNumberPadLightStyleButton,
-                          _TPPasscodeView, _TPPhonePad, _TPPillView, _TPPortraitOnlyNavigationController, _TPRevealingRingView,
-                          _TPRingView, _TPSetPINKeyPadButton, _TPSetPINKeyPadNumberPad, _TPSetPINViewController,
-                          _TPSimpleNumberPad, _TPSimpleNumberPadButton, _TPSlidingButton, _TPStatusBarManager, _TPSuperBottomBar,
-                          _TPSuperBottomBarButton, _TPTableViewCell, _TPView, __TPTemplatedColoredImageView ]
+                          _TPNumberPadButton, _TPNumberPadDarkStyleButton, _TPNumberPadDynamicButton, _TPNumberPadKey,
+                          _TPNumberPadLightStyleButton, _TPPasscodeView, _TPPhonePad, _TPPillView,
+                          _TPPortraitOnlyNavigationController, _TPRevealingRingView, _TPRingView, _TPSetPINKeyPadButton,
+                          _TPSetPINKeyPadNumberPad, _TPSetPINViewController, _TPSimpleNumberPad, _TPSlidingButton,
+                          _TPStatusBarManager, _TPSuperBottomBar, _TPSuperBottomBarButton, _TPTableViewCell, _TPView,
+                          __TPTemplatedColoredImageView ]
     objc-ivars:         [ _TPAlert._completion, _TPAlert._userNotification, _TPAlertAction._handler,
                           _TPAlertViewHelper._alertView, _TPAlertViewHelper._completionHandler, _TPBadgeView._layerCornerRadius,
                           _TPBadgeView._sizeCategory, _TPBadgeView._theme, _TPBadgeView._title, _TPBadgeView._titleLabel,
@@ -41,7 +41,8 @@ exports:
                           _TPBottomSingleButtonBar._delegate, _TPButton._backdropView, _TPButton._blursBackground,
                           _TPButton._color, _TPButton._roundsCorners, _TPButton._usesOverlayBlendingForContents,
                           _TPDialPromptAlert._buttonTitle, _TPDialPromptAlert._dialAction, _TPDialPromptAlert._handles,
-                          _TPDialerNumberPad._delegate, _TPDialerNumberPad._playsSounds, _TPDialerNumberPad._soundController,
+                          _TPDialPromptAlert._processHandle, _TPDialPromptAlert._remoteAlertHandle, _TPDialerNumberPad._delegate,
+                          _TPDialerNumberPad._playsSounds, _TPDialerNumberPad._soundController,
                           _TPDialerSoundController._incompleteSoundCount, _TPDialerSoundController._inflightSounds,
                           _TPDialerSoundController._soundsActivated, _TPFavoritesController._callProviderManager,
                           _TPFavoritesController._completionDispatchQueue, _TPFavoritesController._contactCache,
@@ -50,7 +51,6 @@ exports:
                           _TPFavoritesController._serialDispatchQueue, _TPFavoritesController._transportNameCache,
                           _TPFavoritesEntryCell._actionType, _TPFavoritesEntryCell._avatarContentView,
                           _TPFavoritesEntryCell._avatarContentViewHeightLayoutConstraint,
-                          _TPFavoritesEntryCell._avatarContentViewWidthLayoutConstraint,
                           _TPFavoritesEntryCell._avatarViewController, _TPFavoritesEntryCell._contactNameLabel,
                           _TPFavoritesEntryCell._contactNameLabelBaselineLayoutConstraint,
                           _TPFavoritesEntryCell._contentViewLayoutConstraintsLoaded, _TPFavoritesEntryCell._contentViewLoaded,
@@ -59,12 +59,12 @@ exports:
                           _TPFavoritesEntryCell._transportNameLabel,
                           _TPFavoritesEntryCell._transportNameLabelBaselineLayoutConstraint,
                           _TPFavoritesEntryCell._transportNameLabelLeadingLayoutConstraint, _TPFavoritesEntryCell._transportView,
-                          _TPFavoritesViewController._avatarViewControllerSettings, _TPFavoritesViewController._contactFormatter,
-                          _TPFavoritesViewController._contentUnavailable, _TPFavoritesViewController._contentUnavailableView,
-                          _TPFavoritesViewController._favoritesController, _TPFavoritesViewController._favoritesEntries,
-                          _TPFavoritesViewController._sections, _TPFileStorageManager._hasClearedLegacyStorage,
-                          _TPFileStorageManager._queue, _TPFileStorageManager._urlForFileSystem, _TPLCDBar._shadowView,
-                          _TPLCDSubImageView._image, _TPLCDTextView._animates, _TPLCDTextView._animation,
+                          _TPFavoritesViewController._contactFormatter, _TPFavoritesViewController._contentUnavailable,
+                          _TPFavoritesViewController._contentUnavailableView, _TPFavoritesViewController._favoritesController,
+                          _TPFavoritesViewController._favoritesEntries, _TPFavoritesViewController._sections,
+                          _TPFileStorageManager._hasClearedLegacyStorage, _TPFileStorageManager._queue,
+                          _TPFileStorageManager._urlForFileSystem, _TPInCallUILauncher._launchSOSCompletion,
+                          _TPLCDBar._shadowView, _TPLCDSubImageView._image, _TPLCDTextView._animates, _TPLCDTextView._animation,
                           _TPLCDTextView._centerText, _TPLCDTextView._delegate, _TPLCDTextView._font, _TPLCDTextView._fontSize,
                           _TPLCDTextView._isAnimating, _TPLCDTextView._leftTruncates, _TPLCDTextView._minFontSize,
                           _TPLCDTextView._scrollingView, _TPLCDTextView._shadowColor, _TPLCDTextView._text,

@@ -1,18 +1,19 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/NewsToday.framework/NewsToday
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    allowed-clients:    [ Health, HealthArticles, HealthArticlesPlugin, HealthArticlesPluginTests, Home, HomeArticles, NewsToday,
-                          NewsTodayTests, NewsInternalSettings, nanonewscd, newsd, NewsServices ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    allowable-clients:  [ Health, HealthArticles, HealthArticlesPlugin, HealthArticlesPluginTests, Home, HomeArticles,
+                          NewsInternalSettings, NewsServices, NewsToday, NewsTodayTests, nanonewscd, newsd ]
     symbols:            [ _FCConsumedArticleFilterMethodForReadArticlesFilterMethod,
                           _FCConsumedArticleFilterMethodForSeenArticlesFilterMethod,
                           _FCFeedPersonalizingContentHalfLifeScoreWithMillisecondDate, _FRPPTExtendedLaunchTypeForNSString,
-                          _FRPPTExtendedLaunchTypes, _FRPPTExtendedLaunchTypesStringMap, _FRPPTRequiredDataForFRPPTType,
-                          _FRPPTTypeForNSString, _FRPPTTypes, _FRPPTTypesStringMap, _FRPersonalizationItemGlobalScores,
+                          _FRPPTExtendedLaunchTypes, _FRPPTExtendedLaunchTypesStringMap, _FRPPTTypeForNSString, _FRPPTTypes,
+                          _FRPPTTypesStringMap, _FRPersonalizationItemGlobalScores,
                           _FRPersonalizationUtilitiesStaticHourlyFlowRate, _NNCreateHeadlineSyncableHeadline,
                           _NNHeadlineSyncableResultFromHeadline, _NNHeadlineSyncableResultFromResult,
                           _NNHeadlineSyncableSectionFromSection, _NNSetupCompanionSyncLog, _NSStringFromFRPPTExtendedLaunchType,
@@ -23,9 +24,9 @@ exports:
                           _NTHeadlineFromFCHeadline, _NTHeadlineSourceNameImageHeightFromNameImageSizePreset,
                           _NTHeadlineSourceNameImageMaskAssetHandleFromFCHeadline, _NTHeadlineThumbnailFromFCHeadline,
                           _NTHeadlineThumbnailLengthFromThumbnailSizePreset, _NTIsUserInExperiment, _NTNewsSourceIdentifier,
-                          _NTParsecSourceIdentifier, _NTSectionCanShowLeadingCell, _NTSectionFeedItemsLimit, _NTSharedLog,
-                          _NTShouldUseParsecResults, _NTSimulateCrashWithError, _NTUnknownSourceIdentifier, _NTXPCSuitableError,
-                          _NewsTodayVersionNumber, _NewsTodayVersionString ]
+                          _NTParsecSourceIdentifier, _NTPossiblySimulateCrashWithError, _NTSectionCanShowLeadingCell,
+                          _NTSectionFeedItemsLimit, _NTSharedLog, _NTShouldUseParsecResults, _NTUnknownSourceIdentifier,
+                          _NTXPCSuitableError, _NewsTodayVersionNumber, _NewsTodayVersionString ]
     objc-classes:       [ _FRPersonalizationUtilities, _FRRingBuffer, _NTArticleIDsSectionFetchDescriptor,
                           _NTArticleListSectionFetchDescriptor, _NTCatchUpOperation, _NTCatchUpOperationArticleIDsRequest,
                           _NTCatchUpOperationForYouFetchInfo, _NTCatchUpOperationForYouRequest, _NTCatchUpOperationResults,
@@ -38,7 +39,7 @@ exports:
                           _NTNewsTodayResultsExplicitAllocationAggregator, _NTNewsTodayResultsFetchDescriptor,
                           _NTNewsTodayResultsSourceFetchHelper, _NTNewsTodayResultsSourceFetchHelperSectionDescriptor,
                           _NTNoContentSourceAvailabilityEntry, _NTNoContentTodayResultOperation,
-                          _NTNoContentTodayResultsFetchDescriptor, _NTPaidAccessChecker, _NTParsecSourceAvailabilityEntry,
+                          _NTNoContentTodayResultsFetchDescriptor, _NTParsecSourceAvailabilityEntry,
                           _NTParsecTodayResultOperation, _NTParsecTodayResultsFetchDescriptor, _NTParsecZKWNewsOperation,
                           _NTPersonalizationFeatureCTRLookupOperation, _NTPersonalizationFeatureCTRLookupRequest,
                           _NTPersonalizedSectionFetchDescriptor, _NTPersonalizedSectionLimitTransformation,
@@ -65,6 +66,7 @@ exports:
                           _NTCatchUpOperationForYouFetchInfo._attemptedCachedOnly,
                           _NTCatchUpOperationForYouFetchInfo._feedContextByFeedID,
                           _NTCatchUpOperationForYouFetchInfo._fetchedRecordsInterestToken,
+                          _NTCatchUpOperationForYouRequest._bundleSubscriptionProvider,
                           _NTCatchUpOperationForYouRequest._cutoffTime, _NTCatchUpOperationForYouRequest._fetchingBin,
                           _NTCatchUpOperationForYouRequest._headlinesPerFeedFetchCount,
                           _NTCatchUpOperationForYouRequest._hiddenFeedIDs, _NTCatchUpOperationForYouRequest._mutedTagIDs,
@@ -98,10 +100,10 @@ exports:
                           _NTHeadline._searchResult, _NTHeadline._shortExcerpt, _NTHeadline._sourceName,
                           _NTHeadline._sourceNameImageRemoteURL, _NTHeadline._sourceNameImageScale, _NTHeadline._sourceTagID,
                           _NTHeadline._storyType, _NTHeadline._supportsSavingForLater, _NTHeadline._thumbnailFocalFrame,
-                          _NTHeadline._thumbnailRemoteURL, _NTHeadline._thumbnailSizePreset, _NTHeadline._title,
-                          _NTHeadline._titleCompact, _NTHeadline._topicIDs, _NTHeadline._videoCallToActionTitle,
-                          _NTHeadline._videoCallToActionURL, _NTHeadline._videoDuration, _NTHeadline._videoURL,
-                          _NTHeadline._webURL, _NTHeadlinePersonalizationMetadata._articleID,
+                          _NTHeadline._thumbnailIdentifier, _NTHeadline._thumbnailRemoteURL, _NTHeadline._thumbnailSizePreset,
+                          _NTHeadline._title, _NTHeadline._titleCompact, _NTHeadline._topicIDs,
+                          _NTHeadline._videoCallToActionTitle, _NTHeadline._videoCallToActionURL, _NTHeadline._videoDuration,
+                          _NTHeadline._videoURL, _NTHeadline._webURL, _NTHeadlinePersonalizationMetadata._articleID,
                           _NTHeadlinePersonalizationMetadata._publisherID, _NTHeadlinePersonalizationMetadata._scoredTopicIDs,
                           _NTItemAggregationResult._aggregatedItemsBySectionDescriptor,
                           _NTItemAggregationResult._itemIDsOfLeadingCells,
@@ -120,6 +122,7 @@ exports:
                           _NTNewsTodayResultOperation._todayConfigOperationHeldRecordsByType,
                           _NTNewsTodayResultsExplicitAllocationAggregator._allowLeadingCell,
                           _NTNewsTodayResultsExplicitAllocationAggregator._allowSectionTitles,
+                          _NTNewsTodayResultsExplicitAllocationAggregator._configurationManager,
                           _NTNewsTodayResultsExplicitAllocationAggregator._embedsLimit,
                           _NTNewsTodayResultsExplicitAllocationAggregator._feedPersonalizer,
                           _NTNewsTodayResultsExplicitAllocationAggregator._filterDate,
@@ -135,15 +138,16 @@ exports:
                           _NTNoContentSourceAvailabilityEntry.availabilityChangedNotificationBlock,
                           _NTNoContentTodayResultOperation._resultAssetHandlesByAssetID,
                           _NTNoContentTodayResultOperation._resultFetchInfo,
-                          _NTNoContentTodayResultOperation._resultTodayResults, _NTPaidAccessChecker._purchasedTagIDs,
+                          _NTNoContentTodayResultOperation._resultTodayResults,
                           _NTParsecSourceAvailabilityEntry._availabilityChangedNotificationBlock,
                           _NTParsecSourceAvailabilityEntry._networkReachability,
                           _NTParsecTodayResultOperation._resultAssetHandlesByAssetID,
                           _NTParsecTodayResultOperation._resultFetchInfo, _NTParsecTodayResultOperation._resultTodayResults,
-                          _NTParsecZKWNewsOperation._fetchDate, _NTParsecZKWNewsOperation._newsCompletionHandler,
-                          _NTParsecZKWNewsOperation._resultRankingFeedback, _NTParsecZKWNewsOperation._resultSearchResultIDs,
-                          _NTParsecZKWNewsOperation._resultSearchResultsBySearchResultID, _NTParsecZKWNewsOperation._session,
-                          _NTPersonalizationFeatureCTRLookupOperation._aggregateStore,
+                          _NTParsecZKWNewsOperation._fetchDate, _NTParsecZKWNewsOperation._keyboardInputMode,
+                          _NTParsecZKWNewsOperation._newsCompletionHandler, _NTParsecZKWNewsOperation._resultRankingFeedback,
+                          _NTParsecZKWNewsOperation._resultSearchResultIDs,
+                          _NTParsecZKWNewsOperation._resultSearchResultsBySearchResultID, _NTParsecZKWNewsOperation._scale,
+                          _NTParsecZKWNewsOperation._session, _NTPersonalizationFeatureCTRLookupOperation._aggregateStore,
                           _NTPersonalizationFeatureCTRLookupOperation._lookupCompletion,
                           _NTPersonalizationFeatureCTRLookupOperation._lookupRequests,
                           _NTPersonalizationFeatureCTRLookupOperation._personalizationTreatment,

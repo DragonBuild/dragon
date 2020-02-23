@@ -35,15 +35,14 @@ HM_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, watchos, tvos)
 @property (nonatomic, strong, readonly) HMAccessoryCategory *accessoryCategory;
 
 /*!
- * @brief Indication if the setup URL needs to be updated for this request. If this is true,
- *        payloadWithURL:ownershipToken: must be used to create the HMAccessorySetupPayload.
+ * @brief Indication if the setup URL needs to be updated in this payload. If this is YES, you must use payloadWithURL:ownershipToken: to create your HMAccessorySetupPayload.
  */
 @property (nonatomic, assign, readonly) BOOL requiresSetupPayloadURL;
 
 /*!
- * @brief Indication if the ownership token needs to be updated for this request.
+ * @brief Indication if the ownership token needs to be updated in this payload. If this is YES, you may either use payloadWithOwnershipToken: or payloadWithURL:ownershipToken:.
  */
-@property (nonatomic, assign, readonly) BOOL requiresOwnershipToken API_DEPRECATED("No longer supported", ios(13.0, 13.0));
+@property (nonatomic, assign, readonly) BOOL requiresOwnershipToken;
 
 /*!
  * @brief Creates an accessory setup payload with ownership token

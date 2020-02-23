@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/ANEServices.framework/ANEServices
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _H11ANEDeviceClose, _H11ANEDeviceOpen, _H11ANEDeviceUpdateParameters, _H11ANEProgramCancelAllRequests,
                           _H11ANEProgramCompleteAllRequests, _H11ANEProgramCreate, _H11ANEProgramCreateNewInstance,
                           _H11ANEProgramDestroy, _H11ANEProgramPrepare, _H11ANEProgramProcessRequest,
@@ -25,7 +26,7 @@ exports:
                           __ZN6H11ANE12H11ANEDevice13ANE_GetStatusEP18H11ANEStatusStruct,
                           __ZN6H11ANE12H11ANEDevice13ANE_IsPoweredEv, __ZN6H11ANE12H11ANEDevice14ANE_GetVersionEP13H11ANEVersion,
                           __ZN6H11ANE12H11ANEDevice15ANE_SendCommandEPhjjj, __ZN6H11ANE12H11ANEDevice16ANE_LoadFirmwareEv,
-                          __ZN6H11ANE12H11ANEDevice16H11ANEDeviceOpenEPFiPS0_jPvS2_ES2_18ANEDeviceUsageTypeyy,
+                          __ZN6H11ANE12H11ANEDevice16H11ANEDeviceOpenEPFiPS0_jPvS2_ES2_18ANEDeviceUsageTypeP22H11ANEDeviceInfoStruct,
                           __ZN6H11ANE12H11ANEDevice17ANE_ProgramCreateEP29H11ANEProgramCreateArgsStructP35H11ANEProgramCreateArgsStructOutput,
                           __ZN6H11ANE12H11ANEDevice17H11ANEDeviceCloseEv, __ZN6H11ANE12H11ANEDevice17ReadPropertyValueEjPjj,
                           __ZN6H11ANE12H11ANEDevice18ANE_ForgetFirmwareEv,
@@ -38,6 +39,7 @@ exports:
                           __ZN6H11ANE12H11ANEDevice20GetClientPrivateDataEv, __ZN6H11ANE12H11ANEDevice20SetClientPrivateDataEPv,
                           __ZN6H11ANE12H11ANEDevice21ANE_CancelAllRequestsEv, __ZN6H11ANE12H11ANEDevice21DisableDeviceMessagesEv,
                           __ZN6H11ANE12H11ANEDevice22ANE_ProgramSendRequestEP30H11ANEProgramRequestArgsStructj,
+                          __ZN6H11ANE12H11ANEDevice22ANE_SetPowerManagementEj,
                           __ZN6H11ANE12H11ANEDevice25ANE_GetDriverLoggingFlagsEPj,
                           __ZN6H11ANE12H11ANEDevice25ANE_ProgramCreateInstanceEP29H11ANEProgramCreateArgsStruct,
                           __ZN6H11ANE12H11ANEDevice25ANE_SetDriverLoggingFlagsEj,
@@ -59,6 +61,7 @@ exports:
                           __ZN6H11ANE19H11ANEFrameReceiver15stopNoDataTimerEv,
                           __ZN6H11ANE19H11ANEFrameReceiver16startNoDataTimerEv,
                           __ZN6H11ANE19H11ANEFrameReceiver17tickleNoDataTimerEv,
+                          __ZN6H11ANE19H11ANEFrameReceiver18processStatsBufferEPNS_26H11ANEFrameReceiverRequestEPS0_,
                           __ZN6H11ANE19H11ANEFrameReceiver18setupFrameReceiverEv,
                           __ZN6H11ANE19H11ANEFrameReceiver19completeAllRequestsEv,
                           __ZN6H11ANE19H11ANEFrameReceiver21ProgramProcessRequestERNS_26H11ANEFrameReceiverRequestE,
@@ -120,8 +123,8 @@ exports:
                           __ZN6H11ANE29H11ANEFrameReceiverBufferPool14allocateBufferEPP10__CVBuffer,
                           __ZN6H11ANE29H11ANEFrameReceiverBufferPool14deactivatePoolEv,
                           __ZN6H11ANE29H11ANEFrameReceiverBufferPool17ModifyBufferCountEi,
-                          __ZN6H11ANE29H11ANEFrameReceiverBufferPoolC1EPNS_12H11ANEDeviceENS_33H11ANEFrameReceiverBufferPoolTypeEjjjjj17H11ANEFrameFormatbjjjjjj,
-                          __ZN6H11ANE29H11ANEFrameReceiverBufferPoolC2EPNS_12H11ANEDeviceENS_33H11ANEFrameReceiverBufferPoolTypeEjjjjj17H11ANEFrameFormatbjjjjjj,
+                          __ZN6H11ANE29H11ANEFrameReceiverBufferPoolC1ENS_33H11ANEFrameReceiverBufferPoolTypeEjjjjj17H11ANEFrameFormatbjjjjjj,
+                          __ZN6H11ANE29H11ANEFrameReceiverBufferPoolC2ENS_33H11ANEFrameReceiverBufferPoolTypeEjjjjj17H11ANEFrameFormatbjjjjjj,
                           __ZN6H11ANE29H11ANEFrameReceiverBufferPoolD1Ev, __ZN6H11ANE29H11ANEFrameReceiverBufferPoolD2Ev,
                           __ZN6H11ANE33CreateH11ANEFirmwareWorkProcessorEPNS_47H11ANEFirmwareWorkProcessorCreationParamsStructE,
                           __ZN6H11ANE34DestroyH11ANEFirmwareWorkProcessorEPNS_27H11ANEFirmwareWorkProcessorE,
@@ -129,5 +132,5 @@ exports:
                           __ZNK6H11ANE25H11ANECFRemoteMessagePort16GetRunLoopSourceEv, __ZTIN6H11ANE24H11ANECFLocalMessagePortE,
                           __ZTIN6H11ANE25H11ANECFRemoteMessagePortE, __ZTSN6H11ANE24H11ANECFLocalMessagePortE,
                           __ZTSN6H11ANE25H11ANECFRemoteMessagePortE, __ZTVN6H11ANE24H11ANECFLocalMessagePortE,
-                          __ZTVN6H11ANE25H11ANECFRemoteMessagePortE ]
+                          __ZTVN6H11ANE25H11ANECFRemoteMessagePortE, _debugFwStatsData ]
 ...

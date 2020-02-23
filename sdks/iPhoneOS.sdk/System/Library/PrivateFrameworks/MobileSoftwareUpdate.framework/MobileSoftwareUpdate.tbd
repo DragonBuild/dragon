@@ -1,22 +1,25 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/MobileSoftwareUpdate
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _MSUApplyUpdate, _MSUAssetCalculateApplySize, _MSUAssetCalculateInstallationSize,
                           _MSUAssetCalculatePrepareSize, _MSUBrainIsLoadable, _MSUCheckInstallationSize,
-                          _MSUCheckPreparationSize, _MSUCloseUpdateHandle, _MSUCopyPreviousUpdateAllToleratedFailures,
+                          _MSUCheckPreparationSize, _MSUCloseUpdateHandle, _MSUCopyConnectivityData, _MSUCopyEnvInfoForNeRD,
+                          _MSUCopyInstalledRecoveryOSVersion, _MSUCopyPreviousUpdateAllToleratedFailures,
                           _MSUCopyToleratedStatusForStep, _MSUDidLastUpdateBasebandTolerateFailure, _MSUIsFirstBootAfterUpdate,
                           _MSUParsedToleratedFailureForStep, _MSUPreflightUpdate, _MSUPrepareUpdate, _MSUPrepareUpdateWithAsset,
-                          _MSUPrepareUpdateWithMAAsset, _MSUPurgeSuspendedUpdate, _MSUResumeUpdate,
-                          _MSURetrievePreviousRestoreDate, _MSURetrievePreviousUpdateDate,
-                          _MSURetrievePreviousUpdateFirstToleratedFailure, _MSURetrievePreviousUpdateResults,
-                          _MSURetrievePreviousUpdateState, _MSUSuspendUpdate, _kCFErrorDomainMobileSoftwareUpdate,
-                          _kCFErrorDomainPersonalization, _kMSUOptionsBrainLocationKey, _kMSUOptionsKeyAllowSpecialCaseDeletions,
-                          _kMSUOptionsKeyAppleConnectCredentials, _kMSUOptionsKeyAppleConnectCredentialsSubkeyAccountName,
+                          _MSUPrepareUpdateWithMAAsset, _MSUPurgeSuspendedUpdate, _MSUReportAndCleanupPreviousUpdateState,
+                          _MSUResumeUpdate, _MSUResumeUpdateWithOptions, _MSURetrievePreviousRestoreDate,
+                          _MSURetrievePreviousUpdateDate, _MSURetrievePreviousUpdateFirstToleratedFailure,
+                          _MSURetrievePreviousUpdateResults, _MSURetrievePreviousUpdateState, _MSUSuspendUpdate,
+                          _kCFErrorDomainMobileSoftwareUpdate, _kCFErrorDomainPersonalization, _kMSUOptionsBrainLocationKey,
+                          _kMSUOptionsKeyAllowSpecialCaseDeletions, _kMSUOptionsKeyAppleConnectCredentials,
+                          _kMSUOptionsKeyAppleConnectCredentialsSubkeyAccountName,
                           _kMSUOptionsKeyAppleConnectCredentialsSubkeyPassword, _kMSUOptionsKeyAppleConnectSsoToken,
                           _kMSUOptionsKeyDoNotPatch, _kMSUOptionsKeyDoNotPersonalize, _kMSUOptionsKeyEnableManagedRequest,
                           _kMSUOptionsKeyEventStats, _kMSUOptionsKeyFirstPreflightPhase,

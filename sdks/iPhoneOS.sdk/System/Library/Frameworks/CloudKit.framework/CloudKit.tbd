@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: FFF97FBD-E0F9-33FF-BCD6-D893A968F77F', 'armv7s: 2BDDF427-B957-31D0-A2D5-5AC238068657', 
-                   'arm64: 88979018-F79C-3AA2-8E55-E1857D10A845', 'arm64e: BC281824-DDE4-3BBB-85C7-02672F2C6F97' ]
+                   'arm64: 78B5EDFC-2D88-3A18-B2A7-965A5A96A92F', 'arm64e: 453469D2-293F-3CA6-BC44-6390A026C7DD' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CloudKit.framework/CloudKit'
-current-version: 854
+current-version: 829
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _CKGetCacheDir, _CKRegisterRepeatingXPCActivity, _CKStringFromParticipantType, 
@@ -17,7 +17,7 @@ exports:
                        _kCKUseSystemPublicTokenEntitlementKey ]
     objc-classes:    [ CKSQLiteStatement, CKTimeLogger, CKTimeLoggerLog ]
   - archs:           [ armv7, armv7s, arm64, arm64e ]
-    symbols:         [ _CKAPSEnvironmentEntitlementString, _CKAbsoluteHostTime, _CKAcceptablePredicateValueClasses, 
+    symbols:         [ _CKAPSEnvironmentEntitlementString, _CKAcceptablePredicateValueClasses, 
                        _CKAcceptableValueClasses, _CKAccountChangedNotification, 
                        _CKActivitySharingContainerIdentifier, _CKAllClientEntitlementKeys, 
                        _CKAllTokensKey, _CKAppIdentifierFromTeamAppTuple, _CKAssetRepairContainerFormat, 
@@ -90,8 +90,8 @@ exports:
                        _CKRecordShareIDKey, _CKRecordShareInfoKey, _CKRecordShareKey, 
                        _CKRecordTypeShare, _CKRecordTypeUserRecord, _CKRecordZoneDefaultName, 
                        _CKReferenceActionValidate, _CKRemindersContainerIdentifier, 
-                       _CKRemindersShareURLSlug, _CKRequestUUID, _CKRetryAfterSecondsForError, 
-                       _CKSDKVersion, _CKSQLiteJournalSuffixes, _CKSafariBookmarksContainerIdentifier, 
+                       _CKRequestUUID, _CKRetryAfterSecondsForError, _CKSDKVersion, 
+                       _CKSQLiteJournalSuffixes, _CKSafariBookmarksContainerIdentifier, 
                        _CKServerEnvironmentFromString, _CKShareDaemonPrefix, _CKShareThumbnailImageDataKey, 
                        _CKShareTitleKey, _CKShareTypeKey, _CKShareURLSlugForiWorkShareTitle, 
                        _CKSharingContainerSlugForContainerID, _CKSharingdContainerIdentifier, 

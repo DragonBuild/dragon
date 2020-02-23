@@ -1,16 +1,19 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PassKitUIFoundation.framework/PassKitUIFoundation
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PKGlyphViewSize, _PKMatrixForRotationAroundXAxis, _PKMatrixForRotationAroundYAxis, _PKMatrixForScale,
                           _PKMatrixIdentity ]
     objc-classes:       [ _PK3DCardView, _PKAuthenticator, _PKAuthenticatorEvaluationContext, _PKAuthenticatorEvaluationRequest,
-                          _PKAuthenticatorEvaluationResponse, _PKAuthenticatorSharedRootContext, _PKCheckGlyphLayer,
-                          _PKDisplayLinkTargetProxy, _PKFingerprintGlyphView, _PKGlyphView, _PKMetalRenderLoop, _PKMotionManager,
+                          _PKAuthenticatorEvaluationResponse, _PKAuthenticatorSharedRootContext,
+                          _PKCategoryVisualizationCardView, _PKCheckGlyphLayer, _PKDisplayLinkTargetProxy,
+                          _PKFingerprintGlyphView, _PKGlyphView, _PKMetalRenderLoop, _PKMotionManager,
+                          _PKPassFaceViewCategoryVisualizationRendererState, _PKPassFaceViewRendererState,
                           _PKPaymentRemoteInstrumentThumbnailView, _PKPeerPayment3DCharacter, _PKPeerPayment3DScene,
                           _PKPeerPayment3DStore, _PKPeerPayment3DTextView, _PKPhoneGlyphLayer, _PKRenderLoop,
                           _PKUISpringAnimationFactory ]
@@ -51,13 +54,31 @@ exports:
                           _PKAuthenticatorEvaluationResponse._kextBlacklistVersion, _PKAuthenticatorEvaluationResponse._result,
                           _PKAuthenticatorSharedRootContext._LAContext,
                           _PKAuthenticatorSharedRootContext._assumeUserIntentAvailable, _PKAuthenticatorSharedRootContext._lock,
-                          _PKCheckGlyphLayer._checkGlyphDelegate, _PKCheckGlyphLayer._covered,
-                          _PKCheckGlyphLayer._coveredTransform, _PKCheckGlyphLayer._maskLayer, _PKCheckGlyphLayer._primaryColor,
-                          _PKCheckGlyphLayer._revealed, _PKCheckGlyphLayer._shapeLayer, _PKCheckGlyphLayer._uncoveredTransform,
-                          _PKDisplayLinkTargetProxy._target, _PKFingerprintGlyphView._backgroundLayer,
-                          _PKFingerprintGlyphView._backgroundShapeLayers, _PKFingerprintGlyphView._contentLayer,
-                          _PKFingerprintGlyphView._delegate, _PKFingerprintGlyphView._fadeOnRecognized,
-                          _PKFingerprintGlyphView._foregroundLayer, _PKFingerprintGlyphView._foregroundRingContainerLayer,
+                          _PKCategoryVisualizationCardView._blurDisabled, _PKCategoryVisualizationCardView._blurShader,
+                          _PKCategoryVisualizationCardView._bucketColors, _PKCategoryVisualizationCardView._circleDataBuffer,
+                          _PKCategoryVisualizationCardView._circleOutlinePipelineState,
+                          _PKCategoryVisualizationCardView._circlePipelineState,
+                          _PKCategoryVisualizationCardView._circleUniformsBuffer, _PKCategoryVisualizationCardView._commandQueue,
+                          _PKCategoryVisualizationCardView._drawableHeight, _PKCategoryVisualizationCardView._drawableWidth,
+                          _PKCategoryVisualizationCardView._effectivePaused, _PKCategoryVisualizationCardView._emptying,
+                          _PKCategoryVisualizationCardView._hasPendingUpdate, _PKCategoryVisualizationCardView._invalidated,
+                          _PKCategoryVisualizationCardView._magnitudes, _PKCategoryVisualizationCardView._motionEnabled,
+                          _PKCategoryVisualizationCardView._needsDraw, _PKCategoryVisualizationCardView._overlayNormalTexture,
+                          _PKCategoryVisualizationCardView._overlayPipelineState,
+                          _PKCategoryVisualizationCardView._overlayTexture, _PKCategoryVisualizationCardView._paused,
+                          _PKCategoryVisualizationCardView._pendingUpdateStyle, _PKCategoryVisualizationCardView._renderLoop,
+                          _PKCategoryVisualizationCardView._renderPassDescriptor,
+                          _PKCategoryVisualizationCardView._secondRenderPassDescriptor,
+                          _PKCategoryVisualizationCardView._singleCircleDataBuffer, _PKCategoryVisualizationCardView._state,
+                          _PKCategoryVisualizationCardView._texture, _PKCategoryVisualizationCardView._textureCoordsBuffer,
+                          _PKCategoryVisualizationCardView._vertexCoordsBuffer, _PKCheckGlyphLayer._checkGlyphDelegate,
+                          _PKCheckGlyphLayer._covered, _PKCheckGlyphLayer._coveredTransform, _PKCheckGlyphLayer._maskLayer,
+                          _PKCheckGlyphLayer._primaryColor, _PKCheckGlyphLayer._revealed, _PKCheckGlyphLayer._shapeLayer,
+                          _PKCheckGlyphLayer._uncoveredTransform, _PKDisplayLinkTargetProxy._target,
+                          _PKFingerprintGlyphView._backgroundLayer, _PKFingerprintGlyphView._backgroundShapeLayers,
+                          _PKFingerprintGlyphView._contentLayer, _PKFingerprintGlyphView._delegate,
+                          _PKFingerprintGlyphView._fadeOnRecognized, _PKFingerprintGlyphView._foregroundLayer,
+                          _PKFingerprintGlyphView._foregroundRingContainerLayer,
                           _PKFingerprintGlyphView._foregroundRingShapeLayers, _PKFingerprintGlyphView._foregroundShapeLayers,
                           _PKFingerprintGlyphView._lastAnimationWillFinish, _PKFingerprintGlyphView._maskForegroundLayer,
                           _PKFingerprintGlyphView._maskLayer, _PKFingerprintGlyphView._primaryColor,
@@ -70,14 +91,15 @@ exports:
                           _PKGlyphView._fingerprintView, _PKGlyphView._isPad, _PKGlyphView._lastAnimationGroup,
                           _PKGlyphView._lastAnimationWillFinish, _PKGlyphView._layoutFlags, _PKGlyphView._pearlView,
                           _PKGlyphView._phoneAspectRatio, _PKGlyphView._phoneLayer, _PKGlyphView._phoneWiggleAnimationKey,
-                          _PKGlyphView._phoneWiggling, _PKGlyphView._primaryColor, _PKGlyphView._priorState,
-                          _PKGlyphView._secondaryColor, _PKGlyphView._state, _PKGlyphView._style,
-                          _PKGlyphView._transitionCompletionHandlers, _PKGlyphView._transitionIndex, _PKGlyphView._transitioning,
-                          _PKGlyphView._transitioningAnimated, _PKGlyphView._userIntentArrowLayer,
-                          _PKGlyphView._userIntentDeviceLayer, _PKGlyphView._userIntentEdge, _PKGlyphView._userIntentLayer,
-                          _PKMetalRenderLoop._currentDrawable, _PKMetalRenderLoop._device, _PKMetalRenderLoop._drawableSize,
-                          _PKMetalRenderLoop._drawableSizeDirty, _PKMetalRenderLoop._layer, _PKMetalRenderLoop._pixelFormat,
-                          _PKMotionManager._clients, _PKMotionManager._motion,
+                          _PKGlyphView._phoneWiggling, _PKGlyphView._primaryColor, _PKGlyphView._primaryHighlightColor,
+                          _PKGlyphView._priorState, _PKGlyphView._secondaryColor, _PKGlyphView._secondaryHighlightColor,
+                          _PKGlyphView._state, _PKGlyphView._style, _PKGlyphView._transitionCompletionHandlers,
+                          _PKGlyphView._transitionIndex, _PKGlyphView._transitioning, _PKGlyphView._transitioningAnimated,
+                          _PKGlyphView._userIntentArrowLayer, _PKGlyphView._userIntentDeviceLayer, _PKGlyphView._userIntentEdge,
+                          _PKGlyphView._userIntentLayer, _PKMetalRenderLoop._currentDrawable, _PKMetalRenderLoop._device,
+                          _PKMetalRenderLoop._drawableSize, _PKMetalRenderLoop._drawableSizeDirty, _PKMetalRenderLoop._layer,
+                          _PKMetalRenderLoop._pixelFormat, _PKMotionManager._clients, _PKMotionManager._motion,
+                          _PKPassFaceViewCategoryVisualizationRendererState._state,
                           _PKPaymentRemoteInstrumentThumbnailView._cardImageView,
                           _PKPaymentRemoteInstrumentThumbnailView._placeholderImageView, _PKPeerPayment3DCharacter._character,
                           _PKPeerPayment3DCharacter._node, _PKPeerPayment3DScene._cameraNode,

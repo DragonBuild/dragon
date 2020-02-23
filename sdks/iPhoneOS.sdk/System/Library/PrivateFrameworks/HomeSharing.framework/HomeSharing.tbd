@@ -1,15 +1,16 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/HomeSharing.framework/HomeSharing
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _HSArtworkInfoKeyArtworkDictionary, _HSArtworkInfoKeyArtworkDictionaryCoverURL,
-                          _HSArtworkInfoKeyArtworkDictionaryFullToken, _HSArtworkInfoKeyArtworkDictionaryFullURL,
-                          _HSArtworkInfoKeyArtworkDictionaryOvalToken, _HSArtworkInfoKeyArtworkDictionaryOvalURL,
-                          _HSArtworkInfoKeyArtworkDictionaryTemplateJSON,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _HSArtworkInfoKeyArtworkDictionary, _HSArtworkInfoKeyArtworkDictionaryCoverArtworkJSON,
+                          _HSArtworkInfoKeyArtworkDictionaryCoverURL, _HSArtworkInfoKeyArtworkDictionaryFullToken,
+                          _HSArtworkInfoKeyArtworkDictionaryFullURL, _HSArtworkInfoKeyArtworkDictionaryOvalToken,
+                          _HSArtworkInfoKeyArtworkDictionaryOvalURL, _HSArtworkInfoKeyArtworkDictionaryTemplateJSON,
                           _HSArtworkInfoKeyArtworkDictionaryTemplateSupportsLayeredImage,
                           _HSArtworkInfoKeyArtworkDictionaryTemplateURL, _HSArtworkInfoKeyPurchaseHistoryID,
                           _HSArtworkInfoKeySagaID, _HSArtworkInfoKeyStatus, _HSCachesClearedNotification,
@@ -20,7 +21,8 @@ exports:
                           _HSCloudAvailabilityControllerNetworkReachabilityDidChangeNotification, _HSCloudCacheRootDirectory,
                           _HSCloudClientArtworkDownloadsDidCompleteNotification, _HSCloudClientClearJaliscoAccountID,
                           _HSCloudClientClearSagaAccountID, _HSCloudClientCloudAddToPlaylistBehaviorDidChangeNotification,
-                          _HSCloudClientCreateArtworkInfoDictionary, _HSCloudClientGetJaliscoAccountID,
+                          _HSCloudClientCreateArtworkInfoDictionary,
+                          _HSCloudClientEnableCloudLibraryFailureTypeChangedNotification, _HSCloudClientGetJaliscoAccountID,
                           _HSCloudClientGetJaliscoLastLibraryUpdateTime, _HSCloudClientGetJaliscoOnDiskDatabaseRevision,
                           _HSCloudClientGetPreferredVideoQuality, _HSCloudClientGetSagaAccountID,
                           _HSCloudClientGetSagaDatabaseUserVersion, _HSCloudClientGetSagaLastLibraryUpdateTime,
@@ -85,7 +87,7 @@ exports:
                           _HSCloudAvailabilityController._preferencesChangedNotifyToken,
                           _HSCloudAvailabilityController._preferencesChangedNotifyTokenIsValid,
                           _HSCloudAvailabilityController._radiosPreferences, _HSCloudClient._active,
-                          _HSCloudClient._configuration, _HSCloudClient._daemonConfiguration, _HSCloudClient._nsxpcConnection,
+                          _HSCloudClient._configuration, _HSCloudClient._daemonConfiguration, _HSCloudClient._icCloudClient,
                           _HSCloudClient._preferredVideoQuality, _HSCloudClient._updateInProgressChangedHandler,
                           _HSCloudClient._updateJaliscoInProgressChangedHandler,
                           _HSCloudClient._updateSagaInProgressChangedHandler, _HSCloudItemIDList._idTypes,

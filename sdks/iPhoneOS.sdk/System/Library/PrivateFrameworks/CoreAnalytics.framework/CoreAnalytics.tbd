@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CoreAnalytics.framework/CoreAnalytics
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AnalyticsIsEventUsed, _AnalyticsSendEvent, _AnalyticsSendEventLazy,
                           _AnalyticsSetCallbackForQueriedEvent, _AnalyticsSetCallbackForQueriedEventWithQueue,
                           __Z19analytics_tool_dumpNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
@@ -61,7 +62,8 @@ exports:
                           _analytics_mark_awd_queriable, _analytics_send_awd_metric, _analytics_send_awd_trigger,
                           _analytics_send_event, _analytics_send_event_lazy, _analytics_send_queried_awd_metric,
                           _analytics_send_queried_awd_trigger, _analytics_set_awd_query_callback,
-                          _analytics_set_callback_for_queried_event, _analytics_set_callback_for_queried_event_with_queue ]
+                          _analytics_set_callback_for_queried_event, _analytics_set_callback_for_queried_event_with_queue,
+                          _report_locale_prefs_to_analyticsd ]
     objc-classes:       [ _AnalyticsConfigurationObserver, _AnalyticsEventObserver ]
     objc-ivars:         [ _AnalyticsConfigurationObserver._delegate, _AnalyticsConfigurationObserver._delegateQueue,
                           _AnalyticsConfigurationObserver._queue, _AnalyticsConfigurationObserver.observer,

@@ -14,10 +14,6 @@
 @class PHAsset;
 @class PHLivePhoto;
 
-#if defined(__cplusplus) && __cplusplus < 201103L
-#error "Photos requires C++11 or later"
-#endif
-
 typedef NS_ENUM(NSInteger, UIImageOrientation);
 
 NS_ASSUME_NONNULL_BEGIN

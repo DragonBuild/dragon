@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/DataAccess.framework/Frameworks/DASubCal.framework/DASubCal
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _NSStringFromSubCalRefreshTaskError, _SubCalCopyAuthNeededForHostNotification,
                           _SubCalCopyDuplicateAccountNotification, _SubCalCopyInvalidAccountNotification,
                           _SubCalCopySaveAccountNotification, _SubCalCopyWhereToAccountNotification,
@@ -16,7 +17,7 @@ exports:
                           _kSubCalShouldRemoveAlarms, _kSubCalSubscribedCalendarType, _kSubCalSubscriptionURLKey, _kSubCalSyncId,
                           _kSubCalTitleKey, _kSubCalURLSanitized, _kSubCalValidationTaskErrorDomain, _kSubCaliCalTypeKey,
                           _subCalDigestForCalendar, _subCalExternalRep, _subCalRefreshFlagsForCalendar,
-                          _subCalSetDigestOnCalendar, _subCalSetRefreshFlagsOnCalendar ]
+                          _subCalSetRefreshFlagsOnCalendar ]
     objc-classes:       [ _SubCalAccount, _SubCalDATask, _SubCalLocalDBHelper, _SubCalURLRequest, _SubCalValidationTask ]
     objc-ivars:         [ _SubCalAccount._didTrySSL, _SubCalAccount._isHolidaySubscribedCalendar,
                           _SubCalAccount._isManagedCalendar, _SubCalAccount._subCalAccountVersion, _SubCalAccount._tmpICSData,

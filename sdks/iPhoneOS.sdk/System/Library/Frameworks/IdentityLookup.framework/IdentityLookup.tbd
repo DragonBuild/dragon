@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 40B35306-8ABD-3C86-BFE3-0C8BDB626899', 'arm64e: A6C27596-003B-39F0-9253-18152388B5AE' ]
+                   'arm64: CB22A916-8141-3560-91B3-7E0C3EA4E971', 'arm64e: 503181BE-3992-3A95-A7EB-27741F981286' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/IdentityLookup.framework/IdentityLookup'
 exports:         

@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 5AF045C8-8DF7-3724-9447-B8C01BB052E6', 'armv7s: 2D6CEB26-E037-38C6-9294-014A120683DA', 
-                   'arm64: 2C939DA9-E1D2-3492-A858-CD3F0C7B9EAD', 'arm64e: 3817AF67-9ACA-3288-8871-C9CEFDE006A2' ]
+                   'arm64: D2208DD3-9225-3489-8CF1-045000CCDB89', 'arm64e: 85092669-A1E9-3EC8-A222-C6C5FEE4ACDF' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics'
-current-version: 1348.12.1
+current-version: 1348.1.1
 compatibility-version: 64
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -355,14 +355,14 @@ exports:
                        _CGFontCreateWithName, _CGFontCreateWithPlatformFont, _CGFontCreateWithPlatformFontAndVariation, 
                        _CGFontCreateWithVariations, _CGFontDBAddFont, _CGFontDBAddFontReferencesAtPath, 
                        _CGFontDBAddFontsAtPath, _CGFontDBAddFontsFromPlist, _CGFontDBAddFontsInDirectory, 
-                       _CGFontDBApplyFunction, _CGFontDBCopyFontWithName, _CGFontDBCreate, 
-                       _CGFontDBCreatePlist, _CGFontDBGetFontWithName, _CGFontDBGetLocal, 
-                       _CGFontDBPurgeFont, _CGFontDBRelease, _CGFontDBRemoveFont, 
-                       _CGFontDBSetInitializer, _CGFontDefaultAllowsFontSmoothing, 
-                       _CGFontDefaultGetAntialiasingStyle, _CGFontDefaultGetSmoothingContrast, 
-                       _CGFontDefaultGetSmoothingStyle, _CGFontFinderApplyFunction, 
-                       _CGFontFinderCopyAllURLs, _CGFontFinderCopyURLForName, _CGFontFinderCopyURLForPlatformFont, 
-                       _CGFontFinderCreate, _CGFontFinderCreateFontWithName, _CGFontFinderCreateFontWithPlatformFont, 
+                       _CGFontDBApplyFunction, _CGFontDBCreate, _CGFontDBCreatePlist, 
+                       _CGFontDBGetFontWithName, _CGFontDBGetLocal, _CGFontDBPurgeFont, 
+                       _CGFontDBRelease, _CGFontDBRemoveFont, _CGFontDBSetInitializer, 
+                       _CGFontDefaultAllowsFontSmoothing, _CGFontDefaultGetAntialiasingStyle, 
+                       _CGFontDefaultGetSmoothingContrast, _CGFontDefaultGetSmoothingStyle, 
+                       _CGFontFinderApplyFunction, _CGFontFinderCopyAllURLs, _CGFontFinderCopyURLForName, 
+                       _CGFontFinderCopyURLForPlatformFont, _CGFontFinderCreate, 
+                       _CGFontFinderCreateFontWithName, _CGFontFinderCreateFontWithPlatformFont, 
                        _CGFontFinderGetDefault, _CGFontFinderRelease, _CGFontFinderRetain, 
                        _CGFontFinderSetDefault, _CGFontGetAscent, _CGFontGetCIDsForGlyphs, 
                        _CGFontGetCapHeight, _CGFontGetContainingBoundingBoxForGlyphs, 

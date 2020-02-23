@@ -1,12 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WebCore.framework/Frameworks/libwebrtc.dylib
-current-version:       607.1.40
+current-version:       608.1.48
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _ConvertToI420, __ZN3rtc10LogMessage10LogToDebugENS_15LoggingSeverityE, __ZN3rtc10PacketInfoC1ERKS0_,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _ConvertToI420, __ZN3rtc10LogMessage10LogToDebugENS_15LoggingSeverityE,
+                          __ZN3rtc10LogMessage12SetLogOutputENS_15LoggingSeverityEPFvS1_PKcE, __ZN3rtc10PacketInfoC1ERKS0_,
                           __ZN3rtc10PacketInfoD1Ev, __ZN3rtc10SentPacketC1Exx, __ZN3rtc13PacketOptionsC1ERKS0_,
                           __ZN3rtc13PacketOptionsC1Ev, __ZN3rtc13PacketOptionsD1Ev,
                           __ZN3rtc13SocketAddress13SetResolvedIPERKNS_9IPAddressE,
@@ -157,18 +159,17 @@ exports:
                           __ZTVN6webrtc21IceCandidateInterfaceE, __ZTVN6webrtc23PeerConnectionInterfaceE,
                           __ZTVN6webrtc27SessionDescriptionInterfaceE, __ZTVN6webrtc29SetSessionDescriptionObserverE,
                           __ZTVN6webrtc30PeerConnectionFactoryInterfaceE, __ZTVN6webrtc32CreateSessionDescriptionObserverE ]
-    objc-classes:       [ _RTCCVPixelBuffer, _RTCVideoDecoderVP8, _RTCWrappedNativeVideoDecoder, _RTCWrappedNativeVideoEncoder,
-                          _WK_RTCCodecSpecificInfoH264, _WK_RTCDefaultVideoDecoderFactory, _WK_RTCDefaultVideoEncoderFactory,
-                          _WK_RTCEncodedImage, _WK_RTCH264ProfileLevelId, _WK_RTCI420Buffer, _WK_RTCMutableI420Buffer,
-                          _WK_RTCRtpEncodingParameters, _WK_RTCRtpFragmentationHeader, _WK_RTCSingleVideoEncoderH264,
-                          _WK_RTCVideoBitrateAllocation, _WK_RTCVideoCodecInfo, _WK_RTCVideoDecoderFactoryH264,
-                          _WK_RTCVideoDecoderH264, _WK_RTCVideoEncoderFactoryH264, _WK_RTCVideoEncoderH264,
-                          _WK_RTCVideoEncoderQpThresholds, _WK_RTCVideoEncoderSettings, _WK_RTCVideoEncoderVP8,
-                          _WK_RTCVideoFrame ]
+    objc-classes:       [ _RTCCVPixelBuffer, _WK_RTCCodecSpecificInfoH264, _WK_RTCDefaultVideoDecoderFactory,
+                          _WK_RTCDefaultVideoEncoderFactory, _WK_RTCEncodedImage, _WK_RTCH264ProfileLevelId, _WK_RTCI420Buffer,
+                          _WK_RTCMutableI420Buffer, _WK_RTCRtpEncodingParameters, _WK_RTCRtpFragmentationHeader,
+                          _WK_RTCSingleVideoEncoderH264, _WK_RTCVideoBitrateAllocation, _WK_RTCVideoCodecInfo,
+                          _WK_RTCVideoDecoderFactoryH264, _WK_RTCVideoDecoderH264, _WK_RTCVideoDecoderVP8,
+                          _WK_RTCVideoEncoderFactoryH264, _WK_RTCVideoEncoderH264, _WK_RTCVideoEncoderQpThresholds,
+                          _WK_RTCVideoEncoderSettings, _WK_RTCVideoEncoderVP8, _WK_RTCVideoFrame,
+                          _WK_RTCWrappedNativeVideoDecoder, _WK_RTCWrappedNativeVideoEncoder ]
     objc-ivars:         [ _RTCCVPixelBuffer._bufferHeight, _RTCCVPixelBuffer._bufferWidth, _RTCCVPixelBuffer._cropHeight,
                           _RTCCVPixelBuffer._cropWidth, _RTCCVPixelBuffer._cropX, _RTCCVPixelBuffer._cropY,
                           _RTCCVPixelBuffer._height, _RTCCVPixelBuffer._pixelBuffer, _RTCCVPixelBuffer._width,
-                          _RTCWrappedNativeVideoDecoder._wrappedDecoder, _RTCWrappedNativeVideoEncoder._wrappedEncoder,
                           _WK_RTCCodecSpecificInfoH264._packetizationMode, _WK_RTCDefaultVideoEncoderFactory.preferredCodec,
                           _WK_RTCEncodedImage._buffer, _WK_RTCEncodedImage._captureTimeMs, _WK_RTCEncodedImage._completeFrame,
                           _WK_RTCEncodedImage._contentType, _WK_RTCEncodedImage._encodeFinishMs,
@@ -185,13 +186,14 @@ exports:
                           _WK_RTCRtpFragmentationHeader._fragmentationPlType,
                           _WK_RTCRtpFragmentationHeader._fragmentationTimeDiff, _WK_RTCSingleVideoEncoderH264._bitrateAdjuster,
                           _WK_RTCSingleVideoEncoderH264._callback, _WK_RTCSingleVideoEncoderH264._codecInfo,
-                          _WK_RTCSingleVideoEncoderH264._compressionSession, _WK_RTCSingleVideoEncoderH264._disableEncoding,
-                          _WK_RTCSingleVideoEncoderH264._encoderBitrateBps, _WK_RTCSingleVideoEncoderH264._frameScaleBuffer,
-                          _WK_RTCSingleVideoEncoderH264._h264BitstreamParser, _WK_RTCSingleVideoEncoderH264._height,
-                          _WK_RTCSingleVideoEncoderH264._mode, _WK_RTCSingleVideoEncoderH264._nativeVideoCodec,
-                          _WK_RTCSingleVideoEncoderH264._packetizationMode, _WK_RTCSingleVideoEncoderH264._pixelBufferPool,
-                          _WK_RTCSingleVideoEncoderH264._profile, _WK_RTCSingleVideoEncoderH264._simulcastIndex,
-                          _WK_RTCSingleVideoEncoderH264._targetBitrateBps, _WK_RTCSingleVideoEncoderH264._width,
+                          _WK_RTCSingleVideoEncoderH264._disableEncoding, _WK_RTCSingleVideoEncoderH264._encoderBitrateBps,
+                          _WK_RTCSingleVideoEncoderH264._frameScaleBuffer, _WK_RTCSingleVideoEncoderH264._h264BitstreamParser,
+                          _WK_RTCSingleVideoEncoderH264._height, _WK_RTCSingleVideoEncoderH264._mode,
+                          _WK_RTCSingleVideoEncoderH264._nativeVideoCodec, _WK_RTCSingleVideoEncoderH264._packetizationMode,
+                          _WK_RTCSingleVideoEncoderH264._pixelBufferPool, _WK_RTCSingleVideoEncoderH264._profile,
+                          _WK_RTCSingleVideoEncoderH264._simulcastIndex, _WK_RTCSingleVideoEncoderH264._targetBitrateBps,
+                          _WK_RTCSingleVideoEncoderH264._useVCP, _WK_RTCSingleVideoEncoderH264._vcpCompressionSession,
+                          _WK_RTCSingleVideoEncoderH264._vtCompressionSession, _WK_RTCSingleVideoEncoderH264._width,
                           _WK_RTCVideoBitrateAllocation._nativeVideoBitrateAllocation, _WK_RTCVideoCodecInfo._name,
                           _WK_RTCVideoCodecInfo._parameters, _WK_RTCVideoDecoderH264._callback,
                           _WK_RTCVideoDecoderH264._decompressionSession, _WK_RTCVideoDecoderH264._error,
@@ -204,5 +206,6 @@ exports:
                           _WK_RTCVideoEncoderSettings._nativeVideoCodec, _WK_RTCVideoEncoderSettings._qpMax,
                           _WK_RTCVideoEncoderSettings._startBitrate, _WK_RTCVideoEncoderSettings._targetBitrate,
                           _WK_RTCVideoEncoderSettings._width, _WK_RTCVideoFrame._buffer, _WK_RTCVideoFrame._rotation,
-                          _WK_RTCVideoFrame._timeStampNs, _WK_RTCVideoFrame.timeStamp ]
+                          _WK_RTCVideoFrame._timeStampNs, _WK_RTCVideoFrame.timeStamp,
+                          _WK_RTCWrappedNativeVideoDecoder._wrappedDecoder, _WK_RTCWrappedNativeVideoEncoder._wrappedEncoder ]
 ...

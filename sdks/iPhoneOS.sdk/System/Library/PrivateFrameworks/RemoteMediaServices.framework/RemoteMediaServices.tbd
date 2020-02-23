@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/RemoteMediaServices.framework/RemoteMediaServices
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _NSStringFromRMSMessageType, _NSStringFromRMSResponseCode, _RMSControlSessionTimeout,
                           _RMSDiscoverySessionTimeout, _RMSPairingSessionTimeout, _generateRandomPasscode ]
     objc-classes:       [ _RMSAddToWishlistMessage, _RMSAppleTVServiceProvider, _RMSAudioRoute, _RMSAudioRouteMessage,
@@ -148,7 +149,7 @@ exports:
                           _RMSPickAudioRouteMessage._macAddress, _RMSPickAudioRouteMessage._sessionIdentifier,
                           _RMSPlaybackCommandMessage._has, _RMSPlaybackCommandMessage._playbackCommand,
                           _RMSPlaybackCommandMessage._sessionIdentifier, _RMSPowerAssertion._assertionID,
-                          _RMSResponseCodeMessage._has, _RMSResponseCodeMessage._responseCode,
+                          _RMSResponseCodeMessage._has, _RMSResponseCodeMessage._responseCode, _RMSRunAssertion._transaction,
                           _RMSSeekToPlaybackTimeMessage._has, _RMSSeekToPlaybackTimeMessage._playbackTime,
                           _RMSSeekToPlaybackTimeMessage._sessionIdentifier, _RMSSendTextMessage._has,
                           _RMSSendTextMessage._sessionIdentifier, _RMSSendTextMessage._text, _RMSSendTextResponseMessage._has,

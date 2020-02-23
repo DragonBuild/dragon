@@ -1,13 +1,13 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/DataDetectorsNaturalLanguage.framework/DataDetectorsNaturalLanguage
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _DataDetectorsNaturalLanguageVersionNumber, _DataDetectorsNaturalLanguageVersionString,
-                          _IPDebuggingModeKey, _IPFeatureDataContextDateIsTimeOnlyAndReferrengingToSentDate,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _IPFeatureDataContextDateIsTimeOnlyAndReferrengingToSentDate,
                           _IPFeatureDataContextDateOnlyContainsTimeInformation, _IPFeatureDataContextDateTimeFromIpsosOverlay,
                           _IPFeatureDataContextDateTimeIsTenseDependent, _IPFeatureDataContextEventEndDate,
                           _IPFeatureDataContextEventEndDateTimeZone, _IPFeatureDataContextEventIsAllDay,
@@ -25,21 +25,12 @@ exports:
                           _IPFeatureTextMessageScannerConfidenceMatchedRatio,
                           _IPFeatureTextMessageScannerConfidenceNormTextLength,
                           _IPFeatureTextMessageScannerConfidenceNumberOfEventTypes,
-                          _IPFeatureTextMessageScannerConfidencePolarityFlips, _IPInitLogging, _IPMessageTypeEmail,
-                          _IPMessageTypeShortMessage, __IPLogHandle, _humanReadableClusterType, _humanReadableFeatureType,
-                          _ipsos_allDayPreferredKey, _ipsos_confidenceKey, _ipsos_dataFeaturesKey,
-                          _ipsos_disableTimeAdjustmentKey, _ipsos_eventAttributesKey, _ipsos_eventClassificationTypeKey,
-                          _ipsos_eventStatusKey, _ipsos_experimentalConfidenceKey, _ipsos_isDateTimeTenseDependentKey,
-                          _ipsos_isEndTimeApproximateKey, _ipsos_isEventTimeOnlyAndReferrengingToSentDateKey,
-                          _ipsos_isTimeApproximateKey, _ipsos_isTimeOffsetKey, _ipsos_messageUnitKey,
-                          _ipsos_timeNeedsMeridianGuessKey, _ipsos_usedBubblesCountKey,
-                          _ipsos_usesDefaultClassificationTypeStartTimeKey, _kScoreThresholdConfirmation,
-                          _kScoreThresholdProposal, _kScoreThresholdProposalOrConfirmation, _kScoreThresholdRejection ]
+                          _IPFeatureTextMessageScannerConfidencePolarityFlips, _IPMessageTypeEmail, _IPMessageTypeShortMessage ]
     objc-classes:       [ _IPCircularBufferArray, _IPDataDetectorsFeatureExtractor, _IPEventClassificationType, _IPFeature,
                           _IPFeatureData, _IPFeatureExtractor, _IPFeatureKeyword, _IPFeatureMailScanner, _IPFeatureManager,
                           _IPFeatureScanner, _IPFeatureSentence, _IPFeatureSentenceFragment, _IPFeatureTextMessageScanner,
-                          _IPKeywordFeatureExtractor, _IPMessage, _IPMessageUnit, _IPPerson, _IPQuoteParser, _IPRegexToolbox,
-                          _IPSentenceFeatureExtractor, _IPTenseDetector, _IPTextMessageConversation ]
+                          _IPKeywordFeatureExtractor, _IPMessage, _IPMessageThread, _IPMessageUnit, _IPPerson, _IPQuoteParser,
+                          _IPRegexToolbox, _IPSentenceFeatureExtractor, _IPTenseDetector, _IPTextMessageConversation ]
     objc-ivars:         [ _IPCircularBufferArray._backingStore, _IPCircularBufferArray._capacity,
                           _IPCircularBufferArray._currentIndex, _IPCircularBufferArray._lastObject,
                           _IPCircularBufferArray._mutationDetector, _IPEventClassificationType._allDayAllowed,
@@ -85,7 +76,8 @@ exports:
                           _IPMessage._isReply, _IPMessage._isSenderSignificant, _IPMessage._isSent,
                           _IPMessage._keywordsDictionary, _IPMessage._lowercaseSubject, _IPMessage._messageUnits,
                           _IPMessage._messageUnitsTextLength, _IPMessage._recipients, _IPMessage._sender, _IPMessage._subject,
-                          _IPMessage._threadIdentifier, _IPMessage._type, _IPMessageUnit._bestLanguage,
+                          _IPMessage._threadIdentifier, _IPMessage._type, _IPMessageThread._allUnits,
+                          _IPMessageThread._allUnitsSorted, _IPMessageThread._threadRoots, _IPMessageUnit._bestLanguage,
                           _IPMessageUnit._dataFeatures, _IPMessageUnit._features, _IPMessageUnit._flatMessageThread,
                           _IPMessageUnit._followups, _IPMessageUnit._indexInOriginalMessage, _IPMessageUnit._interactedDateRange,
                           _IPMessageUnit._keywordFeatures, _IPMessageUnit._lowercaseText, _IPMessageUnit._neutralRanges,

@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SoftwareUpdateServicesUI.framework/SoftwareUpdateServicesUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SUSUICLIToolConnectionName, _SUSUIControllerConnectionName, _SUSUICreateInstallationKeybagWithSecret,
                           _SUSUICreateInstallationKeybagWithSecretAndHandler, _SUSUILog, _SUSUILogAuthenticationUI,
                           _SUSUILogEmergencyCallUI, _SUSUILogKeybagInterface, _SUSUILogPostUpdateAlert,
@@ -27,5 +28,6 @@ exports:
                           _SUSUIControllerClient._connected, _SUSUIControllerClient._serverConnection,
                           _SUSUIControllerClient._serverIsExiting, _SUSUIFakeSUAutoInstallForecast._now,
                           _SUSUIFakeSUAutoInstallOperation._cancelled, _SUSUIFakeSUAutoInstallOperation._uuid,
-                          _SUSUIPreferences._alertAfterDownload, _SUSUISoftwareUpdateDefaults._sbLegacyDefaults ]
+                          _SUSUIPreferences._alertAfterDownload, _SUSUIPreferences._needsAlertPresentationAfterOTAUpdate,
+                          _SUSUIPreferences._passcodeRequiredDays, _SUSUISoftwareUpdateDefaults._sbLegacyDefaults ]
 ...

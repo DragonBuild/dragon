@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3736B652-9B8C-35DB-B431-416B84EF6FD9', 'armv7s: 18CC6365-C54D-36E5-89DD-0F6DC3521B05', 
-                   'arm64: 476A33DD-A9E6-31E8-9C03-8A6BD407747F', 'arm64e: 979BFF2F-D016-3444-A320-B8B78C663D31' ]
+                   'arm64: 75FEF5CD-149E-379D-8E8C-0B91420575D9', 'arm64e: 888568EA-BBB9-3F2B-BE55-C4C1DE38CE5E' ]
 platform:        ios
 install-name:    '/usr/lib/libncurses.5.4.dylib'
 current-version: 5.4

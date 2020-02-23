@@ -17,6 +17,4 @@
 
 #include <ImageIO/CGImageMetadata.h>
 
-#include <ImageIO/CGImageAnimation.h>
-
 #endif  /* __IMAGEIO__ */

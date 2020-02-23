@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/Stocks.framework/Stocks
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CeilToPixel, _ClientInfo, _CreateCredential, _DefaultStocksCountryCode, _DefaultStocksOverride,
                           _DeviceInfo, _ExchangeLastCloseDateKey, _ExchangeLastUpdateTimeKey, _ExchangeNameKey,
                           _ExchangeNextOpenDateKey, _ExchangeStatusKey, _ExchangeStreamIntervalKey,
@@ -114,26 +115,27 @@ exports:
                           _SCKDatabase._mergeHandlers, _SCKDatabase._observersByZoneName, _SCKDatabase._observersLock,
                           _SCKDatabase._schema, _SCKDatabase._startupQueue, _SCKDatabase._status, _SCKDatabase._storeCoordinator,
                           _SCKDatabase._zoneSnapshotsByZoneName, _SCKDatabaseJSONStore._accessQueue,
-                          _SCKDatabaseJSONStore._backupEnabled, _SCKDatabaseJSONStore._changeListenerSource,
-                          _SCKDatabaseJSONStore._diskReadCount, _SCKDatabaseJSONStore._diskWriteCount,
-                          _SCKDatabaseJSONStore._fileCoordinator, _SCKDatabaseJSONStore._foreignZoneDictsByName,
-                          _SCKDatabaseJSONStore._havePendingChanges, _SCKDatabaseJSONStore._lastDirtyDate,
-                          _SCKDatabaseJSONStore._lastKnownStoreChangeTag, _SCKDatabaseJSONStore._lastSyncDate,
-                          _SCKDatabaseJSONStore._loadedFromDisk, _SCKDatabaseJSONStore._observers,
-                          _SCKDatabaseJSONStore._presentedItemOperationQueue, _SCKDatabaseJSONStore._presentedItemURL,
-                          _SCKDatabaseJSONStore._saveThrottler, _SCKDatabaseJSONStore._serverChangeToken,
-                          _SCKDatabaseJSONStore._storeURL, _SCKDatabaseJSONStore._workQueue,
-                          _SCKDatabaseJSONStore._zoneStoresByName, _SCKDatabaseMemoryStore._backupEnabled,
-                          _SCKDatabaseMemoryStore._lastDirtyDate, _SCKDatabaseMemoryStore._lastSyncDate,
-                          _SCKDatabaseMemoryStore._serverChangeToken, _SCKDatabaseMemoryStore._zoneStoresByName,
-                          _SCKDatabasePollingCondition._minIntervalSinceLastSync, _SCKDatabaseSchema._environment,
-                          _SCKDatabaseSchema._name, _SCKDatabaseSchema._security, _SCKDatabaseSchema._zoneSchemas,
-                          _SCKFauxDatabaseStoreCoordinator._queue, _SCKFauxDatabaseStoreCoordinator._store,
-                          _SCKOperationThrottler._dispatchSource, _SCKOperationThrottler._handlerSynchronizationGroup,
-                          _SCKOperationThrottler._serialQueue, _SCKOperationThrottler._suspended,
-                          _SCKRecordFieldSchema._encrypted, _SCKRecordFieldSchema._name, _SCKRecordFieldSchema._required,
-                          _SCKRecordFieldSchema._valueClass, _SCKRecordSchema._fieldSchemas, _SCKRecordSchema._recordType,
-                          _SCKStartupQueue._startupTaskQueue, _SCKStubContainer._accountInfoErrorMode,
+                          _SCKDatabaseJSONStore._allowedCommandClasses, _SCKDatabaseJSONStore._changeListenerSource,
+                          _SCKDatabaseJSONStore._cloudBackupEnabled, _SCKDatabaseJSONStore._diskReadCount,
+                          _SCKDatabaseJSONStore._diskWriteCount, _SCKDatabaseJSONStore._fileCoordinator,
+                          _SCKDatabaseJSONStore._foreignZoneDictsByName, _SCKDatabaseJSONStore._havePendingChanges,
+                          _SCKDatabaseJSONStore._lastDirtyDate, _SCKDatabaseJSONStore._lastKnownStoreChangeTag,
+                          _SCKDatabaseJSONStore._lastSyncDate, _SCKDatabaseJSONStore._loadedFromDisk,
+                          _SCKDatabaseJSONStore._observers, _SCKDatabaseJSONStore._presentedItemOperationQueue,
+                          _SCKDatabaseJSONStore._presentedItemURL, _SCKDatabaseJSONStore._saveThrottler,
+                          _SCKDatabaseJSONStore._serverChangeToken, _SCKDatabaseJSONStore._storeURL,
+                          _SCKDatabaseJSONStore._workQueue, _SCKDatabaseJSONStore._zoneStoresByName,
+                          _SCKDatabaseMemoryStore._cloudBackupEnabled, _SCKDatabaseMemoryStore._lastDirtyDate,
+                          _SCKDatabaseMemoryStore._lastSyncDate, _SCKDatabaseMemoryStore._serverChangeToken,
+                          _SCKDatabaseMemoryStore._zoneStoresByName, _SCKDatabasePollingCondition._minIntervalSinceLastSync,
+                          _SCKDatabaseSchema._environment, _SCKDatabaseSchema._name, _SCKDatabaseSchema._security,
+                          _SCKDatabaseSchema._zoneSchemas, _SCKFauxDatabaseStoreCoordinator._queue,
+                          _SCKFauxDatabaseStoreCoordinator._store, _SCKOperationThrottler._dispatchSource,
+                          _SCKOperationThrottler._handlerSynchronizationGroup, _SCKOperationThrottler._serialQueue,
+                          _SCKOperationThrottler._suspended, _SCKRecordFieldSchema._encrypted, _SCKRecordFieldSchema._name,
+                          _SCKRecordFieldSchema._required, _SCKRecordFieldSchema._valueClass, _SCKRecordSchema._fieldSchemas,
+                          _SCKRecordSchema._recordType, _SCKStartupQueue._startupTaskQueue,
+                          _SCKStubContainer._accountInfoErrorMode,
                           _SCKStubContainer._accountInfoSupportsDeviceToDeviceEncryption,
                           _SCKStubContainer._databaseChangesOperationChangedZoneIDs,
                           _SCKStubContainer._databaseChangesOperationCount, _SCKStubContainer._modifyRecordsErrorMode,

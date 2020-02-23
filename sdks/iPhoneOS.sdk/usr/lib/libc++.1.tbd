@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B41C63AE-D89D-3E89-9582-FA88DFB4A813', 'armv7s: 8D4659D4-1F05-3002-AD00-9152E1483631', 
-                   'arm64: DF28407A-A890-32BF-B7E1-11E48C8CF5AD', 'arm64e: 3ACC748C-C387-35F1-999B-2A02AC4063B9' ]
+                   'arm64: E63839F4-8C7F-3F7C-BE90-8B0D049A7048', 'arm64e: 60815C5B-C76D-335F-BE69-FC00D3B8EB82' ]
 platform:        ios
 install-name:    '/usr/lib/libc++.1.dylib'
-current-version: 800.7
+current-version: 800.6
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ __ZNKSt3__18messagesIcE6do_getEiiiRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE, 

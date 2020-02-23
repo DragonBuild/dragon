@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3DC31F48-413E-34B1-A12F-D0EB1BCEB4C9', 'armv7s: 8DB7A18D-7D7E-341D-8A41-C3D7532BE433', 
-                   'arm64: AA4EC2AB-0BFA-3954-88EC-3AA21CDE6BEE', 'arm64e: BAEC2F35-1448-368E-A148-02073721D4DC' ]
+                   'arm64: AEF1A849-BA73-3837-A258-B65F928EDC92', 'arm64e: 8546DC4D-14EC-367D-954F-FC24A524D795' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/iAd.framework/iAd'
 exports:         

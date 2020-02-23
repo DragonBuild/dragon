@@ -1,28 +1,32 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/RelevanceEngineUI.framework/RelevanceEngineUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _REApplicationTintColor, _REDecodeImage, _REEncodeImage, _REEncodedImageCapInsetsKey,
                           _REEncodedImageDataKey, _REEncodedImageOrientationKey, _REEncodedImageResizingModeKey,
                           _REEncodedImageScaleKey, _REEncodedImageSupressHairlineKey, _REEncodedImageTemplateKey,
                           _REImageNamedFromBundle, _RELegibilityColorForContentColor, _REMetadataBundleIdentifierKey,
-                          _RESuggestedBodyImageSizeForStyle, _RESuggestedHeaderImageSizeForStyle, _REUILocalizedString,
-                          _REUINowPlayingPlaceholderAlbumArtwork, _REUISampleRelevanceProviderForPosition,
+                          _RESuggestedBodyImageSizeForStyle, _RESuggestedHeaderImageSizeForStyle,
+                          _REUIActionsAlertProviderClientInterface, _REUIActionsAlertProviderMachService,
+                          _REUIActionsAlertProviderServerInterface, _REUIGraphicCircularTemplateForAppWithIdentifier,
+                          _REUILocalizedString, _REUINowPlayingPlaceholderAlbumArtwork, _REUISampleRelevanceProviderForPosition,
+                          _REUIScaledFullColorImageProviderWithImage, _REUIScaledFullColorImageViewImageMetadataKey,
                           _REUITrainingContextActionInteraction, _REUITrainingContextAppActionInteraction,
                           _REUITrainingContextDwellInteraction, _REUITrainingContextTapInteraction,
                           _RelevanceEngineUIVersionNumber, _RelevanceEngineUIVersionString ]
     objc-classes:       [ _REImageImage, _REUIDonatedElementDemoProperties, _REUIDonatedElementProperties,
                           _REUIElementDonatedActionAction, _REUIElementIntentAction, _REUIRelevanceEngineController,
-                          _REUIRelevanceEngineControllerUpdateOperation, _REUITrainingContext, _REUIUpNextDataSource,
-                          _REUpNextAccessoryView, _REUpNextBaseCell, _REUpNextCollectionView, _REUpNextCollectionViewFlowLayout,
-                          _REUpNextCollectionViewFlowLayoutAttributes, _REUpNextCollectionViewSingleItemFlowLayout,
-                          _REUpNextHeaderView, _REUpNextImageView, _REUpNextLargeTextCell, _REUpNextLargeWithDetailTextCell,
-                          _REUpNextMultilineCell, _REUpNextThumbnailCell, _TableCell, __REUIBundlePlaceholder,
-                          __REUIControllerTrainingContext ]
+                          _REUIRelevanceEngineControllerUpdateOperation, _REUIScaledFullColorImageView, _REUITrainingContext,
+                          _REUIUpNextDataSource, _REUpNextAccessoryView, _REUpNextBaseCell, _REUpNextCollectionView,
+                          _REUpNextCollectionViewFlowLayout, _REUpNextCollectionViewFlowLayoutAttributes,
+                          _REUpNextCollectionViewSingleItemFlowLayout, _REUpNextHeaderView, _REUpNextImageView,
+                          _REUpNextLargeTextCell, _REUpNextLargeWithDetailTextCell, _REUpNextMultilineCell,
+                          _REUpNextThumbnailCell, _TableCell, __REUIBundlePlaceholder, __REUIControllerTrainingContext ]
     objc-ivars:         [ _REImageImage._uiImage, _REUIDonatedElementDemoProperties._demoAppIcon,
                           _REUIDonatedElementDemoProperties._demoAppName,
                           _REUIDonatedElementDemoProperties._demoBundleIdentifier, _REUIDonatedElementDemoProperties._demoIntent,
@@ -30,10 +34,10 @@ exports:
                           _REUIDonatedElementProperties._appName, _REUIDonatedElementProperties._bodyImage,
                           _REUIDonatedElementProperties._displayAppName, _REUIDonatedElementProperties._fullsizeAppIcon,
                           _REUIDonatedElementProperties._intent, _REUIDonatedElementProperties._isUsingPlaceholderArtwork,
-                          _REUIDonatedElementProperties._relevantShortcut, _REUIDonatedElementProperties._subtitle,
-                          _REUIDonatedElementProperties._title, _REUIDonatedElementProperties._userActivity,
-                          _REUIElementDonatedActionAction._performer, _REUIElementDonatedActionAction._properties,
-                          _REUIRelevanceEngineController._allowsLocationUse,
+                          _REUIDonatedElementProperties._monochromeBodyImage, _REUIDonatedElementProperties._relevantShortcut,
+                          _REUIDonatedElementProperties._subtitle, _REUIDonatedElementProperties._title,
+                          _REUIDonatedElementProperties._userActivity, _REUIElementDonatedActionAction._performer,
+                          _REUIElementDonatedActionAction._properties, _REUIRelevanceEngineController._allowsLocationUse,
                           _REUIRelevanceEngineController._currentElementStates, _REUIRelevanceEngineController._delegate,
                           _REUIRelevanceEngineController._delegateCallbacks, _REUIRelevanceEngineController._engine,
                           _REUIRelevanceEngineController._hiddenBundleIdentifiers, _REUIRelevanceEngineController._hiddenIndices,
@@ -43,7 +47,8 @@ exports:
                           _REUIRelevanceEngineController._sectionOrder, _REUIRelevanceEngineController._trainingContext,
                           _REUIRelevanceEngineController._wantsIdealizedContent,
                           _REUIRelevanceEngineController._wantsLiveDataSources,
-                          _REUIRelevanceEngineControllerUpdateOperation._updateType, _REUITrainingContext._becameVisibleDates,
+                          _REUIRelevanceEngineControllerUpdateOperation._updateType, _REUIScaledFullColorImageView._imageView,
+                          _REUIScaledFullColorImageView.filterProvider, _REUITrainingContext._becameVisibleDates,
                           _REUITrainingContext._resetsWhenResignsCurrent, _REUITrainingContext._visibilityDurations,
                           _REUIUpNextDataSource._controller, _REUpNextAccessoryView._accessoryDescription,
                           _REUpNextAccessoryView._label, _REUpNextAccessoryView._labelEffectView, _REUpNextBaseCell._behavior,

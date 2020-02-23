@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: A3ED655B-727E-391A-A741-7B73B4939695', 'armv7s: E3657660-EFCF-3278-A7EF-6C52F5DF55C8', 
-                   'arm64: D88DE485-D197-336D-B587-B9F73BEDD323', 'arm64e: 4D01BA5C-EA82-3348-A4E1-C91C7397FE0D' ]
+                   'arm64: FF57B5E3-A6F6-3834-8992-8B9826EA488E', 'arm64e: 9AAB95C7-9DBD-3C26-AC0D-ACE5A844DBCF' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/MetalPerformanceShaders'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _MPSExerciseDeviceKernelList_Private, _MPSGetDeviceInfo, _MPSGetDevicePixelInfo, 
@@ -39,10 +39,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 24937D19-51A3-35CB-873E-E5C861664102', 'arm64e: 0BC8022B-AF5C-33D8-83FE-454C953D6440' ]
+                   'arm64: D5E4AF7E-C44D-3901-8E7E-471CA7211179', 'arm64e: 82AD74FF-6F4B-382D-A5BE-47633AB14447' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSCore.framework/MPSCore'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ arm64, arm64e ]
     symbols:         [ __Z21MPSDecrementReadCountP17MPSTemporaryImage, __Z21MPSDecrementReadCountP18MPSTemporaryMatrix, 
@@ -131,10 +131,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: C059222D-B886-3B75-995B-31C56B8015C7', 'arm64e: 8359CC5F-6FF0-3A58-B677-8842A81D0838' ]
+                   'arm64: 4BCF8939-8085-321E-8231-C520BC6C9A53', 'arm64e: 7684C91F-4381-30BB-8B39-20E7716959DC' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSImage.framework/MPSImage'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     allowable-clients: [ MPSNeuralNetwork, MetalPerformanceShaders ]
@@ -164,10 +164,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 6CF5BA4F-D91A-3701-9A0E-175BD27CB950', 'arm64e: F6CFDAF6-BD6A-3C6F-87EC-5526295706C5' ]
+                   'arm64: B021F83F-20AC-3250-B05B-F82508103613', 'arm64e: 43BAC7EB-C229-3AEA-8E2E-6BD32CCD971A' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSMatrix.framework/MPSMatrix'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ arm64, arm64e ]
     symbols:         [ __Z21MPSDecrementReadCountP18MPSTemporaryMatrix, __Z21MPSDecrementReadCountP18MPSTemporaryVector ]
@@ -183,7 +183,7 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 923DEFBC-3A70-3A4C-9D18-84624666624E', 'arm64e: 40A573CE-CD0E-3CE5-B57C-BE4A19CC7CD5' ]
+                   'arm64: 8C06ACA6-4C0D-3558-8B00-322BF6E6D52F', 'arm64e: 6470F885-8FF7-34F5-9F52-5E195DBB337E' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSNDArray.framework/MPSNDArray'
 exports:         
@@ -255,10 +255,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: C1683973-9AB1-326B-8903-A2E56F47B0DF', 'arm64e: 4E1043F2-8793-3DCE-AD8D-8BBADB44C0CB' ]
+                   'arm64: 41CBA9CF-A1BF-38FF-9642-4C00C38318A3', 'arm64e: ED26F966-E942-369F-85C6-5EDA1B7DDF73' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSNeuralNetwork.framework/MPSNeuralNetwork'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     allowable-clients: [ MetalPerformanceShaders ]
@@ -362,10 +362,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: EB0CF9E9-2D06-3312-B4B2-49288E395775', 'arm64e: 4A3F3127-C36E-3212-8A48-187957EFCAB9' ]
+                   'arm64: F668D45A-CAAC-3639-BC3E-A4781AC166D4', 'arm64e: 8B4ACAEB-1B0B-31E1-B693-A4E2F11A09ED' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/MPSRayIntersector'
-current-version: 122.2
+current-version: 122.0.46
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     allowable-clients: [ MetalPerformanceShaders ]

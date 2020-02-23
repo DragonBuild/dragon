@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 52CAFB89-6052-38D8-9894-C20299AC769B', 'arm64e: 9A2DD123-A2C2-31A1-8021-FA4799A61BFD' ]
+                   'arm64: C9857AFC-9A3C-3256-90AB-15C7DD8BD405', 'arm64e: 35A79149-1273-37D3-A252-7C0A0E76E2BC' ]
 platform:        ios
 install-name:    '/usr/lib/libapp_launch_measurement.dylib'
 exports:         

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 5806F70D-F43D-3E23-8A81-81BDC3FABEC8', 'arm64e: DAC47E1D-FFE7-34AF-B2DD-F1876D38718E' ]
+                   'arm64: 704A036D-EEA7-3FB4-9CA4-1B3D583FD8F5', 'arm64e: DB43B780-3DB9-3A63-A56E-F5851696351A' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/MetricKit.framework/MetricKit'
 exports:         
@@ -18,10 +18,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 7A9AF8FA-C7B1-3D75-8063-E086691428E5', 'arm64e: 1F8D109A-61E2-384D-B360-4D604B274EC7' ]
+                   'arm64: 0E7986CA-E67D-305E-A36C-7D3785C27EC5', 'arm64e: DB3C348B-D718-3E2B-B819-25A474C26CD4' ]
 platform:        ios
 install-name:    '/System/Library/PrivateFrameworks/SignpostMetrics.framework/SignpostMetrics'
-current-version: 41
+current-version: 40
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _SignpostMetricsVersionNumber, _SignpostMetricsVersionString, 

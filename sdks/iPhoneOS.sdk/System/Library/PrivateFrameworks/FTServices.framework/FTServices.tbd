@@ -1,17 +1,19 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/FTServices.framework/FTServices
 current-version:       800
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _FTCTRegistrationStatusCanRegisterKey, _FTCTRegistrationStatusChangedNotification,
                           _FTCTRegistrationStatusIMSIKey, _FTCTRegistrationStatusPLMNKey, _FTCTRegistrationStatusPhoneNumberKey,
                           _FTEntitlementStatusChangedNotification, _FTErrorDomain, _FTRegionListFinishedLoadingNotification,
                           _FTServerBagFinishedLoadingNotification, _FTServiceStatusDidChangeNotification,
                           _FTServiceStatusNotifyRegister, _FTServicesSuppressServiceErrorDialogsPropertyKey,
-                          _FaceTimeDeviceCapabilityChangedNotification, _FaceTimeDeviceRegistrationCapabilityChangedNotification,
+                          _FTUserConfigurationSelectedSubscriptionLabelDidChange, _FaceTimeDeviceCapabilityChangedNotification,
+                          _FaceTimeDeviceRegistrationCapabilityChangedNotification,
                           _FaceTimeDeviceRegistrationStateChangedNotification, _FaceTimeDeviceRestictionsChangedNotification,
                           _FaceTimeDeviceSIMInsertedNotification, _FaceTimeDeviceSIMRemovedNotification, _MessageLogEvent,
                           _MessageLogStatistic, __AuthenticationDictionaryFromParameters, __BindingsArrayFromURIs,

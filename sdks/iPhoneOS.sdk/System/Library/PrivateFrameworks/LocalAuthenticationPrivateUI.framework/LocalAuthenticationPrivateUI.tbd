@@ -1,35 +1,51 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/LocalAuthenticationPrivateUI.framework/LocalAuthenticationPrivateUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _LAUIPhysicalButtonNormalizedFrame ]
-    objc-classes:       [ _LAUIAnimationDelegate, _LAUICheckmarkLayer, _LAUICubicBSplineRenderer, _LAUIHorizontalArrowView,
+    objc-classes:       [ _LAPKGlyphWrapper, _LAUIAnimationDelegate, _LAUIAuthenticationCore, _LAUIAuthenticationView,
+                          _LAUICheckmarkLayer, _LAUICubicBSplineRenderer, _LAUIDisplayLinkTargetProxy, _LAUIHorizontalArrowView,
                           _LAUIPearlGlyphLabel, _LAUIPearlGlyphView, _LAUIPearlGlyphViewStaticResources, _LAUIPhysicalButtonView,
-                          _LAUIRadialPingView ]
-    objc-ivars:         [ _LAUIAnimationDelegate._didStartHandler, _LAUIAnimationDelegate._didStopHandler,
-                          _LAUICheckmarkLayer._animating, _LAUICheckmarkLayer._animationIndex, _LAUICheckmarkLayer._completions,
-                          _LAUICheckmarkLayer._lineWidth, _LAUICheckmarkLayer._lineWidthScale, _LAUICheckmarkLayer._primaryColor,
-                          _LAUICheckmarkLayer._revealed, _LAUICheckmarkLayer._shapeLayer,
+                          _LAUIRadialPingView, _LAUIRenderLoop ]
+    objc-ivars:         [ _LAPKGlyphWrapper._fastAnimations, _LAPKGlyphWrapper._glyphQueue, _LAPKGlyphWrapper._glyphView,
+                          _LAPKGlyphWrapper._grayedOut, _LAPKGlyphWrapper._idleTouchID, _LAPKGlyphWrapper._view,
+                          _LAUIAnimationDelegate._didStartHandler, _LAUIAnimationDelegate._didStopHandler,
+                          _LAUIAuthenticationCore._activeMechanisms, _LAUIAuthenticationCore._applicationActive,
+                          _LAUIAuthenticationCore._authenticationResult, _LAUIAuthenticationCore._biometryType,
+                          _LAUIAuthenticationCore._context, _LAUIAuthenticationCore._delegate,
+                          _LAUIAuthenticationCore._doneMatching, _LAUIAuthenticationCore._enabledMechanisms,
+                          _LAUIAuthenticationCore._keyWindow, _LAUIAuthenticationCore._uiActive, _LAUIAuthenticationCore._view,
+                          _LAUIAuthenticationView._authenticationCore, _LAUIAuthenticationView._delegate,
+                          _LAUIAuthenticationView._fastAnimations, _LAUIAuthenticationView._glyphStyle,
+                          _LAUIAuthenticationView._glyphWrapper, _LAUIAuthenticationView._idleWhenDone,
+                          _LAUIAuthenticationView._style, _LAUICheckmarkLayer._animating, _LAUICheckmarkLayer._animationIndex,
+                          _LAUICheckmarkLayer._completions, _LAUICheckmarkLayer._lineWidth, _LAUICheckmarkLayer._lineWidthScale,
+                          _LAUICheckmarkLayer._primaryColor, _LAUICheckmarkLayer._revealed, _LAUICheckmarkLayer._shapeLayer,
                           _LAUICheckmarkLayer._transientShapeLayers, _LAUICubicBSplineRenderer._animation_targets,
                           _LAUICubicBSplineRenderer._cap_control_point_indices, _LAUICubicBSplineRenderer._cap_control_points,
                           _LAUICubicBSplineRenderer._caps_dirty, _LAUICubicBSplineRenderer._clear_pass_descriptor,
                           _LAUICubicBSplineRenderer._command_queue, _LAUICubicBSplineRenderer._completion_container,
                           _LAUICubicBSplineRenderer._control_point_indices, _LAUICubicBSplineRenderer._control_points,
-                          _LAUICubicBSplineRenderer._current_animation_target_index, _LAUICubicBSplineRenderer._frame_index,
+                          _LAUICubicBSplineRenderer._current_animation_target_index,
+                          _LAUICubicBSplineRenderer._depth_stencil_texture, _LAUICubicBSplineRenderer._drawable_height,
+                          _LAUICubicBSplineRenderer._drawable_width, _LAUICubicBSplineRenderer._frame_index,
                           _LAUICubicBSplineRenderer._global_state_animator, _LAUICubicBSplineRenderer._instance_count,
                           _LAUICubicBSplineRenderer._instance_state, _LAUICubicBSplineRenderer._last_render_time,
-                          _LAUICubicBSplineRenderer._layer, _LAUICubicBSplineRenderer._model_transform,
+                          _LAUICubicBSplineRenderer._model_transform, _LAUICubicBSplineRenderer._multisample_texture,
                           _LAUICubicBSplineRenderer._needs_update, _LAUICubicBSplineRenderer._projection_transform,
-                          _LAUICubicBSplineRenderer._render_pass_descriptor, _LAUICubicBSplineRenderer._reversed,
-                          _LAUICubicBSplineRenderer._ring_buffer, _LAUICubicBSplineRenderer._ring_end,
-                          _LAUICubicBSplineRenderer._ring_start, _LAUICubicBSplineRenderer._shared_render_state,
-                          _LAUICubicBSplineRenderer._spline_instance_uniforms, _LAUICubicBSplineRenderer._spline_state,
-                          _LAUICubicBSplineRenderer._tesselation_factors, _LAUICubicBSplineRenderer._view,
-                          _LAUICubicBSplineRenderer._view_transform, _LAUICubicBSplineRenderer._wireframe_enabled,
+                          _LAUICubicBSplineRenderer._render_loop, _LAUICubicBSplineRenderer._render_pass_descriptor,
+                          _LAUICubicBSplineRenderer._reversed, _LAUICubicBSplineRenderer._ring_buffer,
+                          _LAUICubicBSplineRenderer._ring_end, _LAUICubicBSplineRenderer._ring_start,
+                          _LAUICubicBSplineRenderer._shared_render_state, _LAUICubicBSplineRenderer._spline_instance_uniforms,
+                          _LAUICubicBSplineRenderer._spline_state, _LAUICubicBSplineRenderer._tesselation_factors,
+                          _LAUICubicBSplineRenderer._texture_index, _LAUICubicBSplineRenderer._textures,
+                          _LAUICubicBSplineRenderer._textures_dirty, _LAUICubicBSplineRenderer._view_transform,
+                          _LAUICubicBSplineRenderer._wireframe_enabled, _LAUIDisplayLinkTargetProxy._target,
                           _LAUIHorizontalArrowView._animated, _LAUIHorizontalArrowView._animating,
                           _LAUIHorizontalArrowView._arrow_container, _LAUIHorizontalArrowView._color,
                           _LAUIHorizontalArrowView._container, _LAUIHorizontalArrowView._direction,
@@ -64,16 +80,17 @@ exports:
                           _LAUIPearlGlyphView._faceStates, _LAUIPearlGlyphView._feedbackEnabled,
                           _LAUIPearlGlyphView._finishedColor, _LAUIPearlGlyphView._finishedColorOverridden,
                           _LAUIPearlGlyphView._hideFace, _LAUIPearlGlyphView._idleColor, _LAUIPearlGlyphView._inWindow,
-                          _LAUIPearlGlyphView._lastUpdateTime, _LAUIPearlGlyphView._maximumFramerate,
-                          _LAUIPearlGlyphView._metalLayer, _LAUIPearlGlyphView._metalView, _LAUIPearlGlyphView._modelDirty,
-                          _LAUIPearlGlyphView._mouthID, _LAUIPearlGlyphView._normalRenderState, _LAUIPearlGlyphView._noseID,
+                          _LAUIPearlGlyphView._invalidated, _LAUIPearlGlyphView._lastUpdateTime, _LAUIPearlGlyphView._layer,
+                          _LAUIPearlGlyphView._maximumFramerate, _LAUIPearlGlyphView._modelDirty, _LAUIPearlGlyphView._mouthID,
+                          _LAUIPearlGlyphView._normalRenderState, _LAUIPearlGlyphView._noseID,
                           _LAUIPearlGlyphView._oscillatingColor, _LAUIPearlGlyphView._overdrawRatio,
                           _LAUIPearlGlyphView._panning, _LAUIPearlGlyphView._paused, _LAUIPearlGlyphView._priorState,
-                          _LAUIPearlGlyphView._processingColor, _LAUIPearlGlyphView._reduceBlur, _LAUIPearlGlyphView._renderer,
-                          _LAUIPearlGlyphView._rendererIdentifiers, _LAUIPearlGlyphView._rendererPaused,
-                          _LAUIPearlGlyphView._ringPoint, _LAUIPearlGlyphView._scale, _LAUIPearlGlyphView._sharedResources,
-                          _LAUIPearlGlyphView._state, _LAUIPearlGlyphView._stateChangeAnimated,
-                          _LAUIPearlGlyphView._stateChangeCounter, _LAUIPearlGlyphView._style, _LAUIPearlGlyphView._successColor,
+                          _LAUIPearlGlyphView._processingColor, _LAUIPearlGlyphView._reduceBlur, _LAUIPearlGlyphView._renderLoop,
+                          _LAUIPearlGlyphView._renderer, _LAUIPearlGlyphView._rendererIdentifiers,
+                          _LAUIPearlGlyphView._rendererPaused, _LAUIPearlGlyphView._ringPoint, _LAUIPearlGlyphView._scale,
+                          _LAUIPearlGlyphView._sharedResources, _LAUIPearlGlyphView._state,
+                          _LAUIPearlGlyphView._stateChangeAnimated, _LAUIPearlGlyphView._stateChangeCounter,
+                          _LAUIPearlGlyphView._style, _LAUIPearlGlyphView._successColor,
                           _LAUIPearlGlyphViewStaticResources._device, _LAUIPearlGlyphViewStaticResources._state,
                           _LAUIPhysicalButtonView._animating, _LAUIPhysicalButtonView._animationLength,
                           _LAUIPhysicalButtonView._buttonView, _LAUIPhysicalButtonView._containerView,
@@ -83,5 +100,10 @@ exports:
                           _LAUIPhysicalButtonView._periodicAnimationKey, _LAUIPhysicalButtonView._style,
                           _LAUIRadialPingView._animating, _LAUIRadialPingView._animating_counter,
                           _LAUIRadialPingView._animating_dirty, _LAUIRadialPingView._blurs, _LAUIRadialPingView._color,
-                          _LAUIRadialPingView._container, _LAUIRadialPingView._primary, _LAUIRadialPingView._pulse ]
+                          _LAUIRadialPingView._container, _LAUIRadialPingView._primary, _LAUIRadialPingView._pulse,
+                          _LAUIRenderLoop._background, _LAUIRenderLoop._current_drawable, _LAUIRenderLoop._delegate,
+                          _LAUIRenderLoop._device, _LAUIRenderLoop._display_link, _LAUIRenderLoop._drawable_size,
+                          _LAUIRenderLoop._drawable_size_dirty, _LAUIRenderLoop._drawing, _LAUIRenderLoop._effective_paused,
+                          _LAUIRenderLoop._in_application_context, _LAUIRenderLoop._invalidated, _LAUIRenderLoop._layer,
+                          _LAUIRenderLoop._paused, _LAUIRenderLoop._pixel_format, _LAUIRenderLoop._preferred_fps ]
 ...

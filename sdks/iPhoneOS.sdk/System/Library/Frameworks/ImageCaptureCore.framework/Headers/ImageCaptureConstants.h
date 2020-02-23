@@ -65,7 +65,6 @@ typedef NS_ENUM(NSInteger)
     ICReturnCodeSystemOffset              = -21300,
     ICReturnCodeDeviceOffset              = -21350,
     ICReturnCodeDeviceConnection          = -21400,
-    ICReturnCodeObjectOffset              = -21450,
 } ICReturnCodeOffset;
 
 
@@ -106,29 +105,10 @@ typedef NS_ERROR_ENUM(ICErrorDomain, ICReturnConnectionErrorCode) {
     /* Device reports eject has failed. */
     ICReturnConnectionEjectFailed                   = ICReturnCodeDeviceOffset -4,
     /* Failed to open a connection to the device. */
-    ICReturnConnectionFailedToOpen                  = ICReturnCodeDeviceOffset -5,
+    ICReturnConnectionFailedToOpen                  = ICReturnCodeDeviceConnection,
     /* Failed to open the device. */
-    ICReturnConnectionFailedToOpenDevice            = ICReturnCodeDeviceOffset -6,
+    ICReturnConnectionFailedToOpenDevice            = ICReturnCodeDeviceConnection -1,
 };
-
-
-
-typedef NS_ERROR_ENUM(ICErrorDomain, ICReturnPTPDeviceErrorCode) {
-    
-    /* Destination path supplied is invalid */
-    ICReturnPTPFailedToSendCommand                  = ICReturnCodeDownloadOffset,
-};
-
-
-
-typedef NS_ERROR_ENUM(ICErrorDomain, ICReturnDownloadErrorCode) {
-    
-    /* Destination path supplied is invalid */
-    ICReturnDownloadPathInvalid                     = ICReturnCodeDownloadOffset,
-    /* Destination file is not writable */
-    ICReturnDownloadFileWritable                    = ICReturnCodeDownloadOffset-1,
-};
-
 
 typedef NS_ERROR_ENUM(ICErrorDomain, ICLegacyReturnCode)
 {
@@ -262,21 +242,6 @@ typedef NS_ERROR_ENUM(ICErrorDomain, ICReturnCode) {
     /* Multierror */
     ICReturnMultiErrorDictionary                = -30000,
 };
-
-typedef NS_ERROR_ENUM(ICErrorDomain, ICReturnObjectErrorCode) {
-    
-    /* Object does not exist. */
-    ICReturnCodeObjectDoesNotExist              = ICReturnCodeObjectOffset,
-    /* Object data offset invalid. */
-    ICReturnCodeObjectDataOffsetInvalid         = ICReturnCodeObjectOffset-1,
-    /* Object could not be read */
-    ICReturnCodeObjectCouldNotBeRead            = ICReturnCodeObjectOffset-2,
-    /* Object could not be read */
-    ICReturnCodeObjectDataEmpty                 = ICReturnCodeObjectOffset-3,
-    
-    
-};
-
 
 #define ICReturnDeviceIsAccessRestrictedAppleDevice ICReturnDeviceIsPasscodeLocked
 

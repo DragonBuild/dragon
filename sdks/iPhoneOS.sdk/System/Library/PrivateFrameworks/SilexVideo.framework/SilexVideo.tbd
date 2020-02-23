@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SilexVideo.framework/SilexVideo
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SVBundle, _SVContentSizeCategoryIsEqualToContentSizeCategory, _SVDiscoverMoreAccessoryItemIdentifier,
                           _SVMoreFromAccessoryItemIdentifier, _SVNowPlayingAccessoryItemIdentifier,
                           _SVUpNextAccessoryItemIdentifier, _SVVideoErrorDomain, _SVVideoTimeInvalid, _SilexVideoVersionNumber,
@@ -18,10 +19,10 @@ exports:
                           _SVDiscoverMoreButtonInteractionHandler, _SVDiscoverMoreInteractionObserverFactory,
                           _SVEventTrackingAssembly, _SVFrameworkAssembly, _SVFullscreenDismissalAnimator,
                           _SVFullscreenPresentationAnimator, _SVFullscreenTransitionContext, _SVGestureInteractionFactory,
-                          _SVGestureRecognizerManager, _SVGestureRecognizerViewProvider, _SVImageCache, _SVInteraction,
-                          _SVInteractionAssembly, _SVInteractionContext, _SVInteractionContextFactory, _SVInteractionHandler,
-                          _SVInteractionManager, _SVInteractionObserver, _SVInteractionObservingGestureRecognizer,
-                          _SVKeyValueObserver, _SVLearnMoreButton, _SVLearnMoreInteractionHandlerFactory, _SVMaterialButton,
+                          _SVGestureRecognizerManager, _SVGestureRecognizerViewProvider, _SVInteraction, _SVInteractionAssembly,
+                          _SVInteractionContext, _SVInteractionContextFactory, _SVInteractionHandler, _SVInteractionManager,
+                          _SVInteractionObserver, _SVInteractionObservingGestureRecognizer, _SVKeyValueObserver,
+                          _SVLearnMoreButton, _SVLearnMoreInteractionHandlerFactory, _SVLooper, _SVMaterialButton,
                           _SVMaterialVideoPlayButton, _SVModalPresentationViewControllerProvider,
                           _SVMoreFromAccessoryItemContentProvider, _SVMoreFromButton, _SVMoreFromInteractionObserverFactory,
                           _SVMutableVideoMetadata, _SVNowPlayingInteractionObserverFactory, _SVPlaybackAssembly,
@@ -36,12 +37,12 @@ exports:
                           _SVPlaylistInteractionAssembly, _SVPlaylistSkipHandler, _SVPlaylistSkipPolicyHandler,
                           _SVPlaylistUIAssembly, _SVPrefetchAssembly, _SVPrefetchManager, _SVPrefetchPolicyHandler,
                           _SVPrefetcher, _SVPrefetcherFactory, _SVPrivacyStatementInteractionHandler,
-                          _SVPrivacyStatementInteractionHandlerFactory, _SVReplayButton, _SVScrubbingManager,
-                          _SVScrubbingPolicyHandler, _SVShareButtonManager, _SVSharingAssembly,
-                          _SVSkipInteractionObserverFactory, _SVSkipToNextButtonManager, _SVSkipToNextInteractionHandlerFactory,
-                          _SVSkipToPreviousButtonManager, _SVSkipToPreviousInteractionHandler, _SVTimeBasedAction,
-                          _SVTimeConverter, _SVTimeline, _SVTimelineAssembly, _SVTimelineManager, _SVUIAssembly,
-                          _SVURLAssetFactory, _SVURLAssetLoader, _SVURLAssetLoaderFactory, _SVURLAssetOptionsProvider, _SVVideo,
+                          _SVPrivacyStatementInteractionHandlerFactory, _SVScrubbingManager, _SVScrubbingPolicyHandler,
+                          _SVShareButtonManager, _SVSharingAssembly, _SVSkipInteractionObserverFactory,
+                          _SVSkipToNextButtonManager, _SVSkipToNextInteractionHandlerFactory, _SVSkipToPreviousButtonManager,
+                          _SVSkipToPreviousInteractionHandler, _SVTimeBasedAction, _SVTimeConverter, _SVTimeline,
+                          _SVTimelineAssembly, _SVTimelineManager, _SVUIAssembly, _SVURLAssetFactory, _SVURLAssetLoader,
+                          _SVURLAssetLoaderFactory, _SVURLAssetOptionsProvider, _SVVideo,
                           _SVVideoAccessoryBarDisplayModeTransition, _SVVideoAccessoryBarDisplayModeTransitionContext,
                           _SVVideoAccessoryBarDisplayState, _SVVideoAccessoryBarItemDisplayState,
                           _SVVideoAccessoryBarItemTransition, _SVVideoAccessoryBarItemTransitionContext,
@@ -124,8 +125,8 @@ exports:
                           _SVInteractionObserver._didBlock, _SVInteractionObserver._willBlock, _SVKeyValueObserver._change,
                           _SVKeyValueObserver._keyPath, _SVKeyValueObserver._object, _SVKeyValueObserver._options,
                           _SVLearnMoreInteractionHandlerFactory._playbackController,
-                          _SVLearnMoreInteractionHandlerFactory._videoProviderProviding, _SVMaterialButton._backgroundView,
-                          _SVMaterialVideoPlayButton._backgroundView,
+                          _SVLearnMoreInteractionHandlerFactory._videoProviderProviding, _SVLooper._durationObserver,
+                          _SVLooper._player, _SVMaterialButton._backgroundView, _SVMaterialVideoPlayButton._backgroundView,
                           _SVModalPresentationViewControllerProvider._videoViewControllerProvider,
                           _SVMoreFromAccessoryItemContentProvider._accessoryItemButton,
                           _SVMoreFromAccessoryItemContentProvider._logoCancellationBlock,
@@ -172,12 +173,12 @@ exports:
                           _SVPrefetchManager._prefetcherFactory, _SVPrefetchManager._prefetchers,
                           _SVPrefetchManager._queueObserver, _SVPrefetchManager._queueProvider, _SVPrefetcher._bufferObserver,
                           _SVPrefetcher._loadingProgressObserver, _SVPrefetcher._loadingStateObserver,
-                          _SVPrefetcher._playbackProgressObserver, _SVPrefetcher._playerItemLoader,
+                          _SVPrefetcher._playbackCoordinator, _SVPrefetcher._playbackProgressObserver,
                           _SVPrefetcher._prefetchPolicy, _SVPrefetcherFactory._bufferObserverFactory,
                           _SVPrefetcherFactory._loadingProgressObserverFactory,
-                          _SVPrefetcherFactory._loadingStateObserverFactory,
-                          _SVPrefetcherFactory._playbackProgressObserverFactory, _SVPrefetcherFactory._playerItemLoaderProvider,
-                          _SVPrefetcherFactory._prefetchPolicyHandler, _SVPrivacyStatementInteractionHandler._playbackController,
+                          _SVPrefetcherFactory._loadingStateObserverFactory, _SVPrefetcherFactory._playbackCoordinatorProvider,
+                          _SVPrefetcherFactory._playbackProgressObserverFactory, _SVPrefetcherFactory._prefetchPolicyHandler,
+                          _SVPrivacyStatementInteractionHandler._playbackController,
                           _SVPrivacyStatementInteractionHandler._videoAdProvider,
                           _SVPrivacyStatementInteractionHandlerFactory._playbackController,
                           _SVPrivacyStatementInteractionHandlerFactory._videoProviderProviding,
@@ -340,8 +341,7 @@ exports:
                           _SVVideoPeriodicTimeObserver.changeBlock,
                           _SVVideoPeriodicTimeObserverFactory._playbackStateObserverFactory,
                           _SVVideoPeriodicTimeObserverFactory._playerProvider,
-                          _SVVideoPeriodicTimeObserverFactory._timeConverter, _SVVideoPlayButton._paused,
-                          _SVVideoPlaybackAttemptTracker._attemptedPlayback,
+                          _SVVideoPeriodicTimeObserverFactory._timeConverter, _SVVideoPlaybackAttemptTracker._attemptedPlayback,
                           _SVVideoPlaybackAttemptTracker._loadingStateObserver,
                           _SVVideoPlaybackAttemptTracker._playbackAttemptBlock,
                           _SVVideoPlaybackAttemptTracker._playbackPolicyObserver,

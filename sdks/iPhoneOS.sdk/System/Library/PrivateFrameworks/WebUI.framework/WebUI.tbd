@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WebUI.framework/WebUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     re-exports:         [ /System/Library/PrivateFrameworks/SafariShared.framework/SafariShared ]
     symbols:            [ _WBUABAddressKey, _WBUABStreetKey, _WBUAutoFillClearDataClasses, _WBUAutoFillDisableDataClasses,
                           _WBUAutoFillGetEnabledDataClasses,
@@ -15,10 +16,7 @@ exports:
                           _WBUPasswordGenerationExistingPasswordOverwrittenOnAppSuspendAggdKey,
                           _WBUPasswordGenerationExistingPasswordOverwrittenOnViewCloseAggdKey,
                           _WBUPasswordGenerationPasswordAcceptedAggdKey, _WBUPasswordGenerationPasswordSavedAggdKey,
-                          _WBUPasswordGenerationPromptShownAggdKey, _incrementAggdKey,
-                          _kCertificateContextAuthenticationChallengeKey, _kCertificateContextCompletionHandlerKey,
-                          _kCertificateContextReasonChallenge, _kCertificateContextReasonKey,
-                          _kWBUCertificateContextUseOnlyAvailableIdentityWithoutPrompting, _setAggdKey,
+                          _WBUPasswordGenerationPromptShownAggdKey, _incrementAggdKey, _setAggdKey,
                           _webuiCookieAcceptPolicyPreferencesKey ]
     objc-classes:       [ _WBUAlertController, _WBUAutoFillDisplayData, _WBUCreditCardDataController, _WBUFeatureManager,
                           _WBUFormAutoFillPrompt, _WBUFormAutoFillWhiteList, _WBUFormDataController,
@@ -27,11 +25,12 @@ exports:
     objc-ivars:         [ _WBUAlertController._alert, _WBUAlertController._automaticallyDismiss, _WBUAlertController._handler,
                           _WBUAlertController._tableView, _WBUAutoFillDisplayData._fillMatches, _WBUAutoFillDisplayData._label,
                           _WBUFeatureManager._account, _WBUFeatureManager._accountStore, _WBUFeatureManager._autoFillAvailable,
-                          _WBUFeatureManager._bookmarksAvailable, _WBUFeatureManager._cloudSyncAvailable,
-                          _WBUFeatureManager._inMemoryBookmarkChangeTrackingAvailable, _WBUFeatureManager._internalQueue,
-                          _WBUFeatureManager._managementState, _WBUFeatureManager._offlineReadingListAvailable,
-                          _WBUFeatureManager._readingListAvailable, _WBUFormAutoFillWhiteList._cache,
-                          _WBUFormDataController._autoFillCorrectionManager, _WBUFormDataController._autoFillFeedbackProcessor,
+                          _WBUFeatureManager._bookmarksAvailable, _WBUFeatureManager._cachedShouldRequestMoreTime,
+                          _WBUFeatureManager._cloudSyncAvailable, _WBUFeatureManager._inMemoryBookmarkChangeTrackingAvailable,
+                          _WBUFeatureManager._internalQueue, _WBUFeatureManager._managementState,
+                          _WBUFeatureManager._offlineReadingListAvailable, _WBUFeatureManager._readingListAvailable,
+                          _WBUFormAutoFillWhiteList._cache, _WBUFormDataController._autoFillCorrectionManager,
+                          _WBUFormDataController._autoFillFeedbackProcessor,
                           _WBUFormDataController._cachedAutoFillRestrictionValue, _WBUFormDataController._savePending,
                           _WBUGeneratedPasswordCredentialUpdateRequest._generatedPassword,
                           _WBUGeneratedPasswordCredentialUpdateRequest._lastGeneratedPassword,

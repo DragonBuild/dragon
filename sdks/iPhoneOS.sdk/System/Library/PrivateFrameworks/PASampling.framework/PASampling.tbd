@@ -1,20 +1,20 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PASampling.framework/PASampling
-current-version:       218.2
+current-version:       243
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CopyDonatingUniqueIds, _CopyMountStatusData, _CountedStateForSampleThread,
                           _CreateDsymSymbolOwnerForUUID, _CreatePAImageInfoArrayFromDyldImageInfos,
                           _CreateSymbolOwnerForUUIDAtPath, _CreateSymbolicatorForLiveProcess, _DescriptionForKCDataType,
-                          _EventTypeString, _FreeMountStatusData, _KPerfReadAheadTaskLevelInfo, _MachToNano,
-                          '_OBJC_EHTYPE_$_PAException', _PACFBundleCopyStringForKey, _PACommonAverageFromArray,
-                          _PACommonStandardDeviationFromArray, _PAMachTimeForMachAbsTime, _PAMachTimeForMachAbsTimeWithTimebase,
+                          _EventTypeString, _FreeMountStatusData, _KPerfReadAheadTaskLevelInfo, '_OBJC_EHTYPE_$_PAException',
+                          _PACFBundleCopyStringForKey, _PAMachTimeForMachAbsTime, _PAMachTimeForMachAbsTimeWithTimebase,
                           _PAMachTimeForNSNumberOfMachAbsTime, _PAMachTimeGetCurrent, _PAMachTimeToMachAbsTimeWithTimebase,
-                          _PANSDictionaryCopyStringForKey, _PAOrderAddedListKey, _PASamplingVersionNumber,
-                          _PASamplingVersionString, _PASerializableAddInstanceToSerializationDictionaryWithClassKey,
+                          _PAOrderAddedListKey, _PASamplingVersionNumber, _PASamplingVersionString,
+                          _PASerializableAddInstanceToSerializationDictionaryWithClassKey,
                           _PASerializableFillSerializedIndicesWithCollectionOfSerializableInstances,
                           _PASerializableFillSerializedIndicesWithDictionaryOfSerializableArrays,
                           _PASerializableFillSerializedIndicesWithDictionaryOfSerializableInstances,
@@ -43,19 +43,17 @@ exports:
                           _ReduceToSignificantDigits, _SanitizedSignature, _StringForThreadQoS, _TaskAndThreadDisplayName,
                           _TaskDisplayName, _TracePointString, _UNKNOWN_STRING, __AvoidSuspendingPid, __CheckAppleInternal,
                           __CopyStringForTime, __CreateSanitizedCopy, __IsTimerCoalesced, __IsTimerLimited, __IsTimerNormal,
-                          __PALogTimestamp, __PAPrintToMutableData, __PASerializableIndexForPointer,
-                          __PASerializableInstanceForIndex, __TimerTier, __addInstanceToDeserializationDictionaryWithClassKey,
-                          __addPointerToIndexDictionaryForClass, __copy_commerce_info_strings, __getIndexRangeForTimestamps,
+                          __PALogTimestamp, __PASerializableIndexForPointer, __PASerializableInstanceForIndex, __TimerTier,
+                          __addInstanceToDeserializationDictionaryWithClassKey, __addPointerToIndexDictionaryForClass,
+                          __copy_commerce_info_strings, __getIndexRangeForTimestamps,
                           __indexToInstanceDictionaryFromDeserializationDictionary, __is_alive,
                           __newDataBufferFromPointerToIndexDictionary, __newMutableCollectionFromIndexList,
                           __newNumberForPointer, __newPointerToIndexDictionary, __paos_printf_frame_base,
                           __paos_printf_frame_state, __paos_printf_frame_timerange, __pidsForName,
-                          __pointerInBufferForIndexWithClass, _formattedAddress, _formattedBytes, _formattedBytesDouble,
-                          _formattedSignedBytes, _kPABinaryLocatorBuildNumberKey, _kPABinaryLocatorDatabaseDirectory,
-                          _kPABinaryLocatorDatabaseLocation, _kPAErrorIndex, _kPANullIndex, _kPAWSUpdateNoSuchIndex,
-                          _levelFormattedString, _nameForProcInfo, _newProcessStructures, _pa_tailspin_parse_stackshot_chunk,
-                          _pagesToBytes, _pagesToBytesDefault, _printHeaderSpacingToStream, _uuidForBytes, _uuidForString,
-                          _uuid_string ]
+                          __pointerInBufferForIndexWithClass, _formattedBytes, _formattedSignedBytes,
+                          _kPABinaryLocatorBuildNumberKey, _kPABinaryLocatorDatabaseDirectory, _kPABinaryLocatorDatabaseLocation,
+                          _kPAErrorIndex, _kPANullIndex, _kPAWSUpdateNoSuchIndex, _pa_tailspin_parse_stackshot_chunk,
+                          _printHeaderSpacingToStream, _uuidForBytes, _uuidForString, _uuid_string ]
     objc-classes:       [ _PAAggregatedDispatchQueue, _PAAggregatedExecutable, _PAAggregatedInstruction,
                           _PAAggregatedKernelInstruction, _PAAggregatedMainThread, _PAAggregatedProcessInstance,
                           _PAAggregatedTask, _PAAggregatedThread, _PAAggregatedThreadAndDispatchQueue, _PABinaryLocator,
@@ -258,11 +256,12 @@ exports:
                           _PAStackshotThread.thread_snap, _PASymbol._length, _PASymbol._name, _PASymbol._offsetInOwner,
                           _PASymbol._sourceInfos, _PASymbolDataStore._binaryLocator, _PASymbolDataStore._dscSymDir,
                           _PASymbolDataStore._dsymPaths, _PASymbolDataStore._kernelCache,
-                          _PASymbolDataStore._pidToCSSymbolicatorCache, _PASymbolDataStore._sharedCache32bit,
-                          _PASymbolDataStore._sharedCache32bitRange, _PASymbolDataStore._sharedCache64bit,
-                          _PASymbolDataStore._sharedCache64bitRange, _PASymbolDataStore._sharedCacheUUIDsAlreadySearchedFor,
-                          _PASymbolDataStore._shouldSymbolicate, _PASymbolDataStore._shouldUseDsymForUUIDToFindBinaries,
-                          _PASymbolDataStore._uuidToCSSymbolOwnerCache, _PASymbolDataStore._uuidToSharedCacheImageInfoDictionary,
+                          _PASymbolDataStore._nonSystemSharedCache, _PASymbolDataStore._nonSystemSharedCacheRange,
+                          _PASymbolDataStore._pidToCSSymbolicatorCache, _PASymbolDataStore._pidsUsingNonSystemSharedCache,
+                          _PASymbolDataStore._sharedCacheUUIDsAlreadySearchedFor, _PASymbolDataStore._shouldSymbolicate,
+                          _PASymbolDataStore._shouldUseDsymForUUIDToFindBinaries, _PASymbolDataStore._systemSharedCache,
+                          _PASymbolDataStore._systemSharedCacheRange, _PASymbolDataStore._uuidToCSSymbolOwnerCache,
+                          _PASymbolDataStore._uuidToSharedCacheImageInfoDictionary,
                           _PASymbolDataStore._uuidToSymbolOwnerDictionary, _PASymbolHandle._owner, _PASymbolHandle._symbol,
                           _PASymbolHandle._symbolOwnerStartAddressInTask, _PASymbolHandleWithKernelBool._isKernel,
                           _PASymbolHandleWithKernelBool._symbolHandle, _PASymbolOwner._binaryVersion,

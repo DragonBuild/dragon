@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 12789F19-2BF8-3BCC-9875-B65B6947DCED', 'arm64e: 6D2CF149-960A-3B5D-BFC0-56D237C0A235' ]
+                   'arm64: 3A058100-E782-3BBB-8C3A-B8AECA41C803', 'arm64e: 0613299E-DDD9-366C-AADC-3C966FD34DCC' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/LinkPresentation.framework/LinkPresentation'
-current-version: 119.13
+current-version: 118.3
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     re-exports:      [ '/System/Library/PrivateFrameworks/URLFormatting.framework/URLFormatting' ]
@@ -40,10 +40,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 07666A2D-159C-3D2E-BAE9-4B294F41046D', 'arm64e: BA90267A-6049-3B9E-B637-F939D8E0395E' ]
+                   'arm64: 977F6466-F64B-3C76-B93D-A6B906E38CCC', 'arm64e: 060AE237-345A-3357-856C-711B70A7C7F0' ]
 platform:        ios
 install-name:    '/System/Library/PrivateFrameworks/URLFormatting.framework/URLFormatting'
-current-version: 119.13
+current-version: 118.3
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     objc-classes:    [ URLFormattingTestingOverrides ]

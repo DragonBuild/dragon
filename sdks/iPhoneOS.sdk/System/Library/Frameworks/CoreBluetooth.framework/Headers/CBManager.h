@@ -73,16 +73,6 @@ typedef NS_ENUM(NSInteger, CBManagerAuthorization) {
  *				Updates are provided by required delegate method {@link managerDidUpdateState:}.
  *  @seealso	state
  */
-@property(nonatomic, assign, readonly) CBManagerAuthorization authorization API_DEPRECATED_WITH_REPLACEMENT("CBManager.authorization", ios(13.0,13.1));
-
-
-/*!
- *  @property authorization
- *
- *  @discussion The current authorization of the manager, initially set to <code>CBManagerAuthorizationNotDetermined</code>.
- *  			You can check this in your implementation of required delegate method {@link managerDidUpdateState:}. You can also use it to check authorization status before allocating CBManager.
- *  @seealso	state
- */
-@property(class, nonatomic, assign, readonly) CBManagerAuthorization authorization API_AVAILABLE(macos(10.15), ios(13.1), watchos(6.0), tvos(13.0));
+@property(nonatomic, assign, readonly) CBManagerAuthorization authorization;
 
 @end

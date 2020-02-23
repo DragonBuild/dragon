@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PrintKit.framework/PrintKit
-current-version:       239.4
+current-version:       244
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PKAllowNonTLSConnection, _PKAnnotationsImagedKey, _PKCancelAlert, _PKCancelJobs,
                           _PKCertUISynchronization, _PKCheckAlert, _PKCopiesKey, _PKCopyLocalizedPrinterStateReasons,
                           _PKCopyLocalizedString, _PKDisplayAlert, _PKDisplayNotice, _PKDisplayQuotaAlert, _PKDisplayRetry,
@@ -25,17 +26,17 @@ exports:
                           _PKPrinterReasonsChangedNotification, _PKPrinterTypeKey, _PKPrinterUUIDKey,
                           _PKPrinterWasLastUsedPrinterForDocumentKey, _PKPrinterWasLastUsedPrinterForPhotoKey,
                           _PKPrintingIsAvailable, _PKQualityDraft, _PKQualityHigh, _PKQualityKey, _PKQualityNormal,
-                          _PKResolutionKey, _PKSchemeKey, _PKServerCertCB, _PKSetAuthInfo, _PKSetPasswordCB,
-                          _PKSetupAddToCurrentWiFi, _PKSetupKeepAWDLOn, _PKSetupPassCodeKey, _PKSetupPassCodeShouldCancelKey,
-                          _PKSetupPassword, _PKSetupPasswordScope, _PKSetupPasswordScopeSupportedKey, _PKShowPrintCenterWidget,
-                          _PKStoreCredentialsInKeychainAllowed, _PKSupportsPrintColorModeKey, _PKTXTRecordKey,
+                          _PKQueryIPPAndBuildTXT, _PKResolutionKey, _PKSchemeKey, _PKServerCertCB, _PKSetAuthInfo,
+                          _PKSetPasswordCB, _PKSetupAddToCurrentWiFi, _PKSetupKeepAWDLOn, _PKSetupPassCodeKey,
+                          _PKSetupPassCodeShouldCancelKey, _PKSetupPassword, _PKSetupPasswordScope,
+                          _PKSetupPasswordScopeSupportedKey, _PKShowPrintCenterWidget, _PKStoreCredentialsInKeychainAllowed,
+                          _PKSupportsPrintColorModeKey, _PKTXTRecordKey, _PKTXTSupportsPDL, _PKTXTToDict,
                           _PKThumbnailPositionCenter, _PKThumbnailPositionKey, _PKThumbnailPositionTop, _PKUserAllowsCertTrust,
                           _PKUserPassKey, _PrintKitVersionNumber, _PrintKitVersionString, __liteDrawImageToSheet,
                           __lite_page_transform, __urfSetLineSize, __urfSetStats, _copyMatchingCerts, _deleteCertificate,
-                          _genericSize, _octetAsString, _pk_number_of_jobs, _queryIPPAndBuildTXT, _storeCertificate,
-                          _transferair, _trayFromString, _traysFromAttrs, _txtSupportsPDL, _txtToDict, _urfDelete,
-                          _urfErrorString, _urfGetLineSize, _urfNew, _urfReadLine, _urfReadPage, _urfReadStart, _urfWriteLine,
-                          _urfWritePage, _urfWriteStart ]
+                          _genericSize, _octetAsString, _pk_number_of_jobs, _storeCertificate, _transferair, _trayFromString,
+                          _traysFromAttrs, _urfDelete, _urfErrorString, _urfGetLineSize, _urfNew, _urfReadLine, _urfReadPage,
+                          _urfReadStart, _urfWriteLine, _urfWritePage, _urfWriteStart ]
     objc-classes:       [ _PKDefaults, _PKJob, _PKMediaName, _PKPaper, _PKPaperList, _PKPrintSettings, _PKPrinter,
                           _PKPrinterBrowser, _PKSupply, _PKTray ]
     objc-ivars:         [ _PKJob._PIN, _PKJob._printerURI, _PKJob.mediaProgress, _PKJob.mediaSheets, _PKJob.mediaSheetsCompleted,

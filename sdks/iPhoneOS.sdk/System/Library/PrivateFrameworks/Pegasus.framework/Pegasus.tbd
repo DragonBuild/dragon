@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/Pegasus.framework/Pegasus
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PGPegasusErrorDomain, _PGPictureInPictureProxyPictureInPictureActiveChangedNotification ]
     objc-classes:       [ _PGBackdropView, _PGChevronView, _PGHostedWindow, _PGHostedWindowHostingHandle, _PGLayerHostView,
                           _PGLoadingIndicatorView, _PGPictureInPictureApplication, _PGPictureInPictureController,
@@ -24,6 +25,7 @@ exports:
                           _PGPictureInPictureController._pictureInPictureActive,
                           _PGPictureInPictureController._pictureInPictureApplications,
                           _PGPictureInPictureController._pictureInPictureRemoteObjects,
+                          _PGPictureInPictureController._pictureInPictureRemoteObjectsSupportingActiveSessionCancellationOnStart,
                           _PGPictureInPictureController._suspendedPictureInPictureRemoteObject,
                           _PGPictureInPictureControlsViewController._actionButton,
                           _PGPictureInPictureControlsViewController._cancelButton,
@@ -59,9 +61,13 @@ exports:
                           _PGPictureInPictureProxy._playbackProgress, _PGPictureInPictureProxy._playbackProgressSetterThrottler,
                           _PGPictureInPictureProxy._playbackRate, _PGPictureInPictureProxy._preferredContentSize,
                           _PGPictureInPictureProxy._queue, _PGPictureInPictureProxy._rootViewController,
-                          _PGPictureInPictureProxy._viewController, _PGPictureInPictureRemoteObject._connection,
-                          _PGPictureInPictureRemoteObject._controlsStyle, _PGPictureInPictureRemoteObject._currentState,
-                          _PGPictureInPictureRemoteObject._delegate, _PGPictureInPictureRemoteObject._delegateRespondsTo,
+                          _PGPictureInPictureProxy._sceneSessionPersistentIdentifier,
+                          _PGPictureInPictureProxy._shouldCancelActivePictureInPictureOnStart,
+                          _PGPictureInPictureProxy._shouldPullCancellationPolicyOnStart,
+                          _PGPictureInPictureProxy._viewController, _PGPictureInPictureProxy._windowSceneActivationStateObserver,
+                          _PGPictureInPictureRemoteObject._connection, _PGPictureInPictureRemoteObject._controlsStyle,
+                          _PGPictureInPictureRemoteObject._currentState, _PGPictureInPictureRemoteObject._delegate,
+                          _PGPictureInPictureRemoteObject._delegateRespondsTo,
                           _PGPictureInPictureRemoteObject._finishTaskInvalidationUUID,
                           _PGPictureInPictureRemoteObject._initialLayerFrame,
                           _PGPictureInPictureRemoteObject._interruptionBeganFinishTaskAssertion,
@@ -76,9 +82,11 @@ exports:
                           _PGPictureInPictureRemoteObject._processAssertion, _PGPictureInPictureRemoteObject._queue,
                           _PGPictureInPictureRemoteObject._shouldShowAlternateActionButtonImage,
                           _PGPictureInPictureRemoteObject._shouldShowLoadingIndicator,
+                          _PGPictureInPictureRemoteObject._sourceSceneSessionPersistentIdentifier,
                           _PGPictureInPictureRemoteObject._transitioningState, _PGPictureInPictureViewController._application,
                           _PGPictureInPictureViewController._canStartShowingChrome,
                           _PGPictureInPictureViewController._containerView, _PGPictureInPictureViewController._contentContainer,
+                          _PGPictureInPictureViewController._contentContainerRespondsTo,
                           _PGPictureInPictureViewController._contentView, _PGPictureInPictureViewController._controlsStyle,
                           _PGPictureInPictureViewController._controlsViewController, _PGPictureInPictureViewController._delegate,
                           _PGPictureInPictureViewController._delegateRespondsTo,

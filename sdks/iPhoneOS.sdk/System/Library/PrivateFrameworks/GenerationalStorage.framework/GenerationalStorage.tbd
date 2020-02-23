@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/GenerationalStorage.framework/GenerationalStorage
-current-version:       285.101
+current-version:       309
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _GSAdditionCreationDisplayNameKey, _GSAdditionCreationInfoValidate, _GSAdditionCreationKeepFileIDKey,
                           _GSAdditionCreationNameKey, _GSAdditionCreationNameSpaceKey, _GSAdditionCreationOnDuplicateKey,
                           _GSAdditionCreationOptionsKey, _GSAdditionCreationPOSIXNameKey, _GSAdditionCreationUserInfoKey,
@@ -22,11 +23,12 @@ exports:
                           _GSLibraryPrivateTransferGenerationToClientName, _GSLibraryRemoveGenerations,
                           _GSLibraryResolveDocumentId2, _GSLibraryRestoreGeneration, _GSLibrarySetGenerationInfoValueForKey,
                           _GSLibrarySetGenerationOptions, _GSLibrarySetGenerationOriginalDisplayName,
-                          _GSLibrarySetStorageOptions, _GSMergeInfoValueDictionary, _GSMutableInfoDictionary,
-                          _GSSetGenerationOptions, _GSSetInfoDictionary, _GSSetOriginalDisplayName, _GSSetOriginalPOSIXName,
-                          _GSTrackDocument, _GSUbiquitousConflictsNameSpace, __BeforePathRemove, __GSError, __GSErrorForErrno,
-                          __GSErrorForStatus, __GSIsDocumentRevision, __GSOpenByID, __PathRename, __PathResolve,
-                          __RemoveSubTrees, __RemoveTree, __SetBirthTimeSpecForFD, _get_volume_uuid, _kGSLibraryErrorDomain ]
+                          _GSLibrarySetStorageOptions, _GSLibraryTransferDocumentId, _GSMergeInfoValueDictionary,
+                          _GSMutableInfoDictionary, _GSSetGenerationOptions, _GSSetInfoDictionary, _GSSetOriginalDisplayName,
+                          _GSSetOriginalPOSIXName, _GSTrackDocument, _GSUbiquitousConflictsNameSpace, __BeforePathRemove,
+                          __GSError, __GSErrorForErrno, __GSErrorForStatus, __GSIsDocumentRevision, __GSOpenByID, __PathRename,
+                          __PathResolve, __RemoveSubTrees, __RemoveTree, __SetBirthTimeSpecForFD, _get_volume_uuid,
+                          _kGSLibraryErrorDomain ]
     objc-classes:       [ _GSAddition, _GSClientManagedLibrary, _GSDaemonProxySync, _GSDocumentIdentifier,
                           _GSPermanentAdditionEnumerator, _GSPermanentStorage, _GSStagingPrefix, _GSStorageManager,
                           _GSTemporaryAddtionEnumerator, _GSTemporaryStorage, __CopyfileCallbackCtx ]

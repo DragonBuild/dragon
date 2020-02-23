@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WirelessDiagnostics.framework/WirelessDiagnostics
 current-version:       757
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     re-exports:         [ /usr/lib/libAWDSupportFramework.dylib ]
     symbols:            [ _AWDPostMetric, _AWDPostSimpleMetric, _AWDPostSimpleMetricWithBool, _AWDPostSimpleMetricWithInteger,
                           _AWDPostSimpleMetricWithString, _AWDPostSimpleMetricWithUnsignedInteger,
@@ -78,13 +79,13 @@ exports:
                           __ZN3awd15AWDMetricBufferC1EjONSt3__18weak_ptrINS_18AWDMetricSubmitterEEE,
                           __ZN3awd15AWDMetricBufferC2EjONSt3__18weak_ptrINS_18AWDMetricSubmitterEEE,
                           __ZN3awd15AWDMetricBufferD1Ev, __ZN3awd15AWDMetricBufferD2Ev,
-                          __ZN3awd15AWDServerFacade10registerAsEjjb, __ZN3awd15AWDServerFacade13handleMessageEN3xpc4dictE,
-                          __ZN3awd15AWDServerFacade13register_syncEjjb, __ZN3awd15AWDServerFacade13tryInitializeEv,
-                          __ZN3awd15AWDServerFacade17handleServerErrorEN3xpc6objectE,
+                          __ZN3awd15AWDServerFacade10registerAsEjjb, __ZN3awd15AWDServerFacade11getMetadataEjb,
+                          __ZN3awd15AWDServerFacade13handleMessageEN3xpc4dictE, __ZN3awd15AWDServerFacade13register_syncEjjb,
+                          __ZN3awd15AWDServerFacade13tryInitializeEv, __ZN3awd15AWDServerFacade17handleServerErrorEN3xpc6objectE,
                           __ZN3awd15AWDServerFacade19initConnection_syncEv,
-                          __ZN3awd15AWDServerFacade6createEU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEE,
-                          __ZN3awd15AWDServerFacadeC1EU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEE,
-                          __ZN3awd15AWDServerFacadeC2EU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEE,
+                          __ZN3awd15AWDServerFacade6createEU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEEU13block_pointerFvN3xpc4dictEjE,
+                          __ZN3awd15AWDServerFacadeC1EU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEEU13block_pointerFvN3xpc4dictEjE,
+                          __ZN3awd15AWDServerFacadeC2EU13block_pointerFvjjNSt3__110shared_ptrINS_7profile22ComponentConfigurationEEEEU13block_pointerFvjNS_7TriggerEEU13block_pointerFvvEU13block_pointerFvjNS_10PiiAllowedENS_15LocationAllowedENS_17AnalyticsShimModeEEU13block_pointerFvN3xpc4dictEjE,
                           __ZN3awd15AWDServerFacadeD1Ev, __ZN3awd15AWDServerFacadeD2Ev, __ZN3awd15MetricContainer10takeMetricEv,
                           __ZN3awd15MetricContainer11storeMetricEyjRKN20wireless_diagnostics6google8protobuf11MessageLiteE,
                           __ZN3awd15MetricContainerC1Ej, __ZN3awd15MetricContainerC2Ej, __ZN3awd15MetricContainerD1Ev,
@@ -173,6 +174,7 @@ exports:
                           __ZN3awd25AWDRegisterTriggerMessageC1EjjNSt3__13mapIjiNS1_4lessIjEENS1_9allocatorINS1_4pairIKjiEEEEEENS1_6chrono8durationIxNS1_5ratioILl1ELl1EEEEE,
                           __ZN3awd25AWDRegisterTriggerMessageC2ERKN3xpc4dictE,
                           __ZN3awd25AWDRegisterTriggerMessageC2EjjNSt3__13mapIjiNS1_4lessIjEENS1_9allocatorINS1_4pairIKjiEEEEEENS1_6chrono8durationIxNS1_5ratioILl1ELl1EEEEE,
+                          __ZN3awd25getCoreAnalyticsEventNameEj,
                           __ZN3awd27AWDBundledSubmissionMessage13createMessageEjNS_7TriggerERKNSt3__13mapIjNS2_6vectorIhNS2_9allocatorIhEEEENS2_4lessIjEENS5_INS2_4pairIKjS7_EEEEEE,
                           __ZN3awd27AWDBundledSubmissionMessage20getBundledSubmissionEv,
                           __ZN3awd27AWDBundledSubmissionMessageC1ERKN3xpc4dictE,
@@ -186,9 +188,11 @@ exports:
                           __ZN3awd35AWDSetComponentConfigurationMessageC2ERKN3xpc4dictE,
                           __ZN3awd35AWDSetComponentConfigurationMessageC2EjjNSt3__110shared_ptrINS1_6vectorIhNS1_9allocatorIhEEEEEE,
                           __ZN3awd35AWDSetComponentConfigurationMessageD0Ev, __ZN3awd35AWDSetComponentConfigurationMessageD1Ev,
-                          __ZN3awd35AWDSetComponentConfigurationMessageD2Ev, __ZN3awd7metrics12SimpleMetric10SharedCtorEv,
-                          __ZN3awd7metrics12SimpleMetric10SharedDtorEv, __ZN3awd7metrics12SimpleMetric16default_instanceEv,
-                          __ZN3awd7metrics12SimpleMetric17default_instance_E,
+                          __ZN3awd35AWDSetComponentConfigurationMessageD2Ev,
+                          __ZN3awd6MetricC1EjyNSt3__16vectorIhNS1_9allocatorIhEEEEb, __ZN3awd6MetricC1Ev,
+                          __ZN3awd6MetricC2EjyNSt3__16vectorIhNS1_9allocatorIhEEEEb, __ZN3awd6MetricC2Ev,
+                          __ZN3awd7metrics12SimpleMetric10SharedCtorEv, __ZN3awd7metrics12SimpleMetric10SharedDtorEv,
+                          __ZN3awd7metrics12SimpleMetric16default_instanceEv, __ZN3awd7metrics12SimpleMetric17default_instance_E,
                           __ZN3awd7metrics12SimpleMetric20kMetricIdFieldNumberE,
                           __ZN3awd7metrics12SimpleMetric20kValueIntFieldNumberE,
                           __ZN3awd7metrics12SimpleMetric21CheckTypeAndMergeFromERKN20wireless_diagnostics6google8protobuf11MessageLiteE,
@@ -758,6 +762,7 @@ exports:
                           __ZTVN3awd7profile22ComponentConfigurationE, __ZTVN3awd7profile22ConfigurationParameterE,
                           __ZTVN3awd7profile3LogE, __ZTVN3awd7profile6MetricE, __ZTVN3awd7profile7ProfileE,
                           __ZTVN3awd7profile9ConditionE, __ZTVN3awd7profile9TimerSpecE, _kAWDObserverEventKey,
-                          _kAwdDiagnosticsFileArray, _kAwdLoggingSystemName ]
+                          _kAwdDiagnosticsFileArray, _kAwdLoggingSystemName, _kMetadataBaseKey, _kMetadataCidKey,
+                          _kMetadataComponentKey, _kMetadataNeedsBaseKey, _kMetadataTypeKey ]
     objc-classes:       [ _AWDMetricContainer, _AWDMetricManager, _AWDObserver, _AWDServerConnection ]
 ...

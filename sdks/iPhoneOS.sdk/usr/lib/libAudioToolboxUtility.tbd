@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 391F992B-3B09-3701-98CC-3E1DFCFC5346', 'arm64e: 26F4B54E-7642-30A5-9E83-36C7960DA710' ]
+                   'arm64: B9A5FBF3-DDF0-38B5-B980-218B0E165892', 'arm64e: 05DE8065-DB24-3295-B62D-42E3D1BF19DF' ]
 platform:        ios
 install-name:    '/usr/lib/libAudioToolboxUtility.dylib'
 exports:         

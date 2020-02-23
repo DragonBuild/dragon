@@ -1,21 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/MediaPlayerUI.framework/MediaPlayerUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     re-exports:         [ /System/Library/PrivateFrameworks/MPUFoundation.framework/MPUFoundation ]
-    symbols:            [ _MPUApplicationDefaultsDidChangeNotification,
-                          _MPUFeedbackCommandPresentationStyleFromMediaPlayerFeedbackCommandPresentationStyle,
-                          _MPUFeedbackCommandPresentationStyleToMediaPlayerFeedbackCommandPresentationStyle,
-                          _MPUMediaControlsStyleIsNewSystemStyle, _MPUMediaEntityLikedStateFromMediaPlayerLikedState,
-                          _MPUMediaEntityLikedStateToMediaPlayerLikedState, _MPURepeatTypeFromMediaPlayerRepeatType,
-                          _MPURepeatTypeToMediaPlayerRepeatType, _MPUShuffleTypeFromMediaPlayerShuffleType,
-                          _MPUShuffleTypeToMediaPlayerShuffleType, _MPUSkipLimitEqualToSkipLimit,
-                          _MPUSkipLimitFromMediaPlayerSkipLimit, _MPUSkipLimitToMediaPlayerSkipLimit,
-                          _MPUStoreFrontURLForMediaType, _NSStringFromMPUMediaControlsStyle ]
+    symbols:            [ _MPUApplicationDefaultsDidChangeNotification, _MPUStoreFrontURLForMediaType ]
     objc-classes:       [ _MPUAdaptiveCollectionViewController, _MPUApplicationDefaults, _MPUArtworkView,
                           _MPUCollectionViewController, _MPUCompletionFooterView, _MPUCompletionQueryDataSource,
                           _MPUGradientView, _MPUItemOfferButton, _MPUNavigationController, _MPUNowPlayingController,

@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SiriTape.framework/SiriTape
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _GCDAsyncSocketErrorDomain, _GCDAsyncSocketException, _GCDAsyncSocketManuallyEvaluateTrust,
                           _GCDAsyncSocketQueueName, _GCDAsyncSocketSSLCipherSuites, _GCDAsyncSocketSSLPeerID,
                           _GCDAsyncSocketSSLProtocolVersionMax, _GCDAsyncSocketSSLProtocolVersionMin,
@@ -53,15 +54,15 @@ exports:
                           _STMockSessionDJ._recordedServerBoundAceCommands, _STMockSessionDJ._recordedStartRequests,
                           _STMockSessionDJ._recordedStartRequestsTimestamps, _STMockSessionDJ._replayIndex,
                           _STMockSessionDJ._requestCompleted, _STMockSessionDJ._responseTime, _STMockSessionDJ._responsesQueue,
-                          _STProxy._autoExit, _STProxy._previousAccountIdentifier, _STProxy._proxySocketDelegate,
-                          _STProxy._queue, _STProxy._replayCompletions, _STProxy._socket, _STProxy._speechLogs,
-                          _STProxy._speechLogsIndex, _STProxy._testSpeechURL, _STProxy._useSpeechLogs,
-                          _STProxyConnection._bufferedInputData, _STProxyConnection._httpRequestHeader,
-                          _STProxyConnection._inputDecompressor, _STProxyConnection._isCanceled, _STProxyConnection._isFinished,
-                          _STProxyConnection._isOpened, _STProxyConnection._queue, _STProxyConnection._socket,
-                          _STProxyConnection.recorder, _STProxySocketDelegate._clientConnections,
+                          _STProxy._aceObjectHandler, _STProxy._autoExit, _STProxy._previousAccountIdentifier,
+                          _STProxy._proxySocketDelegate, _STProxy._queue, _STProxy._replayCompletions, _STProxy._socket,
+                          _STProxy._speechLogs, _STProxy._speechLogsIndex, _STProxy._testSpeechURL, _STProxy._useSpeechLogs,
+                          _STProxyConnection._bufferedInputData, _STProxyConnection._handler,
+                          _STProxyConnection._httpRequestHeader, _STProxyConnection._inputDecompressor,
+                          _STProxyConnection._isCanceled, _STProxyConnection._isFinished, _STProxyConnection._isOpened,
+                          _STProxyConnection._queue, _STProxyConnection._socket, _STProxySocketDelegate._clientConnections,
                           _STProxySocketDelegate._clientQueue, _STProxySocketDelegate._connectedSockets,
-                          _STProxySocketDelegate._listenSocket, _STProxySocketDelegate._port, _STProxySocketDelegate._recording,
+                          _STProxySocketDelegate._handler, _STProxySocketDelegate._listenSocket, _STProxySocketDelegate._port,
                           _STProxySocketDelegate._replayURL, _STProxySocketDelegate._serverConnection,
                           _STProxySocketDelegate._serverQueue, _STProxySocketDelegate._serverSocket,
                           _STProxySocketDelegate._serverURL, _STProxySocketDelegate._usingTLS ]

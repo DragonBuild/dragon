@@ -1,20 +1,20 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/MPUFoundation.framework/MPUFoundation
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _MPUAVItemContentItemIdentifierCollectionDidChangeNotification, _MPUBalancedEdgeInsets,
                           _MPUBorderDrawingCacheDidInvalidateNotification, _MPUContentItemTypeFromMPMediaPlaybackItemContentType,
                           _MPUContentItemTypeIsContainerType, _MPUDataSourceDidInvalidateNotification,
                           _MPUDataSourceInvalidationContextUserInfoKey, _MPUDataSourceViewControllerRestorationDataSourceKey,
-                          _MPUDataSourceWillInvalidateNotification, _MPUDeviceGetGraphicsQuality, _MPUDeviceIsWidePhone,
-                          _MPUEdgeInsetsOutsetRect, _MPUEdgeInsetsRectInsets, _MPUFloatCeilForScale, _MPUFloatEqualToFloat,
-                          _MPUFloatFloorForScale, _MPUFloatGetSafeScaleForValue, _MPUFloatGreaterThanOrEqualToFloat,
-                          _MPUFloatLessThanOrEqualToFloat, _MPUFloatRoundForScale,
-                          _MPUFontDescriptorPreferredContentSizeCategoryDidChangeNotification,
+                          _MPUDataSourceWillInvalidateNotification, _MPUDeviceIsWidePhone, _MPUEdgeInsetsOutsetRect,
+                          _MPUEdgeInsetsRectInsets, _MPUFloatCeilForScale, _MPUFloatEqualToFloat, _MPUFloatFloorForScale,
+                          _MPUFloatGetSafeScaleForValue, _MPUFloatGreaterThanOrEqualToFloat, _MPUFloatLessThanOrEqualToFloat,
+                          _MPUFloatRoundForScale, _MPUFontDescriptorPreferredContentSizeCategoryDidChangeNotification,
                           _MPUFontLeadingAdjustmentGetDescription, _MPUFontTextStyleGetDescription, _MPUFontWeightGetDescription,
                           _MPUHTMLEscapedDescriptionML, _MPUHTMLEscapedLyricsML, _MPUHTMLParserErrorDomain,
                           _MPUHTMLParserMultipleErrorsKey, _MPUHalfTintedTransportButtonReuseIdentifier,
@@ -30,7 +30,6 @@ exports:
                           _MPURectByRemovingUserInterfaceLayoutDirectionInRect, _MPURectEqualToRect,
                           _MPUScrollViewApplyContentInsetAdditions, _MPUSizeEqualToSize,
                           _MPUTableViewControllerIsValidContentOffset, _MPUTransportButtonReuseIdentifier,
-                          _SSVMediaContentTasteItemContentTypeFromMPUContentItemType,
                           __MPUFontDescriptorDidInvalidateCachedFontsAndMetricsNotification,
                           __MPUProtoBufUserActivityContainerItemReadFrom, __MPUProtoBufUserActivityContextReadFrom,
                           __ZN3MPU18LayoutInterpolator16EntriesContainer11insertEntryENS0_5EntryE,
@@ -43,14 +42,13 @@ exports:
                           __ZNK3MPU18LayoutInterpolator16EntriesContainer22primaryReferenceMetricEv,
                           __ZNK3MPU18LayoutInterpolator16EntriesContainer32valueForSecondaryReferenceMetricEd,
                           __ZNK3MPU7Point3DeqERKS0_, __ZNK3MPU7Point3DneERKS0_ ]
-    objc-classes:       [ _MPUAVPlayer, _MPUAVPlaylistManager, _MPUAbbreviatingLabel, _MPUActionCellConfiguration,
-                          _MPUAnimationFactory, _MPUBorderConfiguration, _MPUBorderDrawingCache, _MPUBorderView,
-                          _MPUBorderedImageStackItemView, _MPUCellConfiguration, _MPUCellInvalidationContext,
-                          _MPUContentItemIdentifierCollection, _MPUContentSizeLayoutConstraint, _MPUDataSource,
-                          _MPUDataSourceConfiguration, _MPUDataSourceController, _MPUDataSourceInvalidationContext,
-                          _MPUDataSourceViewController, _MPUEmphasizedText, _MPUFallAnimator, _MPUFontDescriptor,
-                          _MPUFontDescriptorCache, _MPUHTMLParser, _MPUHalfTintedTransportButton, _MPUImageStackItemView,
-                          _MPUJinglePlayActivityReportingController, _MPUKeyValueObserver, _MPULayoutInterpolator,
+    objc-classes:       [ _MPUAbbreviatingLabel, _MPUActionCellConfiguration, _MPUAnimationFactory, _MPUBorderConfiguration,
+                          _MPUBorderDrawingCache, _MPUBorderView, _MPUBorderedImageStackItemView, _MPUCellConfiguration,
+                          _MPUCellInvalidationContext, _MPUContentItemIdentifierCollection, _MPUContentSizeLayoutConstraint,
+                          _MPUDataSource, _MPUDataSourceConfiguration, _MPUDataSourceController,
+                          _MPUDataSourceInvalidationContext, _MPUDataSourceViewController, _MPUEmphasizedText, _MPUFallAnimator,
+                          _MPUFontDescriptor, _MPUFontDescriptorCache, _MPUHTMLParser, _MPUHalfTintedTransportButton,
+                          _MPUImageStackItemView, _MPUJinglePlayActivityReportingController, _MPULayoutInterpolator,
                           _MPUMarqueeView, _MPUMutableContentItemIdentifierCollection, _MPUMutableFontDescriptor,
                           _MPUMutableUserActivityContainerItem, _MPUMutableUserActivityContext, _MPUNotificationObserver,
                           _MPUNowPlayingIndicatorView, _MPUNumberFormatter, _MPUPinningView, _MPUQueryDataSource,
@@ -111,8 +109,6 @@ exports:
                           _MPUHalfTintedTransportButton._transportButtonEventHandler, _MPUImageStackItemView._image,
                           _MPUImageStackItemView._imageAlpha, _MPUImageStackItemView._imageContentsRect,
                           _MPUImageStackItemView._imageTransform, _MPUImageStackItemView._imageView,
-                          _MPUKeyValueObserver._observationHandler, _MPUKeyValueObserver._observedKeyPath,
-                          _MPUKeyValueObserver._observedObject, _MPUKeyValueObserver._queue,
                           _MPULayoutInterpolator._entriesContainers,
                           _MPULayoutInterpolator._hasEntryWithSpecificSecondaryReferenceMetric,
                           _MPUMarqueeView._animationDirection, _MPUMarqueeView._animationReferenceView,

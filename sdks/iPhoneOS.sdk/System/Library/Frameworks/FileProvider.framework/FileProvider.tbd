@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: CC52BDA6-9B4F-3011-B1B4-5A760E64A473', 'arm64e: 0E816E15-6643-351F-BED7-A2AC92B6F683' ]
+                   'arm64: 217802E0-734C-3655-954A-0F350067E113', 'arm64e: 0F3272D2-B391-3F33-89CD-C3EDD26ACE17' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/FileProvider.framework/FileProvider'
 exports:         
@@ -75,8 +75,7 @@ exports:
                        _FPSpotlightIndexDidChangeNotification, _FPStatFSFromPath, 
                        _FPStitchingSessionFieldsKey, _FPStitchingSessionItemKey, 
                        _FPTagDataXattrName, _FPThumbnailFormatBRUndecorated, _FPThumbnailFormatLICachedBitmap, 
-                       _FPURLIsInFileProvider, _FPURLIsLocatedOnRemovableStorage, 
-                       _FPURLMightBeInFileProvider, _FPURLMightBeInFileProviderForEUID, 
+                       _FPURLIsInFileProvider, _FPURLMightBeInFileProvider, _FPURLMightBeInFileProviderForEUID, 
                        _FPURLResourceKeysByItemPropertyNames, _FPUbiquitousDocumentMainWindowDidChange, 
                        _FPUniversalBookmarkableStringFromDocumentURL, _FPUpdateLastUsedDate, 
                        _FPUserCancelledError, _FPUserRelativePathsEntitlement, _FPVersion, 

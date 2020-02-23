@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 28BA75ED-9E90-3D1B-ADE1-BF6DFAE5CDF2', 'armv7s: 05F6A76A-ECF5-36A2-BF4E-F9CD365E1674', 
-                   'arm64: FF63481D-FB6A-353B-B2C1-AC4EAECF594D', 'arm64e: 046F17DF-03A8-3D03-99F5-BD4CFF8123C4' ]
+                   'arm64: 6E8ED431-E507-3897-BF3A-AFD3D4C2C49F', 'arm64e: 2A356815-C9F4-3364-9AAC-B56FC2A4DD20' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation'
-current-version: 1673.126
+current-version: 1665.15
 compatibility-version: 150
 exports:         
   - archs:           [ armv7, armv7s ]
@@ -680,8 +680,8 @@ exports:
                        __CFPreferencesCopyPathForManagedDomain, __CFPreferencesCopyValueNoCache, 
                        __CFPreferencesCopyValueWithContainer, __CFPreferencesFlushCachesForIdentifier, 
                        __CFPreferencesGetAppBooleanValueWithContainer, __CFPreferencesGetAppIntegerValueWithContainer, 
-                       __CFPreferencesGetBooleanValueWithValue, __CFPreferencesHasAppCloudValue, 
-                       __CFPreferencesHasAppValue, __CFPreferencesIsManaged, __CFPreferencesManagementStatusChangedForDomains, 
+                       __CFPreferencesHasAppCloudValue, __CFPreferencesHasAppValue, 
+                       __CFPreferencesIsManaged, __CFPreferencesManagementStatusChangedForDomains, 
                        __CFPreferencesNotifyOfImpendingUserDeletion, __CFPreferencesPostValuesChangedInDomains, 
                        __CFPreferencesRegisterStandardUserDefaultsExists, __CFPreferencesRemoveSuitePreferencesFromAppWithContainer, 
                        __CFPreferencesSetAccessRestricted, __CFPreferencesSetAppCloudSyncEnabled, 

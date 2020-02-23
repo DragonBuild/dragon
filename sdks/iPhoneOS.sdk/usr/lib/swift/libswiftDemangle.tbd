@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 0E188212-B51D-321E-BC29-5B6DA8AB959D', 'arm64e: 987F8544-4CE2-3D63-A4AD-74D68FF7D25B' ]
+                   'arm64: 0522218E-0AD1-3F78-90A0-002AB0B1D836', 'arm64e: B54EFF4F-24BA-3B32-91BF-78115F8BC06D' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftDemangle.dylib'
 current-version: 1100.2.255
@@ -116,7 +116,6 @@ exports:
                        __ZN5swift8Demangle9Demangler30demangleRetroactiveConformanceEv, 
                        __ZN5swift8Demangle9Demangler31popDependentProtocolConformanceEv, 
                        __ZN5swift8Demangle9Demangler32demanglePrivateContextDescriptorEv, 
-                       __ZN5swift8Demangle9Demangler33demangleDependentConformanceIndexEv, 
                        __ZN5swift8Demangle9Demangler33popDependentAssociatedConformanceEv, 
                        __ZN5swift8Demangle9Demangler35demangleConcreteProtocolConformanceEv, 
                        __ZN5swift8Demangle9Demangler40demangleDependentProtocolConformanceRootEv, 

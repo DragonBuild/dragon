@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: AC72DF21-EDE5-3302-9DDC-A94197070127', 'arm64e: 94DCE894-CDE9-37D9-B5DB-C777F58087F3' ]
+                   'arm64: 2EC8165E-AA11-33BB-A543-C419FBA588E9', 'arm64e: E738F945-AAF1-3310-9109-7021EBEA95E2' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/FileProviderUI.framework/FileProviderUI'
-current-version: 27
+current-version: 26
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _FPUIActionIdentifierAuthenticate, _FPUIActionViewControllerErrorDomain, 

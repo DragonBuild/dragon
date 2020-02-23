@@ -1,24 +1,23 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/VisualVoicemail.framework/VisualVoicemail
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AWDVisualVoicemailBeaconMaxedOutReadFrom, _AWDVisualVoicemailCustomGreetingUpdatedReadFrom,
                           _AWDVisualVoicemailDownloadedReadFrom, _AWDVisualVoicemailServiceAccountStateUpdatedReadFrom,
                           _AWDVisualVoicemailTranscriptionRatedReadFrom, _AWDVisualVoicemailTranscriptionStatusChangedReadFrom,
-                          _VMApplicationResumedNotification, _VMApplicationSuspendedNotification, _VMAudioMessageReadFrom,
-                          _VMBundleIdentifierVoicemailDaemon, _VMBundleIdentifierVoicemailFramework,
+                          _VMAudioMessageReadFrom, _VMBundleIdentifierVoicemailDaemon, _VMBundleIdentifierVoicemailFramework,
                           _VMCarrierIMAPParametersChangedNotification, _VMCarrierNotificationUserInfoAccountUUID,
                           _VMCarrierNotificationUserInfoIMAPParameters, _VMCarrierStateRequestMessageIdentifier,
                           _VMCarrierStateResponseErrorCodeSendFailed, _VMCarrierStateResponseErrorCodeTemporaryFailure,
                           _VMCarrierStateResponseErrorDomain, _VMGetAudioFileExtension, _VMGetTranscriptFileExtension,
                           _VMGetUserAccountDirectoryURL, _VMGetUserGreetingFileURL, _VMGetUserGreetingsDirectoryURL,
                           _VMGetUserVoicemailDatabaseDirectoryURL, _VMGetUserVoicemailDatabaseFileURL,
-                          _VMGetUserVoicemailDirectoryURL, _VMPhoneNumberNormalizedPhoneNumberString, _VMServiceClientConnected,
-                          _VMServiceClientDisconnected, _VMServiceClientObjectTypeAccount, _VMServiceClientObjectTypeVoicemail,
+                          _VMGetUserVoicemailDirectoryURL, _VMPhoneNumberNormalizedPhoneNumberString,
                           _VMServiceDataAvailableNotification, _VMServiceMessageWaitingStateChangedNotification,
                           _VMServicePasswordNeededNotification, _VMServiceRecordsAddedNotification,
                           _VMServiceSubscriptionStatusChangedNotification, _VMServiceUnreadCountChangedNotification,
@@ -32,7 +31,6 @@ exports:
                           _VMVoicemailSyncInProgressChangedNotification, _VMVoicemailTranscribingStatusChangedNotification,
                           _VMVoicemailVoicemailFlagsChangedKey, _VMVoicemailVoicemailsAddedKey,
                           _VMVoicemailVoicemailsChangedNotification, _VMVoicemailVoicemailsDeletedKey, _VMXPCConnectionAvailable,
-                          _VMXPCConnectionEstablished, _VMXPCConnectionInterrupted, _VMXPCConnectionInvalidated,
                           _VMXPCMachServiceName, _VVMessageWaitingFallbackNotification,
                           _VVServiceContextActivationErrorNotification, _VVServiceDataAvailableNotification,
                           _VVServiceDataReceiveBeganNotification, _VVServiceDataReceiveContinuedNotification,
@@ -46,9 +44,10 @@ exports:
                           _VVServiceTaskCancelledNotification, _VVServiceTaskEndedNotification,
                           _VVServiceTaskStartedNotification, _VVServiceTrashedCountChangedNotification,
                           _VVServiceUnreadCountChangedNotification, _VVSharedServiceSubscriptionStateChangedNotification,
-                          _VVVerifierChangedNotification, __VVSharedServiceIsSubscribed, _kIMAPServiceBeaconAddress,
-                          _kIMAPServiceBeaconServiceCenterAddress, _kIMAPServiceBeaconTimeout,
-                          _kIMAPServiceBypassSMSCAvailabilityCheck, _kIMAPServiceClientManagesTrash,
+                          _VVVerifierChangedNotification, __VVSharedServiceIsSubscribed, _isValidNumber,
+                          _kIMAPServiceAllowedFQDNServers, _kIMAPServiceAllowedIMAPServers, _kIMAPServiceAllowedIPv4Servers,
+                          _kIMAPServiceAllowedIPv6Servers, _kIMAPServiceBeaconAddress, _kIMAPServiceBeaconServiceCenterAddress,
+                          _kIMAPServiceBeaconTimeout, _kIMAPServiceBypassSMSCAvailabilityCheck, _kIMAPServiceClientManagesTrash,
                           _kIMAPServiceDeliverLegacyNotificationsBeforeSetup, _kIMAPServiceIdleConnectionTimeout,
                           _kIMAPServiceKey, _kIMAPServiceMaxGreetingDuration, _kIMAPServiceMaxPINLength,
                           _kIMAPServiceMaximumBeaconCount, _kIMAPServiceMinPINLength, _kIMAPServicePreferredAuthenticationScheme,

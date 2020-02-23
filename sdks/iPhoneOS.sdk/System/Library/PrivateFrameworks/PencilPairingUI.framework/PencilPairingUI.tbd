@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/PencilPairingUI.framework/PencilPairingUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PNPChargingStatusConfigureAutoDismiss, _PNPChargingStatusConfigureAutoDismissWithTime,
                           _PNPPlatterDismissPlatterContainerView, _PNPPlatterPresentPlatterContainerView,
                           _PNPSyntheticEventSourceForStep, _PNPWizardAdvanceStepButtonTitle,
@@ -16,10 +17,9 @@ exports:
     objc-classes:       [ _PNPAirplaneModeView, _PNPAirplaneModeViewController, _PNPChargingStatusView,
                           _PNPChargingStatusViewController, _PNPConnectButton, _PNPDeviceState, _PNPGradientView,
                           _PNPHardwareView, _PNPLockScreenViewController, _PNPPairingView, _PNPPairingViewController,
-                          _PNPPairingViewControllerView, _PNPPencilAdjustmentInteractionEventSource,
-                          _PNPPencilHorizontalPresentationContainerView, _PNPPencilView, _PNPPlatterAnimator,
-                          _PNPPlatterContainerView, _PNPPlatterPresentationController, _PNPPlatterShadowView,
-                          _PNPPlatterTransitioningDelegate, _PNPQuickSwapEventSource, _PNPStackedPillView,
+                          _PNPPairingViewControllerView, _PNPPencilHorizontalPresentationContainerView, _PNPPencilView,
+                          _PNPPlatterAnimator, _PNPPlatterContainerView, _PNPPlatterPresentationController,
+                          _PNPPlatterShadowView, _PNPPlatterTransitioningDelegate, _PNPQuickSwapEventSource, _PNPStackedPillView,
                           _PNPSyntheticDoubleTapEvent, _PNPSyntheticPencilEvent, _PNPSyntheticPencilInteractionEventSource,
                           _PNPSyntheticWaitEvent, _PNPWelcomeBuddyDescriptionView, _PNPWizardAdvanceStepButton,
                           _PNPWizardInkWeightControl, _PNPWizardScratchpadCanvasView, _PNPWizardScratchpadInkView,
@@ -51,21 +51,20 @@ exports:
                           _PNPPairingView._finishedWizardTransition, _PNPPairingView._pencilSpinningRect,
                           _PNPPairingView._pencilView, _PNPPairingView._showWizardContents,
                           _PNPPairingView._showsChargingStatusView, _PNPPairingView._state, _PNPPairingView._wizardView,
-                          _PNPPairingViewController._alertVC, _PNPPairingViewController._delegate,
-                          _PNPPairingViewController._deviceState, _PNPPairingViewController._horizontalChargingStatusView,
+                          _PNPPairingViewController._alertVC, _PNPPairingViewController._animationTranslation,
+                          _PNPPairingViewController._delegate, _PNPPairingViewController._deviceState,
+                          _PNPPairingViewController._horizontalChargingStatusView,
                           _PNPPairingViewController._horizontalPencilPlatterContainerView,
                           _PNPPairingViewController._horizontalPencilView,
                           _PNPPairingViewController._horizontalPresentationPencilContainerView,
                           _PNPPairingViewController._inWizard, _PNPPairingViewController._initialTimer,
                           _PNPPairingViewController._pairingChargingStatusView, _PNPPairingViewController._pairingView,
-                          _PNPPairingViewController._pairingViewControllerState,
+                          _PNPPairingViewController._pairingViewControllerState, _PNPPairingViewController._panGestureRecognizer,
                           _PNPPairingViewController._platterTransitioningDelegate, _PNPPairingViewController._showingChargingUI,
                           _PNPPairingViewController._spinnerElapsedTime, _PNPPairingViewController._timeoutTimer,
                           _PNPPairingViewController._viewDidAppearCalled, _PNPPairingViewController._viewRequestsDismissCalled,
                           _PNPPairingViewController._wizardPlatterContainerView, _PNPPairingViewController.appearanceDelegate,
                           _PNPPairingViewController.platterDelegate,
-                          _PNPPencilAdjustmentInteractionEventSource._pencilInteraction,
-                          _PNPPencilAdjustmentInteractionEventSource.eventDestination,
                           _PNPPencilHorizontalPresentationContainerView._chargingStatusView,
                           _PNPPencilHorizontalPresentationContainerView._deviceState,
                           _PNPPencilHorizontalPresentationContainerView._pencilView,
@@ -73,10 +72,11 @@ exports:
                           _PNPPencilView._deviceState, _PNPPencilView._pencilImageView, _PNPPencilView._pencilMovieView,
                           _PNPPencilView._spinning, _PNPPencilView._touchIndicatorPosition, _PNPPencilView._touchIndicatorShown,
                           _PNPPencilView._touchIndicatorView, _PNPPencilView._variant, _PNPPlatterAnimator._isPresenting,
-                          _PNPPlatterContainerView._autoDismissBlock, _PNPPlatterContainerView._autoDismissDate,
-                          _PNPPlatterContainerView._contentView, _PNPPlatterContainerView._contentViewContainerView,
-                          _PNPPlatterContainerView._dimmingState, _PNPPlatterContainerView._dimmingView,
-                          _PNPPlatterContainerView._dismissUsingAlpha, _PNPPlatterContainerView._edge,
+                          _PNPPlatterContainerView._animationTranslation, _PNPPlatterContainerView._autoDismissBlock,
+                          _PNPPlatterContainerView._autoDismissDate, _PNPPlatterContainerView._contentView,
+                          _PNPPlatterContainerView._contentViewContainerView, _PNPPlatterContainerView._dimmingState,
+                          _PNPPlatterContainerView._dimmingView, _PNPPlatterContainerView._dismissUsingAlpha,
+                          _PNPPlatterContainerView._edge, _PNPPlatterContainerView._effectView,
                           _PNPPlatterContainerView._pencilOffset, _PNPPlatterContainerView._preferredCornerRadius,
                           _PNPPlatterContainerView._presented, _PNPPlatterContainerView._shadowView,
                           _PNPStackedPillView._bottomLabel, _PNPStackedPillView._bottomLabelColor,
@@ -104,10 +104,10 @@ exports:
                           _PNPWizardScratchpadView._selectedInkIndex, _PNPWizardScratchpadView._showToastTimer,
                           _PNPWizardScratchpadView._showingToast, _PNPWizardScratchpadView._step,
                           _PNPWizardScratchpadView._toastView, _PNPWizardScratchpadView._toolsBackgroundPillView,
-                          _PNPWizardView._adjustmentInteractionEventSource, _PNPWizardView._advanceStepButton,
-                          _PNPWizardView._bulletPointViews, _PNPWizardView._delegate, _PNPWizardView._deviceState,
-                          _PNPWizardView._eventSourceForStep, _PNPWizardView._firstDescriptionView, _PNPWizardView._navBar,
-                          _PNPWizardView._pencilView, _PNPWizardView._pencilViewHeightConstraint, _PNPWizardView._quickSwapViews,
+                          _PNPWizardView._advanceStepButton, _PNPWizardView._bulletPointViews, _PNPWizardView._delegate,
+                          _PNPWizardView._deviceState, _PNPWizardView._eventSourceForStep, _PNPWizardView._firstDescriptionView,
+                          _PNPWizardView._navBar, _PNPWizardView._pencilInteraction, _PNPWizardView._pencilView,
+                          _PNPWizardView._pencilViewHeightConstraint, _PNPWizardView._quickSwapViews,
                           _PNPWizardView._scratchpadTopConstraint, _PNPWizardView._scratchpadView, _PNPWizardView._scrollView,
                           _PNPWizardView._scrollViewBottomConstraintQuickSwap, _PNPWizardView._scrollViewBottomConstraintWelcome,
                           _PNPWizardView._scrollViewContainer, _PNPWizardView._secondDescriptionView,

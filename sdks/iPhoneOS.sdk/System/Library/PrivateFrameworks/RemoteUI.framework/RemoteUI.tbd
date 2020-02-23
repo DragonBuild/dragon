@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/RemoteUI.framework/RemoteUI
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _RUIAlertCancelButtonIndex, _RUIErrorDomain, _RUIHTTPRequestErrorDomain,
                           _RUIHTTPRequestLoadingStatusDidChangeNotification, _RUIHTTPResponseKey,
                           _RUIImageLoaderDidLoadImageNotification, _RUIImageLoaderLoadingStatusDidChangeNotification,
@@ -33,14 +34,15 @@ exports:
                           _RUIAlertView._buttonIndex, _RUIAlertView._completion, _RUIAlertView._message,
                           _RUIAlertView._objectModel, _RUIAlertView._title, _RUIBarButtonItem._action,
                           _RUIBarButtonItem._barButtonItem, _RUIBarButtonSpinnerView._spinner, _RUIChoiceView._bigChoice,
-                          _RUIChoiceView._buttonTray, _RUIChoiceView._header, _RUIChoiceView._headerView,
-                          _RUIChoiceView._scrollView, _RUIChoiceView._smallChoice, _RUIChoiceView._subHeader,
-                          _RUIChoiceView._target, _RUIChoiceView._trayBackdrop, _RUIChoiceView._usesTwoButtonLayout,
-                          _RUIChoiceViewElement._choices, _RUIChoiceViewElement._header, _RUIChoiceViewElement._helpLinkElement,
-                          _RUIChoiceViewElement._image, _RUIChoiceViewElement._objectModel, _RUIChoiceViewElement._page,
-                          _RUIChoiceViewElement._subHeader, _RUIChoiceViewElement._view, _RUIDetailButtonElement._visibility,
-                          _RUIDetailHeaderElement._headerView, _RUIElement._attributes, _RUIElement._body, _RUIElement._enabled,
-                          _RUIElement._identifier, _RUIElement._parent, _RUIElement._style, _RUIFooterElement._footerView,
+                          _RUIChoiceView._buttonTray, _RUIChoiceView._currentStyle, _RUIChoiceView._customSafeAreaInsets,
+                          _RUIChoiceView._header, _RUIChoiceView._headerView, _RUIChoiceView._scrollView,
+                          _RUIChoiceView._smallChoice, _RUIChoiceView._subHeader, _RUIChoiceView._target,
+                          _RUIChoiceView._trayBackdrop, _RUIChoiceView._usesTwoButtonLayout, _RUIChoiceViewElement._choices,
+                          _RUIChoiceViewElement._header, _RUIChoiceViewElement._helpLinkElement, _RUIChoiceViewElement._image,
+                          _RUIChoiceViewElement._objectModel, _RUIChoiceViewElement._page, _RUIChoiceViewElement._subHeader,
+                          _RUIChoiceViewElement._view, _RUIDetailButtonElement._visibility, _RUIDetailHeaderElement._headerView,
+                          _RUIElement._attributes, _RUIElement._body, _RUIElement._enabled, _RUIElement._identifier,
+                          _RUIElement._parent, _RUIElement._style, _RUIFooterElement._footerView,
                           _RUIHTMLFooterElement._HTMLContent, _RUIHTMLFooterView._baseURL, _RUIHTMLFooterView._delegate,
                           _RUIHTMLFooterView._webContainerView, _RUIHTMLHeaderElement._HTMLContent, _RUIHTMLHeaderView._baseURL,
                           _RUIHTMLHeaderView._delegate, _RUIHTMLHeaderView._isFirstSection, _RUIHTMLHeaderView._webContainerView,
@@ -56,13 +58,13 @@ exports:
                           _RUIImageLoader._startupLock, _RUILinkLabel._action, _RUILinkLabel._enabled, _RUILinkLabel._linkButton,
                           _RUILinkLabel._textAlignment, _RUILinkLabel._textLabel, _RUILoader._allowNonSecureHTTP,
                           _RUILoader._parser, _RUILoader._parserDelegate, _RUILoader._sessionDelegateAdapter, _RUILoader._style,
-                          _RUILoader._url, _RUINavBarSpinnerManager._activityIndicatorViewStyle,
+                          _RUILoader._url, _RUILoader._userInterfaceStyle, _RUINavBarSpinnerManager._activityIndicatorViewStyle,
                           _RUINavBarSpinnerManager._savedRecords, _RUINavigationController._menuDismissalHandler,
-                          _RUINavigationController._ruiSupportedInterfaceOrientations, _RUIObjectModel._alert,
-                          _RUIObjectModel._authPasswordEquivalent, _RUIObjectModel._authPasswordFieldID,
-                          _RUIObjectModel._clientInfo, _RUIObjectModel._ctx, _RUIObjectModel._currentPage,
-                          _RUIObjectModel._defaultPages, _RUIObjectModel._delegate, _RUIObjectModel._displayedPages,
-                          _RUIObjectModel._httpHeaders, _RUIObjectModel._identifier,
+                          _RUINavigationController._ruiSupportedInterfaceOrientations, _RUINavigationController._style,
+                          _RUIObjectModel._activeElement, _RUIObjectModel._alert, _RUIObjectModel._authPasswordEquivalent,
+                          _RUIObjectModel._authPasswordFieldID, _RUIObjectModel._clientInfo, _RUIObjectModel._ctx,
+                          _RUIObjectModel._currentPage, _RUIObjectModel._defaultPages, _RUIObjectModel._delegate,
+                          _RUIObjectModel._displayedPages, _RUIObjectModel._httpHeaders, _RUIObjectModel._identifier,
                           _RUIObjectModel._identifierMarkingStackRemovalAfterPush, _RUIObjectModel._inlineScript,
                           _RUIObjectModel._name, _RUIObjectModel._namedAlerts, _RUIObjectModel._namedPages,
                           _RUIObjectModel._nextButtonStyle, _RUIObjectModel._parseFinished, _RUIObjectModel._primaryAlert,

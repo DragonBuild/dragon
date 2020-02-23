@@ -1,29 +1,30 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/iCalendar.framework/iCalendar
-current-version:       287
+current-version:       800
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _ICSDecodeBase64, _ICSEncodeBase64, _ICSObscuritySalt, _ICSTravelAdvisoryBehavior_Automatic,
-                          _ICSTravelAdvisoryBehavior_Disabled, _ICSTravelAdvisoryBehavior_Enabled, _ICSiCalendarErrorDomain,
-                          _SHA256StringOfString, __uniqueSaltForThisMachine, _iCalendarAppendStringToStringWithOptions,
-                          _iCalendarRepresentationForCALDay, _kCALSTR_XAPPLE_inviter_name_param,
-                          _kCALSTR_XAPPLE_self_invited_param, _kCALSTR_XAPPLE_telephone_param,
-                          _kICSSTR_XAPPLE_acknowledged_param, _kICSSTR_XAPPLE_activity_prop, _kICSSTR_XAPPLE_app_link_data_prop,
-                          _kICSSTR_XAPPLE_auto_refresh_prop, _kICSSTR_XAPPLE_autoarchived_param, _kICSSTR_XAPPLE_bookmark,
-                          _kICSSTR_XAPPLE_calendar_color_prop, _kICSSTR_XAPPLE_contact_identifiers,
-                          _kICSSTR_XAPPLE_default_alarm, _kICSSTR_XAPPLE_dontschedule_prop, _kICSSTR_XAPPLE_dropbox_prop,
-                          _kICSSTR_XAPPLE_end_location, _kICSSTR_XAPPLE_etag, _kICSSTR_XAPPLE_ews_attachmentid_param,
-                          _kICSSTR_XAPPLE_ews_busystatus_prop, _kICSSTR_XAPPLE_ews_changekey_prop,
-                          _kICSSTR_XAPPLE_ews_itemid_prop, _kICSSTR_XAPPLE_ews_needsserverconfirmation_prop,
-                          _kICSSTR_XAPPLE_ews_permission_prop, _kICSSTR_XAPPLE_filename_param,
-                          _kICSSTR_XAPPLE_likeness_data_param, _kICSSTR_XAPPLE_local_default_alarm,
-                          _kICSSTR_XAPPLE_proximity_prop, _kICSSTR_XAPPLE_related_travel_param, _kICSSTR_XAPPLE_routing_param,
-                          _kICSSTR_XAPPLE_scheduletag, _kICSSTR_XAPPLE_serverFilename, _kICSSTR_XAPPLE_sort_order_prop,
-                          _kICSSTR_XAPPLE_structured_data_prop, _kICSSTR_XAPPLE_structured_location_prop,
-                          _kICSSTR_XAPPLE_suggestion_info_changed_fields_prop,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _ICSAppendEmoji, _ICSDecodeBase64, _ICSEncodeBase64, _ICSRedactString,
+                          _ICSTravelAdvisoryBehavior_Automatic, _ICSTravelAdvisoryBehavior_Disabled,
+                          _ICSTravelAdvisoryBehavior_Enabled, _ICSiCalendarErrorDomain, __pictureForByte,
+                          _iCalendarAppendStringToStringWithOptions, _iCalendarRepresentationForCALDay,
+                          _kCALSTR_XAPPLE_inviter_name_param, _kCALSTR_XAPPLE_self_invited_param,
+                          _kCALSTR_XAPPLE_telephone_param, _kICSSTR_XAPPLE_acknowledged_param, _kICSSTR_XAPPLE_activity_prop,
+                          _kICSSTR_XAPPLE_app_link_data_prop, _kICSSTR_XAPPLE_auto_refresh_prop,
+                          _kICSSTR_XAPPLE_autoarchived_param, _kICSSTR_XAPPLE_bookmark, _kICSSTR_XAPPLE_calendar_color_prop,
+                          _kICSSTR_XAPPLE_contact_identifiers, _kICSSTR_XAPPLE_default_alarm, _kICSSTR_XAPPLE_dontschedule_prop,
+                          _kICSSTR_XAPPLE_dropbox_prop, _kICSSTR_XAPPLE_end_location, _kICSSTR_XAPPLE_etag,
+                          _kICSSTR_XAPPLE_ews_attachmentid_param, _kICSSTR_XAPPLE_ews_busystatus_prop,
+                          _kICSSTR_XAPPLE_ews_changekey_prop, _kICSSTR_XAPPLE_ews_itemid_prop,
+                          _kICSSTR_XAPPLE_ews_needsserverconfirmation_prop, _kICSSTR_XAPPLE_ews_permission_prop,
+                          _kICSSTR_XAPPLE_filename_param, _kICSSTR_XAPPLE_likeness_data_param,
+                          _kICSSTR_XAPPLE_local_default_alarm, _kICSSTR_XAPPLE_proximity_prop,
+                          _kICSSTR_XAPPLE_related_travel_param, _kICSSTR_XAPPLE_routing_param, _kICSSTR_XAPPLE_scheduletag,
+                          _kICSSTR_XAPPLE_serverFilename, _kICSSTR_XAPPLE_sort_order_prop, _kICSSTR_XAPPLE_structured_data_prop,
+                          _kICSSTR_XAPPLE_structured_location_prop, _kICSSTR_XAPPLE_suggestion_info_changed_fields_prop,
                           _kICSSTR_XAPPLE_suggestion_info_changes_acknowledged_prop,
                           _kICSSTR_XAPPLE_suggestion_info_opaque_key_prop, _kICSSTR_XAPPLE_suggestion_info_timestamp_prop,
                           _kICSSTR_XAPPLE_suggestion_info_unique_key_prop, _kICSSTR_XAPPLE_travel_advisory_behavior,

@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/NetworkStatistics.framework/NetworkStatistics
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _NStatManagerAddAllRoutes, _NStatManagerAddAllRoutesWithFilter, _NStatManagerAddAllTCP,
                           _NStatManagerAddAllTCPWithFilter, _NStatManagerAddAllTCPWithOptions, _NStatManagerAddAllUDP,
                           _NStatManagerAddAllUDPWithFilter, _NStatManagerAddAllUDPWithOptions, _NStatManagerCreate,
@@ -22,14 +23,15 @@ exports:
                           _kNStatProviderTCP, _kNStatProviderUDP, _kNStatSrcKeyAvgRTT, _kNStatSrcKeyChannelArchitecture,
                           _kNStatSrcKeyConnProbeFailed, _kNStatSrcKeyConnectAttempt, _kNStatSrcKeyConnectSuccess,
                           _kNStatSrcKeyDurationAbsoluteTime, _kNStatSrcKeyEPID, _kNStatSrcKeyEUPID, _kNStatSrcKeyEUUID,
-                          _kNStatSrcKeyInterface, _kNStatSrcKeyInterfaceCellConfigBackoffTime,
+                          _kNStatSrcKeyEventFlags, _kNStatSrcKeyInterface, _kNStatSrcKeyInterfaceCellConfigBackoffTime,
                           _kNStatSrcKeyInterfaceCellConfigInactivityTime, _kNStatSrcKeyInterfaceCellUlAvgQueueSize,
                           _kNStatSrcKeyInterfaceCellUlMaxQueueSize, _kNStatSrcKeyInterfaceCellUlMinQueueSize,
                           _kNStatSrcKeyInterfaceDescription, _kNStatSrcKeyInterfaceDlCurrentBandwidth,
                           _kNStatSrcKeyInterfaceDlMaxBandwidth, _kNStatSrcKeyInterfaceIsAWD, _kNStatSrcKeyInterfaceIsAWDL,
                           _kNStatSrcKeyInterfaceIsCellFallback, _kNStatSrcKeyInterfaceIsExpensive,
                           _kNStatSrcKeyInterfaceLinkQualityMetric, _kNStatSrcKeyInterfaceName, _kNStatSrcKeyInterfaceThreshold,
-                          _kNStatSrcKeyInterfaceType, _kNStatSrcKeyInterfaceTypeCellular, _kNStatSrcKeyInterfaceTypeLoopback,
+                          _kNStatSrcKeyInterfaceType, _kNStatSrcKeyInterfaceTypeCellular,
+                          _kNStatSrcKeyInterfaceTypeCompanionLink, _kNStatSrcKeyInterfaceTypeLoopback,
                           _kNStatSrcKeyInterfaceTypeUnknown, _kNStatSrcKeyInterfaceTypeWiFi, _kNStatSrcKeyInterfaceTypeWired,
                           _kNStatSrcKeyInterfaceUlBytesLost, _kNStatSrcKeyInterfaceUlCurrentBandwidth,
                           _kNStatSrcKeyInterfaceUlEffectiveLatency, _kNStatSrcKeyInterfaceUlMaxBandwidth,
@@ -55,10 +57,11 @@ exports:
                           _kNStatSrcTCPStateFinWait1, _kNStatSrcTCPStateFinWait2, _kNStatSrcTCPStateLastAck,
                           _kNStatSrcTCPStateListen, _kNStatSrcTCPStateSynReceived, _kNStatSrcTCPStateSynSent,
                           _kNStatSrcTCPStateTimeWait ]
-    objc-classes:       [ _NWSInterfaceSnapshot, _NWSProtocolSnapshot, _NWSRouteSnapshot, _NWSRouteSnapshotter, _NWSSnapshot,
-                          _NWSSnapshotSource, _NWSSnapshotter, _NWSTCPSnapshot, _NWSUDPSnapshot,
+    objc-classes:       [ _NWSInterfaceSnapshot, _NWSProtocolSnapshot, _NWSQUICSnapshot, _NWSRouteSnapshot, _NWSRouteSnapshotter,
+                          _NWSSnapshot, _NWSSnapshotSource, _NWSSnapshotter, _NWSTCPSnapshot, _NWSUDPSnapshot,
                           _NWStatisticsDelegateBlockWrapper, _NWStatisticsInterfaceSource, _NWStatisticsManager,
-                          _NWStatisticsRouteSource, _NWStatisticsSource, _NWStatisticsTCPSource, _NWStatisticsUDPSource ]
+                          _NWStatisticsQUICSource, _NWStatisticsRouteSource, _NWStatisticsSource, _NWStatisticsTCPSource,
+                          _NWStatisticsUDPSource ]
     objc-ivars:         [ _NWSInterfaceSnapshot._cellConfigBackoffTime, _NWSInterfaceSnapshot._cellConfigInactivityTime,
                           _NWSInterfaceSnapshot._cellUlAvgQueueSize, _NWSInterfaceSnapshot._cellUlMaxQueueSize,
                           _NWSInterfaceSnapshot._cellUlMinQueueSize, _NWSInterfaceSnapshot._descriptor,
@@ -74,9 +77,10 @@ exports:
                           _NWSInterfaceSnapshot._wifiScanCount, _NWSInterfaceSnapshot._wifiScanDuration,
                           _NWSInterfaceSnapshot._wifiUlErrorRate, _NWSProtocolSnapshot._countsIncludeHeaderOverhead,
                           _NWSProtocolSnapshot._epid, _NWSProtocolSnapshot._eupid, _NWSProtocolSnapshot._euuid,
-                          _NWSProtocolSnapshot._flowDuration, _NWSProtocolSnapshot._flowStartContinuousTime,
-                          _NWSProtocolSnapshot._flowStartTimestamp, _NWSProtocolSnapshot._interfaceAWDL,
-                          _NWSProtocolSnapshot._interfaceCellular, _NWSProtocolSnapshot._interfaceCellularViaFallback,
+                          _NWSProtocolSnapshot._eventFlags, _NWSProtocolSnapshot._flowDuration,
+                          _NWSProtocolSnapshot._flowStartContinuousTime, _NWSProtocolSnapshot._flowStartTimestamp,
+                          _NWSProtocolSnapshot._interfaceAWDL, _NWSProtocolSnapshot._interfaceCellular,
+                          _NWSProtocolSnapshot._interfaceCellularViaFallback, _NWSProtocolSnapshot._interfaceCompanionLink,
                           _NWSProtocolSnapshot._interfaceExpensive, _NWSProtocolSnapshot._interfaceIndex,
                           _NWSProtocolSnapshot._interfaceLoopback, _NWSProtocolSnapshot._interfaceUnknown,
                           _NWSProtocolSnapshot._interfaceWifi, _NWSProtocolSnapshot._interfaceWired,
@@ -86,16 +90,21 @@ exports:
                           _NWSProtocolSnapshot._receiveBufferSize, _NWSProtocolSnapshot._receiveBufferUsed,
                           _NWSProtocolSnapshot._remoteAddress, _NWSProtocolSnapshot._trafficClass,
                           _NWSProtocolSnapshot._uniqueProcessID, _NWSProtocolSnapshot._uuid, _NWSProtocolSnapshot._vuuid,
+                          _NWSQUICSnapshot._descriptor, _NWSQUICSnapshot._euuid, _NWSQUICSnapshot._eventFlags,
+                          _NWSQUICSnapshot._localAddress, _NWSQUICSnapshot._processName, _NWSQUICSnapshot._provider,
+                          _NWSQUICSnapshot._remoteAddress, _NWSQUICSnapshot._rttAverage, _NWSQUICSnapshot._rttMinimum,
+                          _NWSQUICSnapshot._rttVariation, _NWSQUICSnapshot._uuid, _NWSQUICSnapshot._vuuid,
                           _NWSRouteSnapshot._descriptor, _NWSRouteSnapshot._destination, _NWSRouteSnapshot._gateway,
                           _NWSRouteSnapshot._mask, _NWSSnapshot._changeSeqno, _NWSSnapshot._counts, _NWSSnapshot._provider,
                           _NWSSnapshot._sourceIdentifier, _NWSSnapshot._traditionalDictionary, _NWSSnapshotSource._sockFd,
                           _NWSSnapshotter._kernelSourceRef, _NWSSnapshotter._snapshotSource,
                           _NWSTCPSnapshot._congestionAlgorithm, _NWSTCPSnapshot._descriptor, _NWSTCPSnapshot._euuid,
-                          _NWSTCPSnapshot._localAddress, _NWSTCPSnapshot._processName, _NWSTCPSnapshot._provider,
-                          _NWSTCPSnapshot._remoteAddress, _NWSTCPSnapshot._uuid, _NWSTCPSnapshot._vuuid,
-                          _NWSUDPSnapshot._descriptor, _NWSUDPSnapshot._euuid, _NWSUDPSnapshot._localAddress,
-                          _NWSUDPSnapshot._processName, _NWSUDPSnapshot._provider, _NWSUDPSnapshot._remoteAddress,
-                          _NWSUDPSnapshot._uuid, _NWSUDPSnapshot._vuuid, _NWStatisticsDelegateBlockWrapper._addedBlock,
+                          _NWSTCPSnapshot._eventFlags, _NWSTCPSnapshot._localAddress, _NWSTCPSnapshot._processName,
+                          _NWSTCPSnapshot._provider, _NWSTCPSnapshot._remoteAddress, _NWSTCPSnapshot._uuid,
+                          _NWSTCPSnapshot._vuuid, _NWSUDPSnapshot._descriptor, _NWSUDPSnapshot._euuid,
+                          _NWSUDPSnapshot._eventFlags, _NWSUDPSnapshot._localAddress, _NWSUDPSnapshot._processName,
+                          _NWSUDPSnapshot._provider, _NWSUDPSnapshot._remoteAddress, _NWSUDPSnapshot._uuid,
+                          _NWSUDPSnapshot._vuuid, _NWStatisticsDelegateBlockWrapper._addedBlock,
                           _NWStatisticsDelegateBlockWrapper._countsBlock, _NWStatisticsDelegateBlockWrapper._descriptionBlock,
                           _NWStatisticsDelegateBlockWrapper._eventsBlock, _NWStatisticsDelegateBlockWrapper._removedBlock,
                           _NWStatisticsInterfaceSource._descriptor, _NWStatisticsManager.__internalSources,
@@ -113,9 +122,11 @@ exports:
                           _NWStatisticsManager._querySequenceNumber, _NWStatisticsManager._queuedQueryAlls,
                           _NWStatisticsManager._readBuffer, _NWStatisticsManager._readSource, _NWStatisticsManager._reading,
                           _NWStatisticsManager._sockfd, _NWStatisticsManager._strongDelegate,
-                          _NWStatisticsManager._systemInformationSubscribed, _NWStatisticsRouteSource._descriptor,
+                          _NWStatisticsManager._systemInformationSubscribed, _NWStatisticsQUICSource._descriptor,
+                          _NWStatisticsQUICSource._eventFlags, _NWStatisticsRouteSource._descriptor,
                           _NWStatisticsRouteSource._destination, _NWStatisticsSource._countsSeqno, _NWStatisticsSource._delegate,
                           _NWStatisticsSource._descriptorSeqno, _NWStatisticsSource._filter, _NWStatisticsSource._last_counts,
                           _NWStatisticsSource._manager, _NWStatisticsSource._provider, _NWStatisticsSource._reference,
-                          _NWStatisticsSource._removing, _NWStatisticsTCPSource._descriptor, _NWStatisticsUDPSource._descriptor ]
+                          _NWStatisticsSource._removing, _NWStatisticsTCPSource._descriptor, _NWStatisticsTCPSource._eventFlags,
+                          _NWStatisticsUDPSource._descriptor, _NWStatisticsUDPSource._eventFlags ]
 ...

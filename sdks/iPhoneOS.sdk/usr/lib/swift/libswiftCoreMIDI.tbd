@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 490D4998-D655-3142-80F9-EED8F5E46015', 'arm64e: BF1A416E-D9CD-318A-A7B1-28913B774022' ]
+                   'arm64: D369E711-D737-32DF-BA4A-4C8B1C17F129', 'arm64e: 731A8718-FC89-3660-B81E-4098C2402262' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftCoreMIDI.dylib'
 current-version: 0

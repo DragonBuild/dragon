@@ -1,33 +1,36 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/HelpKit.framework/HelpKit
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _HLPLogForCategory, _HelpKitVersionNumber, _HelpKitVersionString, _gHLPHelpTopicViewSpacerWidth,
-                          _kHLPHelpBookAssetHostOverride, _kHLPHelpBookLocaleListName, _kHLPHelpBookPreferredLanguageOverride,
-                          _kHLPHelpTopicViewControllerLastTopicHistoryItem, _kHLPHyphenationFactorAccessibility,
-                          _kHLPHyphenationFactorDefault, _kHLPReachabilityChangedNotification,
-                          _kTPSReachabilityChangedNotification ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _HLPLogForCategory, _HelpKitVersionNumber, _HelpKitVersionString, __allowedClassesForIndexArchive,
+                          _gHLPHelpTopicViewSpacerWidth, _kHLPHelpBookAssetHostOverride, _kHLPHelpBookLocaleListName,
+                          _kHLPHelpBookPreferredLanguageOverride, _kHLPHelpTableOfContentCellPadding,
+                          _kHLPHelpTableOfContentCellSectionImageSize, _kHLPHelpTopicViewControllerLastTopicHistoryItem,
+                          _kHLPHyphenationFactorAccessibility, _kHLPHyphenationFactorDefault,
+                          _kHLPReachabilityChangedNotification, _kTPSReachabilityChangedNotification ]
     objc-classes:       [ _HLPCommonDefines, _HLPHelpBookController, _HLPHelpItem, _HLPHelpLoadingView, _HLPHelpLocale,
                           _HLPHelpLocaleController, _HLPHelpSearchIndexController, _HLPHelpSearchResult,
                           _HLPHelpSearchResultTableViewController, _HLPHelpSectionItem, _HLPHelpTableOfContentCell,
                           _HLPHelpTableOfContentViewController, _HLPHelpTopicHistoryItem, _HLPHelpTopicItem,
                           _HLPHelpTopicViewController, _HLPHelpUsageController, _HLPHelpViewController, _HLPReachability,
                           _HLPReachabilityManager, _HLPRemoteDataController, _TPSCommonDefines, _TPSDataCache,
-                          _TPSDataCacheController, _TPSImageCacheController, _TPSJSONCacheController, _TPSReachability,
-                          _TPSReachabilityManager, _TPSStringCacheController, _TPSURLSessionHandler, _TPSURLSessionItem,
-                          _TPSURLSessionManager, _TPSURLSessionTask, _TPSVideoCacheController ]
+                          _TPSDataCacheController, _TPSFileCacheController, _TPSImageCacheController, _TPSJSONCacheController,
+                          _TPSReachability, _TPSReachabilityManager, _TPSStringCacheController, _TPSURLSessionHandler,
+                          _TPSURLSessionItem, _TPSURLSessionManager, _TPSURLSessionTask, _TPSVideoCacheController ]
     objc-ivars:         [ _HLPHelpBookController._bookId, _HLPHelpBookController._contentFormatVersion,
                           _HLPHelpBookController._contentVersion, _HLPHelpBookController._copyrightText,
                           _HLPHelpBookController._copyrightTopicIdentifier, _HLPHelpBookController._fullBookView,
                           _HLPHelpBookController._hasSectionIcon, _HLPHelpBookController._helpBookURL,
                           _HLPHelpBookController._helpItemMap, _HLPHelpBookController._iconBasePath,
                           _HLPHelpBookController._imageCacheController, _HLPHelpBookController._locale,
-                          _HLPHelpBookController._remoteSearchPath, _HLPHelpBookController._rootSectionItem,
-                          _HLPHelpBookController._serverType, _HLPHelpBookController._topicPathFormat,
+                          _HLPHelpBookController._remoteCSSearchIndex, _HLPHelpBookController._remoteSearchPath,
+                          _HLPHelpBookController._rootSectionItem, _HLPHelpBookController._serverType,
+                          _HLPHelpBookController._supportsDarkMode, _HLPHelpBookController._topicPathFormat,
                           _HLPHelpBookController._welcomeTopicIdentifier, _HLPHelpItem._decodedName, _HLPHelpItem._iconURL,
                           _HLPHelpItem._identifier, _HLPHelpItem._level, _HLPHelpItem._name, _HLPHelpItem._parent,
                           _HLPHelpItem._serverType, _HLPHelpLoadingView._activityIndicatorView, _HLPHelpLoadingView._delegate,
@@ -35,20 +38,25 @@ exports:
                           _HLPHelpLoadingView._errorTitleLabel, _HLPHelpLocale._isoCodes, _HLPHelpLocale._path,
                           _HLPHelpLocaleController._helpBookURL, _HLPHelpLocaleController._locales,
                           _HLPHelpLocaleController._preferredLanguagesOverride, _HLPHelpLocaleController._supportedLanguageCodes,
-                          _HLPHelpSearchIndexController._helpBookController, _HLPHelpSearchIndexController._searchIndex,
-                          _HLPHelpSearchResult._identifier, _HLPHelpSearchResult._matchCount, _HLPHelpSearchResult._weight,
+                          _HLPHelpSearchIndexController._helpBookController,
+                          _HLPHelpSearchIndexController._privateSearchableIndex, _HLPHelpSearchIndexController._searchIndex,
+                          _HLPHelpSearchIndexController._spotlightSearchQuery,
+                          _HLPHelpSearchIndexController._spotlightSearchScores, _HLPHelpSearchIndexController._useCSSearch,
+                          _HLPHelpSearchResult._identifier, _HLPHelpSearchResult._matchCount,
+                          _HLPHelpSearchResult._relevanceScore, _HLPHelpSearchResult._weight,
                           _HLPHelpSearchResultTableViewController._footerLabel,
                           _HLPHelpSearchResultTableViewController._footerView,
-                          _HLPHelpSearchResultTableViewController._searchResults, _HLPHelpSectionItem._children,
+                          _HLPHelpSearchResultTableViewController._searchResults,
+                          _HLPHelpSearchResultTableViewController._separatorValue, _HLPHelpSectionItem._children,
                           _HLPHelpSectionItem._open, _HLPHelpTableOfContentCell._RTL, _HLPHelpTableOfContentCell._arrowImageView,
-                          _HLPHelpTableOfContentCell._arrowImageViewLeadingConstraint,
-                          _HLPHelpTableOfContentCell._arrowImageViewWidthConstraint, _HLPHelpTableOfContentCell._closed,
+                          _HLPHelpTableOfContentCell._arrowImageViewLeadingConstraint, _HLPHelpTableOfContentCell._closed,
                           _HLPHelpTableOfContentCell._helpItem, _HLPHelpTableOfContentCell._ignoreLevels,
                           _HLPHelpTableOfContentCell._labelToArrowViewLeadingConstraint, _HLPHelpTableOfContentCell._nameLabel,
                           _HLPHelpTableOfContentCell._sectionImageLeadingConstraint,
                           _HLPHelpTableOfContentCell._sectionImageURLSessionItem, _HLPHelpTableOfContentCell._sectionImageView,
                           _HLPHelpTableOfContentCell._sectionImageWidthConstraint,
                           _HLPHelpTableOfContentCell._showFirstLevelIcon,
+                          _HLPHelpTableOfContentCell._updateSeparatorInsetAutomatically,
                           _HLPHelpTableOfContentViewController._copyrightFooterLabel,
                           _HLPHelpTableOfContentViewController._copyrightFooterLabelHeightConstraint,
                           _HLPHelpTableOfContentViewController._copyrightFooterLabelTopConstraint,
@@ -61,6 +69,8 @@ exports:
                           _HLPHelpTableOfContentViewController._searchController,
                           _HLPHelpTableOfContentViewController._searchResultTableViewController,
                           _HLPHelpTableOfContentViewController._searchTerms,
+                          _HLPHelpTableOfContentViewController._tableBackgroundView,
+                          _HLPHelpTableOfContentViewController._tableFooterSeparatorView,
                           _HLPHelpTableOfContentViewController._tableFooterView,
                           _HLPHelpTableOfContentViewController._usageController, _HLPHelpTopicHistoryItem._anchor,
                           _HLPHelpTopicHistoryItem._contentOffset, _HLPHelpTopicHistoryItem._contentSize,

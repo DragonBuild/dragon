@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/Accessibility.framework/Frameworks/AccessibilityUIService.framework/AccessibilityUIService
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AXUIAlertDefaultDelayBetweenSubsequentAlerts, _AXUIAlertDisplayTimeDefaultForAlerts,
                           _AXUIAlertDisplayTimeDefaultForBanners, _AXUIAlertDisplayTimeForever,
                           _AXUIAlertSizeMetricFillingContainer, _AXUIAlertSizeMetricFitting,
@@ -17,11 +18,12 @@ exports:
                           ___AXUINSBundleOverride_super, ___AXUIUIScreenOverride_super ]
     objc-ivars:         [ _AXStyleProviderUIAlert._alertType, _AXStyleProviderUIAlert._backgroundViewDismissalOrigin,
                           _AXStyleProviderUIAlert._dismissalGestureYOffset, _AXStyleProviderUIAlert._styleProvider,
-                          _AXUIAlert._context, _AXUIAlertContext._alertView, _AXUIAlertContext._creationTimeInterval,
-                          _AXUIAlertContext._duration, _AXUIAlertContext._fadeAnimationDuration, _AXUIAlertContext._iconImage,
-                          _AXUIAlertContext._identifier, _AXUIAlertContext._priority, _AXUIAlertContext._service,
-                          _AXUIAlertContext._showOrHideTimer, _AXUIAlertContext._subtitleText, _AXUIAlertContext._text,
-                          _AXUIAlertContext._type, _AXUIAlertStyleProvider._bundle, _AXUIClientMessenger._clientIdentifier,
+                          _AXUIAlert._context, _AXUIAlert._userInfo, _AXUIAlertContext._alertView,
+                          _AXUIAlertContext._creationTimeInterval, _AXUIAlertContext._duration,
+                          _AXUIAlertContext._fadeAnimationDuration, _AXUIAlertContext._iconImage, _AXUIAlertContext._identifier,
+                          _AXUIAlertContext._priority, _AXUIAlertContext._service, _AXUIAlertContext._showOrHideTimer,
+                          _AXUIAlertContext._subtitleText, _AXUIAlertContext._text, _AXUIAlertContext._type,
+                          _AXUIAlertContext._userInfo, _AXUIAlertStyleProvider._bundle, _AXUIClientMessenger._clientIdentifier,
                           _AXUIClientMessenger._connection, _AXUIDisplayManager._activeContentViewControllers,
                           _AXUIDisplayManager._activeInterfaceOrientation, _AXUIDisplayManager._activeWindows,
                           _AXUIDisplayManager._alertQueues, _AXUIDisplayManager._defaultAlertStyleProvider,
@@ -30,8 +32,9 @@ exports:
                           _AXUIDisplayManager._passiveContentViewControllers, _AXUIDisplayManager._passiveWindows,
                           _AXUIDisplayManager._reachabilityHandlerIdentifier, _AXUIDisplayManager._reachabilityOffset,
                           _AXUIDisplayManager._serviceManager, _AXUIDisplayManager._systemServerActionHandlerIdentifier,
-                          _AXUIDisplayManager._visibleAlertContexts, _AXUINubbitContext._collisionBehavior,
-                          _AXUINubbitContext._delegate, _AXUINubbitContext._disableDashBoardSystemGesturesAssertion,
+                          _AXUIDisplayManager._userInterfaceStyle, _AXUIDisplayManager._visibleAlertContexts,
+                          _AXUINubbitContext._collisionBehavior, _AXUINubbitContext._delegate,
+                          _AXUINubbitContext._disableDashBoardSystemGesturesAssertion,
                           _AXUINubbitContext._disableSystemGesturesAssertion, _AXUINubbitContext._dynamicAnimator,
                           _AXUINubbitContext._dynamicItemBehavior, _AXUINubbitContext._fadeTimer,
                           _AXUINubbitContext._followPanBehavior, _AXUINubbitContext._gravityBehavior,
@@ -46,5 +49,5 @@ exports:
                           _AXUIServiceManager._pausedConnections, _AXUIServiceManager._resumingConnectionsQueue,
                           _AXUIServiceManager._serviceContexts, _AXUIServiceManager._servicesAccessQueue,
                           _AXUIServiceManager._shouldAllowServicesToProcessMessages, _AXUIServiceManager._springBoardReaper,
-                          _AXUIWindow._isHandlingFullScreenPresentation ]
+                          _AXUIServiceManager._transaction, _AXUIWindow._isHandlingFullScreenPresentation ]
 ...

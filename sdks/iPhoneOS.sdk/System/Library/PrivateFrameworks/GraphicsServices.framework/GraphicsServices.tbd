@@ -1,14 +1,15 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/GraphicsServices.framework/GraphicsServices
 current-version:       14
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _GSApplicationSetUsesLegacyUI, _GSApplicationUsesLegacyUI, _GSColorCreateColorWithDeviceRGBA,
-                          _GSColorCreateColorWithDeviceRGBAInfo, _GSColorCreateWithDeviceWhite, _GSColorGetRGBAComponents,
-                          _GSColorGetRGBAInfo, _GSCopyPurpleNamedPerPIDPort, _GSCopyPurpleNamedPort, _GSCurrentEventTimestamp,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _GSColorCreateColorWithDeviceRGBA, _GSColorCreateColorWithDeviceRGBAInfo,
+                          _GSColorCreateWithDeviceWhite, _GSColorGetRGBAComponents, _GSColorGetRGBAInfo,
+                          _GSCopyPurpleNamedPerPIDPort, _GSCopyPurpleNamedPort, _GSCurrentEventTimestamp,
                           _GSEventAccelerometerAxisX, _GSEventAccelerometerAxisY, _GSEventAccelerometerAxisZ,
                           _GSEventAccessoryAvailabilityChanged, _GSEventCopy, _GSEventCopyCharacters,
                           _GSEventCopyCharactersIgnoringModifiers, _GSEventCopyMarkedCharacters,
@@ -27,36 +28,35 @@ exports:
                           _GSEventIsTabKeyEvent, _GSEventLockDevice, _GSEventPopRunLoopMode, _GSEventPushRunLoopMode,
                           _GSEventQueueContainsMouseEvent, _GSEventQuitTopApplication, _GSEventReceiveRunLoopMode,
                           _GSEventRegisterEventCallBack, _GSEventRemoveShouldRouteToFrontMost, _GSEventResetIdleTimer,
-                          _GSEventRestoreSensitivity, _GSEventRotateSimulator, _GSEventRun, _GSEventRunModal,
-                          _GSEventSendApplicationOpenURL, _GSEventSendKeyEvent, _GSEventSetBacklightLevel, _GSEventSetCharacters,
-                          _GSEventSetHardwareKeyboardAttached, _GSEventSetHardwareKeyboardAttachedWithCountryCodeAndType,
-                          _GSEventSetLocationInWindow, _GSEventSetPathInfoAtIndex, _GSEventSetSensitivity, _GSEventSetType,
-                          _GSEventShouldRouteToFrontMost, _GSEventSourceIsHardware, _GSEventStopModal, _GSEventStopVibrator,
-                          _GSEventVibrateForDuration, _GSFontAddCGFont, _GSFontAddFromFile,
-                          _GSFontCopyComboCharacterSetForAdditionalFonts, _GSFontCopyFamilyNames, _GSFontCopyFontFilePath,
-                          _GSFontCopyFontNamesForFamilyName, _GSFontCopyFonts, _GSFontCopyNormalizedAdditionalFontName,
-                          _GSFontCopyPersistentPostscriptURL, _GSFontCreateCacheFromCGCachePlist, _GSFontCreateWithName,
-                          _GSFontGetAddedFontNames, _GSFontGetAscent, _GSFontGetCGFont, _GSFontGetCacheDictionary,
-                          _GSFontGetCapHeight, _GSFontGetCoveredCharacterSet, _GSFontGetCurrentGeneration, _GSFontGetDescent,
-                          _GSFontGetExtraData, _GSFontGetFamilyName, _GSFontGetFullName, _GSFontGetLineGap,
-                          _GSFontGetLineSpacing, _GSFontGetPostScriptName, _GSFontGetSize, _GSFontGetSynthesizedTraits,
-                          _GSFontGetTraits, _GSFontGetTraitsForName, _GSFontGetUnitsPerEm, _GSFontGetXHeight,
-                          _GSFontHasColorGlyphs, _GSFontInitialize, _GSFontIsBold, _GSFontIsFixedPitch, _GSFontIsLastResort,
-                          _GSFontLegacyCreateWithName, _GSFontPurgeFontCache, _GSFontRegisterCGFont,
+                          _GSEventRun, _GSEventRunModal, _GSEventSendApplicationOpenURL, _GSEventSendKeyEvent,
+                          _GSEventSetBacklightLevel, _GSEventSetCharacters, _GSEventSetHardwareKeyboardAttached,
+                          _GSEventSetHardwareKeyboardAttachedWithCountryCodeAndType, _GSEventSetLocationInWindow,
+                          _GSEventSetPathInfoAtIndex, _GSEventSetType, _GSEventShouldRouteToFrontMost, _GSEventSourceIsHardware,
+                          _GSEventStopModal, _GSEventStopVibrator, _GSEventVibrateForDuration, _GSFontAddCGFont,
+                          _GSFontAddFromFile, _GSFontCopyComboCharacterSetForAdditionalFonts, _GSFontCopyFamilyNames,
+                          _GSFontCopyFontFilePath, _GSFontCopyFontNamesForFamilyName, _GSFontCopyFonts,
+                          _GSFontCopyNormalizedAdditionalFontName, _GSFontCopyPersistentPostscriptURL,
+                          _GSFontCreateCacheFromCGCachePlist, _GSFontCreateWithName, _GSFontGetAddedFontNames, _GSFontGetAscent,
+                          _GSFontGetCGFont, _GSFontGetCacheDictionary, _GSFontGetCapHeight, _GSFontGetCoveredCharacterSet,
+                          _GSFontGetCurrentGeneration, _GSFontGetDescent, _GSFontGetExtraData, _GSFontGetFamilyName,
+                          _GSFontGetFullName, _GSFontGetLineGap, _GSFontGetLineSpacing, _GSFontGetPostScriptName, _GSFontGetSize,
+                          _GSFontGetSynthesizedTraits, _GSFontGetTraits, _GSFontGetTraitsForName, _GSFontGetUnitsPerEm,
+                          _GSFontGetXHeight, _GSFontHasColorGlyphs, _GSFontInitialize, _GSFontIsBold, _GSFontIsFixedPitch,
+                          _GSFontIsLastResort, _GSFontLegacyCreateWithName, _GSFontPurgeFontCache, _GSFontRegisterCGFont,
                           _GSFontRegisterPersistentURLs, _GSFontRegisterURL, _GSFontRemoveFromCache,
                           _GSFontSystemFontNameForScaleFactor, _GSFontUnregisterCGFont, _GSFontUnregisterPersistentURLs,
                           _GSFontUnregisterURL, _GSGetPurpleApplicationPort, _GSGetPurpleSystemAppPort,
                           _GSGetPurpleSystemEventPort, _GSGetPurpleWorkspacePort, _GSGetTimeEventHandling, _GSInitialize,
-                          _GSKeyboardCreate, _GSKeyboardGetHWKeyboardType, _GSKeyboardGetLayout, _GSKeyboardGetLiveModifierState,
-                          _GSKeyboardGetModifierState, _GSKeyboardGetStickyLockModifierState, _GSKeyboardGetTranslationOptions,
-                          _GSKeyboardGetTypeID, _GSKeyboardHWKeyboardLayoutsPlist, _GSKeyboardHWKeyboardNormalizeInput,
-                          _GSKeyboardRelease, _GSKeyboardReset, _GSKeyboardSetLayout, _GSKeyboardSetTranslationOptions,
-                          _GSKeyboardTranslateKey, _GSKeyboardTranslateKeyExtended, _GSKeyboardTranslateKeyExtendedCommand,
-                          _GSMainScreenOrientation, _GSMainScreenPixelSize, _GSMainScreenPointSize,
-                          _GSMainScreenPositionTransform, _GSMainScreenScaleFactor, _GSMainScreenSize,
-                          _GSMainScreenWindowTransform, _GSRegisterPurpleNamedPerPIDPort, _GSRegisterPurpleNamedPort,
-                          _GSSaveEventHandlingTimes, _GSSendAppPreferencesChanged,
-                          _GSSendApplicationFinishedBackgroundContentFetchingEvent,
+                          _GSKeyboardCreate, _GSKeyboardGetHWKeyboardType, _GSKeyboardGetKeyCodeForChar, _GSKeyboardGetLayout,
+                          _GSKeyboardGetLiveModifierState, _GSKeyboardGetModifierState, _GSKeyboardGetStickyLockModifierState,
+                          _GSKeyboardGetTranslationOptions, _GSKeyboardGetTypeID, _GSKeyboardHWKeyboardLayoutsPlist,
+                          _GSKeyboardHWKeyboardNormalizeInput, _GSKeyboardRelease, _GSKeyboardReset, _GSKeyboardSetLayout,
+                          _GSKeyboardSetTranslationOptions, _GSKeyboardTranslateKey, _GSKeyboardTranslateKeyExtended,
+                          _GSKeyboardTranslateKeyExtendedCommand, _GSKeyboardTranslateKeyWithModifiers, _GSMainScreenOrientation,
+                          _GSMainScreenPixelSize, _GSMainScreenPointSize, _GSMainScreenPositionTransform,
+                          _GSMainScreenScaleFactor, _GSMainScreenSize, _GSMainScreenWindowTransform,
+                          _GSRegisterPurpleNamedPerPIDPort, _GSRegisterPurpleNamedPort, _GSSaveEventHandlingTimes,
+                          _GSSendAppPreferencesChanged, _GSSendApplicationFinishedBackgroundContentFetchingEvent,
                           _GSSendApplicationFinishedBackgroundContentFetchingEventWithSequenceNumber,
                           _GSSendApplicationFinishedBackgroundNotificationActionEvent, _GSSendApplicationSuspendEvent,
                           _GSSendApplicationSuspendedSettingsUpdatedEvent, _GSSendEvent, _GSSendSimpleEvent,
@@ -100,8 +100,8 @@ exports:
                           _kGSVideoStillsCapability, _kGSVoiceControlCapability, _kGSVolumeButtonCapability, _kGSWAPICapability,
                           _kGSWiFiCapability, _kGSYouTubeCapability, _kGSYouTubePluginCapability, _kGSiPadCapability ]
     objc-classes:       [ __UIFontExtraData ]
-    objc-ivars:         [ __UIFontExtraData._ascender, __UIFontExtraData._coveredCharacterSet, __UIFontExtraData._descender,
-                          __UIFontExtraData._fFlags, __UIFontExtraData._lineGap, __UIFontExtraData._lineHeight,
+    objc-ivars:         [ __UIFontExtraData._ascender, __UIFontExtraData._descender, __UIFontExtraData._fFlags,
+                          __UIFontExtraData._lineGap, __UIFontExtraData._lineHeight,
                           __UIFontExtraData._maximumPointSizeAfterScaling, __UIFontExtraData._pointSizeForScaling,
                           __UIFontExtraData._textStyleForScaling ]
 ...

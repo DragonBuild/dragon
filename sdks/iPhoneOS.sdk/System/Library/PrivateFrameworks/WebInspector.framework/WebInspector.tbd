@@ -1,12 +1,14 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WebInspector.framework/WebInspector
-current-version:       607.1.40
+current-version:       608.1.48
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _RWIProtocolInspectorFrontendConnectedNotification,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _RWIAutomationAvailabilityFromString, _RWINSStringFromAutomationAvailability,
+                          _RWIProtocolInspectorFrontendConnectedNotification,
                           _RWIProtocolInspectorFrontendDisconnectedNotification, __ZN9Inspector17toJSONDoubleArrayEP7NSArray,
                           __ZN9Inspector17toJSONObjectArrayEP7NSArray, __ZN9Inspector17toJSONStringArrayEP7NSArray,
                           __ZN9Inspector17toObjCStringArrayEOKN3WTF6RefPtrINS0_8JSONImpl5ArrayENS0_13DumbPtrTraitsIS3_EEEE,
@@ -25,7 +27,7 @@ exports:
                           _RWIProtocolCSSStyleAttribute, _RWIProtocolCSSStyleId, _RWIProtocolCSSStyleSheetBody,
                           _RWIProtocolCSSStyleSheetHeader, _RWIProtocolConfiguration, _RWIProtocolConsoleCallFrame,
                           _RWIProtocolConsoleChannel, _RWIProtocolConsoleDomainEventDispatcher, _RWIProtocolConsoleMessage,
-                          _RWIProtocolConsoleStackTrace, _RWIProtocolDOMAccessibilityProperties,
+                          _RWIProtocolConsoleStackTrace, _RWIProtocolDOMAccessibilityProperties, _RWIProtocolDOMDataBinding,
                           _RWIProtocolDOMDomainEventDispatcher, _RWIProtocolDOMEventListener, _RWIProtocolDOMHighlightConfig,
                           _RWIProtocolDOMNode, _RWIProtocolDOMRGBAColor, _RWIProtocolDOMStorageDomainEventDispatcher,
                           _RWIProtocolDOMStorageStorageId, _RWIProtocolDebuggerAssertPauseReason,
@@ -46,18 +48,18 @@ exports:
                           _RWIProtocolRuntimePropertyPreview, _RWIProtocolRuntimeRemoteObject,
                           _RWIProtocolRuntimeStructureDescription, _RWIProtocolRuntimeTypeDescription,
                           _RWIProtocolRuntimeTypeLocation, _RWIProtocolRuntimeTypeSet, _RWIProtocolSecurity,
-                          _RWIProtocolSecurityCertificate, _RWIRelay, _RWIRelayDelegateIOS, __RWIApplicationInfo,
-                          __RWIAutomaticInspectionSession, __RWIDriverInterfaceInfo, __RWIRelayClientConnection,
-                          __RWIRelayClientTCPConnection, __RWIRelayConnectionToApplication, __RWITCPConnection,
-                          __RWITCPRelayMessage, __RWITCPServer ]
+                          _RWIProtocolSecurityCertificate, _RWIProtocolSecurityConnection, _RWIRelay, _RWIRelayDelegateIOS,
+                          __RWIApplicationInfo, __RWIAutomaticInspectionSession, __RWIDriverInterfaceInfo,
+                          __RWIRelayClientConnection, __RWIRelayClientTCPConnection, __RWIRelayConnectionToApplication,
+                          __RWITCPConnection, __RWITCPRelayMessage, __RWITCPServer ]
     objc-ivars:         [ _RWIProtocolCSSDomainEventDispatcher._controller, _RWIProtocolConfiguration._consoleEventDispatcher,
                           _RWIProtocolConfiguration._controller, _RWIProtocolConfiguration._cssEventDispatcher,
-                          _RWIProtocolConfiguration._cssHandler, _RWIProtocolConfiguration._domEventDispatcher,
-                          _RWIProtocolConfiguration._domHandler, _RWIProtocolConfiguration._domStorageEventDispatcher,
-                          _RWIProtocolConfiguration._domStorageHandler, _RWIProtocolConfiguration._networkEventDispatcher,
-                          _RWIProtocolConfiguration._networkHandler, _RWIProtocolConfiguration._pageEventDispatcher,
-                          _RWIProtocolConfiguration._pageHandler, _RWIProtocolConsoleDomainEventDispatcher._controller,
-                          _RWIProtocolDOMDomainEventDispatcher._controller,
+                          _RWIProtocolConfiguration._cssHandler, _RWIProtocolConfiguration._domDebuggerHandler,
+                          _RWIProtocolConfiguration._domEventDispatcher, _RWIProtocolConfiguration._domHandler,
+                          _RWIProtocolConfiguration._domStorageEventDispatcher, _RWIProtocolConfiguration._domStorageHandler,
+                          _RWIProtocolConfiguration._networkEventDispatcher, _RWIProtocolConfiguration._networkHandler,
+                          _RWIProtocolConfiguration._pageEventDispatcher, _RWIProtocolConfiguration._pageHandler,
+                          _RWIProtocolConsoleDomainEventDispatcher._controller, _RWIProtocolDOMDomainEventDispatcher._controller,
                           _RWIProtocolDOMStorageDomainEventDispatcher._controller, _RWIProtocolInspector._configuration,
                           _RWIProtocolInspector._inspectorController, _RWIProtocolInspector._inspectorControllerClient,
                           _RWIProtocolJSONObject._object, _RWIProtocolNetworkDomainEventDispatcher._controller,
@@ -66,9 +68,9 @@ exports:
                           _RWIRelay._clientConnections, _RWIRelay._delegate, _RWIRelay._driverInterfaces,
                           _RWIRelay._pendingClientConnections, _RWIRelay._pendingProxyApplicationConnections,
                           _RWIRelay._xpcApplicationListenConnection, _RWIRelayDelegateIOS._applicationStateMonitor,
-                          _RWIRelayDelegateIOS._preventDeviceFromIdlingTimer, _RWIRelayDelegateIOS._relay,
-                          __RWIApplicationInfo._allowsRemoteAutomation, __RWIApplicationInfo._applicationState,
-                          __RWIApplicationInfo._bundleId, __RWIApplicationInfo._connection,
+                          _RWIRelayDelegateIOS._idleTimerAssertion, _RWIRelayDelegateIOS._relay,
+                          __RWIApplicationInfo._automationAvailability, __RWIApplicationInfo._bundleId,
+                          __RWIApplicationInfo._connection, __RWIApplicationInfo._debuggerAvailability,
                           __RWIApplicationInfo._debuggerConnectionIdentifier, __RWIApplicationInfo._hasRemoteDebugSession,
                           __RWIApplicationInfo._hasUpdatedFromListing, __RWIApplicationInfo._hostApplicationPID,
                           __RWIApplicationInfo._name, __RWIApplicationInfo._pid, __RWIApplicationInfo._proxy,

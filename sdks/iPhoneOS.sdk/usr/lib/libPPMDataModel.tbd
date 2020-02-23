@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: D37A2241-7FF0-314E-AA9C-459AF1052522', 'arm64e: 6841A922-83C0-3585-833F-DB656BA1B635' ]
+                   'arm64: 77F2376E-539A-3CBB-8F6F-D1D20C5FB8F4', 'arm64e: 1B827750-EF2F-3B40-B62B-B311017BC317' ]
 platform:        ios
 install-name:    '/usr/lib/libPPMDataModel.dylib'
 exports:         

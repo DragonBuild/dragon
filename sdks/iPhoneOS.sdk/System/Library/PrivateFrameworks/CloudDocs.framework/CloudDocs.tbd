@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/CloudDocs.framework/CloudDocs
-current-version:       575.255
+current-version:       666.5
 compatibility-version: 0
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _BRAccountDidCompleteFirstSyncDownKey, _BRAccountIsDatabaseFromTheFutureKey,
                           _BRAccountIsServiceEnabledKey, _BRAccountIsSynchronizingDesktop, _BRAccountIsSynchronizingDocuments,
                           _BRAccountMigrationStatusKey, _BRAccountPropertyIsMigrationComplete,
@@ -46,11 +47,12 @@ exports:
                           _BREntitlementOldAppleAccountAccess, _BREntitlementPrivateiWorkSharingAcceptance,
                           _BREntitlementSPIAccess, _BREntitlementSharingPrivateInterface, _BREntitlementSharingProxy,
                           _BREntitlementStorageManagement, _BRErrorAffectedContainersKey, _BREvictItemAtURL,
-                          _BREvictItemAtURLWithOptions, _BRFileCoordinatorReadingOptionsPrettyPrint, _BRForceSyncOnAllContainers,
-                          _BRGetApplicationDocumentUsageInformation, _BRGetAttributeValueForItem, _BRGetAttributeValuesForItem,
-                          _BRGetCloudEnabledStatus, _BRGetCloudEnabledStatusForAuditToken, _BRGetCloudEnabledStatusForPID,
-                          _BRGetFileNameFromServerInfoBlob, _BRGetLastSyncDateWithError, _BRGetLocalizedLastSyncWithError,
-                          _BRGetMigrationStatusForDSID, _BRGetMigrationStatusForPrimaryiCloudAccount, _BRGetMobileContainerForID,
+                          _BREvictItemAtURLWithOptions, _BRFailedURLsKey, _BRFileCoordinatorReadingOptionsPrettyPrint,
+                          _BRForceSyncOnAllContainers, _BRGetApplicationDocumentUsageInformation, _BRGetAttributeValueForItem,
+                          _BRGetAttributeValuesForItem, _BRGetCloudEnabledStatus, _BRGetCloudEnabledStatusForAuditToken,
+                          _BRGetCloudEnabledStatusForPID, _BRGetFileNameFromServerInfoBlob, _BRGetLastSyncDateWithError,
+                          _BRGetLocalizedLastSyncWithError, _BRGetMigrationStatusForDSID,
+                          _BRGetMigrationStatusForPrimaryiCloudAccount, _BRGetMobileContainerForID,
                           _BRGetPrimaryiCloudAccountAndFirstSyncStatus, _BRGetPrimaryiCloudAccountStatus,
                           _BRGetProcessMobileContainerForID, _BRGetTotalApplicationDocumentUsage, _BRGetURLForPublishedItem,
                           _BRGetURLForPublishedItemWithOptions, _BRGlobalProgressLocalizedAndCapitalizedDescription,
@@ -125,17 +127,18 @@ exports:
                           _brc_interval_from_nsec, _brc_interval_to_nsec, _brc_is_before_deadline,
                           _brc_monotonic_time_diff_to_interval, _brc_monotonic_time_now, _brc_notifications_log,
                           _brc_notify_get_state, _brc_notify_post, _brc_notify_register_check, _brc_notify_set_state_and_post,
-                          _brc_trace_log, _kBRCDaemonApplicationSupportURLKey, _kBRCDaemonCacheDirectoryURLKey,
-                          _kBRCDaemonCloudDatabaseClassNameKey, _kBRCDaemonDieOnInvalidateKey, _kBRCDaemonRootURLKey,
-                          _kBRCMachServiceName, _kBRCMachTokenServiceName, _kBRCTestsServiceName,
+                          _brc_trace_log, _getSharingServiceInterface, _kBRCDaemonApplicationSupportURLKey,
+                          _kBRCDaemonCacheDirectoryURLKey, _kBRCDaemonCloudDatabaseClassNameKey, _kBRCDaemonDieOnInvalidateKey,
+                          _kBRCDaemonRootURLKey, _kBRCMachServiceName, _kBRCMachTokenServiceName, _kBRCTestsServiceName,
                           _kBRCUpdateSenderBundleVersionNumber, _kBRCUpdateSenderSandboxExtension, _kBRQueryItemDLErrorKey,
                           _kBRQueryItemDLPercentKey, _kBRQueryItemDownloadedSize, _kBRQueryItemInflightProgress,
                           _kBRQueryItemLastEditorNameComponentsKey, _kBRQueryItemLastEditorNameKey,
                           _kBRQueryItemLocalRepresentationPathKey, _kBRQueryItemNeedsDownloadSize,
                           _kBRQueryItemNeedsFaultingCount, _kBRQueryItemNeedsSyncUpCount, _kBRQueryItemNeedsUploadSize,
                           _kBRQueryItemNumberOfFaults, _kBRQueryItemOwnerNameComponentsKey, _kBRQueryItemOwnerNameKey,
-                          _kBRQueryItemSyncedUpCount, _kBRQueryItemTagsKey, _kBRQueryItemULErrorKey, _kBRQueryItemULPercentKey,
-                          _kBRQueryItemUploadedSize, _kBRSyncedLocationsChangedNotification ]
+                          _kBRQueryItemQuotaAvailableKey, _kBRQueryItemSyncedUpCount, _kBRQueryItemTagsKey,
+                          _kBRQueryItemULErrorKey, _kBRQueryItemULPercentKey, _kBRQueryItemUploadedSize,
+                          _kBRSyncedLocationsChangedNotification ]
     objc-classes:       [ _BRAccount, _BRContainer, _BRContainerBundleIdentifiersEnumerator,
                           _BRContainerBundlePropertyEnumerator, _BRContainerCache, _BRContainersMonitor, _BRDaemonConnection,
                           _BRDocObjectID, _BRDownloadAllFilesForLogOutOperation, _BRDownloadAndUploadAllFilesForLogOutOperation,
@@ -148,7 +151,7 @@ exports:
                           _BRShareCleanSubitems, _BRShareCopyAccessTokenOperation, _BRShareCopyDocumentURLForRecordID,
                           _BRShareCopyOperation, _BRShareCopyShareURLOperation, _BRShareCopyiWorkShareURLOperation,
                           _BRShareDestroyOperation, _BRShareLookupParticipantsOperation, _BRSharePrepFolderForSharing,
-                          _BRShareSaveOperation, _BRShareUnshareOperation, _BRSharingCopyEtagOperation,
+                          _BRShareProcessSubitems, _BRShareSaveOperation, _BRShareUnshareOperation, _BRSharingCopyEtagOperation,
                           _BRSharingCopyShareInfoOperation, _BRSharingCopyShareTokenOperation, _BRSharingCopyShortTokenOperation,
                           _BRSharingModifyRecordAccessOperation, _BRTask, _BRTransfersStatusManager,
                           _BRUploadAllFilesForLogOutOperation, _BRUploadAllFilesOperation, _BRXPCSyncProxy, _BRZombie,
@@ -260,9 +263,12 @@ exports:
                           _BRShareLookupParticipantsOperation._lookupParticipantsCompletionBlock,
                           _BRShareLookupParticipantsOperation._userIdentities,
                           _BRSharePrepFolderForSharing._prepFolderSharingCompletionBlock, _BRSharePrepFolderForSharing._url,
-                          _BRShareSaveOperation._share, _BRShareSaveOperation._shareSaveCompletionBlock,
-                          _BRShareUnshareOperation._share, _BRShareUnshareOperation._unshareCompletionBlock,
-                          _BRSharingCopyEtagOperation._fileURL, _BRSharingCopyEtagOperation._sharingEtagCompletionBlock,
+                          _BRShareProcessSubitems._maxSharedSubitemsBeforeFailure,
+                          _BRShareProcessSubitems._processSubitemsCompletionBlock, _BRShareProcessSubitems._processType,
+                          _BRShareProcessSubitems._url, _BRShareSaveOperation._share,
+                          _BRShareSaveOperation._shareSaveCompletionBlock, _BRShareUnshareOperation._share,
+                          _BRShareUnshareOperation._unshareCompletionBlock, _BRSharingCopyEtagOperation._fileURL,
+                          _BRSharingCopyEtagOperation._sharingEtagCompletionBlock,
                           _BRSharingCopyShareInfoOperation._copyShareInfoCompletionBlock,
                           _BRSharingCopyShareInfoOperation._fileURL, _BRSharingCopyShareTokenOperation._fileURL,
                           _BRSharingCopyShareTokenOperation._shareAndBaseTokenCompletionBlock,

@@ -13,12 +13,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-CORETELEPHONY_CLASS_AVAILABLE(6_0) API_UNAVAILABLE(macCatalyst, watchos) API_UNAVAILABLE(macos, tvos)
+CORETELEPHONY_CLASS_AVAILABLE(6_0)
 @interface CTSubscriberInfo : NSObject
 
 + (NSArray<CTSubscriber *> *)subscribers
 API_AVAILABLE(ios(12.1))
-API_UNAVAILABLE(macCatalyst, watchos)
 ;
 
 + (CTSubscriber*) subscriber

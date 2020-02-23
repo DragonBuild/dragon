@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/TextToSpeech.framework/TextToSpeech
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AXSpeechReplaceJapaneseElongationCharactersIfNeeded, _TTSAllCachedAvailableVoicesKey,
                           _TTSAssetKeyCustomVoiceCompatibilityVersion, _TTSAssetKeyCustomVoiceFootprint,
                           _TTSAssetKeyCustomVoiceGender, _TTSAssetKeyCustomVoiceLanguages,
@@ -43,18 +44,19 @@ exports:
                           _TTSVocalizerCopyPathForCommonResources, _TTSVocalizerCopyPathForLocalizedResources,
                           _TTSVocalizerCopyPathForResources, _TTSVocalizerCopyPathForTones,
                           _TTSVocalizerCopyURLForFallbackResource, _TTSVocalizerCopyVoiceEngineFormatVersionForLanguage,
-                          __GetScheduledPriority, __TTSBundleCopyResourceURL, __TTSCopyAvailableLanguageIdentifiers,
-                          __TTSCopyAvailableOutputLanguageIdentifiers, __TTSCopyFallbackLanguageIdentifierForLanguageIdentifier,
-                          __TTSCopyFallbackLanguageIdentifierForLocale, __TTSCopyLanguageArrayForLanguageIdentifier,
-                          __TTSCopyLanguageCodeFromLanguageIdentifier, __TTSCopyLanguageIdentifierForLocale,
-                          __TTSCopyLocalizedString, __TTSCopyLocationCodeFromLanguageIdentifier,
-                          __TTSCopyQualifiedLanguageIdentifierForLanguageCode, __TTSFrameworkBundle,
-                          __TTSIdentifierForVoiceInformation, __TTSLanguageIdentifierIsLanguageOnly,
+                          _TTSWatchSupportsSiriSpeaks, __GetScheduledPriority, __TTSBundleCopyResourceURL,
+                          __TTSCopyAvailableLanguageIdentifiers, __TTSCopyAvailableOutputLanguageIdentifiers,
+                          __TTSCopyFallbackLanguageIdentifierForLanguageIdentifier, __TTSCopyFallbackLanguageIdentifierForLocale,
+                          __TTSCopyLanguageArrayForLanguageIdentifier, __TTSCopyLanguageCodeFromLanguageIdentifier,
+                          __TTSCopyLanguageIdentifierForLocale, __TTSCopyLocalizedString,
+                          __TTSCopyLocationCodeFromLanguageIdentifier, __TTSCopyQualifiedLanguageIdentifierForLanguageCode,
+                          __TTSFrameworkBundle, __TTSIdentifierForVoiceInformation, __TTSLanguageIdentifierIsLanguageOnly,
                           __TTSNameForVoiceInformation, __TTSPreferencesCopyCurrentGenericLocale,
                           __TTSPreferencesCopyDefaultOutputLanguageIdentifierForUserPreferences,
+                          __TTSPreferencesCopyDefaultOutputLanguageIdentifierForUserPreferredLocalizations,
                           __TTSVocalizerCopyVoiceEngineFormatVersionsForLanguage, __VocalizerFootprintForSpeechFootprint,
-                          _kTTSAlternativeAssetBrokerHeaderFileName, _kTTSErrorDomain, _kTTSFrameworkTTSPath,
-                          _kTTSFrameworkVoiceServicesPath, _kTTSGryphonVoiceIdentifierPrefix,
+                          __VocalizerGenderForSpeechGender, _kTTSAlternativeAssetBrokerHeaderFileName, _kTTSErrorDomain,
+                          _kTTSFrameworkTTSPath, _kTTSFrameworkVoiceServicesPath, _kTTSGryphonVoiceIdentifierPrefix,
                           _kTTSMacinTalkVoiceIdentifierPrefix, _kTTSOriginalAssetBrokerHeaderFileName,
                           _kTTSPreferencesSpokenLanguageChangedNotification, _kTTSSiriVoiceIdentifierPrefix,
                           _kTTSSpeechTextClassAttribute, _kTTSSpeechTextClassName, _kTTSSpeechTextClassTitle,

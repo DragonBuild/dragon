@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 9B9A2306-9EF9-3F2C-9CDF-EA07DDE69FEC', 'armv7s: EF8BC870-AC61-3CB7-99DF-62524ACE99F2', 
-                   'arm64: 14C42EC5-5412-322C-AF50-22B824C8F2F3', 'arm64e: 073018CD-4853-37AD-B2C7-A6BD54317FAF' ]
+                   'arm64: A33285D3-52E9-36C6-9E43-BC39F79AC060', 'arm64e: 1E7C19E0-8D3E-3824-BCD5-1782D1959C75' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/NetworkExtension.framework/NetworkExtension'
 exports:         
@@ -352,8 +352,8 @@ exports:
                        _NEAddIntToArray, _NEAddIntToDictionary, _NEAddPortToDictionary, 
                        _NEAddValueToIntKeyedDictionary, _NEAddressRangeIsContainedInAddressRange, 
                        _NEAppProxyErrorDomain, _NEAppendIntToArray, _NEAuditTokenForPID, 
-                       _NECertificateDateIsValid, _NECertificateStatusToString, _NECheckConfigurationUserUUID, 
-                       _NECompareAddresses, _NECopyAuditPortForAuditToken, _NECopyBootstrapPortForPID, 
+                       _NECertificateDateIsValid, _NECertificateStatusToString, _NECompareAddresses, 
+                       _NECopyAuditPortForAuditToken, _NECopyBootstrapPortForPID, 
                        _NECopyConsoleUserUUID, _NECopyInterfaceAddress, _NECopySigningIdentifierForPID, 
                        _NECopySigningIdentifierForXPCMessage, _NECopySynthesizedIPv6Address, 
                        _NECopyUserUUIDFromEUID, _NECopyUserUUIDFromXPCEUID, _NECreateAddressDataFromString, 
@@ -382,7 +382,7 @@ exports:
                        _NEGetIntFromArray, _NEGetIntFromDictionary, _NEGetInterfaceType, 
                        _NEGetNullUUID, _NEGetPortFromAddress, _NEGetPrefixForAddressRange, 
                        _NEGetPrefixForAddressRangeStrings, _NEGetPrefixForIPv4NetmaskString, 
-                       _NEGetPrefixForIPv6NetmaskString, _NEGetRootUUID, _NEGetValueFromIntArray, 
+                       _NEGetPrefixForIPv6NetmaskString, _NEGetValueFromIntArray, 
                        _NEGetValueFromIntKeyedDictionary, _NEGetValueWithType, _NEHotspotConfigurationErrorDomain, 
                        _NEIKEv2AttributeTypeCreateString, _NEIKEv2AuthenticationMethodCreateString, 
                        _NEIKEv2CreateChildSAModeString, _NEIKEv2CreateError, _NEIKEv2CreateErrorAuthentication, 
@@ -419,8 +419,7 @@ exports:
                        _NEPolicyDelete, _NEPolicyDeleteAll, _NEPolicyLockSessionToProcess, 
                        _NEPolicyPersistDropAllFeature, _NEPolicyRegisterService, 
                        _NEPolicySessionDupSocket, _NEPolicySetDispatchQueue, _NEPolicySetDropPriorityLevel, 
-                       _NEPolicySetLayer2DefaultDrop, _NEPolicySetSessionPriority, 
-                       _NEPolicyUnregisterService, _NERemoveValueFromIntKeyedDictionary, 
+                       _NEPolicySetSessionPriority, _NEPolicyUnregisterService, _NERemoveValueFromIntKeyedDictionary, 
                        _NERepeatingEventCreate, _NERepeatingEventGetIntervalInMilliseconds, 
                        _NERepeatingEventGetTimesFired, _NERepeatingEventRelease, 
                        _NEResourcesCopyContentFilterExclusionList, _NEResourcesCopyLocalizedNSString, 
@@ -619,8 +618,8 @@ exports:
                        NEPolicyRouteRule, NEPolicySession, NEPolicySessionFileHandle, 
                        NEProcessInfo, NEProfileIngestion, NEProfileIngestionPayloadInfo, 
                        NEProfilePayloadBase, NEProfilePayloadContentFilter, NEProvider, 
-                       NEProviderServer, NEProxyConfigurationNetworkAgent, NEProxyServer, 
-                       NEProxySettings, NETransparentProxyManager, NETransparentProxyNetworkSettings, 
+                       NEProxyConfigurationNetworkAgent, NEProxyServer, NEProxySettings, 
+                       NETransparentProxyManager, NETransparentProxyNetworkSettings, 
                        NETunnelNetworkSettings, NETunnelProvider, NETunnelProviderManager, 
                        NETunnelProviderProtocol, NETunnelProviderSession, NEUserNotification, 
                        NEUtilConfigurationClient, NEVPN, NEVPNApp, NEVPNConnection, 

@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/AirTraffic.framework/AirTraffic
 current-version:       116
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ATCrashReportInternalLogs, _ATDataMigrationCompleteNotification, _ATDataRestoreCompleteNotification,
                           _ATDataUsageBundleIdentifier, _ATDriveCommandCopyItems, _ATDriveCommandCreateDirectory,
                           _ATDriveCommandDirectoryContents, _ATDriveCommandDownloadFile, _ATDriveCommandFreeSpace,
@@ -45,19 +46,20 @@ exports:
                           _ATServiceProxy, _ATSession, _ATSessionTask, _ATStatus, _ATStatusObserver, _ATStoreInfo,
                           _ATXPCConnection, _ATXPCMessage, _ATXPCServer ]
     objc-ivars:         [ _ATAccountInfo._DSID, _ATAccountInfo._altDSID, _ATAccountInfo._appleID, _ATAirlock._basePath,
-                          _ATAirlock._fm, _ATAsset._assetState, _ATAsset._assetType, _ATAsset._bypassStore,
-                          _ATAsset._bytesRemaining, _ATAsset._canUseCellularData, _ATAsset._clientParams,
+                          _ATAirlock._fm, _ATAsset._allowDownloadOnConstrainedNetwork, _ATAsset._assetState, _ATAsset._assetType,
+                          _ATAsset._bypassStore, _ATAsset._bytesRemaining, _ATAsset._canUseCellularData, _ATAsset._clientParams,
                           _ATAsset._completedAssetParts, _ATAsset._completionBlock, _ATAsset._dataclass, _ATAsset._downloadOnly,
-                          _ATAsset._downloadProgress, _ATAsset._error, _ATAsset._icon, _ATAsset._identifier, _ATAsset._infoPlist,
-                          _ATAsset._installOnly, _ATAsset._installProgress, _ATAsset._installStarted, _ATAsset._installed,
-                          _ATAsset._isDownload, _ATAsset._isForeground, _ATAsset._isPrioritized, _ATAsset._isRestore,
-                          _ATAsset._legacy, _ATAsset._localPath, _ATAsset._lyricsEmbeddedInAsset, _ATAsset._powerRequired,
-                          _ATAsset._prettyName, _ATAsset._priority, _ATAsset._progressBlock, _ATAsset._protectionType,
-                          _ATAsset._queueDuration, _ATAsset._queueStartTime, _ATAsset._readyForStore, _ATAsset._resumeData,
-                          _ATAsset._storeInfo, _ATAsset._storePID, _ATAsset._storePlist, _ATAsset._totalBytes,
-                          _ATAsset._transferDuration, _ATAsset._transferStartTime, _ATAsset._variantOptions,
-                          _ATCodableStream._fileHandleForReading, _ATCodableStream._inputStream, _ATCodableStream._queue,
-                          _ATCodableStream._reader, _ATCodableStream._writer, _ATConnection._atcRunning,
+                          _ATAsset._downloadPauseReason, _ATAsset._downloadProgress, _ATAsset._enqueueSource, _ATAsset._error,
+                          _ATAsset._icon, _ATAsset._identifier, _ATAsset._infoPlist, _ATAsset._installOnly,
+                          _ATAsset._installProgress, _ATAsset._installStarted, _ATAsset._installed, _ATAsset._isDownload,
+                          _ATAsset._isForeground, _ATAsset._isPrioritized, _ATAsset._isRestore, _ATAsset._legacy,
+                          _ATAsset._localPath, _ATAsset._lyricsEmbeddedInAsset, _ATAsset._mediaItemDownloadInfo,
+                          _ATAsset._powerRequired, _ATAsset._prettyName, _ATAsset._priority, _ATAsset._progressBlock,
+                          _ATAsset._protectionType, _ATAsset._queueDuration, _ATAsset._queueStartTime, _ATAsset._readyForStore,
+                          _ATAsset._resumeData, _ATAsset._storeInfo, _ATAsset._storePID, _ATAsset._storePlist,
+                          _ATAsset._totalBytes, _ATAsset._transferDuration, _ATAsset._transferStartTime,
+                          _ATAsset._variantOptions, _ATCodableStream._fileHandleForReading, _ATCodableStream._inputStream,
+                          _ATCodableStream._queue, _ATCodableStream._reader, _ATCodableStream._writer, _ATConnection._atcRunning,
                           _ATConnection._atcRunningToken, _ATConnection._delegate, _ATConnection._registerForStatus,
                           _ATConnection._registeredDataclasses, _ATConnection._xpcConnection, _ATFileBuffer._bufferFileHandle,
                           _ATFileBuffer._currentReadLocation, _ATFileBuffer._length, _ATFileBufferedPipe._buffer,

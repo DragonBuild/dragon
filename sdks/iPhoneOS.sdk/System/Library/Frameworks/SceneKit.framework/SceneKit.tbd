@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1ABA0806-20F4-3D22-BF04-FCB9001DC9F3', 'armv7s: DFE649ED-4041-33A2-9F37-76690FCEAD9D', 
-                   'arm64: 5DCB330E-65B4-3BA3-8648-D7BB0F7849CC', 'arm64e: B5750C0F-752B-3C57-B2ED-910AD28ADA7B' ]
+                   'arm64: 4F561212-6503-38C9-9C11-0019430AAE65', 'arm64e: 060727DF-D987-3927-A320-52465C43819C' ]
 platform:        ios
 install-name:    '/System/Library/Frameworks/SceneKit.framework/SceneKit'
-current-version: 540.3
+current-version: 537.3
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _C3DAnimationManagerContainsSceneTimeBasedAnimation, _C3DAnimationManagerIsEmpty, 
@@ -144,16 +144,16 @@ exports:
                        _SCNSceneSourceForceMorphNormals, _SCNSceneSourceFormat, _SCNSceneSourceFormatC3D, 
                        _SCNSceneSourceFormatCOLLADA, _SCNSceneSourceFormatHint, _SCNSceneSourceFormatOBJ, 
                        _SCNSceneSourceFormatSCN, _SCNSceneSourceGeometryMemoryUsageKey, 
-                       _SCNSceneSourceInputSource, _SCNSceneSourceLoadTexturesInCPUMemory, 
-                       _SCNSceneSourceLoadingOptionPreserveOriginalTopology, _SCNSceneSourceOverrideAssetURLsKey, 
-                       _SCNSceneSourceSceneIndexKey, _SCNSceneSourceShouldCacheKey, 
-                       _SCNSceneSourceSkipConsistencyCheckKey, _SCNSceneSourceStrictConformanceKey, 
-                       _SCNSceneSourceTextureMemoryUsageKey, _SCNSceneSourceUseModelIOToLoadDAEFiles, 
-                       _SCNSceneSourceUseSafeModeKey, _SCNSceneSourceVerboseMode, 
-                       _SCNSceneStartTimeAttributeKey, _SCNSceneUpAxisAttributeKey, 
-                       _SCNSceneWriteToURLShouldKeepReferencesToFilesOption, _SCNSceneWriteToURLShouldZipOption, 
-                       _SCNSetExternalTextureSource, _SCNSetPerformanceStatisticsEnabled, 
-                       _SCNSetResourceBundle, _SCNSetShaderCollectionEnabled, _SCNShaderModifierEntryPointFragment, 
+                       _SCNSceneSourceInputSource, _SCNSceneSourceLoadingOptionPreserveOriginalTopology, 
+                       _SCNSceneSourceOverrideAssetURLsKey, _SCNSceneSourceSceneIndexKey, 
+                       _SCNSceneSourceShouldCacheKey, _SCNSceneSourceSkipConsistencyCheckKey, 
+                       _SCNSceneSourceStrictConformanceKey, _SCNSceneSourceTextureMemoryUsageKey, 
+                       _SCNSceneSourceUseModelIOToLoadDAEFiles, _SCNSceneSourceUseSafeModeKey, 
+                       _SCNSceneSourceVerboseMode, _SCNSceneStartTimeAttributeKey, 
+                       _SCNSceneUpAxisAttributeKey, _SCNSceneWriteToURLShouldKeepReferencesToFilesOption, 
+                       _SCNSceneWriteToURLShouldZipOption, _SCNSetExternalTextureSource, 
+                       _SCNSetPerformanceStatisticsEnabled, _SCNSetResourceBundle, 
+                       _SCNSetShaderCollectionEnabled, _SCNShaderModifierEntryPointFragment, 
                        _SCNShaderModifierEntryPointGeometry, _SCNShaderModifierEntryPointLightingModel, 
                        _SCNShaderModifierEntryPointSurface, _SCNTextureContentWithGLInfo, 
                        _SCNTextureOffsetXKey, _SCNTextureOffsetYKey, _SCNVector3EqualToVector3, 

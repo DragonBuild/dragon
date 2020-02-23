@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/IAP.framework/IAP
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _Generate32BitConnectionID, _GetConnectionToIAP2Daemon, _GetConnectionToIAPDaemon,
                           _GetConnectionToIAPDaemonByCheckingConnectionID, _GetConnectionToIAPDaemonOwningPhysicalConnector,
                           _GetConnectionToIAPDaemonWithConnectionID, _GetConnectionToIAPTransportDaemon,
@@ -52,13 +53,13 @@ exports:
                           _IAPAppProcessIDIsUsingAccessory, _IAPAppReconnectAccessory, _IAPAppRegisterClient,
                           _IAPAppRequestAccessoryWiFiCredentials, _IAPAppSendAccessibilityResponse, _IAPAppSendDebugCommand,
                           _IAPAppSendDeviceIdentifierNotification, _IAPAppSendPointOfInterestInformation,
-                          _IAPAppStartAccessibility, _IAPAppStopAccessibility, _IAPAppToAppFifoPath, _IAPAppToAppSocketPath,
-                          _IAPAudioCopyDeviceStates, _IAPAudioDeviceStateChangedNotification,
-                          _IAPAudioDisableVoiceSignalProcessing, _IAPAudioEnableVoiceSignalProcessing, _IAPAudioGetVolume,
-                          _IAPAudioGetVolumeForTransport, _IAPAudioIsVoiceSignalProcessingEnabled,
-                          _IAPAudioIsVolumeControlSupported, _IAPAudioIsVolumeControlSupportedForTransport,
-                          _IAPAudioNotifyOfPlaybackStateChanged, _IAPAudioPlaybackStateChangedNotification,
-                          _IAPAudioRegisterDeviceStateChangedCallback,
+                          _IAPAppSendXPCMessageReplyWithTimeout, _IAPAppSendXPCMessageWithTimeout, _IAPAppStartAccessibility,
+                          _IAPAppStopAccessibility, _IAPAppToAppFifoPath, _IAPAppToAppSocketPath, _IAPAudioCopyDeviceStates,
+                          _IAPAudioDeviceStateChangedNotification, _IAPAudioDisableVoiceSignalProcessing,
+                          _IAPAudioEnableVoiceSignalProcessing, _IAPAudioGetVolume, _IAPAudioGetVolumeForTransport,
+                          _IAPAudioIsVoiceSignalProcessingEnabled, _IAPAudioIsVolumeControlSupported,
+                          _IAPAudioIsVolumeControlSupportedForTransport, _IAPAudioNotifyOfPlaybackStateChanged,
+                          _IAPAudioPlaybackStateChangedNotification, _IAPAudioRegisterDeviceStateChangedCallback,
                           _IAPAudioRegisterShouldPauseAudioOnHeadsetDisconnectChangedCallback,
                           _IAPAudioRegisterVolumeChangedCallback, _IAPAudioRegisterVolumeControlSupportChangedCallback,
                           _IAPAudioSetVolume, _IAPAudioSetVolumeForTransport, _IAPAudioShouldPauseAudioOnHeadsetDisconnect,
@@ -105,8 +106,10 @@ exports:
                           _IAPlocationSendGPRMCDataStatusValues, _IAPlocationSetAccessoryNMEAFilter, _IsAppVisibleInCurrentMode,
                           _IsDataAggregationEnabled, _IsExistAppMusic, _IsExistAppPodcasts, _IsExistAppiBooks,
                           _IsExistAppiTunesU, _IsIAP2DaemonConnection, _IsIAPDaemonConnection, _SendDisplayPortStatusToAccessory,
-                          _ShouldAccessoryBeHidden, __Z21GetIAPConnectionQueuev, __Z22GetIAPDaemonConnectionv,
-                          __Z23GetIAP2DaemonConnectionv, __Z31GetIAPTransportDaemonConnectionv,
+                          _ShouldAccessoryBeHidden, __IAPSendXPCMessageReplyWithTimeout, __IAPSendXPCMessageWithTimeout,
+                          __Z21GetIAPConnectionQueuev, __Z22GetIAPDaemonConnectionv, __Z23GetIAP2DaemonConnectionv,
+                          __Z24__IAPConnectionMutexLockv, __Z26__IAPConnectionMutexUnlockv,
+                          __Z31GetIAPTransportDaemonConnectionv,
                           __Z41AccessoryDigitalAudioNotificationCallBackP22__CFNotificationCenterPvPK10__CFStringPKvPK14__CFDictionary,
                           ___instance_ref_IAPNavigation, _iaptransportdHasLaunched, _kBTHIDPriorityDefault, _kBTHIDPriorityHigh,
                           _kEAPipePath, _kIAP2AvailableNotification, _kIAP2DXPCServiceName, _kIAP2ServerDiedNotification,

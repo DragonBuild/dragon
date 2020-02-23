@@ -1,11 +1,12 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/WirelessCoexManager.framework/WirelessCoexManager
 current-version:       1
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _WCMEnabled, _WirelessRadioManagerDumpLog, _WirelessRadioManagerSetLogToFile ]
     objc-classes:       [ _WCMClientProxy, _WCMSetting, _WRMClientInterface, _WRM_iRATInterface,
                           _WRM_iRATProximityRecommendation, _WRM_iRATProximityRecommendationLogging ]
@@ -14,9 +15,11 @@ exports:
                           _WRMClientInterface.mNotificationBlock, _WRMClientInterface.mProcessId, _WRMClientInterface.mQueue,
                           _WRM_iRATInterface.mAppLists, _WRM_iRATInterface.mBBAssertionBGAppActive,
                           _WRM_iRATInterface.mClientSupportsMultipleAppTypes,
+                          _WRM_iRATInterface.mGetLinkRecommendationMetricsHandler,
+                          _WRM_iRATInterface.mGetLinkRecommendationMetricsHandlerEnabled,
                           _WRM_iRATInterface.mLinkPreferenceSubscriptionEnabled, _WRM_iRATInterface.mLocationAssertionEnabled,
-                          _WRM_iRATInterface.mLocationState, _WRM_iRATInterface.mObserver, _WRM_iRATInterface.mOppModeObserver,
-                          _WRM_iRATInterface.mProximityGetLinkRecommendationEnabled,
+                          _WRM_iRATInterface.mLocationState, _WRM_iRATInterface.mObserver, _WRM_iRATInterface.mOppBtLQMObserver,
+                          _WRM_iRATInterface.mOppModeObserver, _WRM_iRATInterface.mProximityGetLinkRecommendationEnabled,
                           _WRM_iRATInterface.mProximityGetLinkRecommendationHandler,
                           _WRM_iRATInterface.mProximityLinkRecommendationList,
                           _WRM_iRATInterface.mProximitySubscribeLinkRecommendationEnabled,

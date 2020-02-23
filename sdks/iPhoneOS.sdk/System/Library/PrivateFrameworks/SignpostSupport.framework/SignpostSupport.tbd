@@ -1,14 +1,17 @@
----
-archs:                 [ armv7, armv7s, arm64 ]
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
+flags:                 [ flat_namespace, not_app_extension_safe ]
 install-name:          /System/Library/PrivateFrameworks/SignpostSupport.framework/SignpostSupport
-current-version:       27
+current-version:       40
 compatibility-version: 1
 exports:
-  - archs:              [ armv7, armv7s, arm64 ]
-    symbols:            [ _SSCAEventTypeForSignpost, _SSCAIntervalTypeForSignpostInterval, _SSCAIsCAMetadataSubsystemCategory,
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _IsPerfLoggingInterval, _PassesPerfLoggingWhitelist, _SSCAEventTypeForSignpost,
+                          _SSCAIntervalTypeForSignpostInterval, _SSCAIsCAMetadataSubsystemCategory,
                           _SSCAIsCAWindowServerInMemorySubsystemCategory, _SignpostPlatformForDevice, _SignpostPlatformForString,
-                          _SignpostSerializationErrorDomain, _SignpostSupportAverageDurationMachContinuousTimeForIntervals,
+                          _SignpostReporterShouldUseWhitelist, _SignpostReporterWhitelistedStringSet,
+                          _SignpostSupportAverageDurationMachContinuousTimeForIntervals,
                           _SignpostSupportAverageDurationNsForIntervals,
                           _SignpostSupportAverageDurationOfLongestIntervalsInMachContinuousTime,
                           _SignpostSupportAverageDurationOfLongestIntervalsInNs,
@@ -21,6 +24,7 @@ exports:
                           _SignpostSupportTotalDurationMachContinuousTimeForIntervals,
                           _SignpostSupportTotalDurationNsForIntervals, _SignpostSupportVersionNumber,
                           _SignpostSupportVersionString, _SignpostSystemTimebaseRatio, _StringForSignpostPlatform,
+                          _StringPassesSignpostReporterStringWhitelist,
                           __SignpostSerializeableObjectFromSerializedObjectDictionary,
                           __SignpostSupportSerializationDataFromObjectArray, __signpost_debug_log,
                           _kSignpostSupportMachTimeTranslator_UnknownTime ]
@@ -82,11 +86,14 @@ exports:
                           _SignpostCAInstrumentationProcessor._frameLatencyBlock,
                           _SignpostCAInstrumentationProcessor._frameLifetimeBlock,
                           _SignpostCAInstrumentationProcessor._frameSeedToAccumulatedStateDict,
-                          _SignpostCAInstrumentationProcessor._hidLatencyBlock, _SignpostCAInstrumentationProcessor._renderBlock,
+                          _SignpostCAInstrumentationProcessor._hidLatencyBlock,
+                          _SignpostCAInstrumentationProcessor._isConciseFormat, _SignpostCAInstrumentationProcessor._renderBlock,
                           _SignpostCAInstrumentationProcessor._transactionLifetimeBlock,
                           _SignpostCAIntervalAggregationStats._intervalCount,
                           _SignpostCAIntervalAggregationStats._maxIntervalDurationNs,
                           _SignpostCAIntervalAggregationStats._totalIntervalDurationNs,
+                          _SignpostCAProcessStallAggregation._firstFrameGlitchStats,
+                          _SignpostCAProcessStallAggregation._glitchStats,
                           _SignpostCAProcessStallAggregation._isSystemAggregation,
                           _SignpostCAProcessStallAggregation._longCommitStats,
                           _SignpostCAProcessStallAggregation._longFrameLatencyStats,
@@ -97,6 +104,8 @@ exports:
                           _SignpostCAProcessStallAggregation._longTransactionLifetimeStats,
                           _SignpostCAProcessStallAggregation._pids, _SignpostCAProcessStallAggregation._processExecutablePath,
                           _SignpostCAProcessStallAggregation._processName,
+                          _SignpostCAProcessStallAggregation._responsibleFirstFrameGlitchStats,
+                          _SignpostCAProcessStallAggregation._responsibleGlitchStats,
                           _SignpostCAStallAggregation._executablePathToStallAggregation,
                           _SignpostCAStallAggregation._systemAggregation,
                           _SignpostCAStallAggregationBuilder._caInstrumentationProcessor,
@@ -129,6 +138,7 @@ exports:
                           _SignpostFrameLifetimeInterval._frameLatencyInterval, _SignpostFrameLifetimeInterval._frameSeed,
                           _SignpostFrameLifetimeInterval._hidLatencyInterval,
                           _SignpostFrameLifetimeInterval._pidToContextInfoArrayDict,
+                          _SignpostFrameLifetimeInterval._previousFramePresentationMCT,
                           _SignpostFrameLifetimeInterval._renderInterval, _SignpostFrameLifetimeInterval._swapID,
                           _SignpostHIDLatencyInterval._frameSeed, _SignpostHIDLatencyInterval._swapId,
                           _SignpostInterval._beginEvent, _SignpostInterval._endEvent,
@@ -151,12 +161,15 @@ exports:
                           _SignpostRenderServerRenderInterval._frameSeed,
                           _SignpostRenderServerRenderInterval._hasOffScreenPassCount,
                           _SignpostRenderServerRenderInterval._offScreenPassCount,
+                          _SignpostRenderServerRenderInterval._renderServerPID,
+                          _SignpostRenderServerRenderInterval._renderServerTID,
                           _SignpostRenderServerRenderInterval._renderSkipReason, _SignpostStackFrame._offset,
                           _SignpostStackFrame._symbolOwnerUUID, _SignpostStreamEvent._serialNumber,
                           _SignpostStreamEvent._timeoutSource, _SignpostStreamEvent._totalFrameCount,
                           _SignpostSupportCompositorInterval._contributingPids,
                           _SignpostSupportExactProcessNameFilter._processNameSet,
-                          _SignpostSupportLogMessage.__machContinuousTimestamp, _SignpostSupportLogMessage._message,
+                          _SignpostSupportLogMessage.__machContinuousTimestamp,
+                          _SignpostSupportLogMessage._hasNonScalarDynamicData, _SignpostSupportLogMessage._message,
                           _SignpostSupportLogMessage._messageType, _SignpostSupportLogMessage._processID,
                           _SignpostSupportLogMessage._processImagePath, _SignpostSupportLogMessage._processImageUUID,
                           _SignpostSupportLogMessage._processName, _SignpostSupportLogMessage._processUniqueID,
