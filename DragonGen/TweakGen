@@ -11,19 +11,29 @@ filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 cfesc=$(echo "$CFLAGS" | sed 's/\//\\\//g')
 xmcName=$(echo "${LOGOS_FILE}" | sed 's/.x/.m/g')
-xmcName0="${LOGOS_FILE}.o"
 
-genLogos="build \$builddir/${xmcName} : logos ${LOGOS_FILE}"
-genComp="build \$builddir/${xmcName0} : compile \$builddir/${xmcName}ƒƒ"
-genLink="build \$dsymtarget : link \$builddir/${xmcName0} "
+genLogos=""
+genComp=""
+genLink="build \$dsymtarget : link "
 
 set -f
 subsbs=(${TWEAK_FILES})
 set +f 
 for i in "${subsbs[@]}"; do
-    e=$(echo "${i}" | sed 's/\.m/\.o/g')
+    e="${i}.o"
     genComp+="build \$builddir/${e} : compile ${i}ƒƒ"
     genLink+="\$builddir/${e} "
+done
+
+set -f
+subsbsx=(${LOGOS_FILE})
+set +f
+for i in "${subsbsx[@]}"; do
+    e=$(echo "${i}" | sed 's/\.x/\.m/g')
+    genLogos+="build \$builddir/${e} : logos ${i}ƒƒ"
+    f="${e}.o"
+    genComp+="build \$builddir/${f} : compile \$builddir/${e}ƒƒ"
+    genLink+="\$builddir/${f} "
 done
 
 echo -e "${GenColor}[DragonGen]${NC} Generating input files"
