@@ -28,11 +28,11 @@ pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(
 
 rule compile 
     description = Compiling $in
-    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks $in -o $out
+    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks  -F$theosdir/lib $in -o $out
 
 rule link
     description = Linking %%name%%
-    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks  -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I$$DRAGONBUILD/Preferences.framework -I$$DRAGONBUILD/headers/ -o $out $in 
+    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/lib -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks  -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I$$DRAGONBUILD/Preferences.framework -I$$DRAGONBUILD/headers/  -F$theosdir/lib -o $out $in 
 
 rule debug
     description = Generating Debug Symbols
