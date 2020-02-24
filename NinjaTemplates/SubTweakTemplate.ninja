@@ -37,11 +37,11 @@ rule lint
 
 rule compile 
     description = Compiling $in
-    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework/ $$arcs -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/PrivateFrameworks $in -o $out
+    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk $in -o $out
 
 rule link
     description = Linking %%name%%
-    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework/ $$arcs -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/PrivateFrameworks  -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework -I/Users/kritanta/ios/dragonbuild/headers/ -o $out $in 
+    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks  -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I$$DRAGONBUILD/headers/Preferences.framework -I$$DRAGONBUILD/headers/ -o $out $in 
 
 rule debug
     description = Generating Debug Symbols

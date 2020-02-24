@@ -28,7 +28,7 @@ pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(
 
 rule compile 
     description = Compiling $in
-    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk/System/Library/PrivateFrameworks  -F$theosdir/lib $in -o $out
+    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc -I$$DRAGONBUILD/headers/Preferences.framework/ $$arcs -F$sdk $in -o $out
 
 rule link
     description = Linking %%name%%
