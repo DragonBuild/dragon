@@ -22,13 +22,13 @@ DragonBuild does not auto-import Foundation/UIKit headers.. That will likely not
 
 ## Notes
 
-* This was built for MacOS. I cannot guarantee it works well on Linux. 
+* This was built for MacOS, although I've done a little bit of testing on Linux. If it does not detect `ldid` in the path, it will look in `$DRAGONBUILD/toolchain/bin/` for a toolchain. I would advise properly installing [sbinger's toolchain](https://github.com/sbingner/llvm-project/releases/tag/v10.0.0-1) to your path. 
 
 ## Basic Usage
 
 `dragon [gen] [build] [clean] [install]`
 
-`dragon gen` Generate the ninja build file
+`dragon gen` Generate the ninja build file. Handled automatically now. 
 
 `dragon build` Build the project
 
