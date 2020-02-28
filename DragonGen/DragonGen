@@ -2,6 +2,13 @@
 
 source $DRAGONBUILD/internal/dragoncolors
 
+function DragonMakeNotFound()
+{
+    if [ -f "Makefile" ]; then  
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Attempting to generate DragonMake file from existing Makefile${NC}"
+        source $DRAGONBUILD/DragonGen/MakefileProcessor
+    fi
+}
 if [ -f "DragonMake" ]; then  
     source DragonMake   
     echo -e "${GenColor}[DragonGen]${BoldColor} Generating Build Scripts for ${TWEAK_NAME}${NC}"
@@ -19,13 +26,8 @@ if [ -f "DragonMake" ]; then
             done
         fi
     echo -e "${GenColor}[DragonGen]${NC} Done"
+else
+    DragonMakeNotFound
 fi
 
-function DragonMakeNotFound()
-{
-    if [ -f "Makefile" ]; then  
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Attempting to generate DragonMake file from existing Makefile${NC}"
-        source MakefileProcessor
-    fi
-}
 

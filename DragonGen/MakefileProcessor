@@ -2,13 +2,45 @@
 
 source $DRAGONBUILD/internal/dragoncolors
 
-
 function get_make_var()
 {
     echo 'unique123:;@echo ${'"$1"'}' | 
-      make -f - -f "$2" --no-print-directory unique123
+        make -j 9 -f - -f "$2" --no-print-directory unique123
 }
 
-echo -e "${PrefixColor}[DragonGen]${NC} Invoking GNU Make to process variables${NC}"
-tweakNameVar="get_make_var TWEAK_NAME Makefile"
-targetVar="get_make_var TARGET Makefile"
+echo -e "${GenColor}[DragonGen]${BoldColor} Invoking GNU Make to process variables${NC}"
+echo -e "${GenColor}[DragonGen]${NC} If your theos is slow, this will be too.${NC}"
+tweakNameVar=$(get_make_var "TWEAK_NAME" "Makefile")
+echo -e "${GenColor}[DragonGen]${NC} Tweak Name: ${tweakNameVar} ${NC}"
+targetVar=$(get_make_var "TARGET" "Makefile")
+echo -e "${GenColor}[DragonGen]${NC} Target: ${targetVar} ${NC}"
+tweakFiles=$(get_make_var "${tweakNameVar}_FILES" "Makefile")
+echo -e "${GenColor}[DragonGen]${NC} Files: ${tweakFiles} ${NC}"
+
+echo -e "${GenColor}[DragonGen]${BoldColor} Generating DragonMake variables${NC}"
+
+gTweakType="\""
+if grep -q tweak.mk "Makefile"; then
+    gTweakType="\"Tweak\""
+fi
+
+echo -e "${GenColor}[DragonGen]${NC} TWEAK_TYPE=$gTweakType ${NC}"
+
+gLogosFiles="\""
+gTweakFiles="\""
+
+set -f
+subsb=(${tweakFiles})
+set +f 
+for i in "${subsb[@]}"; do
+    if [[ $i =~ .*.x.?$ ]]; then
+        gLogosFiles+="$i "
+    else
+        gTweakFiles+="$i "
+    fi
+done
+gLogosFiles+="\""
+gTweakFiles+="\""
+
+echo -e "${GenColor}[DragonGen]${NC} LOGOS_FILES=$gLogosFiles ${NC}"
+echo -e "${GenColor}[DragonGen]${NC} TWEAK_FILES=$gTweakFiles ${NC}"
