@@ -28,7 +28,7 @@ pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(
 
 rule logos 
     description = Processing $in with Logos 
-    command = $theosdir/bin/logos.pl $in > $out
+    command = $theosdir/bin/logos2.pl $in > $out
 
 rule lint
     description = Linting $in

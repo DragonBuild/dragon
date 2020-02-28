@@ -10,7 +10,7 @@ theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
 filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 cfesc=$(echo "$CFLAGS" | sed 's/\//\\\//g')
-xmcName=$(echo "${LOGOS_FILE}" | sed 's/.x/.m/')
+xmcName=$(echo "${LOGOS_FILE}" | sed 's/.x/.m/' | sed 's/\//\\\//g')
 
 genLogos=""
 genComp=""
