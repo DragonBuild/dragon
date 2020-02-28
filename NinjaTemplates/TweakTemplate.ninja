@@ -9,9 +9,9 @@ dsymtarget = $signdir/_/Library/MobileSubstrate/DynamicLibraries/%%name%%.nosym
 # We use theos for include headers. You can specify any directory that has the /include/ subdirectory we need. 
 theosdir = $$DRAGONBUILD
 
-ccloc = cc=$$(clang++ --version | grep "InstalledDir:*" | sed "s/InstalledDir: //g" | xargs);cc+="/clang++";
-cc = $$cc
-ll = $$cc
+ccloc = $${ToolchainPath}$${ToolchainPrefix}clang++
+cc = $ccloc
+ll = $ccloc
 
 optim = 2
 iosvers = %%minios%%
@@ -36,19 +36,19 @@ rule lint
 
 rule compile 
     description = Compiling $in
-    command = $ccloc $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc $$arcs -F$$DRAGONBUILD/lib $in -o $out
+    command = $pre $cc $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $arc $$arcs -F$$DRAGONBUILD/lib $in -o $out
 
 rule link
     description = Linking %%name%%
-    command = $ccloc $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  $$arcs -F$$DRAGONBUILD/lib -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework -I/Users/kritanta/ios/dragonbuild/headers/ -o $out $in 
+    command = $pre $ll $lf $lflags -F$sdk $cflags $$fwk $$arcs -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  $$arcs -F$$DRAGONBUILD/lib -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback  -isysroot $sdk -I/Users/kritanta/ios/dragonbuild/headers/Preferences.framework -I/Users/kritanta/ios/dragonbuild/headers/ -o $out $in 
 
 rule debug
     description = Generating Debug Symbols
-    command = dsymutil "$in"; mv $in $out
+    command = $${ToolchainPath}dsymutil "$in" 2&> /dev/null; mv $in $out
 
 rule sign
     description = Signing $out
-    command = ldid -S $in; mv $in $target
+    command = $${ToolchainPath}ldid -S $in; mv $in $target
 
 rule clean
     description = Cleaning Up

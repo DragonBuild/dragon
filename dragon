@@ -8,9 +8,15 @@ clean=0
 
 gen_tbd_from_lib=1
 
+ToolchainPath=""
+ToolchainPrefix=""
+command -v ldid >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
+
 source DragonMake
 
 set -o pipefail
+
+
 
 function cleanbuildfail {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
@@ -73,7 +79,7 @@ if [ $clean == 1 ]; then
 fi
 
 cwd=$(basename $PWD)
-hash=$(md5 DragonMake)
+hash=$(md5sum DragonMake)
 lasthash=$(cat .dragon/hash)
 
 if [ $gen == 1 ]; then 
