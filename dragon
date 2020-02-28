@@ -82,6 +82,18 @@ cwd=$(basename $PWD)
 hash=$(md5sum DragonMake)
 lasthash=$(cat .dragon/hash)
 
+if [ -f "DragonMake" ]; then  
+    true
+else
+    gen=1
+fi
+
+if [ -d ".dragon" ]; then  
+    true
+else
+    gen=1
+fi
+
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja

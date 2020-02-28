@@ -7,6 +7,7 @@ function DragonMakeNotFound()
     if [ -f "Makefile" ]; then  
         echo -e "${PrefixColor}[Dragon]${BoldColor} Attempting to generate DragonMake file from existing Makefile${NC}"
         source $DRAGONBUILD/DragonGen/MakefileProcessor
+        source $DRAGONBUILD/DragonGen/DragonGen
     fi
 }
 if [ -f "DragonMake" ]; then  

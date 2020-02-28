@@ -10,7 +10,7 @@ theosEscaped=$(echo "$THEOS" | sed 's/\//\\\//g')
 filesEscaped=$(echo "$TWEAK_FILES" | sed 's/\//\\\//g')
 dragonEscaped=$(echo "$DRAGONBUILD" | sed 's/\//\\\//g')
 cfesc=$(echo "$CFLAGS" | sed 's/\//\\\//g')
-xmcName=$(echo "${LOGOS_FILE}" | sed 's/.x/.m/' | sed 's/\//\\\//g')
+xmcName=$(echo "${LOGOS_FILES}${LOGOS_FILE}" | sed 's/.x/.m/' | sed 's/\//\\\//g')
 
 genLogos=""
 genComp=""
@@ -24,9 +24,9 @@ for i in "${subsbs[@]}"; do
     genComp+="build \$builddir/${e} : compile ${i}ƒƒ"
     genLink+="\$builddir/${e} "
 done
-
+legacyFiles="${LOGOS_FILE}${LOGOS_FILES}"
 set -f
-subsbsx=(${LOGOS_FILE})
+subsbsx=(${legacyFiles})
 set +f
 for i in "${subsbsx[@]}"; do
     e=$(echo "${i}" | sed 's/\.x/\.m/g')
