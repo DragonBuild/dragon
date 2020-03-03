@@ -5,6 +5,7 @@ install=0
 build=0
 gen=0
 clean=0
+exportt=0
 
 gen_tbd_from_lib=1
 
@@ -30,12 +31,13 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 usage()
 {
     echo "-=-=-"
-    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean]"
+    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean] [export]"
     echo "-=-=-"
     echo "d|do - Build and Install"
     echo "g|gen|generate - DEPRECATED. Generation is automatic."
     echo "b|build|make - Compile, link, and package your project"
     echo "i|install - Install to device located at \$DRBIP"
+    echo "export - Tell ninja to create a compile_commands.json"
     echo "-=-=-"
 }
 printBan()
@@ -53,6 +55,9 @@ while [ "$1" != "" ]; do
                                 install=1
                                 ;;
         g | gen | generate)     gen=1
+                                ;;
+        exp | export)           exportt=1
+                                build=1
                                 ;;
         b | build | make)       build=1
                                 ;;
@@ -110,6 +115,14 @@ if [ $build == 1 ]; then
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
     cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+    if [ $exportt == 1 ]; then 
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+    fi
     if [ "$TWEAK_TYPE" == "Library" ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "
         echo -e "${PrefixColor}[Dragon]${NC} Moving Dylib to root directory"
