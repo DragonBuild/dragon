@@ -38,11 +38,11 @@ rule lint
 
 rule prefix
     description = Compiling $in
-    command = $pre clang $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg -arch arm64 -F$sdk -emit-pch $in -o $out
+    command = $pre clang $cflags -objective-c -c -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk -emit-pch $in -o $out
 
 rule compile 
     description = Compiling $in
-    command = $cc $cflags $modules -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg -arch arm64 -F$sdk/System/Library/PrivateFrameworks $in -o $out
+    command = $pre $cc $cflags $modules -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk/System/Library/PrivateFrameworks $in -o $out
 
 rule link
     description = Linking %%name%%
