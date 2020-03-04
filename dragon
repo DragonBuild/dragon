@@ -6,6 +6,7 @@ build=0
 gen=0
 clean=0
 exportt=0
+export release=0
 
 gen_tbd_from_lib=1
 
@@ -37,9 +38,11 @@ usage()
     echo "g|gen|generate - DEPRECATED. Generation is automatic."
     echo "b|build|make - Compile, link, and package your project"
     echo "i|install - Install to device located at \$DRBIP"
+    echo "r|release - Load DragonRelease variables after DragonMake is loaded"
     echo "export - Tell ninja to create a compile_commands.json"
     echo "-=-=-"
 }
+
 printBan()
 {
     cat $DRAGONBUILD/internal/banner.txt                                             
@@ -62,6 +65,8 @@ while [ "$1" != "" ]; do
         b | build | make)       build=1
                                 ;;
         i | install )           install=1
+                                ;;
+        r | release )           export release=1
                                 ;;
         c | clean )             clean=1
                                 ;;
@@ -159,7 +164,7 @@ if [ $build == 1 ]; then
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
-    dpkg-deb --build -Zgzip .dragon/_ .dragon/packages/
+    dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
     GENOUTPUT="$(ls .dragon/packages)"
     mkdir -p packages 2> /dev/null
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}

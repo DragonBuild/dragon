@@ -11,7 +11,12 @@ function DragonMakeNotFound()
     fi
 }
 if [ -f "DragonMake" ]; then  
+    echo -e "${GenColor}[DragonGen]${BoldColor} Loading DragonMake ${TWEAK_NAME}${NC}"
     source DragonMake   
+    if [ $release == 1 ]; then 
+        echo -e "${GenColor}[DragonGen]${BoldColor} Loading Release Scripts ${TWEAK_NAME}${NC}"
+        source DragonRelease 2>/dev/null || echo -e "${GenColor}[DragonGen]${BoldColor} No Release script found for ${TWEAK_NAME}${NC}"
+    fi
     echo -e "${GenColor}[DragonGen]${BoldColor} Generating Build Scripts for ${TWEAK_NAME}${NC}"
     source $DRAGONBUILD/DragonGen/${TWEAK_TYPE}Gen
     if [ -z "$SUBPROJECTS" ]; then

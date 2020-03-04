@@ -22,9 +22,9 @@ lf = -lobjc -lc++ -lsubstrate %%libs%%
 sdk = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
 buildtarg = -DTARGET_IPHONE=1 
 frameworks = CoreFoundation Foundation UIKit CoreGraphics QuartzCore CoreImage AudioToolbox %%frameworks%%
-cflags = -Wall -mios-version-min=$iosvers -I$$PWD -isysroot "$sdk" -iframework$sdk/System/Library/Frameworks -fcolor-diagnostics -O3 -Wall -ggdb -DDEBUG 
+cflags = -Wall -mios-version-min=$iosvers -I$$PWD -isysroot "$sdk" -iframework$sdk/System/Library/Frameworks -fcolor-diagnostics -O0 -Wall -ggdb -DDEBUG 
 usrCflags = %%cflags%%
-lflags = -dynamiclib -ggdb -lsystem.b -L$$DRAGONBUILD/lib -Xlinker -segalign -Xlinker 4000 #%%lflags%%
+lflags = -dynamiclib -ggdb -lsystem.b -L$$DRAGONBUILD/lib -Xlinker -segalign -Xlinker 4000
 
 pre = fwk=$$(echo "$frameworks" | sed '/^$$/!s/[^ ]* */-framework &/g');arcs=$$(echo "$archs" | sed '/^$$/!s/[^ ]* */-arch &/g');
 
@@ -42,7 +42,7 @@ rule prefix
 
 rule compile 
     description = Compiling $in
-    command = $pre $cc $cflags -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk/System/Library/PrivateFrameworks $in -o $out
+    command = $pre $cc $cflags $usrCflags -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk/System/Library/PrivateFrameworks $in -o $out
 
 rule link
     description = Linking %%name%%
@@ -50,7 +50,7 @@ rule link
 
 rule debug
     description = Generating Debug Symbols
-    command = $${ToolchainPath}dsymutil "$in" 2&> /dev/null; mv $in $out
+    command = mv $in $out
 
 rule sign
     description = Signing $out
