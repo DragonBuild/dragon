@@ -156,6 +156,7 @@ if [ $build == 1 ]; then
     cp control .dragon/_/DEBIAN/control 
     cp ${TWEAK_NAME}.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/${TWEAK_NAME}.plist 2>/dev/null
     cp -R layout/* .dragon/_/ 2>/dev/null
+    chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
     dpkg-deb --build -Zgzip .dragon/_ .dragon/packages/
