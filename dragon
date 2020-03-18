@@ -47,6 +47,8 @@ printBan()
 
 mkdir -p .dragon/ninja > /dev/null
 
+mkdir -p .dragon/modules > /dev/null
+
 # First, get a md5 of the package directory list
 
 while [ "$1" != "" ]; do
