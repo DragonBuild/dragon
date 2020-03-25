@@ -1,0 +1,84 @@
+---
+archs:           [ armv7, arm64, arm64e ]
+platform:        ios
+install-name:    .dragon/sign/usr/lib/libCozy.nosym
+current-version: 0.0
+compatibility-version: 0.0
+exports:         
+  - archs:           [ armv7 ]
+    symbols:         [ ' stub helpers', '_objc_autoreleaseReturnValue$shim' ]
+  - archs:           [ armv7, arm64 ]
+    symbols:         [ __dyld_private ]
+  - archs:           [ armv7, arm64, arm64e ]
+    symbols:         [ '-[CozyColor initWithRed:green:blue:]', , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , , , , , , , , 
+                       , , , , , , , , , , , , , , , , , '+[CozyAnalyzer schemaForImage:withOptions:]', 
+                       '+[CozyAnalyzer schemaForImage:withOptions:]', '+[CozySchema coolnessForColor:]', 
+                       '+[CozySchema coolnessForColor:]', '+[CozySchema darkerColorForColor:byFraction:]', 
+                       '+[CozySchema darkerColorForColor:byFraction:]', 
+                       '+[CozySchema generateFromImage:withOptions:]', 
+                       '+[CozySchema generateFromImage:withOptions:]', 
+                       '+[CozySchema lighterColorForColor:byFraction:]', 
+                       '+[CozySchema lighterColorForColor:byFraction:]', 
+                       '-[CozyColor a]', '-[CozyColor a]', '-[CozyColor b]', 
+                       '-[CozyColor b]', '-[CozyColor d]', '-[CozyColor d]', 
+                       '-[CozyColor g]', '-[CozyColor g]', '-[CozyColor getColor]', 
+                       '-[CozyColor getColor]', '-[CozyColor h]', '-[CozyColor h]', 
+                       '-[CozyColor initWithRed:green:blue:]', '-[CozyColor r]', 
+                       '-[CozyColor r]', '-[CozyColor s]', '-[CozyColor s]', 
+                       '-[CozyColor setA:]', '-[CozyColor setA:]', '-[CozyColor setB:]', 
+                       '-[CozyColor setB:]', '-[CozyColor setD:]', '-[CozyColor setD:]', 
+                       '-[CozyColor setG:]', '-[CozyColor setG:]', '-[CozyColor setH:]', 
+                       '-[CozyColor setH:]', '-[CozyColor setR:]', '-[CozyColor setR:]', 
+                       '-[CozyColor setS:]', '-[CozyColor setS:]', '-[CozyColor setV:]', 
+                       '-[CozyColor setV:]', '-[CozyColor v]', '-[CozyColor v]', 
+                       '-[CozySchema .cxx_destruct]', '-[CozySchema .cxx_destruct]', 
+                       '-[CozySchema backgroundColor]', '-[CozySchema backgroundColor]', 
+                       '-[CozySchema brightnessIsTooLow:]', '-[CozySchema brightnessIsTooLow:]', 
+                       '-[CozySchema colorsForImage:]', '-[CozySchema colorsForImage:]', 
+                       '-[CozySchema colourDistance:andB:]', '-[CozySchema colourDistance:andB:]', 
+                       '-[CozySchema commonColor]', '-[CozySchema commonColor]', 
+                       '-[CozySchema contrastColor]', '-[CozySchema contrastColor]', 
+                       '-[CozySchema contrastValueFor:andB:]', '-[CozySchema contrastValueFor:andB:]', 
+                       '-[CozySchema controlColor]', '-[CozySchema controlColor]', 
+                       '-[CozySchema darker]', '-[CozySchema darker]', 
+                       '-[CozySchema foundColors]', '-[CozySchema foundColors]', 
+                       '-[CozySchema labelColor]', '-[CozySchema labelColor]', 
+                       '-[CozySchema options]', '-[CozySchema options]', 
+                       '-[CozySchema saturationIsTooLow:]', '-[CozySchema saturationIsTooLow:]', 
+                       '-[CozySchema saturationValueFor:andB:]', '-[CozySchema saturationValueFor:andB:]', 
+                       '-[CozySchema secondaryControlColor]', '-[CozySchema secondaryControlColor]', 
+                       '-[CozySchema secondaryLabelColor]', '-[CozySchema secondaryLabelColor]', 
+                       '-[CozySchema setBackgroundColor:]', '-[CozySchema setBackgroundColor:]', 
+                       '-[CozySchema setCommonColor:]', '-[CozySchema setCommonColor:]', 
+                       '-[CozySchema setContrastColor:]', '-[CozySchema setContrastColor:]', 
+                       '-[CozySchema setControlColor:]', '-[CozySchema setControlColor:]', 
+                       '-[CozySchema setDarker:]', '-[CozySchema setDarker:]', 
+                       '-[CozySchema setFoundColors:]', '-[CozySchema setFoundColors:]', 
+                       '-[CozySchema setLabelColor:]', '-[CozySchema setLabelColor:]', 
+                       '-[CozySchema setOptions:]', '-[CozySchema setOptions:]', 
+                       '-[CozySchema setSecondaryControlColor:]', '-[CozySchema setSecondaryControlColor:]', 
+                       '-[CozySchema setSecondaryLabelColor:]', '-[CozySchema setSecondaryLabelColor:]', 
+                       '-[CozySchema setTertiaryControlColor:]', '-[CozySchema setTertiaryControlColor:]', 
+                       '-[CozySchema setTertiaryLabelColor:]', '-[CozySchema setTertiaryLabelColor:]', 
+                       '-[CozySchema tertiaryControlColor]', '-[CozySchema tertiaryControlColor]', 
+                       '-[CozySchema tertiaryLabelColor]', '-[CozySchema tertiaryLabelColor]', 
+                       /Users/kritanta/ios/tweaks/libcozy/.dragon/build/CozyAnalyzer.o, 
+                       /Users/kritanta/ios/tweaks/libcozy/.dragon/build/CozyColor.o, 
+                       /Users/kritanta/ios/tweaks/libcozy/.dragon/build/CozySchema.o, 
+                       _CGRectMake, _CGRectMake ]
+    objc-classes:    [ _CozyAnalyzer, _CozyColor, _CozySchema ]
+    objc-ivars:      [ _CozyColor._h, _CozyColor._a, _CozyColor._b, _CozyColor._d, 
+                       _CozyColor._g, _CozyColor._r, _CozyColor._s, _CozyColor._v, 
+                       _CozySchema._backgroundColor, _CozySchema._commonColor, 
+                       _CozySchema._contrastColor, _CozySchema._controlColor, 
+                       _CozySchema._darker, _CozySchema._foundColors, _CozySchema._labelColor, 
+                       _CozySchema._options, _CozySchema._secondaryControlColor, 
+                       _CozySchema._secondaryLabelColor, _CozySchema._tertiaryControlColor, 
+                       _CozySchema._tertiaryLabelColor ]
+...
