@@ -42,7 +42,7 @@ rule prefix
 
 rule compile 
     description = Compiling $in
-    command = $pre $cc $cflags $modules -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk/System/Library/PrivateFrameworks $in -o $out
+    command = $pre $cc $cflags $modules -objective-c -c $compfl -I$theosdir/include -I$theosdir/vendor/include -I$theosdir/include/_fallback $buildtarg $$arcs -F$sdk/System/Library/PrivateFrameworks -F$$DRAGONBUILD/lib $in -o $out
 
 rule link
     description = Linking %%name%%
