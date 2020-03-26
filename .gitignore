@@ -1,4 +1,5 @@
 ./.dragon
+.vscode
 ./lib/HueSDK_iOS.framework
 .DS_Store
 bin/lib/Logos/Generator/Base/Generator.pm
