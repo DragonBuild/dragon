@@ -45,7 +45,7 @@ bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
 bvars['bundle']['target'] = '$pdirname/_$location$name.dylib'
 bvars['bundle']['libs'] = []
 bvars['bundle']['lopts']= ''
-bvars['bundle']['frameworks'] = ['Preferences']
+bvars['bundle']['frameworks'] = []
 
 bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
