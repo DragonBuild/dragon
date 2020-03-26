@@ -118,7 +118,7 @@ if [ $build == 1 ]; then
         for i in "${subsb[@]}"; do
             echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             cd $i
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja || cleanbuildfail
             rm build.ninja 
             cp -R .dragon/_ ../.dragon
             if [ $i == "." ]; then 
