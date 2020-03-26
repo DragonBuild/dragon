@@ -1,0 +1,10 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: C3A080B9-A364-3EB0-926C-C8EBDEA09B19', 'armv7s: A57B2478-C5AD-3AC0-884B-E164351186F5', 
+                   'arm64: 53957227-B4A5-399C-89DB-1682261BB47F', 'arm64e: C5289316-EE8F-3B0A-8ECD-A1E6C4101903' ]
+platform:        ios
+install-name:    '/usr/lib/libAppPatch.dylib'
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _MIApplyAppPatch ]
+...

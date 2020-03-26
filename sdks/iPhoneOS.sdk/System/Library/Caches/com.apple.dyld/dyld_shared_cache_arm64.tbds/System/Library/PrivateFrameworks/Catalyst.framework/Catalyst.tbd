@@ -1,0 +1,24 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/Catalyst.framework/Catalyst
+current-version:       6
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _CATAssertIsNotQueue, _CATAssertIsQueue, _CATErrorDomain, _CATErrorWithCodeAndUserInfo,
+                          _CATErrorWithDomainCodeAndUserInfo, _CATFormattedStringForKey, _CATGetCatalystQueue, _CATLocalizedKey,
+                          _CATSetCatalystQueue, _CATUnlocalizedKey ]
+    objc-classes:       [ _CATAddress, _CATArbitrator, _CATBatchRemoteTaskOperation, _CATBlockOperationObserver, _CATCollectionController,
+                          _CATEndPoint, _CATMessage, _CATMutableTaskProgress, _CATNetworkReachability, _CATNotificationMessage,
+                          _CATOperation, _CATOperationQueue, _CATProperty, _CATRemoteConnection, _CATRemoteConnectionSocketOptions,
+                          _CATRemoteConnectionTrustDecision, _CATRemoteTaskOperation, _CATRemoteTransport, _CATSerialOperationQueue,
+                          _CATSessionMessage, _CATSessionMessageDidInvalidate, _CATSessionMessageInvalidate, _CATSessionMessageResume,
+                          _CATSessionMessageResumed, _CATSocket, _CATState, _CATStateMachine, _CATStateMachineEvent, _CATTaskBlockServer,
+                          _CATTaskClient, _CATTaskMessage, _CATTaskMessageCancel, _CATTaskMessageError, _CATTaskMessageFetchProgress,
+                          _CATTaskMessageIncrementalProgress, _CATTaskMessageProgressUpdate, _CATTaskMessageStart, _CATTaskOperation,
+                          _CATTaskProgress, _CATTaskRequest, _CATTaskResultObject, _CATTaskServer, _CATTaskSession, _CATTransition,
+                          _CATTransport, _CATXPCTransport ]
+...

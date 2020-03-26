@@ -1,0 +1,16 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/FlightUtilities.framework/FlightUtilities
+current-version:       134.2
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _FUFactoryProvider_Default, _FUFactoryProvider_FlightStats, _FUFactoryProvider_FlyteComm,
+                          _FUFactoryProvider_Parsec ]
+    objc-classes:       [ _FUAirline, _FUAirport, _FUFlight, _FUFlightFactory, _FUFlightLeg, _FUFlightPreviewController, _FUFlightStep,
+                          _FUFlightView, _FUFlightViewController, _FUStepTime, _FUUtils ]
+    objc-ivars:         [ _FUFlightStep._delayFromSchedule ]
+...

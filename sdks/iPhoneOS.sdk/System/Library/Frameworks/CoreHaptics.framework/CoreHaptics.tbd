@@ -1,0 +1,60 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/CoreHaptics.framework/CoreHaptics
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _CHHapticDynamicParameterIDAudioAttackTimeControl, _CHHapticDynamicParameterIDAudioBrightnessControl,
+                          _CHHapticDynamicParameterIDAudioDecayTimeControl, _CHHapticDynamicParameterIDAudioPanControl,
+                          _CHHapticDynamicParameterIDAudioPitchControl, _CHHapticDynamicParameterIDAudioReleaseTimeControl,
+                          _CHHapticDynamicParameterIDAudioVolumeControl, _CHHapticDynamicParameterIDHapticAttackTimeControl,
+                          _CHHapticDynamicParameterIDHapticDecayTimeControl, _CHHapticDynamicParameterIDHapticIntensityControl,
+                          _CHHapticDynamicParameterIDHapticReleaseTimeControl, _CHHapticDynamicParameterIDHapticSharpnessControl,
+                          _CHHapticEventParameterIDAttackTime, _CHHapticEventParameterIDAudioBrightness,
+                          _CHHapticEventParameterIDAudioPan, _CHHapticEventParameterIDAudioPitch,
+                          _CHHapticEventParameterIDAudioVolume, _CHHapticEventParameterIDDecayTime,
+                          _CHHapticEventParameterIDHapticFullnessSelect, _CHHapticEventParameterIDHapticIntensity,
+                          _CHHapticEventParameterIDHapticSharpness, _CHHapticEventParameterIDHapticSharpnessSelect,
+                          _CHHapticEventParameterIDReleaseTime, _CHHapticEventParameterIDSustained, _CHHapticEventTypeAudioClick,
+                          _CHHapticEventTypeAudioContinuous, _CHHapticEventTypeAudioCustom, _CHHapticEventTypeHapticContinuous,
+                          _CHHapticEventTypeHapticTransient, _CHHapticEventTypeWheelsOfTime, _CHHapticPatternKeyEvent,
+                          _CHHapticPatternKeyEventDuration, _CHHapticPatternKeyEventParameters, _CHHapticPatternKeyEventType,
+                          _CHHapticPatternKeyEventWaveformPath, _CHHapticPatternKeyParameter, _CHHapticPatternKeyParameterCurve,
+                          _CHHapticPatternKeyParameterCurveControlPoints, _CHHapticPatternKeyParameterID,
+                          _CHHapticPatternKeyParameterValue, _CHHapticPatternKeyPattern, _CHHapticPatternKeyTime,
+                          _CHHapticPatternKeyVersion ]
+    objc-classes:       [ _AdvancedPatternPlayer, _CHDefaultHapticDeviceCapability, _CHHapticDynamicParameter, _CHHapticEngine,
+                          _CHHapticEvent, _CHHapticEventParameter, _CHHapticParameterAttributesImpl, _CHHapticParameterCurve,
+                          _CHHapticParameterCurveControlPoint, _CHHapticPattern, _CHMetricsKey, _CHMetricsManager, _CHMetricsPlayerData,
+                          _EventToDictionaryConverter, _HapticCommandConverter, _HapticDictionaryReader, _HapticDictionaryWriter,
+                          _PatternPlayer, _PlaybackAction ]
+    objc-ivars:         [ _AdvancedPatternPlayer._completionHandler, _AdvancedPatternPlayer._engine, _AdvancedPatternPlayer._events,
+                          _AdvancedPatternPlayer._loopEnd, _AdvancedPatternPlayer._muteState, _AdvancedPatternPlayer._patternDuration,
+                          _AdvancedPatternPlayer._paused, _AdvancedPatternPlayer._sequence,
+                          _CHDefaultHapticDeviceCapability._supports3rdPartyHaptics, _CHHapticDynamicParameter._param,
+                          _CHHapticDynamicParameter._time, _CHHapticDynamicParameter._value, _CHHapticEngine._audioSessionID,
+                          _CHHapticEngine._autoShutdownEnabled, _CHHapticEngine._avAudioSession,
+                          _CHHapticEngine._clientFinishedHandler, _CHHapticEngine._currentPlayerBehavior,
+                          _CHHapticEngine._dispatchQueue, _CHHapticEngine._muteHapticsWhileRecordingAudio, _CHHapticEngine._player,
+                          _CHHapticEngine._resetHandler, _CHHapticEngine._resourceEntries, _CHHapticEngine._running,
+                          _CHHapticEngine._sessionIsShared, _CHHapticEngine._stoppedHandler, _CHHapticEngine._timer,
+                          _CHHapticEvent._audioResID, _CHHapticEvent._duration, _CHHapticEvent._eventParams, _CHHapticEvent._time,
+                          _CHHapticEvent._type, _CHHapticEventParameter._param, _CHHapticEventParameter._value,
+                          _CHHapticParameterAttributesImpl._defaultValue, _CHHapticParameterAttributesImpl._maxValue,
+                          _CHHapticParameterAttributesImpl._minValue, _CHHapticParameterCurve._controlPoints,
+                          _CHHapticParameterCurve._param, _CHHapticParameterCurve._time, _CHHapticParameterCurveControlPoint._time,
+                          _CHHapticParameterCurveControlPoint._value, _CHHapticPattern._embeddedURLs, _CHHapticPattern._events,
+                          _CHHapticPattern._parameterCurves, _CHHapticPattern._parameters, _CHHapticPattern._version,
+                          _CHMetricsKey.eventType, _CHMetricsKey.intensity, _CHMetricsManager._CHMetricTransientEventTypeStringMap,
+                          _CHMetricsManager._CHMetricsIntensityBin1To2Value, _CHMetricsManager._CHMetricsIntensityBin2To3Value,
+                          _CHMetricsManager._defaultDeviceCaps, _CHMetricsManager._dispatchQueue, _CHMetricsManager._enginePlayerData,
+                          _CHMetricsManager._engineReporter, _CHMetricsManager._engineSPI, _CHMetricsManager._metricsDisabled,
+                          _CHMetricsManager._testData, _CHMetricsManager._testMode, _CHMetricsPlayerData._data,
+                          _HapticDictionaryReader._urlIndex, _HapticDictionaryWriter._urlIndex, _PatternPlayer._channel,
+                          _PatternPlayer._engine, _PatternPlayer._events, _PatternPlayer._muteState, _PatternPlayer._patternDuration,
+                          _PatternPlayer._previousAction, _PlaybackAction.action, _PlaybackAction.time ]
+...

@@ -1,0 +1,7 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: 6E55F5E7-0A87-3C59-9FBF-52290C0B470D', 'arm64e: 19DC561A-5237-3476-A827-BC612E266E1F' ]
+platform:        ios
+install-name:    '/usr/lib/libLeaksAtExit.dylib'
+...

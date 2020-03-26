@@ -1,0 +1,21 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/SoundBoardServices.framework/SoundBoardServices
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _SBAccessoryMovedNotification, _SBAirplayMinimumMediaUserPrivilegeNotification,
+                          _SBAirplayP2PAccessNotification, _SBAirplaySetPasswordNotification, _SBAutoSUNotification,
+                          _SBDeviceResetNotification, _SBRebootDeviceRequest, _SBRebootDeviceResponse,
+                          _SBThermalPressureCurrentLevelKey, _SBThermalPressureTokenKey, _SoundBoardServicesVersionNumber,
+                          _SoundBoardServicesVersionString, _kCannedDemoEntitlement, _kClientBundleIdentifier, _kCurrentVolumeLevel,
+                          _kDebugInfoEntitlement, _kHPCDRestartCannedDemo, _kNowPlayingApplicationMusicGenre,
+                          _kNowPlayingApplicationName, _kStereoLeaderEntitlement, _kSysdiagnoseEntitlement, _kSystemEntitlement,
+                          _toMicroSeconds ]
+    objc-classes:       [ _SBCannedDemoInterface, _SBSAppleCareInterface, _SBSClient, _SBSDebugInterface, _SBSDefaultInfo, _SBSDefaults,
+                          _SBSServer, _SBSSettingsManager, _SBSStereoLeaderInterface, _SBSSysdiagnoseInterface, _SBSSystemInterface ]
+...

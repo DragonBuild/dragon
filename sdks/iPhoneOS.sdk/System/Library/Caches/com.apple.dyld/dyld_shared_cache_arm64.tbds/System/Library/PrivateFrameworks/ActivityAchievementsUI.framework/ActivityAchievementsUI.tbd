@@ -1,0 +1,20 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/ActivityAchievementsUI.framework/ActivityAchievementsUI
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _AAUIAchievementsDataProviderDidFinishInitialLoadNotification,
+                          _AAUIAchievementsDataProviderDidUpdateAchievementNotification, _AAUIFormatCount, _AAUIFormatDateWithStyle,
+                          _AAUIFormatDistance, _AAUIFormatDistanceWithUserUnit, _AAUIFormatEnergyUnit, _AAUIFormatEnergyWithUserUnit,
+                          _AAUIFormatMinutes, _AAUIFormatNumberOfDays, _AAUIFormatOrdinal, _AAUIFormatPercent,
+                          _AAUISortAchievementsByMostRecentEarnedDate, _AAUITrophyCaseShouldShowPerfectWeekAchievement,
+                          _ActivityAchievementsUIVersionNumber, _ActivityAchievementsUIVersionString ]
+    objc-classes:       [ _AAUIAchievementDetailTransitionAnimator, _AAUIAchievementFormatter, _AAUIAchievementLocalizationProvider,
+                          _AAUIAchievementResourceProvider, _AAUIAchievementsDataProvider, _AAUIBadge, _AAUIBadgeImageFactory,
+                          _AAUIBadgeModelConfiguration, _AAUIBadgeModelLoader, _AAUIBadgeView, _AAUIMockAchievementsDataProvider ]
+...

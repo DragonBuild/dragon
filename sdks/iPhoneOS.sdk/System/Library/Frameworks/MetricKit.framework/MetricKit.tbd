@@ -1,0 +1,54 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/MetricKit.framework/MetricKit
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    re-exports:         [ /System/Library/PrivateFrameworks/SignpostMetrics.framework/SignpostMetrics ]
+    symbols:            [ _MetricKitVersionNumber, _MetricKitVersionString ]
+    objc-classes:       [ _MXAppLaunchMetric, _MXAppResponsivenessMetric, _MXAppRunTimeMetric, _MXAverage, _MXCPUMetric,
+                          _MXCellularConditionMetric, _MXDiskIOMetric, _MXDisplayMetric, _MXFramerateMetric, _MXGPUMetric, _MXHistogram,
+                          _MXHistogramBucket, _MXLocationActivityMetric, _MXMemoryMetric, _MXMetaData, _MXMetric, _MXMetricManager,
+                          _MXMetricPayload, _MXNetworkTransferMetric, _MXResourceExceptionMetric, _MXSignpostIntervalData,
+                          _MXSignpostMetric, _MXUnitAveragePixelLuminance, _MXUnitSignalBars ]
+    objc-ivars:         [ _MXAppLaunchMetric._histogrammedApplicationResumeTime, _MXAppLaunchMetric._histogrammedTimeToFirstDraw,
+                          _MXAppResponsivenessMetric._histogrammedApplicationHangTime,
+                          _MXAppRunTimeMetric._cumulativeBackgroundAudioTime, _MXAppRunTimeMetric._cumulativeBackgroundLocationTime,
+                          _MXAppRunTimeMetric._cumulativeBackgroundTime, _MXAppRunTimeMetric._cumulativeForegroundTime,
+                          _MXAverage._averageMeasurement, _MXAverage._averageMeasurementFormatter, _MXAverage._sampleCount,
+                          _MXAverage._standardDeviation, _MXCPUMetric._cumulativeCPUTime,
+                          _MXCellularConditionMetric._histogrammedCellularConditionTime, _MXDiskIOMetric._cumulativeLogicalWrites,
+                          _MXDisplayMetric._averagePixelLuminance, _MXFramerateMetric._averageFramerate,
+                          _MXGPUMetric._cumulativeGPUTime, _MXHistogram._bucketEnumerator, _MXHistogram._histogramData,
+                          _MXHistogram._totalBucketCount, _MXHistogramBucket._bucketCount, _MXHistogramBucket._bucketEnd,
+                          _MXHistogramBucket._bucketStart, _MXHistogramBucket._histogramBucketFormatter,
+                          _MXLocationActivityMetric._cumulativeBestAccuracyForNavigationTime,
+                          _MXLocationActivityMetric._cumulativeBestAccuracyTime,
+                          _MXLocationActivityMetric._cumulativeHundredMetersAccuracyTime,
+                          _MXLocationActivityMetric._cumulativeKilometerAccuracyTime,
+                          _MXLocationActivityMetric._cumulativeNearestTenMetersAccuracyTime,
+                          _MXLocationActivityMetric._cumulativeThreeKilometersAccuracyTime, _MXMemoryMetric._averageSuspendedMemory,
+                          _MXMemoryMetric._peakMemoryUsage, _MXMetaData._applicationBuildVersion, _MXMetaData._deviceType,
+                          _MXMetaData._osVersion, _MXMetaData._regionFormat, _MXMetric._measurementFormatter,
+                          _MXMetricManager._connection, _MXMetricManager._iVarQueue, _MXMetricManager._managerLogHandle,
+                          _MXMetricManager._metricToken, _MXMetricManager._pastPayloads, _MXMetricManager._subscribers,
+                          _MXMetricPayload._applicationLaunchMetrics, _MXMetricPayload._applicationResponsivenessMetrics,
+                          _MXMetricPayload._applicationTimeMetrics, _MXMetricPayload._cellularConditionMetrics,
+                          _MXMetricPayload._cpuMetrics, _MXMetricPayload._diskIOMetrics, _MXMetricPayload._displayMetrics,
+                          _MXMetricPayload._gpuMetrics, _MXMetricPayload._includesMultipleApplicationVersions,
+                          _MXMetricPayload._latestApplicationVersion, _MXMetricPayload._locationActivityMetrics,
+                          _MXMetricPayload._memoryMetrics, _MXMetricPayload._metaData, _MXMetricPayload._networkTransferMetrics,
+                          _MXMetricPayload._signpostMetrics, _MXMetricPayload._timeStampBegin, _MXMetricPayload._timeStampEnd,
+                          _MXNetworkTransferMetric._cumulativeCellularDownload, _MXNetworkTransferMetric._cumulativeCellularUpload,
+                          _MXNetworkTransferMetric._cumulativeWifiDownload, _MXNetworkTransferMetric._cumulativeWifiUpload,
+                          _MXResourceExceptionMetric._cumulativeMemoryResourceExceptionCount,
+                          _MXSignpostIntervalData._averageMemory, _MXSignpostIntervalData._cumulativeCPUTime,
+                          _MXSignpostIntervalData._cumulativeLogicalWrites, _MXSignpostIntervalData._histogrammedSignpostDuration,
+                          _MXSignpostIntervalData._measurementFormatter, _MXSignpostIntervalData._peakMemory,
+                          _MXSignpostMetric._signpostCategory, _MXSignpostMetric._signpostIntervalData,
+                          _MXSignpostMetric._signpostName, _MXSignpostMetric._totalCount ]
+...

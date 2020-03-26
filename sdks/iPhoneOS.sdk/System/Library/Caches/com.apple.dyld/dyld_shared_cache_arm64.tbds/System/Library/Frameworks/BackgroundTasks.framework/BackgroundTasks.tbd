@@ -1,0 +1,14 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/BackgroundTasks.framework/BackgroundTasks
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _BGTaskSchedulerErrorDomain, __BGTaskSchedulerRunningTasksDidChangeNotification ]
+    objc-classes:       [ _BGAppRefreshTask, _BGAppRefreshTaskRequest, _BGProcessingTask, _BGProcessingTaskRequest, _BGTask, _BGTaskRequest,
+                          _BGTaskScheduler ]
+...

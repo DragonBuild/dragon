@@ -1,0 +1,17 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/ExchangeSyncExpress.framework/ExchangeSyncExpress
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _DADCalendarDirectorySearchRecordType_Groups, _DADCalendarDirectorySearchRecordType_Locations,
+                          _DADCalendarDirectorySearchRecordType_Resources, _DADCalendarDirectorySearchRecordType_Users,
+                          _DataAccessMonitoredFolderUpdated, _DataAccessMonitoringConnectionFailed, _kESDPortName,
+                          _kESExchangeAccountWipeOnly, _kESExchangeDeviceID, _kESExchangeUserEnrollmentMode, _kESMailChangeNotification ]
+    objc-classes:       [ _ESDAMContainerIDCacheKey, _ESDConnection, _ESDownloadContext, _ESECalendarAvailabilityContext,
+                          _ESECalendarDirectorySearchContext, _ESSharedCalendarContext ]
+...

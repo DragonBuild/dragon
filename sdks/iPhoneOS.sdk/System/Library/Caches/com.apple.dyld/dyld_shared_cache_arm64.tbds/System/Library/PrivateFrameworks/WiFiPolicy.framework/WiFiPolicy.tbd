@@ -1,0 +1,48 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/WiFiPolicy.framework/WiFiPolicy
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _MachTimeToSecs, _TBMacAddressFromString, _TBMacAdressFromLong, _TBPersistenceConfigurationCache,
+                          _TBPersistenceRemoteStoreServerServiceNameCache, _WFLoggerTimerTmoCallBack, _WiFiPolicyVersionNumber,
+                          _WiFiPolicyVersionString, _WiFiWalletSignedDataForRawPass, _WiFiWalletUtilAddPass,
+                          _WiFiWalletUtilAddPassFromURL, _WiFiWalletUtilRemovePass, _WiFiWalletUtilRemovePassMatchingURL,
+                          _WiFiWalletUtilRemovePassesMatchingIdentifier, __WiFiWalletUtilRemovePassMatching,
+                          __Z32_TBGloriaBoundingBoxFromLocationddh, __ZN6gloria11MortonUtils10XYToQuadIdEyy,
+                          __ZN6gloria11MortonUtils12LeadingZerosEy, __ZN6gloria14TileCoordinate10FromLatLngERKdS2_RKh,
+                          __ZN6gloria15TileBoundingBox5ToWKTEv, __ZN6gloria6TileId10FromLatLngERKdS2_RKh,
+                          __ZN6gloria6TileId10ResolutionEv, __ZN6gloria6TileId21NeighborsWithinRadiusEd, __ZN6gloria6TileId4ZoomEy,
+                          __ZN6gloria6TileId5ReachEj, __ZN6gloria6TileId5ToXYZEv, __ZN6gloria6TileId6ToBBOXEv,
+                          __ZN6gloria6TileId7FromXYZERKNS_14TileCoordinateE, __ZN6gloria6TileId7MapSizeEv,
+                          __ZN6gloria6TileId8AncestorEh, __ZN6gloria6TileId8AncestorEv, __ZN6gloria6TileId8ChildrenEh,
+                          __ZN6gloria6TileId8ChildrenEv, __ZN6gloria6TileId8TileSizeEv, __ZN6gloria6TileId9NeighborsEj,
+                          __ZN6gloria6TileId9NeighborsEv, __ZN6gloria6TileIdC1Ey, __ZN6gloria6TileIdC2Ey,
+                          __ZN6glorialsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_14TileCoordinateE,
+                          __ZN6glorialsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_6TileIdE,
+                          __ZNK6gloria14TileCoordinate6XToLngEv, __ZNK6gloria14TileCoordinate6YToLatEv,
+                          __ZNK6gloria6TileId16GetEncodedTileIdEv, __ZNK6gloria6TileIdeqERKS0_, __ZNK6gloria6TileIdltERKS0_,
+                          __ZNK6gloria6TileIdneERKS0_, ___WiFiManagerLocationManagerVisitCallback, _boundingBoxes,
+                          _kDefaultWiFiAvailabilityMatchMaximumAge, _kTBPopularityScoreDescription, _kTBQualityScoreDescription,
+                          _mccIsoMap ]
+    objc-classes:       [ _TBAccessPointMO, _TBAnalytics, _TBCacheAnalyticsEvent, _TBCoreDataSource, _TBCoreDataStoreDescriptor,
+                          _TBDataSource, _TBDataSourceMediator, _TBDefaults, _TBError, _TBErrorFetchResponse, _TBFetchAnalyticsEvent,
+                          _TBFetchedTile, _TBGloriaTile, _TBJoinAnalyticsEvent, _TBLocalFetchRequestDescriptor, _TBLocalFetchResponse,
+                          _TBLocalFetchTileItem, _TBLocationFetchRequest, _TBLocationFetchRequestDescriptor,
+                          _TBMutableTileFetchResponse, _TBNetworkFetchRequest, _TBNetworkFetchRequestDescriptor, _TBNetworkMO,
+                          _TBNetworkRemoteFetchResponse, _TBPersistenceManager, _TBPersistenceRemoteStoreServer,
+                          _TBPersistenceRemoteStoreServerHandlingPolicy, _TBPopularityScore, _TBPreferLocalFetchDataSource,
+                          _TBPreferLocalFetchOperation, _TBQualityScore, _TBRemoteDataSource, _TBRemoteFetchAndCacheDataSource,
+                          _TBRemoteFetchAndCacheOperation, _TBRemoteFetchResponse, _TBRemoteFetchTileItem, _TBTileFetchRequest,
+                          _TBTileFetchRequestDescriptor, _TBTileItemDescriptor, _TBTileMO, _TBTileRemoteFetchResponse, _WFBlackListNode,
+                          _WFBlacklistEngine, _WFBlacklistStateNode, _WFBlacklistTriggerNode, _WFLogger, _WFLoggerBase,
+                          _WFLoggerCircularBuffer, _WFLoggerFile, _WFLoggerOsLog, _WFMeasure, _WFMeasureThroughputResult, _WiFi3BarsNetwork,
+                          _WiFi3BarsSource, _WiFi3BarsTileFetcher, _WiFiAvailabilityEngine, _WiFiAvailabilityMatch, _WiFiLexicon,
+                          _WiFiLocaleManager, _WiFiLocationManager, _WiFiWalletPass, _WiFiWalletSource ]
+    objc-ivars:         [ _WFLoggerBase._ctxt, _WFLoggerBase._dispatchQueue, _WFLoggerBase._internalInstall,
+                          _WiFiLocaleManager._ctServerConnectionRef ]
+...

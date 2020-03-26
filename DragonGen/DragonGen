@@ -2,38 +2,7 @@
 
 source $DRAGONBUILD/internal/dragoncolors
 
-function DragonMakeNotFound()
-{
-    if [ -f "Makefile" ]; then  
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Attempting to generate DragonMake file from existing Makefile${NC}"
-        source $DRAGONBUILD/DragonGen/MakefileProcessor
-        source $DRAGONBUILD/DragonGen/DragonGen
-    fi
-}
-if [ -f "DragonMake" ]; then  
-    echo -e "${GenColor}[DragonGen]${BoldColor} Loading DragonMake ${TWEAK_NAME}${NC}"
-    source DragonMake   
-    if [ $release == 1 ]; then 
-        echo -e "${GenColor}[DragonGen]${BoldColor} Loading Release Scripts ${TWEAK_NAME}${NC}"
-        source DragonRelease 2>/dev/null || echo -e "${GenColor}[DragonGen]${BoldColor} No Release script found for ${TWEAK_NAME}${NC}"
-    fi
-    echo -e "${GenColor}[DragonGen]${BoldColor} Generating Build Scripts for ${TWEAK_NAME}${NC}"
-    source $DRAGONBUILD/DragonGen/${TWEAK_TYPE}Gen
-    if [ -z "$SUBPROJECTS" ]; then
-            true
-        else 
-            set -f
-            subsb=(${SUBPROJECTS})
-            set +f 
-            for i in "${subsb[@]}"; do
-                cd $i
-                bash $DRAGONBUILD/DragonGen/DragonGen
-                cd ..
-            done
-        fi
-    echo -e "${GenColor}[DragonGen]${NC} Done"
-else
-    DragonMakeNotFound
-fi
+eval $(python3 $DRAGONBUILD/DragonGen/DragonGen.py)
 
-
+export TWEAK_NAME=$package_name
+export INSTALL_CMD=$install_command

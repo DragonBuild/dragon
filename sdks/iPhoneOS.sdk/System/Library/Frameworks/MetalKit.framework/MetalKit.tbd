@@ -1,0 +1,67 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/MetalKit.framework/MetalKit
+current-version:       141
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _MTKMetalVertexDescriptorFromModelIO, _MTKMetalVertexDescriptorFromModelIOWithError,
+                          _MTKMetalVertexFormatFromModelIO, _MTKModelErrorDomain, _MTKModelErrorKey,
+                          _MTKModelIOVertexDescriptorFromMetal, _MTKModelIOVertexDescriptorFromMetalWithError,
+                          _MTKModelIOVertexFormatFromMetal, _MTKTextureLoaderCubeLayoutVertical, _MTKTextureLoaderErrorDomain,
+                          _MTKTextureLoaderErrorKey, _MTKTextureLoaderOptionAllocateMipmaps, _MTKTextureLoaderOptionCubeLayout,
+                          _MTKTextureLoaderOptionGenerateMipmaps, _MTKTextureLoaderOptionOrigin,
+                          _MTKTextureLoaderOptionPackedRowStride, _MTKTextureLoaderOptionSRGB,
+                          _MTKTextureLoaderOptionTextureCPUCacheMode, _MTKTextureLoaderOptionTextureStorageMode,
+                          _MTKTextureLoaderOptionTextureUsage, _MTKTextureLoaderOriginBottomLeft,
+                          _MTKTextureLoaderOriginFlippedVertically, _MTKTextureLoaderOriginTopLeft ]
+    objc-classes:       [ _MTKMesh, _MTKMeshBuffer, _MTKMeshBufferAllocator, _MTKMeshBufferHolder, _MTKMeshBufferZone,
+                          _MTKOffscreenDrawable, _MTKSubmesh, _MTKTextureIOBuffer, _MTKTextureIOBufferAllocator, _MTKTextureIOBufferMap,
+                          _MTKTextureLoader, _MTKTextureLoaderASTCHelper, _MTKTextureLoaderData, _MTKTextureLoaderImageIO,
+                          _MTKTextureLoaderKTX, _MTKTextureLoaderMDL, _MTKTextureLoaderPVR, _MTKTextureLoaderPVR3, _MTKTextureUploader,
+                          _MTKView, _MTKViewDisplayLinkTarget ]
+    objc-ivars:         [ _MTKMesh._name, _MTKMesh._submeshes, _MTKMesh._vertexBuffers, _MTKMesh._vertexCount, _MTKMesh._vertexDescriptor,
+                          _MTKMeshBuffer._allocator, _MTKMeshBuffer._buffer, _MTKMeshBuffer._length, _MTKMeshBuffer._offset,
+                          _MTKMeshBuffer._type, _MTKMeshBuffer._zone, _MTKMeshBufferAllocator._device, _MTKMeshBufferHolder._buffer,
+                          _MTKMeshBufferZone._allocator, _MTKMeshBufferZone._buffer, _MTKMeshBufferZone._buffers,
+                          _MTKMeshBufferZone._capacity, _MTKMeshBufferZone._destroyInvoked, _MTKOffscreenDrawable._device,
+                          _MTKOffscreenDrawable._drawableID, _MTKOffscreenDrawable._layer, _MTKOffscreenDrawable._pixelFormat,
+                          _MTKOffscreenDrawable._presentedTime, _MTKOffscreenDrawable._size, _MTKOffscreenDrawable._texture,
+                          _MTKOffscreenDrawable._textureDirty, _MTKSubmesh._indexBuffer, _MTKSubmesh._indexCount,
+                          _MTKSubmesh._indexType, _MTKSubmesh._mesh, _MTKSubmesh._name, _MTKSubmesh._primitiveType,
+                          _MTKTextureIOBuffer._buffer, _MTKTextureIOBufferAllocator._device, _MTKTextureIOBufferMap._bytes,
+                          _MTKTextureLoader._blitQueue, _MTKTextureLoader._bufferAllocator, _MTKTextureLoader._device,
+                          _MTKTextureLoader._loadQueue, _MTKTextureLoader._loadSemaphore, _MTKTextureLoader._notifyQueue,
+                          _MTKTextureLoader._uploadQueue, _MTKTextureLoaderData._depth, _MTKTextureLoaderData._height,
+                          _MTKTextureLoaderData._imageOrigin, _MTKTextureLoaderData._numArrayElements,
+                          _MTKTextureLoaderData._numFaces, _MTKTextureLoaderData._numMipmapLevels, _MTKTextureLoaderData._pixelFormat,
+                          _MTKTextureLoaderData._textureType, _MTKTextureLoaderData._width, _MTKTextureLoaderImageIO._blockSet,
+                          _MTKTextureLoaderImageIO._bytesPerRow, _MTKTextureLoaderImageIO._cfData,
+                          _MTKTextureLoaderImageIO._expandRGBToRGBA, _MTKTextureLoaderImageIO._imageData,
+                          _MTKTextureLoaderImageIO._pixelFormatInfo, _MTKTextureLoaderKTX._imageData,
+                          _MTKTextureLoaderKTX._packedRowStride, _MTKTextureLoaderKTX._pixelFormatInfo,
+                          _MTKTextureLoaderMDL._pixelFormatInfo, _MTKTextureLoaderMDL._texture, _MTKTextureLoaderPVR._imageData,
+                          _MTKTextureLoaderPVR._numSurfaces, _MTKTextureLoaderPVR._pixelFormatInfo, _MTKTextureLoaderPVR._pvrFormat,
+                          _MTKTextureLoaderPVR3._imageData, _MTKTextureLoaderPVR3._metaDataSize,
+                          _MTKTextureLoaderPVR3._pixelFormatInfo, _MTKTextureLoaderPVR3._pvrCompressedFormat,
+                          _MTKTextureUploader._blit, _MTKTextureUploader._commandBuffer, _MTKTextureUploader._device,
+                          _MTKTextureUploader._lock, _MTKTextureUploader._notifyQueue, _MTKView._autoResizeDrawable,
+                          _MTKView._clearColor, _MTKView._clearDepth, _MTKView._clearStencil, _MTKView._colorPixelFormats,
+                          _MTKView._colorTextures, _MTKView._currentDrawable, _MTKView._delegate, _MTKView._depthStencilPixelFormat,
+                          _MTKView._depthStencilTexture, _MTKView._depthStencilTextureUsage, _MTKView._device, _MTKView._deviceReset,
+                          _MTKView._displayLink, _MTKView._doesNotifyOnRecommendedSizeUpdate, _MTKView._drawOffscreen,
+                          _MTKView._drawRectSubIMP, _MTKView._drawableAttachmentIndex, _MTKView._drawableIdx,
+                          _MTKView._drawableScaleFactor, _MTKView._drawableSize, _MTKView._dumpFirstFrame, _MTKView._dumpFrameAtFrame,
+                          _MTKView._dumpFrameAtSeconds, _MTKView._dumpPath, _MTKView._enableSetNeedsDisplay, _MTKView._forceOrientation,
+                          _MTKView._frameNum, _MTKView._framebufferOnly, _MTKView._maxValidAttachmentIndex, _MTKView._measureAfterFrame,
+                          _MTKView._measureAfterSeconds, _MTKView._metalLayer, _MTKView._multisampleColorTexture,
+                          _MTKView._multisampleColorTextureUsage, _MTKView._multisampleColorTextures,
+                          _MTKView._nominalFramesPerSecond, _MTKView._offscreenSwapChain, _MTKView._paused,
+                          _MTKView._pausedOnBackgrounding, _MTKView._preferredDrawableSize, _MTKView._preferredFramesPerSecond,
+                          _MTKView._renderAttachmentDirtyState, _MTKView._sampleCount, _MTKView._sizeDirty, _MTKView._startTime,
+                          _MTKView._subClassOverridesDrawRect, _MTKView._terminateAfterFrame, _MTKView._terminateAfterSeconds,
+                          _MTKViewDisplayLinkTarget._target ]
+...

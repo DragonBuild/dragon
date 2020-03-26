@@ -1,0 +1,56 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/IntentsUI.framework/IntentsUI
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _INUIRemoteViewControllerErrorDomain, _INUIVoiceShortcutExtensionItemBundleURLKey,
+                          _INUIVoiceShortcutExtensionItemSandboxExtensionDataKey, _IntentsUIVersionNumber, _IntentsUIVersionString,
+                          __INUIRemoteViewControllerErrorDomain, __INUIUtilitiesBestFittingSizeForSizeBySystemVersionDictionary ]
+    objc-classes:       [ _INUIAddVoiceShortcutButton, _INUIAddVoiceShortcutViewController, _INUIAppIntentDeliverer,
+                          _INUIEditVoiceShortcutViewController, _INUIExtensionRequestInfo, _INUIExtensionViewControllerConfiguration,
+                          _INUIImageLoader, _INUIImageServiceConnection, _INUIImageSizeProvider, _INUIInterfaceSection,
+                          _INUILoadingVoiceShortcutViewController, _INUIPortableImageLoaderHelper, _INUIRemoteViewController,
+                          _INUISearchFoundationImageAdapter, _INUIVoiceShortcutHostViewController, _INUIVoiceShortcutXPCInterface,
+                          __INUIExtensionContext, __INUIExtensionContextState, __INUIExtensionHostContext, __INUIServiceViewController,
+                          __INUIXPCInterfaceUtilities ]
+    objc-ivars:         [ _INUIAddVoiceShortcutButton._addToSiriLabel, _INUIAddVoiceShortcutButton._addToSiriLeadingConstraint,
+                          _INUIAddVoiceShortcutButton._addedToSiriLeadingConstraint,
+                          _INUIAddVoiceShortcutButton._checkmarkHeightConstraint, _INUIAddVoiceShortcutButton._checkmarkImageView,
+                          _INUIAddVoiceShortcutButton._cornerRadius, _INUIAddVoiceShortcutButton._delegate,
+                          _INUIAddVoiceShortcutButton._highlightFilter, _INUIAddVoiceShortcutButton._phraseLabel,
+                          _INUIAddVoiceShortcutButton._shortcut, _INUIAddVoiceShortcutButton._sphiriImageView,
+                          _INUIAddVoiceShortcutButton._style, _INUIAddVoiceShortcutButton._voiceShortcut,
+                          _INUIAddVoiceShortcutViewController._currentChildViewController,
+                          _INUIAddVoiceShortcutViewController._delegate,
+                          _INUIAddVoiceShortcutViewController._remoteHostViewController,
+                          _INUIAddVoiceShortcutViewController._shortcut, _INUIAppIntentDeliverer._appStateMonitor,
+                          _INUIAppIntentDeliverer._assertionSetupGroup, _INUIAppIntentDeliverer._assertionTimer,
+                          _INUIAppIntentDeliverer._backgroundLaunchAssertion, _INUIAppIntentDeliverer._bundleIdentifier,
+                          _INUIAppIntentDeliverer._intentBackgroundHandlingAssertion, _INUIAppIntentDeliverer._queue,
+                          _INUIAppIntentDeliverer._requestCompletionBlock, _INUIAppIntentDeliverer._requestTimer,
+                          _INUIEditVoiceShortcutViewController._currentChildViewController,
+                          _INUIEditVoiceShortcutViewController._delegate,
+                          _INUIEditVoiceShortcutViewController._remoteHostViewController, _INUIExtensionRequestInfo._interaction,
+                          _INUIExtensionRequestInfo._requiresUserConsent,
+                          _INUIExtensionViewControllerConfiguration._hostedViewContext,
+                          _INUIExtensionViewControllerConfiguration._interactiveBehavior,
+                          _INUIExtensionViewControllerConfiguration._parameters, _INUIImageLoader._delegate,
+                          _INUIInterfaceSection._interactiveBehavior, _INUIInterfaceSection._parameters,
+                          _INUIPortableImageLoaderHelper._traitCollection, _INUIRemoteViewController._activeExtension,
+                          _INUIRemoteViewController._configuration, _INUIRemoteViewController._currentRequestIdentifier,
+                          _INUIRemoteViewController._delegate, _INUIRemoteViewController._extensionHostContext,
+                          _INUIRemoteViewController._needsStateUpdate, _INUIRemoteViewController._preferredContentSize,
+                          _INUIRemoteViewController._requestInfo, _INUISearchFoundationImageAdapter._intentsImage,
+                          _INUISearchFoundationImageAdapter._sizeValue, _INUIVoiceShortcutHostViewController._delegate,
+                          _INUIVoiceShortcutHostViewController._mode, __INUIExtensionContext._currentExtensionContextState,
+                          __INUIExtensionContextState._hostedViewMaximumAllowedSizes,
+                          __INUIExtensionContextState._hostedViewMinimumAllowedSizes,
+                          __INUIExtensionContextState._interfaceSections, __INUIExtensionHostContext._extensionHostContextDelegate,
+                          __INUIServiceViewController._currentContext, __INUIServiceViewController._currentInteraction,
+                          __INUIServiceViewController._hostedViewController ]
+...

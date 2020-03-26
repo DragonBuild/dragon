@@ -1,0 +1,41 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/CoreNFC.framework/CoreNFC
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _NFCErrorDomain, _NFCISO15693TagResponseErrorKey, _NFCTagResponseUnexpectedLengthErrorKey ]
+    objc-classes:       [ _NFCError, _NFCFeliCaTag, _NFCHardwareManager, _NFCHardwareManagerCallbacks, _NFCHardwareManagerInterface,
+                          _NFCISO15693CustomCommandConfiguration, _NFCISO15693ReadMultipleBlocksConfiguration,
+                          _NFCISO15693ReaderSession, _NFCISO15693ReaderSessionTag, _NFCISO15693Tag, _NFCISO7816APDU, _NFCISO7816Tag,
+                          _NFCMiFareTag, _NFCNDEFMessage, _NFCNDEFPayload, _NFCNDEFReaderSession, _NFCNDEFTag, _NFCReaderSession, _NFCSession,
+                          _NFCTag, _NFCTagCommandConfiguration, _NFCTagReaderSession, _NFCVASCommandConfiguration, _NFCVASReaderSession,
+                          _NFCVASResponse, _NFReaderSessionCallbacks, _NFReaderSessionInterface ]
+    objc-ivars:         [ _NFCHardwareManager._delegates, _NFCHardwareManager._queuedReaderSessions, _NFCHardwareManager._xpcSession,
+                          _NFCISO15693CustomCommandConfiguration._customCommandCode, _NFCISO15693CustomCommandConfiguration._flags,
+                          _NFCISO15693CustomCommandConfiguration._manufacturerCode,
+                          _NFCISO15693CustomCommandConfiguration._requestParameters,
+                          _NFCISO15693ReadMultipleBlocksConfiguration._chunkSize,
+                          _NFCISO15693ReadMultipleBlocksConfiguration._flags, _NFCISO15693ReadMultipleBlocksConfiguration._range,
+                          _NFCISO7816APDU._fullPacket, _NFCISO7816APDU._le, _NFCISO7816APDU._payloadOffset, _NFCMiFareTag._mifareFamily,
+                          _NFCNDEFMessage._records, _NFCNDEFPayload._chunkSize, _NFCNDEFPayload._identifier, _NFCNDEFPayload._payload,
+                          _NFCNDEFPayload._type, _NFCNDEFPayload._typeNameFormat, _NFCNDEFReaderSession._invalidateAfterFirstRead,
+                          _NFCNDEFReaderSession._tagsRead, _NFCNDEFTag._delegateQueue, _NFCNDEFTag._sessionKey, _NFCNDEFTag._tag,
+                          _NFCNDEFTag._writeLocked, _NFCReaderSession._alertMessage, _NFCReaderSession._connectedTag,
+                          _NFCReaderSession._delegate, _NFCReaderSession._delegateQueue, _NFCReaderSession._delegateType,
+                          _NFCReaderSession._invalidated, _NFCReaderSession._invalidationCode, _NFCReaderSession._pollMethod,
+                          _NFCReaderSession._proxy, _NFCReaderSession._sessionConfig, _NFCReaderSession._sessionId,
+                          _NFCReaderSession._sessionQueue, _NFCReaderSession._sessionStartInProgress, _NFCReaderSession._started,
+                          _NFCSession._connection, _NFCSession._connectionLock, _NFCSession._delegate, _NFCSession._exportedObject,
+                          _NFCSession._exportedObjectInterface, _NFCSession._machServiceName, _NFCSession._remoteObjectInterface,
+                          _NFCSession._xpcQueue, _NFCTag._configuration, _NFCTag._delegateQueue, _NFCTag._sessionKey, _NFCTag._tag,
+                          _NFCTagCommandConfiguration._maximumRetries, _NFCTagCommandConfiguration._retryInterval,
+                          _NFCTagReaderSession._connectedTag, _NFCTagReaderSession._swiftDelegateWrapper,
+                          _NFCVASCommandConfiguration._mode, _NFCVASCommandConfiguration._passTypeIdentifier,
+                          _NFCVASCommandConfiguration._url, _NFCVASReaderSession._presenceCheckTimer, _NFCVASReaderSession._vasConfig,
+                          _NFCVASResponse._mobileToken, _NFCVASResponse._status, _NFCVASResponse._vasData ]
+...

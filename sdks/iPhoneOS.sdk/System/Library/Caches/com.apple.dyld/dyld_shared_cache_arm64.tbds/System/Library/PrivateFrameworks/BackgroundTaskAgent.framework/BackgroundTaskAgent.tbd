@@ -1,0 +1,22 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/BackgroundTaskAgent.framework/BackgroundTaskAgent
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _BackgroundTaskAgentAddJob, _BackgroundTaskAgentCopyJob, _BackgroundTaskAgentInit,
+                          _BackgroundTaskAgentRemoveJob, _btaLock, _btaUnlock, _gClientName, _initSem, _initialized,
+                          _kBackgroundTaskAgentAllowedDuringRoaming, _kBackgroundTaskAgentAllowedDuringVoiceCall,
+                          _kBackgroundTaskAgentCellularAllowed, _kBackgroundTaskAgentJobExpired, _kBackgroundTaskAgentJobStatus,
+                          _kBackgroundTaskAgentJobStatusBatteryLevel, _kBackgroundTaskAgentJobStatusNetwork,
+                          _kBackgroundTaskAgentJobStatusPowerPluggedin, _kBackgroundTaskAgentJobStatusScreenBlanked,
+                          _kBackgroundTaskAgentJobWindowAdjustTime, _kBackgroundTaskAgentJobWindowEndTime,
+                          _kBackgroundTaskAgentJobWindowStartTime, _kBackgroundTaskAgentNetworkRequired,
+                          _kBackgroundTaskAgentPowerOptLevel, _kBackgroundTaskAgentPowerPluggedinTime,
+                          _kBackgroundTaskAgentRequiredBatteryLevel, _kBackgroundTaskAgentScreenBlankedTime,
+                          _kBackgroundTaskAgentUserContext ]
+...

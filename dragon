@@ -14,11 +14,7 @@ ToolchainPath=""
 ToolchainPrefix=""
 command -v ldid >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
 
-source DragonMake
-
 set -o pipefail
-
-
 
 function cleanbuildfail {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
@@ -104,6 +100,8 @@ else
     gen=1
 fi
 
+gen=1
+
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
@@ -111,51 +109,32 @@ if [ $gen == 1 ]; then
 fi
 
 if [ $build == 1 ]; then 
-    if [ "$hash" == "$lasthash" ]; then
-        true 
-    else 
-        rm -rf .dragon/ninja/build.ninja 
-        mkdir -p .dragon/ninja
-        source $DRAGONBUILD/DragonGen/DragonGen
-    fi
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
-    cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
-    if [ $exportt == 1 ]; then 
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-    fi
-    if [ "$TWEAK_TYPE" == "Library" ]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Setting up your library locally${NC} "
-        echo -e "${PrefixColor}[Dragon]${NC} Moving Dylib to root directory"
-        cp .dragon/_/usr/lib/$TWEAK_NAME.dylib $TWEAK_NAME.dylib
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Creating a tbd file for ${TWEAK_NAME}${NC}"
-        [ -f $DRAGONBUILD/bin/tbdump ] && true || bash $DRAGONBUILD/internal/DragonCompileTBDump
-        $DRAGONBUILD/bin/tbdump $TWEAK_NAME.dylib > $TWEAK_NAME.tbd 
-        echo -e "${PrefixColor}[Dragon]${NC} Copying generated file to $DRAGONBUILD/lib/"
-        cp $TWEAK_NAME.tbd $DRAGONBUILD/lib/$TWEAK_NAME.tbd
-    fi
-    rm build.ninja 
-    find . -name '.DS_Store' -type f -delete
-    if [ -z "$SUBPROJECTS" ]; then
+    if [ -z "$project_dirs" ]; then
         echo "yeet" > /dev/null 
     else 
         set -f
-        subsb=(${SUBPROJECTS})
+        subsb=(${project_dirs})
         set +f 
         for i in "${subsb[@]}"; do
+            echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             cd $i
-            bash $DRAGONBUILD/internal/dragonsubprep $i
-            cp .dragon/ninja/build.ninja $PWD/build.ninja && env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
-            rm build.ninja
-            # rm $i/${LOGOS_FILE}.m 2>/dev/null
-            bash $DRAGONBUILD/internal/dragonsubbuild $i
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja | cat || cleanbuildfail
+            rm build.ninja 
+            cp -R .dragon/_ ../.dragon
+            if [ $i == "." ]; then 
+                true
+            else
             cd ..
+            fi
         done
     fi
+
+    if [ $exportt == 1 ]; then 
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
+        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+    fi
+    rm build.ninja 
+
     echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
     mkdir -p .dragon/_/DEBIAN 
     cp control .dragon/_/DEBIAN/control 
@@ -169,7 +148,6 @@ if [ $build == 1 ]; then
     mkdir -p packages 2> /dev/null
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
     echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
-    #rm ${LOGOS_FILE}.m 2>/dev/null
     echo "${GENOUTPUT}" > .dragon/last_package
     md5 DragonMake > .dragon/hash
 fi
@@ -184,13 +162,11 @@ if [ $install == 1 ]; then
     fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
 
-    # This check wasn't always here; accidentally wiped /var/mobile on one of my phones :)
     if [ -z "$OUTPUT" ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
         exit 
     fi
 
-    # Chain our commands, so if one fails, the others dont do anything drastic
     scp packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
     
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"

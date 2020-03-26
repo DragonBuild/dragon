@@ -1,0 +1,16 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: 9BB22B08-2358-33F7-9CA0-52F733B0CB9A', 'arm64e: 3D755974-1B4F-38F4-A3D1-16B7083B43C3' ]
+platform:        ios
+install-name:    '/lib/libcryptex_core_development.dylib'
+current-version: 9
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    allowable-clients: [ cryptex, cryptex_development, cryptexd, cryptexd.development ]
+    symbols:         [ __cryptex_resource_agents, __cryptex_resource_bin, __cryptex_resource_daemons, 
+                       __cryptex_resource_frameworks, __cryptex_resource_lib, __cryptex_resource_libexec, 
+                       __cryptex_resource_local, __cryptex_resource_man, __cryptex_resource_share, 
+                       _cryptex_create_from_root, _cryptex_resource_get, _cryptex_view_create, 
+                       _cryptex_view_open, _cryptex_view_open_internal ]
+...

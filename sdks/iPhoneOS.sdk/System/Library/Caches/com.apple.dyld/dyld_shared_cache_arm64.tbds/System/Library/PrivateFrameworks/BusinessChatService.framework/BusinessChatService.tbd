@@ -1,0 +1,19 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/BusinessChatService.framework/BusinessChatService
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _kBCBusinessChatMachServiceName, _kBCBusinessChatServiceName, _kBCBusinessChatViewServiceName,
+                          _kBCChatSuggestRemoteViewController, _kBCSBusinessItemKey, _kBCSOpenHoursDayOfWeekKey, _kBCSOpenHoursFromKey,
+                          _kBCSOpenHoursHoursRangesKey, _kBCSOpenHoursSecondsInDay, _kBCSOpenHoursTimeRangeKey, _kBCSOpenHoursToKey ]
+    objc-classes:       [ _BCSBusinessItem, _BCSBusinessItemController, _BCSBusinessItemMemoryCache, _BCSBusinessItemPersistentStore,
+                          _BCSBusinessQueryController, _BCSBusinessQueryService, _BCSCallToActionItem, _BCSChatSuggestConfigItem,
+                          _BCSChatSuggestShardItem, _BCSConfigController, _BCSHashService, _BCSIconController, _BCSOpenHours,
+                          _BCSPersistentBusinessItemObject, _BCSPersistentStore, _BCSPhoneNumberFormatter, _BCSPhoneNumberNormalizer,
+                          _BCSVisibilityItem ]
+...

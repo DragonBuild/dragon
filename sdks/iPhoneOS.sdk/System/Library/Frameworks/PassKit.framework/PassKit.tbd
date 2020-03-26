@@ -1,0 +1,56 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/PassKit.framework/PassKit
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    re-exports:         [ /System/Library/PrivateFrameworks/PassKitCore.framework/PassKitCore,
+                          /System/Library/PrivateFrameworks/PassKitUI.framework/PassKitUI ]
+    symbols:            [ _PKExtensionAvailableExtensions, _PKExtensionAvailableExtensionsChangedNotification,
+                          _PKExtensionPaymentAuthorizationUIExtensionPointName, _PKExtensionPaymentAuthorizationUIIdentifier,
+                          _PKRemoteAddPaymentPassViewControllerExportedInterface,
+                          _PKRemotePaymentSetupViewControllerExportedInterface,
+                          _PKServiceAddPaymentPassViewControllerExportedInterface,
+                          _PKServicePaymentSetupViewControllerExportedInterface ]
+    objc-classes:       [ _PKAddPassButton, _PKAddPaymentPassViewController, _PKDisbursementAuthorizationController, _PKExtension,
+                          _PKExtensionBaseContext, _PKExtensionHostContext, _PKExtensionProvider, _PKExtensionRemoteViewController,
+                          _PKExtensionVendorContext, _PKPaymentAuthorizationController, _PKPaymentAuthorizationCoreViewController,
+                          _PKPaymentAuthorizationViewController, _PKPaymentButton, _PKPaymentSetupController,
+                          _PKPaymentSetupViewController, _PKRemoteAddPaymentPassViewController, _PKRemotePaymentSetupViewController ]
+    objc-ivars:         [ _PKAddPassButton._addPassButtonStyle, _PKAddPassButton._boundsSize, _PKAddPassButton._highlightFilter,
+                          _PKAddPassButton._highlighted, _PKAddPassButton._iconSize, _PKAddPassButton._iconView,
+                          _PKAddPassButton._layer, _PKAddPassButton._maskView, _PKAddPassButton._multiLineAlignmentInset,
+                          _PKAddPassButton._multiLineLabel, _PKAddPassButton._multiLineSize,
+                          _PKAddPassButton._singleLineAlignmentInset, _PKAddPassButton._singleLineLabel,
+                          _PKAddPassButton._singleLineSize, _PKAddPassButton._useLayoutMargins,
+                          _PKAddPaymentPassViewController._configuration, _PKAddPaymentPassViewController._delegate,
+                          _PKAddPaymentPassViewController._remoteVC, _PKAddPaymentPassViewController._remoteVCRequest,
+                          _PKDisbursementAuthorizationController._authController, _PKDisbursementAuthorizationController._delegate,
+                          _PKDisbursementAuthorizationController._disbursementRequest,
+                          _PKDisbursementAuthorizationController._retainSelf, _PKExtension._identifier, _PKExtension._provider,
+                          _PKExtensionHostContext._delayCallbacksGroup, _PKExtensionHostContext._delegate,
+                          _PKExtensionProvider._didReceiveExtensions, _PKExtensionProvider._extensionQueue,
+                          _PKExtensionProvider._extensionSema, _PKExtensionProvider._extensions,
+                          _PKExtensionProvider._matchingContext, _PKExtensionProvider._passKitExtensions,
+                          _PKExtensionRemoteViewController._delegate, _PKExtensionVendorContext._whitelist,
+                          _PKPaymentAuthorizationController._delegate, _PKPaymentAuthorizationController._paymentCoordinator,
+                          _PKPaymentAuthorizationController._privateDelegate, _PKPaymentAuthorizationController._retainSelf,
+                          _PKPaymentAuthorizationCoreViewController._dataModel, _PKPaymentAuthorizationCoreViewController._delegate,
+                          _PKPaymentAuthorizationCoreViewController._paymentAuthorizationLayout,
+                          _PKPaymentAuthorizationCoreViewController._paymentAuthorizationStyle,
+                          _PKPaymentAuthorizationCoreViewController._stateMachine, _PKPaymentAuthorizationViewController._delegate,
+                          _PKPaymentAuthorizationViewController._paymentCoordinator,
+                          _PKPaymentAuthorizationViewController._privateDelegate,
+                          _PKPaymentAuthorizationViewController._viewHasAppeared, _PKPaymentButton._boundsSize,
+                          _PKPaymentButton._buyLabel, _PKPaymentButton._container, _PKPaymentButton._cornerRadius,
+                          _PKPaymentButton._fontRatio, _PKPaymentButton._highlightFilter, _PKPaymentButton._highlighted,
+                          _PKPaymentButton._layer, _PKPaymentButton._maskView, _PKPaymentButton._style, _PKPaymentButton._type,
+                          _PKPaymentSetupViewController._cancelButton, _PKPaymentSetupViewController._loadingLabel,
+                          _PKPaymentSetupViewController._paymentSetupRequest, _PKPaymentSetupViewController._remoteVC,
+                          _PKPaymentSetupViewController._remoteVCRequest, _PKPaymentSetupViewController._spinner,
+                          _PKRemoteAddPaymentPassViewController._delegate, _PKRemoteAddPaymentPassViewController._finished ]
+...

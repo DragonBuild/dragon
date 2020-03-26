@@ -1,0 +1,10 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: A772A2B5-3022-3372-A59F-E4214A55672A', 'arm64e: 648B1044-7E3C-3E33-933B-E6E42D429FC5' ]
+platform:        ios
+install-name:    '/usr/lib/libAppletTranslationLibrary.dylib'
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    objc-classes:    [ AppletTranslator ]
+...

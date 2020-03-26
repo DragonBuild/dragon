@@ -1,0 +1,24 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/PassKit.framework/PassKit
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    re-exports:         [ /System/Library/PrivateFrameworks/PassKitCore.framework/PassKitCore,
+                          /System/Library/PrivateFrameworks/PassKitUI.framework/PassKitUI ]
+    symbols:            [ _PKExtensionAvailableExtensions, _PKExtensionAvailableExtensionsChangedNotification,
+                          _PKExtensionPaymentAuthorizationUIExtensionPointName, _PKExtensionPaymentAuthorizationUIIdentifier,
+                          _PKRemoteAddPaymentPassViewControllerExportedInterface,
+                          _PKRemotePaymentSetupViewControllerExportedInterface,
+                          _PKServiceAddPaymentPassViewControllerExportedInterface,
+                          _PKServicePaymentSetupViewControllerExportedInterface ]
+    objc-classes:       [ _PKAddPassButton, _PKAddPaymentPassViewController, _PKDisbursementAuthorizationController, _PKExtension,
+                          _PKExtensionBaseContext, _PKExtensionHostContext, _PKExtensionProvider, _PKExtensionRemoteViewController,
+                          _PKExtensionVendorContext, _PKPaymentAuthorizationController, _PKPaymentAuthorizationCoreViewController,
+                          _PKPaymentAuthorizationViewController, _PKPaymentButton, _PKPaymentSetupController,
+                          _PKPaymentSetupViewController, _PKRemoteAddPaymentPassViewController, _PKRemotePaymentSetupViewController ]
+...

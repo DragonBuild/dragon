@@ -1,0 +1,49 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/AddressBookUI.framework/AddressBookUI
+current-version:       33
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _ABAddressBookBundle, _ABAddressBookGetDefaultRotationContentSettings, _ABAddressBookSetAutorotationEnabled,
+                          _ABAddressBookShouldAllowAutorotation, _ABAddressBookUIBundle, _ABCreateStringWithAddressDictionary,
+                          _ABPersonBirthdayProperty, _ABPersonDatesProperty, _ABPersonDepartmentNameProperty,
+                          _ABPersonEmailAddressesProperty, _ABPersonFamilyNameProperty, _ABPersonGivenNameProperty,
+                          _ABPersonInstantMessageAddressesProperty, _ABPersonJobTitleProperty, _ABPersonMiddleNameProperty,
+                          _ABPersonNamePrefixProperty, _ABPersonNameSuffixProperty, _ABPersonNicknameProperty, _ABPersonNoteProperty,
+                          _ABPersonOrganizationNameProperty, _ABPersonPhoneNumbersProperty, _ABPersonPhoneticFamilyNameProperty,
+                          _ABPersonPhoneticGivenNameProperty, _ABPersonPhoneticMiddleNameProperty, _ABPersonPostalAddressesProperty,
+                          _ABPersonPreviousFamilyNameProperty, _ABPersonRelatedNamesProperty, _ABPersonRingtoneProperty,
+                          _ABPersonSocialProfilesProperty, _ABPersonTextToneProperty, _ABPersonUrlAddressesProperty, _ABUIAppIsOldFMF,
+                          _ABUIIsBlurSupported, _ABUIIsContacts, _ABUIIsDDActionsService, _ABUIIsFaceTime, _ABUIIsFirstParty,
+                          _ABUIIsGameCenterFriendRequestExtension, _ABUIIsMobilePhone, _ABUIOldAppsUseModernUI, _ABUIPixelAlignedPoint,
+                          _ABUIPixelAlignedRect, _ABUIPixelAlignedSize, _ABUIRoundToViewScale, _ABUISetUseSiriLocalization,
+                          _ABUIShouldUseLegacyUI, _ABUIShouldUseSiriLocalization, _PostalAddressByAddingCountry,
+                          _StringByRemovingConsecutiveNewLines ]
+    objc-classes:       [ _ABNewPersonViewController, _ABPeoplePickerNavigationController, _ABPersonViewController,
+                          _ABUnknownPersonViewController ]
+    objc-ivars:         [ _ABNewPersonViewController._addressBook, _ABNewPersonViewController._cnContactViewController,
+                          _ABNewPersonViewController._displayedPerson, _ABNewPersonViewController._mergeContact,
+                          _ABNewPersonViewController._newPersonViewDelegate, _ABNewPersonViewController._parentGroup,
+                          _ABNewPersonViewController._parentSource, _ABPeoplePickerNavigationController._addressBook,
+                          _ABPeoplePickerNavigationController._contactPicker,
+                          _ABPeoplePickerNavigationController._displayedProperties,
+                          _ABPeoplePickerNavigationController._ignoreViewWillBePresented,
+                          _ABPeoplePickerNavigationController._peoplePickerDelegate,
+                          _ABPeoplePickerNavigationController._predicateForEnablingPerson,
+                          _ABPeoplePickerNavigationController._predicateForSelectionOfPerson,
+                          _ABPeoplePickerNavigationController._predicateForSelectionOfProperty,
+                          _ABPersonViewController._addressBook, _ABPersonViewController._allowsActions,
+                          _ABPersonViewController._allowsEditing, _ABPersonViewController._cnContactViewController,
+                          _ABPersonViewController._displayedPerson, _ABPersonViewController._displayedProperties,
+                          _ABPersonViewController._highlightedImportant, _ABPersonViewController._highlightedMultiValueIdentifier,
+                          _ABPersonViewController._highlightedProperty, _ABPersonViewController._personViewDelegate,
+                          _ABPersonViewController._shouldShowLinkedPeople, _ABPersonViewController._style,
+                          _ABUnknownPersonViewController._addressBook, _ABUnknownPersonViewController._allowsActions,
+                          _ABUnknownPersonViewController._allowsAddingToAddressBook, _ABUnknownPersonViewController._alternateName,
+                          _ABUnknownPersonViewController._cnContactViewController, _ABUnknownPersonViewController._displayedPerson,
+                          _ABUnknownPersonViewController._message, _ABUnknownPersonViewController._unknownPersonViewDelegate ]
+...

@@ -1,0 +1,17 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/EmergencyAlerts.framework/EmergencyAlerts
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _EACategoryIdentifierAlert, _EACategoryIdentifierConfigurableAlert, _EALogDefault, _EALogSubsystem,
+                          _EANotificationCarrierBundleIdentifierKey, _EANotificationExternalToneFilePathKey,
+                          _EANotificationExternalVibrationPatternFilePathKey, _EANotificationFromPhoneKey,
+                          _EANotificationSoundIsMutableInRelayModeKey, _EARegisterUserNotificationsLogging,
+                          _EmergencyAlertsVersionNumber, _EmergencyAlertsVersionString, _kEADefaultMaxDuration ]
+    objc-classes:       [ _EACellBroadcastMessageListener, _EAEmergencyAlertCenter ]
+...

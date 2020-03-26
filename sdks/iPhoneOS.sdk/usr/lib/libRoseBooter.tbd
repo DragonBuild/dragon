@@ -1,0 +1,12 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: 161F59D2-E44E-37D7-BC5C-8729C3D1B13D', 'arm64e: 32C26E43-326D-3DAC-9E26-D8FE9723213D' ]
+platform:        ios
+install-name:    '/usr/lib/libRoseBooter.dylib'
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _RoseBooterAllocate, _RoseBooterBootChip, _RoseBooterDestroy, 
+                       _RoseBooterGetCal, _RoseBooterHasFailedForward, _RoseBooterPreflight, 
+                       _RoseBooterSendCal ]
+...

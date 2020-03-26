@@ -1,0 +1,11 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/SharingXPCServices.framework/SharingXPCServices
+current-version:       1506.7
+compatibility-version: 0
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _SharingXPCServicesVersionNumber, _SharingXPCServicesVersionString ]
+...

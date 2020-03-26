@@ -1,0 +1,22 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: 595D51BA-C9B3-35BB-9198-576B60FD74C2', 'arm64e: 5F6E02A7-8186-36D7-AB06-19ACC5121B87' ]
+platform:        ios
+install-name:    '/usr/lib/libAudioIssueDetector.dylib'
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _AudioDataAnalysisManagerCreate, _AudioDataAnalysisManagerCreateNodeEnvSPL, 
+                       _AudioDataAnalysisManagerCreateNodePCM, _AudioDataAnalysisManagerCreateNodeSPL, 
+                       _AudioDataAnalysisManagerDispose, _AudioDataAnalysisManagerInitialize, 
+                       _AudioDataAnalysisManagerProcessAudio, _AudioDataAnalysisManagerProcessEnvSPL, 
+                       _AudioDataAnalysisManagerProcessSPL, _AudioDataAnalysisManagerRemoveNode, 
+                       _AudioDataAnalysisManagerReset, _AudioDataAnalysisManagerSetDeviceInfo, 
+                       _AudioDataAnalysisManagerUpdateReportingSessions, _AudioIssueDetectorAnalyzeBuffer, 
+                       _AudioIssueDetectorCreate, _AudioIssueDetectorDispose, _AudioIssueDetectorInitialize, 
+                       _AudioIssueDetectorRemoveNode, _AudioIssueDetectorReset, _AudioIssueDetectorSetDownlinkVolume, 
+                       _AudioIssueDetectorSetNodeFormat, _AudioIssueDetectorSetNodeFormatWithDirection, 
+                       _AudioIssueDetectorSetRouteSpecificDownlinkGainAdjustment, 
+                       _AudioIssueDetectorSetUplinkMute, _AudioIssueDetectorUpdateReportingSessions, 
+                       _EnvironmentalDosimetryAgentCreate, _EnvironmentalDosimetryAgentDispose ]
+...

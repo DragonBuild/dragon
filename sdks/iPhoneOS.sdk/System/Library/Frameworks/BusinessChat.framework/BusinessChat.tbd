@@ -1,0 +1,61 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/BusinessChat.framework/BusinessChat
+current-version:       1
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _BCAuthenticationResponseStatusAuthenticated, _BCAuthenticationResponseStatusFailed, _BCBubbleViewStyleIcon,
+                          _BCBubbleViewStyleLarge, _BCBubbleViewStyleSmall, _BCInternalAuthenticationResponseStatusAuthenticated,
+                          _BCInternalAuthenticationResponseStatusFailed, _BCLabelCategoryAuthenticate, _BCLabelCategoryFailure,
+                          _BCLabelCategorySignIn, _BCLabelCategorySuccess, _BCLoggingEventNameExpired, _BCLoggingEventNameFailure,
+                          _BCLoggingEventNameFallback, _BCLoggingEventNameNotEligible, _BCLoggingEventNameOpen,
+                          _BCLoggingEventNameReplied, _BCLoggingEventNameSuccess, _BCMessageDataImagesKey, _BCMessageDataMSPVersionKey,
+                          _BCMessageDataPayloadKey, _BCMessageDataReceivedMessageKey, _BCMessageDataReplyMessageKey,
+                          _BCMessageDataRequestIdentifierKey, _BCMessageDataVersionKey, _BCMessageRootAuthenticateKey,
+                          _BCMessageRootContentKey, _BCMessageRootErrorKey, _BCMessageRootEventKey,
+                          _BCMessageRootInternalAuthenticateKey, _BCMessageRootJITAppKitKey, _BCMessageRootListPickerKey,
+                          _BCMessageRootPaymentKey, _BCMessageRootUnknownKey, _BCOAuthRedirectURI, _BCParameterNameBody,
+                          _BCParameterNameGroup, _BCParameterNameIntent, _kAuthenticationErrorDomain, _kCryptorErrorDomain ]
+    objc-classes:       [ _BCApplePayManager, _BCAuthenticationLabels, _BCAuthenticationManager, _BCAuthenticationRequest,
+                          _BCAuthenticationResponse, _BCCertificatUtilities, _BCChatAction, _BCChatButton, _BCConstants, _BCCryptor, _BCError,
+                          _BCImage, _BCImageStore, _BCInternalAuthenticationManager, _BCInternalAuthenticationRequest,
+                          _BCInternalAuthenticationResponse, _BCInvalidCertificatView, _BCLogger, _BCMessage, _BCMessageData,
+                          _BCMessageInfo, _BCOAuth2Parameters, _BCProgressIndicatorView, _BCServerErrorView, _BCWebViewController ]
+    objc-ivars:         [ _BCApplePayManager._delegate, _BCAuthenticationLabels._action, _BCAuthenticationLabels._subtitle,
+                          _BCAuthenticationLabels._title, _BCAuthenticationManager._authenticationRequest,
+                          _BCAuthenticationRequest._businessIdentifier, _BCAuthenticationRequest._businessName,
+                          _BCAuthenticationRequest._oauth2, _BCAuthenticationResponse._errors, _BCAuthenticationResponse._status,
+                          _BCAuthenticationResponse._token, _BCChatButton._centeredView, _BCChatButton._iconImageView,
+                          _BCChatButton._isInverted, _BCChatButton._label, _BCChatButton._smallLabel, _BCChatButton._style,
+                          _BCError._code, _BCError._domain, _BCError._message, _BCImage._identifier, _BCImage._imageData,
+                          _BCImage._imageDescription, _BCImageStore._data, _BCImageStore._dictionary, _BCImageStore._rawArray,
+                          _BCInternalAuthenticationManager._account, _BCInternalAuthenticationManager._accountStore,
+                          _BCInternalAuthenticationManager._authenticationRequest,
+                          _BCInternalAuthenticationRequest._businessIdentifier, _BCInternalAuthenticationRequest._groupIdentifier,
+                          _BCInternalAuthenticationRequest._labels, _BCInternalAuthenticationRequest._responseEncryptionKey,
+                          _BCInternalAuthenticationRequest._retrieve, _BCInternalAuthenticationResponse._businessIdentifier,
+                          _BCInternalAuthenticationResponse._credentials, _BCInternalAuthenticationResponse._errors,
+                          _BCInternalAuthenticationResponse._groupIdentifier, _BCInternalAuthenticationResponse._status,
+                          _BCInvalidCertificatView._contentView, _BCInvalidCertificatView._host,
+                          _BCInvalidCertificatView._insecureIcon, _BCInvalidCertificatView._messageLabel,
+                          _BCInvalidCertificatView._titleLabel, _BCMessage._accessibilityLabel, _BCMessage._imageStore,
+                          _BCMessage._internalRootKey, _BCMessage._isFromMe, _BCMessage._messageData, _BCMessage._messageGUID,
+                          _BCMessage._receivedMessage, _BCMessage._replyMessage, _BCMessage._requestIdentifier, _BCMessage._rootObject,
+                          _BCMessage._subcaption, _BCMessage._subtitle, _BCMessage._summaryText, _BCMessage._title, _BCMessage._version,
+                          _BCMessageData._data, _BCMessageData._jsonDictionary, _BCMessageData._receivedMessageDictionary,
+                          _BCMessageData._replyMessageDictionary, _BCMessageData._url, _BCMessageInfo.__style,
+                          _BCMessageInfo._alternateTitle, _BCMessageInfo._image, _BCMessageInfo._imageDescription,
+                          _BCMessageInfo._imageIdentifier, _BCMessageInfo._subtitle, _BCMessageInfo._title,
+                          _BCOAuth2Parameters._accessTokenURL, _BCOAuth2Parameters._authorizationURL,
+                          _BCOAuth2Parameters._clientIdentifier, _BCOAuth2Parameters._clientSecret,
+                          _BCOAuth2Parameters._responseEncryptionKey, _BCOAuth2Parameters._responseType, _BCOAuth2Parameters._scope,
+                          _BCOAuth2Parameters._state, _BCServerErrorView._contentView, _BCServerErrorView._messageLabel,
+                          _BCWebViewController._callbackURI, _BCWebViewController._delegate,
+                          _BCWebViewController._invalidCertificatView, _BCWebViewController._originURL,
+                          _BCWebViewController._progressIndicatorView, _BCWebViewController._serverErrorView,
+                          _BCWebViewController._wasCallbackCaptured, _BCWebViewController._webkitView ]
+...

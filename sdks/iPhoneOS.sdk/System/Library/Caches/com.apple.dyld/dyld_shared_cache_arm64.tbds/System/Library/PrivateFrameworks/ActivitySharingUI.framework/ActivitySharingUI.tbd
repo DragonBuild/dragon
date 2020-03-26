@@ -1,0 +1,24 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/ActivitySharingUI.framework/ActivitySharingUI
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _ASBreadcrumbKeyForBulletinType, _ASCompetitionEndedDescriptionForFriend, _ASCompetitionEndedTitleForFriend,
+                          _ASCompetitionFirstGlanceDescriptionForTypeWithFriends, _ASCompetitionFirstGlanceSectionHeaderForType,
+                          _ASCompetitionLearnMoreDetailsAttributedStringForFriend,
+                          _ASCompetitionLearnMoreIntroductionAttributedStringForFriend,
+                          _ASCompetitionScoreCapCelebrationDescription, _ASCompetitionScoreCapCelebrationTitle,
+                          _ASCompetitionStageStringWithCompetition, _ASCompetitionZeroPaddedScoreString,
+                          _ASDailyAverageStringWithScore, _ASDisplayModeToString, _ASLaunchToMessagesWithRecipients,
+                          _ASPointsStringWithScore, _ASWorkoutCaloriesString, _ASWorkoutCountString, _ASWorkoutNameString,
+                          __ASCompetitionEndedKeyForFriend, _kASDisplayContextCompanion, _kASDisplayContextGizmo ]
+    objc-classes:       [ _ASCompetitionGizmoDetailView, _ASCompetitionGraphView, _ASCompetitionMessageBubbleView,
+                          _ASCompetitionParticipantScoreView, _ASCompetitionScoreView, _ASCompetitionScoreViewConfiguration,
+                          _ASCompetitionTimeRemainingLabel, _ASDisplayContext, _ASFriendListDisplayContext, _ASFriendListRow,
+                          _ASFriendListSection, _ASFriendListSectionManager ]
+...

@@ -1,0 +1,24 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/HIDDisplay.framework/HIDDisplay
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _HIDDisplayCopyPreset, _HIDDisplayCopyPresetUniqueID, _HIDDisplayCreateDeviceWithContainerID,
+                          _HIDDisplayCreateIOReportingInterfaceWithContainerID, _HIDDisplayCreatePresetInterfaceWithContainerID,
+                          _HIDDisplayCreatePresetInterfaceWithService, _HIDDisplayGetActivePresetIndex, _HIDDisplayGetContainerID,
+                          _HIDDisplayGetFactoryDefaultPresetIndex, _HIDDisplayGetPresetCapabilities, _HIDDisplayGetPresetCount,
+                          _HIDDisplayIOReportingActivate, _HIDDisplayIOReportingCancel, _HIDDisplayIOReportingSetCancelHandler,
+                          _HIDDisplayIOReportingSetDispatchQueue, _HIDDisplayIOReportingSetInputDataHandler,
+                          _HIDDisplayIOReportingSetOutputData, _HIDDisplayIsPresetValid, _HIDDisplayIsPresetWritable, _HIDDisplayLog,
+                          _HIDDisplaySetActivePresetIndex, _HIDDisplaySetPreset, _HIDDisplayVersionNumber, _HIDDisplayVersionString,
+                          _kHIDDisplayPresetFieldDataBlockOneKey, _kHIDDisplayPresetFieldDataBlockOneLengthKey,
+                          _kHIDDisplayPresetFieldDataBlockTwoKey, _kHIDDisplayPresetFieldDataBlockTwoLengthKey,
+                          _kHIDDisplayPresetFieldDescriptionKey, _kHIDDisplayPresetFieldNameKey, _kHIDDisplayPresetFieldValidKey,
+                          _kHIDDisplayPresetFieldWritableKey, _kHIDDisplayPresetUniqueIDKey ]
+    objc-classes:       [ _HIDDisplayIOReportingInterface, _HIDDisplayInterface, _HIDDisplayPresetData, _HIDDisplayPresetInterface ]
+...

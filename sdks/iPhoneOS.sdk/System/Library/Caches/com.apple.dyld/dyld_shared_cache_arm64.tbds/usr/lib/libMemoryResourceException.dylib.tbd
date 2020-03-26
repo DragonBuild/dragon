@@ -1,0 +1,18 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /usr/lib/libMemoryResourceException.dylib
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _MREBundleStringForUnbundledProcess, _MREErrorDomain, _MREExceptionTypeToString,
+                          _ReportMemoryExceptionFromTask, _kMREOutputFormatterCategoryTotalKey, _kMREOutputFormatterCleanKey,
+                          _kMREOutputFormatterDirtyKey, _kMREOutputFormatterPageSizeKey, _kMREOutputFormatterReclaimableKey,
+                          _kMREOutputFormatterRegionsKey, _kMREOutputFormatterSummaryKey, _kMREOutputFormatterSwappedKey,
+                          _kMREOutputFormatterTotalFootprintKey, _kMREOutputFormatterWiredKey ]
+    objc-classes:       [ _FPFootprint, _FPMemoryCategory, _FPProcess, _MemoryResourceException, _RMECacheEnumerator ]
+    objc-ivars:         [ _FPProcess._errors, _FPProcess._idleExitStatus, _FPProcess._is64bit, _FPProcess._pid, _FPProcess._warnings ]
+...

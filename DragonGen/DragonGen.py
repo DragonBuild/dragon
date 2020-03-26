@@ -34,30 +34,31 @@ bvars['all']['libs'] = ['objc', 'c++']
 bvars['all']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['all']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 
-bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/$name.dylib'
-bvars['tweak']['target'] = '$pdirname/_$location'
+bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
+bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
 bvars['tweak']['lopts'] = ''
 bvars['tweak']['frameworks'] = []
 
 # This is the default location for a pref bundle, which we can assume is what the user wants by default
-bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/$name'
-bvars['bundle']['target'] = '$pdirname/_$location'
+bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
+bvars['bundle']['target'] = '$pdirname/_$location$name.dylib'
 bvars['bundle']['libs'] = []
 bvars['bundle']['lopts']= ''
 bvars['bundle']['frameworks'] = ['Preferences']
 
-bvars['library']['location'] = '/usr/lib/$name.dylib'
-bvars['library']['target'] = '$pdirname/_$location'
+bvars['library']['location'] = '/usr/lib/'
+bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
 bvars['library']['lopts']= ''
 bvars['library']['frameworks'] = []
 
 # User modifiable variables
 
-def read_dragon_configuration(ninja):
+def read_dragon_configuration():
     f = open("DragonMake", 'r')
     config = yaml.safe_load(f)
+    project_dirs = ''
 
     for i in config:
         if i == 'package_name':
@@ -69,10 +70,17 @@ def read_dragon_configuration(ninja):
         elif i == 'exports': 
             exports.update(config[i])
 
-        package_config = {'name':i}
+        package_config = {'name':i, 'dir':'.'}
         package_config.update(config[i])
         project_config = process_package(package_config)
+
+        f = open(f"{project_config['dir']}/build.ninja", 'w+')
+        ninja = ninja_syntax.Writer(f)
         create_buildfile(ninja, project_config['type'], project_config)
+        f.close()
+        project_dirs = project_dirs + ' ' + project_config['dir']
+    
+    exports['project_dirs'] = project_dirs
 
 
 def process_package(package_config):
@@ -81,28 +89,34 @@ def process_package(package_config):
     uvars['name'] = ''
     uvars['type'] = ''
 
+    uvars['logos_files'] = []
+    uvars['files'] = []
+    uvars['plists'] = []
+
     uvars['dragondir'] = '$$DRAGONBUILD'
     uvars['targetios'] = '10.0'
     uvars['archs'] = ['armv7', 'arm64', 'arm64e']
     uvars['sysroot'] = '$dragondir/sdks/iPhoneOS.sdk'
     uvars['cc'] = 'clang++'
-    uvars['ll'] = 'clang++'
-    uvars['ld'] = 'ldid'
+    uvars['ld'] = 'clang++'
+    uvars['ldid'] = 'ldid'
     uvars['dsym'] = 'dsymutil'
+    uvars['plutil'] = 'plutil'
     uvars['logos']= '$dragondir/bin/logos.pl'
+    uvars['stage'] = ''
     uvars['arc'] = '-fobjc-arc'
     uvars['targ'] = '-DTARGET_IPHONE=1'
 
     uvars['warnings'] = 'all' #'-W' + this
     uvars['optim'] = '0'
-    uvars['debug'] = '-g -DDEBUG'
+    uvars['debug'] = '-fcolor-diagnostics'
 
     uvars['libs'] = []
     uvars['frameworks'] = []
 
     uvars['cflags'] = ''
-    uvars['lflags'] = ''
-    uvars['ldflags']= '-S'
+    uvars['ldflags'] = ''
+    uvars['ldidflags']= '-S'
 
     uvars['installLocation'] = ''
 
@@ -121,6 +135,7 @@ def process_package(package_config):
 
 def create_buildfile(ninja, type, uvars):
     ninja.variable('name', uvars['name'])
+    ninja.variable('lowername', uvars['name'].lower())
     ninja.newline()
     ninja.newline()
 
@@ -134,8 +149,8 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('builddir', dragonvars['builddir'])
     ninja.variable('objdir', dragonvars['objdir'])
     ninja.variable('signdir', dragonvars['signdir'])
-    ninja.variable('signtarget', '$signdir/$location.unsigned')
-    ninja.variable('symtarget', '$signdir/$location.unsym')
+    ninja.variable('signtarget', '$signdir/$target.unsigned')
+    ninja.variable('symtarget', '$signdir/$target.unsym')
     ninja.newline()
 
     ninja.variable('dragondir', uvars['dragondir'])
@@ -148,10 +163,12 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
 
     ninja.variable('cc', uvars['cc'])
-    ninja.variable('ll', uvars['ll'])
     ninja.variable('ld', uvars['ld'])
+    ninja.variable('ldid', uvars['ldid'])
     ninja.variable('dsym', uvars['dsym'])
     ninja.variable('logos', uvars['logos'])
+    ninja.variable('plutil', uvars['plutil'])
+    ninja.variable('stage', uvars['stage'] if isinstance(uvars['stage'], str) else '; '.join(uvars['stage']))
     ninja.newline()
 
     ninja.variable('targetios', uvars['targetios'])
@@ -175,8 +192,8 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
 
     ninja.variable('usrCflags', uvars['cflags'])
-    ninja.variable('usrLflags', uvars['lflags'])
-    ninja.variable('usrLDFlags', uvars['ldflags'])
+    ninja.variable('usrLDflags', uvars['ldflags'])
+    ninja.variable('usrLDIDFlags', uvars['ldidflags'])
     ninja.newline()
 
     ninja.variable('lopt', bvars['all']['lopts'])
@@ -186,7 +203,7 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('cflags', cflags)
     ninja.newline()
 
-    lflags = '$cflags $frameworks $libs $lopt $usrLflags'
+    lflags = '$cflags $frameworks $libs $lopt $usrLDflags'
     ninja.variable('lflags', lflags)
     ninja.newline()
 
@@ -195,20 +212,31 @@ def create_buildfile(ninja, type, uvars):
 
     # rules
 
+    ninja.pool('solo', '1')
+    ninja.newline()
+
     ninja.rule('logos', description="Processing $in with Logos",command="$logos $in > $out")
     ninja.newline()
     ninja.rule('compile', description="Compiling $in", command="$cc $cflags -c $in -o $out")
     ninja.newline()
-    ninja.rule('link', description="Linking $name", command="$ll $lflags -o $out $in")
+    ninja.rule('link', description="Linking $name", command="$ld $lflags -o $out $in")
+    ninja.newline()
+    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p .dragon/_$location/; cp -r Resources/ .dragon/_$location && cp $in $out && find .dragon/_$location -type f -name \"*.plist\" -exec $plutil -convert binary1 \"{}\" \;", pool='solo')
+    ninja.newline()
+    ninja.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
     ninja.newline()
     ninja.rule('debug', description="Generating Debug Symbols for $name", command="$dsym \"$in\" 2&> /dev/null; mv $in $out")
     ninja.newline()
-    ninja.rule('sign', description="Signing $name", command="$ld $ldflags $in && mv $in $target")
+    ninja.rule('sign', description="Signing $name", command="$ldid $usrLDIDFlags $in && mv $in $target")
+    ninja.newline()
+    ninja.rule('stage', description="Running Stage for $name", command="$stage")
     ninja.newline()
 
     outputs = []
+    targets = ['$target']
     logos = uvars['logos_files']
     files = uvars['files']
+    plists = uvars['plists']
 
     for i in logos:
         wc = re.match(dm_wildcard, i)
@@ -218,9 +246,14 @@ def create_buildfile(ninja, type, uvars):
         elif ev:
             out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
         else:
+            if uvars['dir'] != '.':
+                i = '../' + i
             continue 
 
-        logos += str(out).split(' ')
+        if uvars['dir'] != '.':
+            logos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+        else:
+            logos += str(out).split(' ')
         logos.remove(i)
         
     for i in files:
@@ -231,20 +264,54 @@ def create_buildfile(ninja, type, uvars):
         elif ev:
             out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
         else:
+            if uvars['dir'] != '.':
+                i = '../' + i
             continue 
 
-        files += str(out).split(' ')
+        if uvars['dir'] != '.':
+            files += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+        else:
+            files += str(out).split(' ')
         files.remove(i)
 
+    for i in plists:
+        wc = re.match(dm_wildcard, i)
+        ev = re.match(dm_eval, i)
+        if wc:
+            out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+        elif ev:
+            out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+        else:
+            if uvars['dir'] != '.':
+                i = '../' + i
+            continue 
+
+        if uvars['dir'] != '.':
+            plists += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+        else:
+            plists += str(out).split(' ')
+        plists.remove(i)
+
     for f in logos:
-        ninja.build(f'$builddir/{f}.mm', 'logos', f)
-        files.append(f'$builddir/{f}.mm')
+        ninja.build(f'$builddir/{os.path.split(f)[1]}.mm', 'logos', f)
+        files.append(f'$builddir/{os.path.split(f)[1]}.mm')
         ninja.newline()
 
     for f in files:
-        ninja.build(f'$builddir/{f}.o', 'compile', f)
-        outputs.append(f'$builddir/{f}.o')
+        ninja.build(f'$builddir/{os.path.split(f)[1]}.o', 'compile', f)
+        outputs.append(f'$builddir/{os.path.split(f)[1]}.o')
         ninja.newline()
+
+
+    if type == 'bundle':
+        # Use the build file itself as a way to trick ninja into working without a specific file
+        ninja.build('$builddir/trash/bundles', 'bundle', 'build.ninja') 
+        targets.append('$builddir/trash/bundles')
+        ninja.newline()
+    
+    ninja.build('$builddir/trash/stage', 'stage', '$target')
+    targets.append('$builddir/trash/stage')
+    ninja.newline()
 
     ninja.build('$symtarget', 'link', outputs)
     ninja.newline()
@@ -255,15 +322,17 @@ def create_buildfile(ninja, type, uvars):
     ninja.build('$target', 'sign', '$signtarget')
     ninja.newline()
 
-    ninja.default('$target')
+    for f in plists:
+        ninja.build(f'.dragon/_$location./{os.path.split(f)[1]}', 'plist', f)
+        targets.append(f'.dragon/_$location./{os.path.split(f)[1]}')
+        ninja.newline()
+
+    ninja.default(targets)
     ninja.newline()
 
 
 def main():
-    f = open("build.ninja", 'w+')
-    ninja = ninja_syntax.Writer(f)
-    read_dragon_configuration(ninja)
-    f.close()
+    read_dragon_configuration()
 
     for i in exports:
         print(f'export {i}="{exports[i]}"')
@@ -284,7 +353,5 @@ def getmakevars(filename, filter):
         fp.close()
     return variables
 
-
-    
 if __name__ == "__main__":
     main()

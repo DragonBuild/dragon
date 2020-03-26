@@ -1,0 +1,38 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/TrackingAvoidance.framework/TrackingAvoidance
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _NSJSONSerializationNSStringErrorDomain, _TACLVisitConfidenceToString, _TAEventsLog,
+                          _TAGeoNavigationListenerStateToString, _TAGeoTransportTypeToString, _TALocationOfInterestTypeToString,
+                          _TAOutgoingRequestsAdditionalScanningKey, _TAOutgoingRequestsInterVisitMetricsDonationKey,
+                          _TAOutgoingRequestsPeopleDensityKey, _TAOutgoingRequestsVisitMetricsDonationKey,
+                          _TAPrivateVehicleClassificationReasonEnumToString, _TARegisterLogs, _TASPAdvertisementTypeToString,
+                          _TAStatusLog, _TASuspiciousDeviceStatusToString, _TASystemStateTypeToString, _TAUserActivityTypeToString,
+                          _TAVehicularOperatorStateToString, _TAVehicularStateToString, _TAVisitStateTypeToString,
+                          _kTAFilterGeneralDurationOfConsiderationKey, _kTAFilterGeneralThresholdOfLocationRelevanceKey,
+                          _kTAFilterGeneralThresholdOfSignificantDistanceKey, _kTAFilterGeneralThresholdOfSignificantDurationKey,
+                          _kTAFilterSingleVisitEnabledLoiTypesKey, _kTAFilterVisitsMaxSuspiciousDurationKey,
+                          _kTAFilterVisitsMinInterVisitDistanceKey, _kTAFilterVisitsMinNSigmaKey, _kTANotificationThrottleHoursKey,
+                          _kTANotificationThrottleMaxPerPeriodKey, _kTAPeopleDensityEnabledKey, _kTAScanInterVisitScanDelayKey,
+                          _kTAScanMaxDailyRequestsKey, _kTAScanMaxInterVisitRequestsKey, _kTAScanMinInterVisitDisplayOnDurationKey,
+                          _kTAScanMinVisitEntryDisplayOnDurationKey, _kTAStoreBufferCapacityKey,
+                          _kTAStoreBufferTimeIntervalOfRetentionKey, _kTAStoreMaxNSigmaBetweenLastLocationAndVisitKey,
+                          _kTAStorePoiDisplayBufferCapacityKey, _kTAStorePoiSnapshotCapacityKey, _kTATrackingAvoidanceEnabledKey ]
+    objc-classes:       [ _TACLVisit, _TACircularBuffer, _TACoreAnalyticMetricManager, _TADeviceRecord, _TADeviceRecordSettings,
+                          _TADominantUserActivity, _TAFilterGeneral, _TAFilterGeneralSettings, _TAFilterSingleVisit,
+                          _TAFilterSingleVisitSettings, _TAFilterVisits, _TAFilterVisitsSettings, _TAGeneralDetectionMetrics,
+                          _TAGeoNavigationNotification, _TAInterVisitMetricPerDevice, _TAInterVisitMetricsSnapshot,
+                          _TAInterVisitSummary, _TALocationLite, _TALocationOfInterest, _TAMetricsDetection, _TAMetricsInterVisit,
+                          _TAMetricsVisit, _TAOutgoingRequests, _TAPeopleDensityResult, _TAPoiSnapshot,
+                          _TAPrivateVehicleClassificationReason, _TAReplay, _TASPAdvertisement, _TAScanCompleted, _TAScanRequest,
+                          _TAScanRequestSettings, _TASettings, _TASingleVisitDetectionMetrics, _TAStore, _TAStoreSettings,
+                          _TASuspiciousDevice, _TASystemState, _TATrackingAvoidanceService, _TATrackingAvoidanceServiceSettings,
+                          _TAUserActivity, _TAVehicleCategory, _TAVehicleCategoryLogic, _TAVehicleStateNotification,
+                          _TAVisitDetectionMetrics, _TAVisitState ]
+...

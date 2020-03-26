@@ -1,0 +1,15 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/MarkupUI.framework/MarkupUI
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _MUAnimationIconImage, _MUAnimationMaskRect, _MUAnimationSourceRect, _MUAnimationTargetRect,
+                          _MUDisplayAsFullScreen, _MUEncryptPrivateMetadata, _MUFileDisplayName ]
+    objc-classes:       [ _MUCGPDFAnnotationAdaptor, _MUCGPDFNukeAndPaveWriter, _MUContentViewController, _MUImageContentViewController,
+                          _MUImageDownsamplingUtilities, _MUPDFContentViewController, _MURemoteViewController, _MarkupViewController ]
+...

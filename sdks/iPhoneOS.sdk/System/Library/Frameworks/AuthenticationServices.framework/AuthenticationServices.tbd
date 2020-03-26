@@ -1,0 +1,65 @@
+--- !tapi-tbd-v2
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/AuthenticationServices.framework/AuthenticationServices
+current-version:       608.4.9
+compatibility-version: 1
+objc-constraint:       retain_release
+exports:
+  - archs:              [ armv7, armv7s, arm64, arm64e ]
+    symbols:            [ _ASAuthorizationAppleIDProviderCredentialRevokedNotification, _ASAuthorizationErrorDomain,
+                          _ASAuthorizationOperationImplicit, _ASAuthorizationOperationLogin, _ASAuthorizationOperationLogout,
+                          _ASAuthorizationOperationRefresh, _ASAuthorizationScopeEmail, _ASAuthorizationScopeFullName,
+                          _ASCredentialIdentityStoreErrorDomain, _ASExtensionErrorDomain, _ASWebAuthenticationSessionErrorDomain ]
+    objc-classes:       [ _ASAuthorization, _ASAuthorizationAppleIDButton, _ASAuthorizationAppleIDCredential,
+                          _ASAuthorizationAppleIDProvider, _ASAuthorizationAppleIDRequest, _ASAuthorizationController,
+                          _ASAuthorizationOpenIDRequest, _ASAuthorizationPasswordProvider, _ASAuthorizationPasswordRequest,
+                          _ASAuthorizationProviderExtensionAuthorizationRequest, _ASAuthorizationRequest,
+                          _ASAuthorizationSingleSignOnCredential, _ASAuthorizationSingleSignOnProvider,
+                          _ASAuthorizationSingleSignOnRequest, _ASBackgroundObserver, _ASCredentialIdentityStore,
+                          _ASCredentialIdentityStoreState, _ASCredentialProviderExtensionContext, _ASCredentialProviderViewController,
+                          _ASCredentialServiceIdentifier, _ASEmpty, _ASPasswordCredential, _ASPasswordCredentialIdentity,
+                          _ASWebAuthenticationSession, __ASCredentialListViewController,
+                          __ASCredentialProviderExtensionConfigurationViewController, __ASCredentialProviderExtensionHostContext,
+                          __ASExtensionViewController, __ASIncomingCallObserver, __ASPasswordCredentialAuthenticationViewController ]
+    objc-ivars:         [ _ASAuthorization._credential, _ASAuthorization._provider, _ASAuthorizationAppleIDButton._cornerRadius,
+                          _ASAuthorizationAppleIDButton._highlightFilter, _ASAuthorizationAppleIDButton._style,
+                          _ASAuthorizationAppleIDButton._type, _ASAuthorizationAppleIDCredential._accessToken,
+                          _ASAuthorizationAppleIDCredential._authorizationCode, _ASAuthorizationAppleIDCredential._authorizedScopes,
+                          _ASAuthorizationAppleIDCredential._email, _ASAuthorizationAppleIDCredential._fullName,
+                          _ASAuthorizationAppleIDCredential._identityToken, _ASAuthorizationAppleIDCredential._realUserStatus,
+                          _ASAuthorizationAppleIDCredential._refreshToken, _ASAuthorizationAppleIDCredential._state,
+                          _ASAuthorizationAppleIDCredential._user, _ASAuthorizationAppleIDRequest._user,
+                          _ASAuthorizationController._appSSOAuthorization, _ASAuthorizationController._appSSORequestURL,
+                          _ASAuthorizationController._authorizationRequests, _ASAuthorizationController._delegate,
+                          _ASAuthorizationController._presentationContextProvider, _ASAuthorizationOpenIDRequest._nonce,
+                          _ASAuthorizationOpenIDRequest._requestedOperation, _ASAuthorizationOpenIDRequest._requestedScopes,
+                          _ASAuthorizationOpenIDRequest._state,
+                          _ASAuthorizationProviderExtensionAuthorizationRequest._authorizationRequest,
+                          _ASAuthorizationRequest._provider, _ASAuthorizationSingleSignOnCredential._accessToken,
+                          _ASAuthorizationSingleSignOnCredential._authenticatedResponse,
+                          _ASAuthorizationSingleSignOnCredential._authorizedScopes,
+                          _ASAuthorizationSingleSignOnCredential._identityToken, _ASAuthorizationSingleSignOnCredential._state,
+                          _ASAuthorizationSingleSignOnProvider._url, _ASAuthorizationSingleSignOnRequest._authorizationOptions,
+                          _ASBackgroundObserver._block, _ASBackgroundObserver._viewController,
+                          _ASCredentialIdentityStore._helperProxy, _ASCredentialIdentityStoreState._enabled,
+                          _ASCredentialIdentityStoreState._supportsIncrementalUpdates, _ASCredentialServiceIdentifier._identifier,
+                          _ASCredentialServiceIdentifier._type, _ASPasswordCredential._password, _ASPasswordCredential._user,
+                          _ASPasswordCredentialIdentity._rank, _ASPasswordCredentialIdentity._recordIdentifier,
+                          _ASPasswordCredentialIdentity._serviceIdentifier, _ASPasswordCredentialIdentity._user,
+                          _ASWebAuthenticationSession._authenticationSession,
+                          _ASWebAuthenticationSession._originalCompletionHandler,
+                          _ASWebAuthenticationSession._prefersEphemeralWebBrowserSession,
+                          _ASWebAuthenticationSession._presentationContextProvider, _ASWebAuthenticationSession._referenceToSelf,
+                          __ASCredentialListViewController._callObserver, __ASCredentialListViewController._delegate,
+                          __ASCredentialProviderExtensionConfigurationViewController._delegate,
+                          __ASCredentialProviderExtensionHostContext._delegate,
+                          __ASExtensionViewController._allowRequestingUIFromNonUIRequest,
+                          __ASExtensionViewController._dismissOnBackground, __ASExtensionViewController._extension,
+                          __ASExtensionViewController._nonUIHostContext, __ASExtensionViewController._nonUIRequestTimer,
+                          __ASExtensionViewController._remoteViewController, __ASIncomingCallObserver._callObserver,
+                          __ASIncomingCallObserver._incomingCallHandler,
+                          __ASPasswordCredentialAuthenticationViewController._credentialIdentity,
+                          __ASPasswordCredentialAuthenticationViewController._delegate ]
+...

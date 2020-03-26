@@ -1,0 +1,21 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/Frameworks/NotificationCenter.framework/NotificationCenter
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _NCAppLaunchOriginWidget, _NCExtensionItemUserInfoContainerIdentifierKey,
+                          _NCExtensionItemUserInfoDefaultMarginsKey, _NCExtensionItemUserInfoInitialActiveDisplayModeKey,
+                          _NCExtensionItemUserInfoInitialBoundsKey, _NCExtensionItemUserInfoInitialLayoutMarginsKey,
+                          _NCExtensionItemUserInfoInitialMaxCompactSizeKey, _NCExtensionItemUserInfoInitialMaxExpandedSizeKey,
+                          _NCExtensionItemUserInfoInitialVisibilityStateKey, _NCExtensionItemUserInfoSnapshotTimestampsEnabledKey,
+                          _NCExtensionItemUserInfoWidgetIdentifierKey, _NCIsValidWidgetDisplayMode, _NCStringFromWidgetDisplayMode,
+                          _NCStringFromWidgetVisibilityState, _NCWidgetControllerConnectionName,
+                          _NCWidgetControllerHasContentEntitlement, _NCWidgetControllerRequestRefreshEntitlement,
+                          __NCWidgetDisplayModeUnset, _kNCDefaultWidgetLayoutMargins ]
+    objc-classes:       [ _NCWidgetController, _NCWidgetMetrics ]
+...

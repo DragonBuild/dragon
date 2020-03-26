@@ -1,0 +1,38 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/CarPlaySupport.framework/CarPlaySupport
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _CPSFormattedDistanceSepartedShortUnit, _CPSFormattedDistanceWithMediumUnit, _CPSFrameworkBundle,
+                          _CPSIsInternalInstall, _CPSLocalizedStringForKey, _CPSNavigationAlertImageSize, _CPSNavigationAlertViewWidth,
+                          _CPSNavigationCardWidth, _CPSNavigationETAViewSize, _CPSNumberFormatterForDistance,
+                          _CPSPresentationRoundedDistance, _CPSSizeForAttributedText, _CPSSizeForText, _CarPlayFrameworkGeneralLogging,
+                          _CarPlaySupportGeneralLogging, _CarPlaySupportVersionNumber, _CarPlaySupportVersionString,
+                          __CPPanDirectionForPressType, __CPSUIPressesContainsPressTypes, __pressesContainsPressType,
+                          __touchesContainDirectTouch, __touchesContainIndirectTouch, _kCPSLongMinumumPressDuration,
+                          _kCPSPanButtonEdgeSpacing, _kGridButtonHeight, _kGridButtonImageHeight, _kGridButtonImageWidth,
+                          _kGridMaxDistanceBetweenButtons ]
+    objc-classes:       [ _CPSAbridgableLabel, _CPSAlertButton, _CPSAlternateRoutesView, _CPSAnalytics, _CPSApplicationStateMonitor,
+                          _CPSBannerItem, _CPSBannerSource, _CPSBannerSourceProxy, _CPSBannerSourceServiceSpecification, _CPSBannerView,
+                          _CPSBarBackButtonItem, _CPSBarButton, _CPSBarButtonItem, _CPSBaseTemplateViewController, _CPSButton,
+                          _CPSCardPlatterView, _CPSDataSource, _CPSFullScreenAlertViewController, _CPSGridButton, _CPSGridTemplateView,
+                          _CPSGridTemplateViewController, _CPSGuidanceBannerView, _CPSHairlineBorderedView, _CPSHairlineView,
+                          _CPSHidingLabel, _CPSInheritedBackgroundColorView, _CPSInvisibleButton, _CPSLabeledValueView,
+                          _CPSLayoutHelperView, _CPSListTemplateViewController, _CPSManeuverView, _CPSMapButton,
+                          _CPSMapTemplateViewController, _CPSNavigationAlertButtonView, _CPSNavigationAlertFocusButton,
+                          _CPSNavigationAlertProgressView, _CPSNavigationAlertQueue, _CPSNavigationAlertView, _CPSNavigationBar,
+                          _CPSNavigationCardView, _CPSNavigationETAView, _CPSNavigator, _CPSOverlayViewController,
+                          _CPSPagingControlButton, _CPSPagingControlView, _CPSPagingTripPreviewsCardView, _CPSPanButton, _CPSPanView,
+                          _CPSPanViewController, _CPSPausedCardView, _CPSPrimaryManeuverView, _CPSRouteEstimatesView,
+                          _CPSRouteOverviewView, _CPSRoutePreviewsCardView, _CPSRouteRowView, _CPSSearchTemplateViewController,
+                          _CPSSecondaryManeuverView, _CPSSectionedDataSource, _CPSTableCell, _CPSTableView, _CPSTemplateBannerController,
+                          _CPSTemplateConnectionManager, _CPSTemplateInstance, _CPSTripPreviewsCardView, _CPSUpcomingManeuversCardView,
+                          _CPSUtilities, _CPSVoiceTemplateViewController, _CPSVoiceView, _CPSWindow, __CPSFocusHoldingButton,
+                          __CPSNudgeLongPressGestureRecognizer, __CPSNudgeTapGestureRecognizer, __CPSOverlayTouchBlockingView ]
+    objc-ivars:         [ _CPSGridTemplateView._gridButtons ]
+...

@@ -1,0 +1,16 @@
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
+                   'arm64: DC61FA8F-1E5F-3135-829C-41B05E432252', 'arm64e: 3E2823D9-E3F2-33B3-BDBE-1EB3543CAA7C' ]
+platform:        ios
+install-name:    '/usr/lib/libMTLCapture.dylib'
+current-version: 262.68
+compatibility-version: 1.1
+exports:         
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _DYMTLWrapDeviceWithDebugLayer, _GTHarvesterAddTexturePlane, 
+                       _GTHarvesterGetData, _GTHarvesterGetDataSize, _GTHarvesterGetMetadata, 
+                       _GTHarvesterGetMetadataSize, _GTHarvesterGetTextureMetadataRequiredSize, 
+                       _GTHarvesterGetTexturePlane, _GTHarvesterGetTexturePlaneCount, 
+                       _GTHarvesterInitMetadata, _GTMTLGuestAppClient_initGlobalTransportWithHostURL ]
+...
