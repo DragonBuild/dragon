@@ -1,7 +1,5 @@
-# DragonBuild/NinjaGenerators
+# DragonBuild/DragonGen
 
-This folder contains the generation scripts that build build.ninja files. 
+This folder contains the generation script that builds build.ninja files. 
 
-It includes some templates and a wrapper for them. 
-
-You can make your own with simple shell scripting. DragonMake files are just bash variable declarations.
+It uses the ninja_syntax python script that comes packaged with ninja, although we have our own copy, in case we need to modify it later.
