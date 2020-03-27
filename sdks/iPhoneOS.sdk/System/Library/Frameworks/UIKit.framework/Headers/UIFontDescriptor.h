@@ -69,7 +69,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(7.0)) @interface UIFontDescriptor : NSObject <NSC
 // Core attribute access
 @property(nonatomic, readonly) NSString *postscriptName;
 @property(nonatomic, readonly) CGFloat   pointSize;
-@property(nonatomic, readonly) CGAffineTransform matrix;
+@property(nonatomic, readonly) CGAffineTransform matrix API_UNAVAILABLE(macCatalyst);
 @property(nonatomic, readonly) UIFontDescriptorSymbolicTraits symbolicTraits;
 
 - (nullable id)objectForKey:(UIFontDescriptorAttributeName)anAttribute;
@@ -94,7 +94,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(7.0)) @interface UIFontDescriptor : NSObject <NSC
 
 - (UIFontDescriptor *)fontDescriptorByAddingAttributes:(NSDictionary<UIFontDescriptorAttributeName, id> *)attributes; // the new attributes take precedence over the existing ones in the receiver
 - (UIFontDescriptor *)fontDescriptorWithSize:(CGFloat)newPointSize;
-- (UIFontDescriptor *)fontDescriptorWithMatrix:(CGAffineTransform)matrix;
+- (UIFontDescriptor *)fontDescriptorWithMatrix:(CGAffineTransform)matrix API_UNAVAILABLE(macCatalyst);
 - (UIFontDescriptor *)fontDescriptorWithFace:(NSString *)newFace;
 - (UIFontDescriptor *)fontDescriptorWithFamily:(NSString *)newFamily;
 

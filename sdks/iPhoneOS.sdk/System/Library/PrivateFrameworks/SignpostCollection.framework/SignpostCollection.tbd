@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SignpostCollection.framework/SignpostCollection
-current-version:       40
+current-version:       42
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SignpostCollectionVersionNumber, _SignpostCollectionVersionString, _SignpostPlatformForDevice,
@@ -14,10 +15,9 @@ exports:
     objc-ivars:         [ _SignpostSerializationFilterConfiguration._pidFilter,
                           _SignpostSerializationFilterConfiguration._processNameFilter,
                           _SignpostSerializationFilterConfiguration._subsystemCategoryFilter,
-                          _SignpostSerializationFilterConfiguration._uniquePidFilter,
-                          _SignpostSupportObjectSerializer._extractor, _SignpostSupportObjectSerializer._filterConfiguration,
-                          _SignpostSupportObjectSerializer._maxBatchSize, _SignpostSupportObjectSerializer._maxBytesSize,
-                          _SignpostSupportObjectSerializer._outstandingLogMessage,
+                          _SignpostSerializationFilterConfiguration._uniquePidFilter, _SignpostSupportObjectSerializer._extractor,
+                          _SignpostSupportObjectSerializer._filterConfiguration, _SignpostSupportObjectSerializer._maxBatchSize,
+                          _SignpostSupportObjectSerializer._maxBytesSize, _SignpostSupportObjectSerializer._outstandingLogMessage,
                           _SignpostSupportObjectSerializer._outstandingSignpostObjects,
                           _SignpostSupportObjectSerializer._redactPrivacySensitiveData,
                           _SignpostSupportObjectSerializer._serializedLogMessageBlock,

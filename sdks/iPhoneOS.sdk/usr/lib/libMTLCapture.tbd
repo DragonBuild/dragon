@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 8FC7CA09-CFB0-3E0B-924E-C44CB22CAB24', 'arm64e: 956A67FF-398F-357F-BC7E-436536650392' ]
+                   'arm64: DC61FA8F-1E5F-3135-829C-41B05E432252', 'arm64e: 3E2823D9-E3F2-33B3-BDBE-1EB3543CAA7C' ]
 platform:        ios
 install-name:    '/usr/lib/libMTLCapture.dylib'
-current-version: 262.62
+current-version: 262.68
 compatibility-version: 1.1
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]

@@ -1,13 +1,13 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SidecarUI.framework/SidecarUI
-current-version:       174.2
+current-version:       209.20.1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _LOG_Subsystem, _LOG_SubsystemIdentifier, _SidecarLogSubsystem ]
     objc-classes:       [ _SidecarServiceViewController ]
     objc-ivars:         [ _SidecarServiceViewController._allowsDisplaySleep, _SidecarServiceViewController._backgrounded,
                           _SidecarServiceViewController._calledServiceReady, _SidecarServiceViewController._request,

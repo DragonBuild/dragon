@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/RTTUI.framework/RTTUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _RTTUIVersionNumber, _RTTUIVersionString, _ttyImageNamed ]
@@ -21,6 +22,7 @@ exports:
                           _RTTUIConversationControllerCoordinator._realtimeSendLock,
                           _RTTUIConversationControllerCoordinator._utteranceBuffer,
                           _RTTUIConversationControllerCoordinator._utteranceRequestQueue,
+                          _RTTUIConversationViewController._arouetQuickCoalescer,
                           _RTTUIConversationViewController._asciiSubstitutions, _RTTUIConversationViewController._bubbleLayer,
                           _RTTUIConversationViewController._call, _RTTUIConversationViewController._conversation,
                           _RTTUIConversationViewController._currentServiceMessage,
@@ -39,8 +41,8 @@ exports:
                           _RTTUITextView._predictionsCollectionView, _RTTUITextView._rightBackgroundColorEdge,
                           _RTTUITextView._showTTYPredictions, _RTTUITextView._ttyAbbreviations, _RTTUIUtilities._callCenterQueue,
                           _RTTUIUtilities._headphoneJackSupportsTTY, _RTTUIUtilities._inUnitTestMode,
-                          _RTTUIUtteranceCell._accessibilityIsUnread, _RTTUIUtteranceCell._bubbleLayer,
-                          _RTTUIUtteranceCell._delegate, _RTTUIUtteranceCell._editingUtterance, _RTTUIUtteranceCell._textView,
-                          _RTTUIUtteranceCell._utterance, _RTTUtteranceRequest._call, _RTTUtteranceRequest._cellIndexPath,
-                          _RTTUtteranceRequest._index, _RTTUtteranceRequest._string ]
+                          _RTTUIUtteranceCell._accessibilityIsUnread, _RTTUIUtteranceCell._bubbleLayer, _RTTUIUtteranceCell._delegate,
+                          _RTTUIUtteranceCell._editingUtterance, _RTTUIUtteranceCell._textView, _RTTUIUtteranceCell._utterance,
+                          _RTTUtteranceRequest._call, _RTTUtteranceRequest._cellIndexPath, _RTTUtteranceRequest._index,
+                          _RTTUtteranceRequest._string ]
 ...

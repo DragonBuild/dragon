@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class VSAccountProviderResponse;
 
 /// A collection of information about a subscriber's account.
-VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0))
+VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSAccountMetadata : NSObject
 
 /// A value that uniquely identifies the account provider.

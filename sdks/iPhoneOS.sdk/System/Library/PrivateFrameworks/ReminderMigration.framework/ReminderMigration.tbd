@@ -1,14 +1,15 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/ReminderMigration.framework/ReminderMigration
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _kCalAccountIdentifierDictionaryKey, _kCalAccountTypeDictionaryKey, _kCalBackupFileName,
-                          _kCalDefaultListName, _kCalLastReminderMigrationCleanupSystemVersionDefaultsKey, _kCalLocalAccountName,
+    symbols:            [ _kCalAccountIdentifierDictionaryKey, _kCalAccountTypeDictionaryKey, _kCalBackupFileName, _kCalDefaultListName,
+                          _kCalLastReminderMigrationCleanupSystemVersionDefaultsKey, _kCalLocalAccountName,
                           _kCalMaximumCalendarDirectorySizeAllowedForBackupInBytes, _kCalReminderMigrationErrorDomain,
                           _kCalShouldBackupBeforeReminderMigrationDefaultsKey, _kCalendarDatabaseCalendarDirectoryRelativeToHome ]
     objc-classes:       [ _CalCalendarDatabaseReminderMigrationContext, _CalCalendarDatabaseReminderMigrator,
@@ -28,11 +29,10 @@ exports:
                           _CalInProcessReminderMigrator._defaultsProvider, _CalInProcessReminderMigrator._reminderKitProvider,
                           _CalOrderedListChangeItem._listChangeItem, _CalOrderedListChangeItem._order,
                           _CalReminderMigrationContext._accountChangeItemsForAccountIdentifiers,
-                          _CalReminderMigrationContext._accountsForAccountIdentifiers,
-                          _CalReminderMigrationContext._accountsLoaded,
+                          _CalReminderMigrationContext._accountsForAccountIdentifiers, _CalReminderMigrationContext._accountsLoaded,
                           _CalReminderMigrationContext._defaultListMigratedIdentifier,
-                          _CalReminderMigrationContext._defaultListOriginalIdentifier,
-                          _CalReminderMigrationContext._localAccount, _CalReminderMigrationContext._localAccountChangeItem,
+                          _CalReminderMigrationContext._defaultListOriginalIdentifier, _CalReminderMigrationContext._localAccount,
+                          _CalReminderMigrationContext._localAccountChangeItem,
                           _CalReminderMigrationContext._orderedListChangeItemsStack,
                           _CalReminderMigrationContext._recordedAnyFatalFailures,
                           _CalReminderMigrationContext._remDatabaseMigrationContext,

@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SiriUIActivation.framework/SiriUIActivation
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SiriUIActivationVersionNumber, _SiriUIActivationVersionString ]
@@ -15,8 +16,7 @@ exports:
                           _SiriPresentationViewController.__currentTestID, _SiriPresentationViewController.__currentTestName,
                           _SiriPresentationViewController._activationHandled, _SiriPresentationViewController._activationTimer,
                           _SiriPresentationViewController._activePresentationProperties,
-                          _SiriPresentationViewController._activeScreen,
-                          _SiriPresentationViewController._buttonDownEventDidOccur,
+                          _SiriPresentationViewController._activeScreen, _SiriPresentationViewController._buttonDownEventDidOccur,
                           _SiriPresentationViewController._buttonDownTimestamp, _SiriPresentationViewController._buttonTrigger,
                           _SiriPresentationViewController._carSiriButtonHoldToTalkTimer,
                           _SiriPresentationViewController._carSiriButtonTimeInterval,
@@ -24,8 +24,7 @@ exports:
                           _SiriPresentationViewController._completionOptions, _SiriPresentationViewController._connection,
                           _SiriPresentationViewController._contextAppInfosForSiriViewController,
                           _SiriPresentationViewController._currentCarPlaySupportedOEMAppIdList,
-                          _SiriPresentationViewController._currentLockState,
-                          _SiriPresentationViewController._delaySessionEndForTTS,
+                          _SiriPresentationViewController._currentLockState, _SiriPresentationViewController._delaySessionEndForTTS,
                           _SiriPresentationViewController._hostedPresentationFrame, _SiriPresentationViewController._identifier,
                           _SiriPresentationViewController._intentUsageDelegate, _SiriPresentationViewController._isIdleAndQuiet,
                           _SiriPresentationViewController._language, _SiriPresentationViewController._lastAppUpdateTimestamp,

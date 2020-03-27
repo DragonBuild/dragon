@@ -1,0 +1,16 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/iCloudQuotaUI.framework/iCloudQuotaUI
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _ICQPhotosOptimizeEnable, _iCloudQuotaUIVersionNumber, _iCloudQuotaUIVersionString ]
+    objc-classes:       [ _ICQAlertController, _ICQBannerView, _ICQPageView, _ICQUpgradeButton, _ICQUpgradeCloudStorageFlowManager,
+                          _ICQUpgradeFlowManager, _ICQUpgradeFlowOptions, _ICQUpgradeOfferView, _ICQUpgradeOfferViewController,
+                          _ICQUpgradePhotosCloudEnableFlowManager, _ICQUpgradePhotosCloudUpgradeEnableFlowManager,
+                          _ICQUpgradePhotosOptimizeEnableFlowManager, _ICQViewController, __ICQTextView, _icqImageAdditionsDummyClass ]
+...

@@ -1,0 +1,18 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/FSEvents.framework/FSEvents
+current-version:       1268.60.1
+compatibility-version: 0
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _FSEventStreamCopyDescription, _FSEventStreamCopyPathsBeingWatched, _FSEventStreamCreate,
+                          _FSEventStreamCreateRelativeToDevice, _FSEventStreamFlushAsync, _FSEventStreamFlushSync,
+                          _FSEventStreamGetDeviceBeingWatched, _FSEventStreamGetLatestEventId, _FSEventStreamInvalidate,
+                          _FSEventStreamRelease, _FSEventStreamRetain, _FSEventStreamScheduleWithRunLoop,
+                          _FSEventStreamSetDispatchQueue, _FSEventStreamSetExclusionPaths, _FSEventStreamShow, _FSEventStreamStart,
+                          _FSEventStreamStop, _FSEventStreamUnscheduleFromRunLoop, _FSEventsCopyUUIDForDevice,
+                          _FSEventsGetCurrentEventId, _FSEventsGetLastEventIdForDeviceBeforeTime,
+                          _FSEventsPurgeEventsForDeviceUpToEventId ]
+...

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 16E75B82-4510-3396-A402-F4023EADD079', 'arm64e: 55649ED9-5B31-34C1-A4BB-D15930A9B8D4' ]
+                   'arm64: BE6FF9BA-CBE3-3BFD-96AB-9752A210246F', 'arm64e: 63201061-B92E-3263-B609-4B1BF783437E' ]
 platform:        ios
 install-name:    '/usr/lib/liblocker.dylib'
 current-version: 50

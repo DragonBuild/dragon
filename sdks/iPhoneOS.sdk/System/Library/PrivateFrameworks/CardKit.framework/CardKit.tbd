@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/CardKit.framework/CardKit
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CRKIsLargeDevice, _CRKIsRTL, _CardKitVersionNumber, _CardKitVersionString, __CRKIsRTLWithApp,
@@ -13,11 +14,10 @@ exports:
                           _CRKCardSectionViewController, _CRKCardViewController, _CRKComposedStackView, _CRKComposedView,
                           _CRKContainerCardSectionView, _CRKIdentifiedProviderRegistry, _CRKKeyline, _CRKOverlayButton,
                           __CRKBuiltInProvider, __CRKBundleIdentifiedCardSectionViewProvider, __CRKBundleManager,
-                          __CRKCardSectionViewControllerFactory, __CRKCardSectionViewControllerRegistry,
-                          __CRKCardSectionViewLoader, __CRKCardViewControllerTransitionAnimator,
-                          __CRKCardViewControllerTransitionCoordinator, __CRKDebugOverlayView, __CRKHitTestPassThroughView,
-                          __CRKImageLoader, __CRKProviderBundle, __CRKProviderBundleManager,
-                          __CRKSectionShuffleTransitionAnimator, __CRKSendMessageCardFactory ]
+                          __CRKCardSectionViewControllerFactory, __CRKCardSectionViewControllerRegistry, __CRKCardSectionViewLoader,
+                          __CRKCardViewControllerTransitionAnimator, __CRKCardViewControllerTransitionCoordinator,
+                          __CRKDebugOverlayView, __CRKHitTestPassThroughView, __CRKImageLoader, __CRKProviderBundle,
+                          __CRKProviderBundleManager, __CRKSectionShuffleTransitionAnimator, __CRKSendMessageCardFactory ]
     objc-ivars:         [ _CRKCardPresentation._cardSectionViewLoader, _CRKCardPresentation._cardViewController,
                           _CRKCardPresentation._cardViewControllerDelegateChain, _CRKCardPresentation._configuration,
                           _CRKCardPresentation._debugModeEnabled, _CRKCardPresentation._delegate,

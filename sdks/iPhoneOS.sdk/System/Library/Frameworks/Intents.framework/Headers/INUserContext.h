@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 API_AVAILABLE(ios(13.0), watchos(6.0)) API_UNAVAILABLE(tvos, macosx)
-@interface INUserContext : NSObject
+@interface INUserContext : NSObject<NSSecureCoding>
 
 - (instancetype)init NS_UNAVAILABLE;
 

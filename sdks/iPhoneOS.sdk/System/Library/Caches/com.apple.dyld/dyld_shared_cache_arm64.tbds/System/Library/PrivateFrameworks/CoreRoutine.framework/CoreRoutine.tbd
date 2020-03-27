@@ -1,0 +1,25 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/CoreRoutine.framework/CoreRoutine
+current-version:       691.0.4
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _RTConflictingItemIdentifierKey, _RTDetailedErrorsKey, _RTErrorDomain,
+                          _RTLocationsOfInterestDidChangeNotification, _RTMachServiceEvent, _RTMachServiceInternal,
+                          _RTMachServiceRegistration, _RTVisitConfidenceHigh, _RTVisitConfidenceLow, _personalizedLabelsMask ]
+    objc-classes:       [ _RTAddress, _RTApplication, _RTFetchFingerprintsOptions, _RTFingerprint, _RTInferredMapItem, _RTLocation,
+                          _RTLocationOfInterest, _RTLocationOfInterestTransition, _RTLocationOfInterestVisit, _RTMapItem,
+                          _RTMapItemExtendedAttributes, _RTMapServiceOptions, _RTMotionActivity, _RTPair, _RTPlaceInference,
+                          _RTPlaceInferenceOptions, _RTPredictedDate, _RTPredictedLocationOfInterest, _RTReceipt, _RTReceiptEventKit,
+                          _RTRoutineManager, _RTScenarioTrigger, _RTScenarioTriggerSettled, _RTScenarioTriggerUnsettled,
+                          _RTSignalGeneratorOptions, _RTSource, _RTSourceCoreRoutine, _RTSourceCoreRoutineLearnedLocation,
+                          _RTSourceCoreRoutineVehicleEvent, _RTSourceEventKit, _RTSourceMapsSupport, _RTSourceMapsSupportFavoritePlace,
+                          _RTSourceMapsSupportHistoryEntry, _RTSourceMapsSupportHistoryEntryPlaceDisplay,
+                          _RTSourceMapsSupportHistoryEntryRoute, _RTStoredLocationEnumerationContext,
+                          _RTStoredLocationEnumerationOptions, _RTStoredVisitFetchOptions, _RTTokenBucket, _RTVehicleEvent, _RTVisit,
+                          _RTWiFiAccessPoint ]
+...

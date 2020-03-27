@@ -1,18 +1,18 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PreferenceBundles/KeyboardSettings.bundle/KeyboardSettings
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _EditUserWordShortcutDidUpdateNotification, _TICurrentShuangpinTypeUsesSemicolon,
                           _TIFilteredLayoutsByCurrentShuangpinType, _TIGetCurrentShuangpinName, _TIGetCurrentShuangpinType,
-                          _TIGetShuangpinNameFromType, _TIGetShuangpinTypes, _TIInputModeIsChineseShuangpin,
-                          _TIKBAllIdentifiersKey, _TIKBIdentifiersKey, _TIKBRequestsOpenAccessKey, _TIUpdateShuangpinSWLayout,
-                          _kPinyinIdentifier, _kSWLayoutPrefixPinyin, _kSWLayoutPrefixShuangpinWithSemicolon,
-                          _kShuangpinIdentifier ]
+                          _TIGetShuangpinNameFromType, _TIGetShuangpinTypes, _TIInputModeIsChineseShuangpin, _TIKBAllIdentifiersKey,
+                          _TIKBIdentifiersKey, _TIKBRequestsOpenAccessKey, _TIUpdateShuangpinSWLayout, _kPinyinIdentifier,
+                          _kSWLayoutPrefixPinyin, _kSWLayoutPrefixShuangpinWithSemicolon, _kShuangpinIdentifier ]
     objc-classes:       [ _AddInputModeTableViewCell, _DictationFooterView, _EditUserWordController, _KeyboardController,
                           _KeyboardSettingsBundleController, _ListUserWordsController, _SearchUserWordsController,
                           _TIAboutKeyboardPrivacyController, _TIAddExtensionKeyboardController, _TIAddKeyboardController,
@@ -46,8 +46,7 @@ exports:
                           _TIAddExtensionKeyboardController._behavesAsModalForAddSheet,
                           _TIAddExtensionKeyboardController._didGrantOpenAccess,
                           _TIAddExtensionKeyboardController._didRequestOpenAccess,
-                          _TIAddExtensionKeyboardController._hasShownWarning,
-                          _TIAddExtensionKeyboardController._moduleSpecifiers,
+                          _TIAddExtensionKeyboardController._hasShownWarning, _TIAddExtensionKeyboardController._moduleSpecifiers,
                           _TIAddExtensionKeyboardController._networkAccessAlert,
                           _TIAddExtensionKeyboardController._networkAccessSpecifier,
                           _TIAddExtensionKeyboardController._specifierForWarning,
@@ -56,14 +55,13 @@ exports:
                           _TIFuzzyPinyinController._fuzzyPinyinSpecifier, _TIHardwareKeyboardDetailController._inputMode,
                           _TIInputModeTableCell._inputMode, _TIKeyboardExtensionController._aboutPrivacyController,
                           _TIKeyboardExtensionController._addExtensionKeyboardController,
-                          _TIKeyboardExtensionController._lastInputModeSpecifier,
-                          _TIKeyboardListController._aboutPrivacyController, _TIKeyboardListController._addNewInputModeSpecifier,
-                          _TIKeyboardListController._emojiEnabled, _TIKeyboardListController._groupSeparator,
-                          _TIKeyboardListController._keyboardsArray, _TIKeyboardListController._newKeyboardsAdded,
-                          _TIKeyboardListController._numberOfEnabledKeyboards, _TIKeyboardListController._totalKeyboardsCount,
-                          _TIKeyboardListController.deletingRow, _TIKeyboardListControllerTable._todoList,
-                          _TISoftwareLayoutDetailControllerViewController._inputMode, _TIUserWordsManager._cache,
-                          _TIUserWordsManager._observers, _TIUserWordsManager._textReplacementStore,
+                          _TIKeyboardExtensionController._lastInputModeSpecifier, _TIKeyboardListController._aboutPrivacyController,
+                          _TIKeyboardListController._addNewInputModeSpecifier, _TIKeyboardListController._emojiEnabled,
+                          _TIKeyboardListController._groupSeparator, _TIKeyboardListController._keyboardsArray,
+                          _TIKeyboardListController._newKeyboardsAdded, _TIKeyboardListController._numberOfEnabledKeyboards,
+                          _TIKeyboardListController._totalKeyboardsCount, _TIKeyboardListController.deletingRow,
+                          _TIKeyboardListControllerTable._todoList, _TISoftwareLayoutDetailControllerViewController._inputMode,
+                          _TIUserWordsManager._cache, _TIUserWordsManager._observers, _TIUserWordsManager._textReplacementStore,
                           _UIEditUserWordController._dismissCompletionHandler, _UIEditUserWordController._oldPopoverStyle,
                           _UIEditUserWordController._rotationDecider ]
 ...

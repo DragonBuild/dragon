@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F4A578E8-F358-391B-A300-D3FA2EAAD147', 'armv7s: D35285FC-35F0-3A73-82F4-B406C494E6C7', 
-                   'arm64: 63D09573-ABB6-30DD-B2F8-4FC485683C0E', 'arm64e: E3A8419B-07EE-3548-9B59-5A455262D230' ]
+                   'arm64: F4A22F83-F03A-329D-903D-F5F4C13B6959', 'arm64e: F867C04B-4847-3A46-A3FE-F90420FE06F8' ]
 platform:        ios
 install-name:    '/usr/lib/libThaiTokenizer.dylib'
 exports:         

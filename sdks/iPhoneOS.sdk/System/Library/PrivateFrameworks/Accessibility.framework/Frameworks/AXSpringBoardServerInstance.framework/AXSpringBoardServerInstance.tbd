@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/Accessibility.framework/Frameworks/AXSpringBoardServerInstance.framework/AXSpringBoardServerInstance
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AXCaptionPanelContextDidChangeNotification, _AXSBApplicationControllerInstance,
@@ -16,17 +17,18 @@ exports:
                           _SBAXLocalizedString, _SBAXLocalizedStringWithTable, _SBMediaNowPlayingChangedNotification,
                           _SBOrientationLockChangedNotification, __UIAXLoadVisualAlertsBundle, __UIActionSheetDismissDuration ]
     objc-classes:       [ _AXAlertAction, _AXAssertionIdentifierTypePair, _AXCSScrollGestureControllerAccessibility,
-                          _AXSBDeviceApplicationSceneStatusBarBreadcrumbProviderAccessibility, _AXSBHearingAidDeviceController,
-                          _AXSBHomeHardwareButtonActions, _AXSBLockScreenManager, _AXSBReachabilityManagerAccessibility,
-                          _AXSBServerHelperBulletinWindowController, _AXSBServerHelperSBControlCenterController,
-                          _AXSBServerSBHUDController, _AXSBServerUIApplication, _AXSBServerVolumeControl, _AXSBUIWindow,
-                          _AXSBVoiceOverShakeMessage, _AXSBVoiceOverSwipeDetectorView, _AXSB_SBApplicationSafeCategory,
-                          _AXSB_SBIconControllerSafeCategory, _AXSB_SBMainDisplaySceneManagerSafeCategory,
-                          _AXSB_SBRestartManagerSafeCategory, _AXSB_UIAlertControllerActionViewSafeCategory,
-                          _AXSB_UIAlertControllerSafeCategory, _AXSB_UIScreenSafeCategory, _AXSecureWindow,
-                          _AXSiriShortcutsViewController, _AXSiriShortcutsViewControllerView, _AXSpringBoardAccessibility,
-                          _AXSpringBoardServerAlertManager, _AXSpringBoardServerHelper, _AXSpringBoardServerSideAppManager,
-                          _AXSpringBoardSettingsLoader, _AXTripleClickAlertController, _AXTripleClickTableViewCell,
+                          _AXSBAirPodSettingsManager, _AXSBDeviceApplicationSceneStatusBarBreadcrumbProviderAccessibility,
+                          _AXSBHearingAidDeviceController, _AXSBHomeHardwareButtonActions, _AXSBLockScreenManager,
+                          _AXSBReachabilityManagerAccessibility, _AXSBServerHelperBulletinWindowController,
+                          _AXSBServerHelperSBControlCenterController, _AXSBServerSBHUDController, _AXSBServerUIApplication,
+                          _AXSBServerVolumeControl, _AXSBUIWindow, _AXSBVoiceOverShakeMessage, _AXSBVoiceOverSwipeDetectorView,
+                          _AXSB_SBApplicationSafeCategory, _AXSB_SBIconControllerSafeCategory,
+                          _AXSB_SBMainDisplaySceneManagerSafeCategory, _AXSB_SBRestartManagerSafeCategory,
+                          _AXSB_UIAlertControllerActionViewSafeCategory, _AXSB_UIAlertControllerSafeCategory,
+                          _AXSB_UIScreenSafeCategory, _AXSecureWindow, _AXSiriShortcutsViewController,
+                          _AXSiriShortcutsViewControllerView, _AXSpringBoardAccessibility, _AXSpringBoardServerAlertManager,
+                          _AXSpringBoardServerHelper, _AXSpringBoardServerSideAppManager, _AXSpringBoardSettingsLoader,
+                          _AXTripleClickAlertController, _AXTripleClickTableViewCell,
                           _AX_AX_SBSecureMainScreenActiveInterfaceOrientationWindowOverride, __AXSpringBoardServerInstance,
                           ___AXCSScrollGestureControllerAccessibility_super,
                           ___AXSBDeviceApplicationSceneStatusBarBreadcrumbProviderAccessibility_super,
@@ -41,17 +43,20 @@ exports:
                           ___AXSpringBoardServerSideAppManager,
                           ___AX_AX_SBSecureMainScreenActiveInterfaceOrientationWindowOverride_super ]
     objc-ivars:         [ _AXAlertAction.buttonIndex, _AXAssertionIdentifierTypePair._identifier,
-                          _AXAssertionIdentifierTypePair._type, _AXSBHearingAidDeviceController._hearingAidIsConnected,
+                          _AXAssertionIdentifierTypePair._type, _AXSBAirPodSettingsManager._accessoryManager,
+                          _AXSBAirPodSettingsManager._delayTimer, _AXSBAirPodSettingsManager._deviceListeners,
+                          _AXSBAirPodSettingsManager._deviceMap, _AXSBAirPodSettingsManager._localDevice,
+                          _AXSBAirPodSettingsManager._queue, _AXSBAirPodSettingsManager._session,
+                          _AXSBHearingAidDeviceController._hearingAidIsConnected,
                           _AXSBHearingAidDeviceController._holdingMediaForConnection,
                           _AXSBHearingAidDeviceController._holdingPhoneForConnection,
                           _AXSBHearingAidDeviceController._mediaUpdateQueue, _AXSBHearingAidDeviceController._preferredRoute,
-                          _AXSBHearingAidDeviceController._preferredRouteTimer,
-                          _AXSBHearingAidDeviceController._routeChangedTime,
+                          _AXSBHearingAidDeviceController._preferredRouteTimer, _AXSBHearingAidDeviceController._routeChangedTime,
                           _AXSBHearingAidDeviceController._shouldIgnoreRouteChanges,
-                          _AXSBHearingAidDeviceController.isShowingHearingAidControl,
-                          _AXSBVoiceOverSwipeDetectorView._bgImageView, _AXSBVoiceOverSwipeDetectorView._delegate,
-                          _AXSBVoiceOverSwipeDetectorView._swipeDetected, _AXSBVoiceOverSwipeDetectorView._titleLabel,
-                          _AXSiriShortcutsViewController._delegate, _AXSiriShortcutsViewController._shortLookViewController,
+                          _AXSBHearingAidDeviceController.isShowingHearingAidControl, _AXSBVoiceOverSwipeDetectorView._bgImageView,
+                          _AXSBVoiceOverSwipeDetectorView._delegate, _AXSBVoiceOverSwipeDetectorView._swipeDetected,
+                          _AXSBVoiceOverSwipeDetectorView._titleLabel, _AXSiriShortcutsViewController._delegate,
+                          _AXSiriShortcutsViewController._shortLookViewController,
                           _AXSiriShortcutsViewControllerView._parentViewController,
                           _AXSpringBoardServerAlertManager._handlesByService, _AXSpringBoardServerHelper._alertHandler,
                           _AXSpringBoardServerHelper._alertManager, _AXSpringBoardServerHelper._dimTimerAssertion,
@@ -66,8 +71,7 @@ exports:
                           _AXTripleClickTableViewCell._topLine, __AXSpringBoardServerInstance._actionHandlers,
                           __AXSpringBoardServerInstance._assertionClients, __AXSpringBoardServerInstance._assertionServer,
                           __AXSpringBoardServerInstance._client, __AXSpringBoardServerInstance._currentSpeakerClient,
-                          __AXSpringBoardServerInstance._delegate,
-                          __AXSpringBoardServerInstance._disableControlCenterAssertionHeld,
+                          __AXSpringBoardServerInstance._delegate, __AXSpringBoardServerInstance._disableControlCenterAssertionHeld,
                           __AXSpringBoardServerInstance._disableNotificationCenterAssertionHeld,
                           __AXSpringBoardServerInstance._hidManager, __AXSpringBoardServerInstance._processMonitor,
                           __AXSpringBoardServerInstance._reachabilityHandlers, __AXSpringBoardServerInstance._server,

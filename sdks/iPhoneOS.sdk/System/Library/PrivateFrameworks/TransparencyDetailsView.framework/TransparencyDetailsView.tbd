@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/TransparencyDetailsView.framework/TransparencyDetailsView
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ADTransparencyViewControllerErrorDomain, _NewsTransparencyViewControllerErrorDomain,
@@ -19,10 +20,10 @@ exports:
                           _ADTransparencyViewController._transparencyDetailsUnavailableMessage,
                           _ADTransparencyViewController._transparencyNavBar,
                           _ADTransparencyViewController._transparencyRendererPayload,
-                          _ADTransparencyViewController._transparencyRendererURL,
-                          _ADTransparencyViewController.activityIndicator, _NewsTransparencyViewController._delegate,
-                          _NewsTransparencyViewController._errorLabel, _NewsTransparencyViewController._isClientTodayWidget,
-                          _NewsTransparencyViewController._isiPad, _NewsTransparencyViewController._myNewsPrivacyWebView,
+                          _ADTransparencyViewController._transparencyRendererURL, _ADTransparencyViewController.activityIndicator,
+                          _NewsTransparencyViewController._delegate, _NewsTransparencyViewController._errorLabel,
+                          _NewsTransparencyViewController._isClientTodayWidget, _NewsTransparencyViewController._isiPad,
+                          _NewsTransparencyViewController._myNewsPrivacyWebView,
                           _NewsTransparencyViewController._transparencyDetailsDictionary,
                           _NewsTransparencyViewController._transparencyDetailsUnavailableMessage,
                           _NewsTransparencyViewController._transparencyNavBar,

@@ -1779,3 +1779,9 @@ module SQLite3 [system] [extern_c] {
  }
  export *
 }
+
+module xcselect [system] [extern_c] {
+ header "xcselect.h"
+ export *
+ link "xcselect"
+}

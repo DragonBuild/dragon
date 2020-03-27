@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: E2DB2337-223F-3F29-B788-9D60EB874DA6', 'armv7s: 011427F7-3032-38B1-8155-D24FD294F072', 
-                   'arm64: 9E025508-97D0-3FD3-8BEE-F395366C4F04', 'arm64e: F2AFD155-F265-3853-8CB7-520F44C5588C' ]
+                   'arm64: 59D0E71A-7EC9-3F9C-90A9-9B1D4F3C027E', 'arm64e: F305D5D8-1DB2-3200-82BF-0AF89A02EB45' ]
 platform:        ios
 install-name:    '/usr/lib/libAWDProtobufBluetooth.dylib'
 exports:         
@@ -558,6 +558,7 @@ exports:
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo29kNfMinGoodChannelsFieldNumberE, 
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo30kPercentPacketsAnt0FieldNumberE, 
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo30kPercentPacketsAnt1FieldNumberE, 
+                       __ZN3awd7metrics25BluetoothHFPAudioLinkInfo30kPercentPacketsTxBFFieldNumberE, 
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo31kAvgPacketsPerSwitchFieldNumberE, 
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo31kSanitizedDeviceNameFieldNumberE, 
                        __ZN3awd7metrics25BluetoothHFPAudioLinkInfo32kAvgSwitchesPerSecondFieldNumberE, 
@@ -607,6 +608,7 @@ exports:
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo29kNfMinGoodChannelsFieldNumberE, 
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo30kPercentPacketsAnt0FieldNumberE, 
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo30kPercentPacketsAnt1FieldNumberE, 
+                       __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo30kPercentPacketsTxBFFieldNumberE, 
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo31kAvgPacketsPerSwitchFieldNumberE, 
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo31kSanitizedDeviceNameFieldNumberE, 
                        __ZN3awd7metrics26BluetoothA2DPAudioLinkInfo32kAvgSwitchesPerSecondFieldNumberE, 

@@ -32,18 +32,18 @@ typedef NS_ENUM(NSInteger, VSAccountAccessStatus)
     VSAccountAccessStatusDenied = 2, // The user has explicitly decided to not allow the app to access subscription information.
     VSAccountAccessStatusGranted = 3, // The user has currently decided to allow the app to access subscription information.
 }
-API_AVAILABLE(ios(10.0), tvos(10.0));
+API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst);
 
 /// Options that may be provided when checking access status.
 typedef NSString * VSCheckAccessOption NS_STRING_ENUM
-API_AVAILABLE(ios(10.0), tvos(10.0));
+API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst);
 
 /// A boolean indicating whether the user may be prompted to grant access.
 VS_EXTERN VSCheckAccessOption const VSCheckAccessOptionPrompt
-API_AVAILABLE(ios(10.0), tvos(10.0));
+API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst);
 
 /// A VSAccountManager instance coordinates access to a subscriber's account.
-VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0))
+VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSAccountManager : NSObject
 
 /// An object that can help the account manager by presenting and dismissing view controllers when needed, and deciding whether to allow authentication with the selected provider.
@@ -69,7 +69,7 @@ VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0))
 
 
 /// A VSAccountManager instance coordinates access to a subscriber's account.
-API_AVAILABLE(ios(10.0), tvos(10.0))
+API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst)
 @protocol VSAccountManagerDelegate <NSObject>
 
 @required

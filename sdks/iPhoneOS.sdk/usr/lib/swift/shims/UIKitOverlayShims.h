@@ -173,6 +173,7 @@ API_AVAILABLE(ios(13.0), tvos(13.0))
 - (void)applyDifferencesFromSnapshot:(__UIDiffableDataSourceSnapshot*)snapshot;
 - (void)reloadFromSnapshot:(__UIDiffableDataSourceSnapshot*)snapshot;
 - (void)applyDifferencesFromSnapshot:(__UIDiffableDataSourceSnapshot *)snapshot animatingDifferences:(BOOL)animatingDifferences;
+- (void)applyDifferencesFromSnapshot:(__UIDiffableDataSourceSnapshot *)snapshot animatingDifferences:(BOOL)animatingDifferences completion:(void(^ _Nullable)(void))completion;
 
 
 // deprecated
@@ -215,6 +216,12 @@ API_AVAILABLE(ios(13.0), tvos(13.0))
 API_AVAILABLE(ios(13.0), tvos(13.0))
 @interface __UIDiffableDataSourceSnapshot : __UIDiffableDataSource<NSCopying>
 - (instancetype)init;
+@end
+
+API_AVAILABLE(ios(13.0), tvos(13.0))
+@interface NSDiffableDataSourceSnapshot()
+@property(nonatomic,readonly) __UIDiffableDataSourceSnapshot *impl;
+- (instancetype)initWithDataSource:(__UIDiffableDataSource * _Nullable)dataSource;
 @end
 
 #if __has_feature(nullability)

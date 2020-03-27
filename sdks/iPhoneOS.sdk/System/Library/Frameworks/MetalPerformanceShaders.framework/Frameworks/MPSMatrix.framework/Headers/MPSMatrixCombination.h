@@ -111,8 +111,8 @@ MPS_CLASS_AVAILABLE_STARTING( macos(10.13), ios(11.0), macCatalyst(13.0), tvos(1
 /*! @abstract   Initialize a copy operator
  *  @param      copyRows        The number of rows to copy for each copy operation
  *  @param      copyColumns     The number of matrix columns to copy in each copy operation
- *  @param      sourcesAreTransposed       If YES, the sources are in row major storage order
- *  @param      destinationsAreTransposed  If YES, the destinations are in row major storage order
+ *  @param      sourcesAreTransposed       If YES, the sources are in column major storage order
+ *  @param      destinationsAreTransposed  If YES, the destinations are in column major storage order
  */
 -(nonnull instancetype) initWithDevice: (nonnull id <MTLDevice>) device
                               copyRows: (NSUInteger) copyRows

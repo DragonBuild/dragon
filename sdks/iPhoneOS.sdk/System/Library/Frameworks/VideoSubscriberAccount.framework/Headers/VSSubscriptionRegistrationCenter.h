@@ -14,11 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class VSSubscription;
 
 /// VSSubscriptionRegistrationCenter stores subscription information.
-#if TARGET_OS_IPHONE
-VS_EXPORT API_AVAILABLE(ios(11.0), tvos(11.0))
-#else
-VS_EXPORT
-#endif // #if TARGET_OS_IPHONE
+VS_EXPORT API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSSubscriptionRegistrationCenter : NSObject
 
 /// Use the default subscription registration center to tell the system about

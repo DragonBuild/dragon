@@ -1,17 +1,17 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/HealthVisualization.framework/HealthVisualization
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _HealthVisualizationVersionNumber, _HealthVisualizationVersionString ]
     objc-classes:       [ __TtC19HealthVisualization16DiagramImageView, __TtC19HealthVisualization19InsightQueryManager,
                           __TtC19HealthVisualization19SleepQueryOperation, __TtC19HealthVisualization21HighlightCalendarView,
-                          __TtC19HealthVisualization23AggregateChangeDetector,
-                          __TtC19HealthVisualization23ChangeDetectorOperation,
+                          __TtC19HealthVisualization23AggregateChangeDetector, __TtC19HealthVisualization23ChangeDetectorOperation,
                           __TtC19HealthVisualization24HighlightCalendarDayView,
                           __TtC19HealthVisualization24ItemDetailViewController,
                           __TtC19HealthVisualization24StatisticsQueryOperation,
@@ -26,6 +26,5 @@ exports:
                           __TtC19HealthVisualization37AudioExposureStatisticsQueryOperation,
                           __TtC19HealthVisualization41AggregateInsightResponseProducerOperation,
                           __TtC19HealthVisualization44CorrelatedStatisticsCollectionQueryOperation,
-                          __TtCC19HealthVisualization19InsightQueryManagerP33_54A37DF9FC18F63C979A2416A60CD79E18InsightValueObject,
                           __TtCC19HealthVisualization35DiagramAxisMetricsCalculatorFactory23HiLoScalarAxisDimension ]
 ...

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Specifies which information the app wants to obtain about the subscriber's account.
 /// You should only request the information you need to fulfill your contractual obligations.
-VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0))
+VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSAccountMetadataRequest : NSObject
 
 /// Identifies who is making the request.

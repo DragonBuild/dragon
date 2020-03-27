@@ -1,7 +1,7 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/ANEServices.framework/ANEServices
 current-version:       1
 compatibility-version: 1
@@ -9,13 +9,13 @@ exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _H11ANEDeviceClose, _H11ANEDeviceOpen, _H11ANEDeviceUpdateParameters, _H11ANEProgramCancelAllRequests,
                           _H11ANEProgramCompleteAllRequests, _H11ANEProgramCreate, _H11ANEProgramCreateNewInstance,
-                          _H11ANEProgramDestroy, _H11ANEProgramPrepare, _H11ANEProgramProcessRequest,
-                          _H11ANEProgramProcessRequest2, _H11ANEProgramProcessRequestDirect, _H11ANEProgramStop,
-                          _H11InitializePlatformServices, __ZN13H11ANEMetrics10StartTimerEv, __ZN13H11ANEMetrics12ClearSamplesEv,
+                          _H11ANEProgramDestroy, _H11ANEProgramPrepare, _H11ANEProgramProcessRequest, _H11ANEProgramProcessRequest2,
+                          _H11ANEProgramProcessRequestDirect, _H11ANEProgramStop, _H11InitializePlatformServices,
+                          __ZN13H11ANEMetrics10StartTimerEv, __ZN13H11ANEMetrics12ClearSamplesEv,
                           __ZN13H11ANEMetrics17GetMetricsSummaryEP21_H11ANEMetricsSummary,
                           __ZN13H11ANEMetrics19PrintMetricsSummaryEv, __ZN13H11ANEMetrics9AddSampleEyy,
-                          __ZN13H11ANEMetrics9StopTimerEv, __ZN13H11ANEMetricsC1Ej, __ZN13H11ANEMetricsC2Ej,
-                          __ZN13H11ANEMetricsD1Ev, __ZN13H11ANEMetricsD2Ev,
+                          __ZN13H11ANEMetrics9StopTimerEv, __ZN13H11ANEMetricsC1Ej, __ZN13H11ANEMetricsC2Ej, __ZN13H11ANEMetricsD1Ev,
+                          __ZN13H11ANEMetricsD2Ev,
                           __ZN18H11ANEFirmwareWork11FirmwareRPCEP41H11ANEFirmwareWorkProcessorItemArgsStruct,
                           __ZN18H11ANEFirmwareWork11RPCFileInfoEP49H11ANEFirmwareWorkProcessorItemBufferParamsStructj,
                           __ZN18H11ANEFirmwareWork11RPCFileReadEP49H11ANEFirmwareWorkProcessorItemBufferParamsStructj,
@@ -58,8 +58,7 @@ exports:
                           __ZN6H11ANE12H11ANEDeviceD2Ev, __ZN6H11ANE14getFrameFormatEj,
                           __ZN6H11ANE19H11ANEFrameReceiver11stopReceiveEv, __ZN6H11ANE19H11ANEFrameReceiver12startReceiveEv,
                           __ZN6H11ANE19H11ANEFrameReceiver13NoDataTimeoutEP16__CFRunLoopTimerPv,
-                          __ZN6H11ANE19H11ANEFrameReceiver15stopNoDataTimerEv,
-                          __ZN6H11ANE19H11ANEFrameReceiver16startNoDataTimerEv,
+                          __ZN6H11ANE19H11ANEFrameReceiver15stopNoDataTimerEv, __ZN6H11ANE19H11ANEFrameReceiver16startNoDataTimerEv,
                           __ZN6H11ANE19H11ANEFrameReceiver17tickleNoDataTimerEv,
                           __ZN6H11ANE19H11ANEFrameReceiver18processStatsBufferEPNS_26H11ANEFrameReceiverRequestEPS0_,
                           __ZN6H11ANE19H11ANEFrameReceiver18setupFrameReceiverEv,
@@ -69,8 +68,7 @@ exports:
                           __ZN6H11ANE19H11ANEFrameReceiver24addIODispatcherToRunLoopEv,
                           __ZN6H11ANE19H11ANEFrameReceiver28registerFrameReceiveCallbackEPFvPvPNS_26H11ANEFrameReceiverRequestEES1_,
                           __ZN6H11ANE19H11ANEFrameReceiver29removeIODispatcherFromRunLoopEv,
-                          __ZN6H11ANE19H11ANEFrameReceiver9FrameDoneEPviPyi,
-                          __ZN6H11ANE19H11ANEFrameReceiverC1EPNS_12H11ANEDeviceE,
+                          __ZN6H11ANE19H11ANEFrameReceiver9FrameDoneEPviPyi, __ZN6H11ANE19H11ANEFrameReceiverC1EPNS_12H11ANEDeviceE,
                           __ZN6H11ANE19H11ANEFrameReceiverC2EPNS_12H11ANEDeviceE, __ZN6H11ANE19H11ANEFrameReceiverD1Ev,
                           __ZN6H11ANE19H11ANEFrameReceiverD2Ev, __ZN6H11ANE20H11ANECreateCVBufferEjjjj17H11ANEFrameFormatbjjjbj,
                           __ZN6H11ANE20H11ANEFirmwareLogger31SetFirmwareLoggerThreadPriorityEj,
@@ -98,8 +96,7 @@ exports:
                           __ZN6H11ANE25H11ANECFRemoteMessagePortD0Ev, __ZN6H11ANE25H11ANECFRemoteMessagePortD1Ev,
                           __ZN6H11ANE25H11ANECFRemoteMessagePortD2Ev,
                           __ZN6H11ANE26DestroyH11ANEFrameReceiverEPNS_19H11ANEFrameReceiverE,
-                          __ZN6H11ANE26H11ANEVerifyFirmwareDigestEPhmS0_,
-                          __ZN6H11ANE27H11ANEFirmwareWorkProcessor11stopReceiveEv,
+                          __ZN6H11ANE26H11ANEVerifyFirmwareDigestEPhmS0_, __ZN6H11ANE27H11ANEFirmwareWorkProcessor11stopReceiveEv,
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessor12startReceiveEv,
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessor13NoDataTimeoutEP16__CFRunLoopTimerPv,
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessor15stopNoDataTimerEv,
@@ -114,9 +111,8 @@ exports:
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessorC1EPNS_12H11ANEDeviceE,
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessorC2EPNS_12H11ANEDeviceE,
                           __ZN6H11ANE27H11ANEFirmwareWorkProcessorD1Ev, __ZN6H11ANE27H11ANEFirmwareWorkProcessorD2Ev,
-                          __ZN6H11ANE27H11ANEGetCFPreferenceNumberEPK10__CFStringS2_i,
-                          __ZN6H11ANE27H11ANEGetMachThreadPriorityEjPi, __ZN6H11ANE27H11ANEInflateFirmwareBufferEPhmPS0_Pm,
-                          __ZN6H11ANE27H11ANESetMachThreadPriorityEji,
+                          __ZN6H11ANE27H11ANEGetCFPreferenceNumberEPK10__CFStringS2_i, __ZN6H11ANE27H11ANEGetMachThreadPriorityEjPi,
+                          __ZN6H11ANE27H11ANEInflateFirmwareBufferEPhmPS0_Pm, __ZN6H11ANE27H11ANESetMachThreadPriorityEji,
                           __ZN6H11ANE28CreateH11ANEDeviceControllerEPPNS_22H11ANEDeviceControllerEPFiS1_PvPNS_12H11ANEDeviceEES3_,
                           __ZN6H11ANE29DestroyH11ANEDeviceControllerEPNS_22H11ANEDeviceControllerE,
                           __ZN6H11ANE29H11ANEFrameReceiverBufferPool12activatePoolEv,

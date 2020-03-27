@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/AccessoryNavigation.framework/AccessoryNavigation
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ACCNav_DispComp_ComponentID, _ACCNav_DispComp_MaxAfterManeuverRoadNameLength,
@@ -13,9 +14,8 @@ exports:
                           _ACCNav_DispComp_MaxMGuidanceManeuverCapacity, _ACCNav_DispComp_MaxManeuverDescriptionLength,
                           _ACCNav_DispComp_Name, _ACCNav_DispComp_SourceName, _ACCNav_DispComp_SourceSupportsRouteGuidance,
                           _ACCNav_LGIUpdate_AccessoryID, _ACCNav_LGIUpdate_InstructionText, _ACCNav_LGIUpdate_LaneGuidanceIndex,
-                          _ACCNav_LGIUpdate_LaneInfo, _ACCNav_LGIUpdate_LaneInfo_Angle,
-                          _ACCNav_LGIUpdate_LaneInfo_AngleHighlight, _ACCNav_LGIUpdate_LaneInfo_Index,
-                          _ACCNav_LGIUpdate_LaneInfo_Status, _ACCNav_MIUpdate_AccessoryID,
+                          _ACCNav_LGIUpdate_LaneInfo, _ACCNav_LGIUpdate_LaneInfo_Angle, _ACCNav_LGIUpdate_LaneInfo_AngleHighlight,
+                          _ACCNav_LGIUpdate_LaneInfo_Index, _ACCNav_LGIUpdate_LaneInfo_Status, _ACCNav_MIUpdate_AccessoryID,
                           _ACCNav_MIUpdate_AfterManeuverRoadName, _ACCNav_MIUpdate_DistanceBetweenManeuver,
                           _ACCNav_MIUpdate_DistanceBetweenManeuverDisplayString,
                           _ACCNav_MIUpdate_DistanceBetweenManeuverDisplayUnits, _ACCNav_MIUpdate_DrivingSide,
@@ -46,13 +46,12 @@ exports:
                           _ACCNav_RODUpdate_RoadObject_LateralOffset, _ACCNav_RODUpdate_RoadObject_LateralSpeed,
                           _ACCNav_RODUpdate_RoadObject_State, _ACCNav_RODUpdate_RoadObject_Type, _ACCNav_RODUpdate_RoadSign,
                           _ACCNav_RODUpdate_RoadSign_ForwardOffset, _ACCNav_RODUpdate_RoadSign_ID,
-                          _ACCNav_RODUpdate_RoadSign_LateralOffset, _ACCNav_RODUpdate_RoadSign_State,
-                          _ACCNav_RODUpdate_RoadSign_Type, _ACCNav_RODUpdate_RoadSign_Value, _ACCNav_RODUpdate_Timestamp,
-                          _AccessoryNavigationVersionNumber, _AccessoryNavigationVersionString ]
-    objc-classes:       [ _ACCNavigationAccessory, _ACCNavigationAccessoryComponent,
-                          _ACCNavigationAccessoryObjectDetectionComponent, _ACCNavigationLaneGuidanceInfo,
-                          _ACCNavigationLaneGuidanceLaneInfo, _ACCNavigationManeuverUpdateInfo, _ACCNavigationProvider,
-                          _ACCNavigationRoadObjectDetectionInfo, _ACCNavigationRoadObjectRoadLaneInfo,
+                          _ACCNav_RODUpdate_RoadSign_LateralOffset, _ACCNav_RODUpdate_RoadSign_State, _ACCNav_RODUpdate_RoadSign_Type,
+                          _ACCNav_RODUpdate_RoadSign_Value, _ACCNav_RODUpdate_Timestamp, _AccessoryNavigationVersionNumber,
+                          _AccessoryNavigationVersionString ]
+    objc-classes:       [ _ACCNavigationAccessory, _ACCNavigationAccessoryComponent, _ACCNavigationAccessoryObjectDetectionComponent,
+                          _ACCNavigationLaneGuidanceInfo, _ACCNavigationLaneGuidanceLaneInfo, _ACCNavigationManeuverUpdateInfo,
+                          _ACCNavigationProvider, _ACCNavigationRoadObjectDetectionInfo, _ACCNavigationRoadObjectRoadLaneInfo,
                           _ACCNavigationRoadObjectRoadObjectInfo, _ACCNavigationRoadObjectRoadSignInfo,
                           _ACCNavigationRouteGuidanceUpdateInfo ]
     objc-ivars:         [ _ACCNavigationAccessory._accessoryUID, _ACCNavigationAccessory._componentListInternal,
@@ -64,17 +63,16 @@ exports:
                           _ACCNavigationAccessoryComponent._maxLength_DestinationRoadName,
                           _ACCNavigationAccessoryComponent._maxLength_LaneGuidanceDescription,
                           _ACCNavigationAccessoryComponent._maxLength_ManeuverDescription,
-                          _ACCNavigationAccessoryComponent._maxLength_PostManeuverRoadName,
-                          _ACCNavigationAccessoryComponent._name, _ACCNavigationAccessoryComponent._requestSourceName,
+                          _ACCNavigationAccessoryComponent._maxLength_PostManeuverRoadName, _ACCNavigationAccessoryComponent._name,
+                          _ACCNavigationAccessoryComponent._requestSourceName,
                           _ACCNavigationAccessoryComponent._requestSourceSupportsRouteGuidance,
                           _ACCNavigationAccessoryComponent._supportsExitInfo,
                           _ACCNavigationAccessoryObjectDetectionComponent._identifier,
                           _ACCNavigationAccessoryObjectDetectionComponent._isEnabled,
                           _ACCNavigationAccessoryObjectDetectionComponent._name,
-                          _ACCNavigationAccessoryObjectDetectionComponent._supportedTypes,
-                          _ACCNavigationLaneGuidanceInfo._infoDict, _ACCNavigationLaneGuidanceLaneInfo._infoDict,
-                          _ACCNavigationManeuverUpdateInfo._infoDict, _ACCNavigationProvider._accessories,
-                          _ACCNavigationProvider._delegates, _ACCNavigationProvider._providerUID,
+                          _ACCNavigationAccessoryObjectDetectionComponent._supportedTypes, _ACCNavigationLaneGuidanceInfo._infoDict,
+                          _ACCNavigationLaneGuidanceLaneInfo._infoDict, _ACCNavigationManeuverUpdateInfo._infoDict,
+                          _ACCNavigationProvider._accessories, _ACCNavigationProvider._delegates, _ACCNavigationProvider._providerUID,
                           _ACCNavigationProvider._remoteObject, _ACCNavigationProvider._serverConnection,
                           _ACCNavigationRoadObjectDetectionInfo._infoDict, _ACCNavigationRoadObjectRoadLaneInfo._infoDict,
                           _ACCNavigationRoadObjectRoadObjectInfo._infoDict, _ACCNavigationRoadObjectRoadSignInfo._infoDict,

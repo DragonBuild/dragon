@@ -484,6 +484,9 @@ Protocols:
   - Selector: 'computeCommandEncoderWithDispatchType:'
     SwiftName: makeComputeCommandEncoder(dispatchType:)
     MethodKind: Instance
+  - Selector: 'resourceStateCommandEncoder'
+    SwiftName: makeResourceStateCommandEncoder()
+    MethodKind: Instance
   - Selector: 'parallelRenderCommandEncoderWithDescriptor:'
     SwiftName: makeParallelRenderCommandEncoder(descriptor:)
     MethodKind: Instance

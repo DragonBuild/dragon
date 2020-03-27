@@ -181,6 +181,11 @@ HM_EXTERN API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0)) API_UNAVAILABLE(maco
  */
 - (void)addAndSetupAccessoriesWithPayload:(HMAccessorySetupPayload *)payload completionHandler:(void (^)(NSArray<HMAccessory *>* __nullable accessories, NSError * __nullable error))completion API_AVAILABLE(ios(11.3)) API_UNAVAILABLE(watchos, tvos);
 
+/*!
+ * @brief True if this home supports all of the requirements for adding a network router.
+ */
+@property (readonly, assign, nonatomic) BOOL supportsAddingNetworkRouter API_AVAILABLE(ios(13.2), watchos(6.1), tvos(13.2)) API_UNAVAILABLE(macos);
+
 @end
 
 
@@ -744,6 +749,16 @@ API_AVAILABLE(ios(8.0), watchos(2.0), tvos(10.0)) API_UNAVAILABLE(macos)
  * @param homeHubState The new home hub state.
  */
 - (void)home:(HMHome *)home didUpdateHomeHubState:(HMHomeHubState)homeHubState API_AVAILABLE(ios(11.0), watchos(4.0), tvos(11.0));
+
+/*!
+ * @brief Informs the delegate when the supported features of this home changes.
+ *
+ * The supported features covered by this are currently:
+ *   - supportsAddingNetworkRouter
+ *
+ * @param home Sender of the message.
+ */
+- (void)homeDidUpdateSupportedFeatures:(HMHome *)home API_AVAILABLE(ios(13.2), watchos(6.1), tvos(13.2)) API_UNAVAILABLE(macos);
 
 @end
 

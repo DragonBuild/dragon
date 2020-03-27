@@ -1,20 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/CoreAnalytics.framework/CoreAnalytics
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _AnalyticsIsEventUsed, _AnalyticsSendEvent, _AnalyticsSendEventLazy,
-                          _AnalyticsSetCallbackForQueriedEvent, _AnalyticsSetCallbackForQueriedEventWithQueue,
+    symbols:            [ _AnalyticsIsEventUsed, _AnalyticsSendEvent, _AnalyticsSendEventLazy, _AnalyticsSetCallbackForQueriedEvent,
+                          _AnalyticsSetCallbackForQueriedEventWithQueue,
                           __Z19analytics_tool_dumpNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
                           __Z19analytics_tool_saveNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
                           __Z21analytics_tool_commitv, __Z23analytics_tool_rolloverv, __Z25analytics_tool_has_configv,
                           __Z26analytics_tool_config_dumpv, __Z26analytics_tool_config_infov, __Z26analytics_tool_config_listv,
-                          __Z27analytics_tool_send_barrierv, __Z28analytics_tool_config_reloadv,
-                          __Z29analytics_tool_get_cache_listv,
+                          __Z27analytics_tool_send_barrierv, __Z28analytics_tool_config_reloadv, __Z29analytics_tool_get_cache_listv,
                           __Z29analytics_tool_transform_infoNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
                           __Z30analytics_tool_transform_evictNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
                           __Z32analytics_tool_transform_persistNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
@@ -59,14 +59,13 @@ exports:
                           __ZTSN13CoreAnalytics13EventObserverE, __ZTSN13CoreAnalytics21ConfigurationObserverE,
                           __ZTVN13CoreAnalytics13EventObserverE, __ZTVN13CoreAnalytics21ConfigurationObserverE,
                           _analytics_cancel_queried_awd_metric, _analytics_is_awd_metric_enabled, _analytics_is_event_used,
-                          _analytics_mark_awd_queriable, _analytics_send_awd_metric, _analytics_send_awd_trigger,
-                          _analytics_send_event, _analytics_send_event_lazy, _analytics_send_queried_awd_metric,
-                          _analytics_send_queried_awd_trigger, _analytics_set_awd_query_callback,
-                          _analytics_set_callback_for_queried_event, _analytics_set_callback_for_queried_event_with_queue,
-                          _report_locale_prefs_to_analyticsd ]
+                          _analytics_mark_awd_queriable, _analytics_send_awd_metric, _analytics_send_awd_trigger, _analytics_send_event,
+                          _analytics_send_event_lazy, _analytics_send_queried_awd_metric, _analytics_send_queried_awd_trigger,
+                          _analytics_set_awd_query_callback, _analytics_set_callback_for_queried_event,
+                          _analytics_set_callback_for_queried_event_with_queue, _report_locale_prefs_to_analyticsd ]
     objc-classes:       [ _AnalyticsConfigurationObserver, _AnalyticsEventObserver ]
     objc-ivars:         [ _AnalyticsConfigurationObserver._delegate, _AnalyticsConfigurationObserver._delegateQueue,
                           _AnalyticsConfigurationObserver._queue, _AnalyticsConfigurationObserver.observer,
-                          _AnalyticsEventObserver._delegate, _AnalyticsEventObserver._delegateQueue,
-                          _AnalyticsEventObserver._queue, _AnalyticsEventObserver.observer ]
+                          _AnalyticsEventObserver._delegate, _AnalyticsEventObserver._delegateQueue, _AnalyticsEventObserver._queue,
+                          _AnalyticsEventObserver.observer ]
 ...

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 06679423-8432-30F7-B26C-54DC4540D634', 'armv7s: 3E08F7BA-A82B-3C3E-AFEA-07923C33315E', 
-                   'arm64: D53B6B2C-EC02-357E-B358-3CB05E89ED3A', 'arm64e: 6324C3DD-E53C-37F7-A50C-6255CD3BEA08' ]
+                   'arm64: 55BA665C-36E7-36ED-B8B6-2D52C35E95B0', 'arm64e: 4659186C-0EDF-32AE-80D0-7FEE015A97DE' ]
 platform:        ios
 install-name:    '/usr/lib/libFDR.dylib'
 exports:         

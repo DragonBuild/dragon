@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/WelcomeKitUI.framework/WelcomeKitUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _WelcomeKitUIVersionNumber, _WelcomeKitUIVersionString ]
@@ -13,12 +14,9 @@ exports:
                           _WLWelcomeGroupViewController, _WLWelcomeViewController, _WLWelcomeViewControllerMetrics ]
     objc-ivars:         [ _WLAvailabilityRequestController._completionHandler, _WLIntroViewController._continueHandler,
                           _WLIntroViewController._continueView, _WLIntroViewController._spinner,
-                          _WLMigrationCompletedViewController._continueButton,
-                          _WLMigrationCompletedViewController._continueHandler,
-                          _WLMigrationCompletedViewController._continueView,
-                          _WLMigrationProgressViewController._completionHandler,
-                          _WLMigrationProgressViewController._deviceNameView,
-                          _WLMigrationProgressViewController._explanationView,
+                          _WLMigrationCompletedViewController._continueButton, _WLMigrationCompletedViewController._continueHandler,
+                          _WLMigrationCompletedViewController._continueView, _WLMigrationProgressViewController._completionHandler,
+                          _WLMigrationProgressViewController._deviceNameView, _WLMigrationProgressViewController._explanationView,
                           _WLMigrationProgressViewController._migrationConcluded,
                           _WLMigrationProgressViewController._migrationController,
                           _WLMigrationProgressViewController._migrationControllerIsRestartable,

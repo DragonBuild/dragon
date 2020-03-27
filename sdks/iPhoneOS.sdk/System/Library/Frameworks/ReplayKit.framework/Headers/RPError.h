@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, RPRecordingErrorCode) {
     RPRecordingErrorAttemptToStartInRecordingState = -5830, // Failed due to attempting to start a recording thats already in a recording state
     RPRecordingErrorPhotoFailure = -5831, // Failed during saving to camera roll
     RPRecordingErrorRecordingInvalidSession = -5832, // Attempted to start an invalid recording session
+    RPRecordingErrorFailedToStartCaptureStack = -5833, // Failed to start due to video/audio capture failure
     RPRecordingErrorCodeSuccessful = 0 //Successfully saved video to camera roll
 };
 

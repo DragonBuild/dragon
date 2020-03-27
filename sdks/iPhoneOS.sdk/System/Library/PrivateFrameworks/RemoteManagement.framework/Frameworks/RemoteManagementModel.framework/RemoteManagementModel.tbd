@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/RemoteManagement.framework/Frameworks/RemoteManagementModel.framework/RemoteManagementModel
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _RMModelAccountMailDeclaration_EmailAccountType_emailTypeIMAP,
@@ -79,11 +80,10 @@ exports:
                           _RMModelAccountMailDeclaration._payloadOutgoingMailServerPortNumber,
                           _RMModelAccountMailDeclaration._payloadOutgoingMailServerUseSSL,
                           _RMModelAccountMailDeclaration._payloadPreventAppSheet,
-                          _RMModelAccountMailDeclaration._payloadPreventMove,
-                          _RMModelAccountWebClipDeclaration._payloadFullScreen, _RMModelAccountWebClipDeclaration._payloadIcon,
-                          _RMModelAccountWebClipDeclaration._payloadIsRemovable, _RMModelAccountWebClipDeclaration._payloadLabel,
-                          _RMModelAccountWebClipDeclaration._payloadPrecomposed, _RMModelAccountWebClipDeclaration._payloadURL,
-                          _RMModelActivationSimpleDeclaration._payloadPredicate,
+                          _RMModelAccountMailDeclaration._payloadPreventMove, _RMModelAccountWebClipDeclaration._payloadFullScreen,
+                          _RMModelAccountWebClipDeclaration._payloadIcon, _RMModelAccountWebClipDeclaration._payloadIsRemovable,
+                          _RMModelAccountWebClipDeclaration._payloadLabel, _RMModelAccountWebClipDeclaration._payloadPrecomposed,
+                          _RMModelAccountWebClipDeclaration._payloadURL, _RMModelActivationSimpleDeclaration._payloadPredicate,
                           _RMModelActivationSimpleDeclaration._payloadStandardConfigurations, _RMModelAnyPayload._dictKeys,
                           _RMModelApplicationAppStoreDeclaration._payloadBundleIdentifier,
                           _RMModelApplicationAppStoreDeclaration._payloadDescriptor,
@@ -109,8 +109,8 @@ exports:
                           _RMModelDeviceNameDeclaration._payloadName, _RMModelImageDeclaration._payloadDescriptor,
                           _RMModelImageDeclaration._payloadReference, _RMModelManagementTestCommandCommand._payloadEcho,
                           _RMModelManagementTestCommandCommand._payloadReturnStatus,
-                          _RMModelManagementTestCommandCommand_Status._statusEcho,
-                          _RMModelManagementTestDeclaration._payloadEcho, _RMModelManagementTestDeclaration._payloadReturnStatus,
+                          _RMModelManagementTestCommandCommand_Status._statusEcho, _RMModelManagementTestDeclaration._payloadEcho,
+                          _RMModelManagementTestDeclaration._payloadReturnStatus,
                           _RMModelNetworkWiFiDeclaration._payloadHIDDENNETWORK, _RMModelNetworkWiFiDeclaration._payloadSSIDSTR,
                           _RMModelPasscodeSettingsDeclaration._payloadAllowFingerprintForUnlock,
                           _RMModelPasscodeSettingsDeclaration._payloadAllowFingerprintModification,
@@ -124,12 +124,12 @@ exports:
                           _RMModelPasscodeSettingsDeclaration._payloadMinComplexChars,
                           _RMModelPasscodeSettingsDeclaration._payloadMinLength,
                           _RMModelPasscodeSettingsDeclaration._payloadPinHistory,
-                          _RMModelPasscodeSettingsDeclaration._payloadRequireAlphanumeric,
-                          _RMModelPayloadBase._unknownPayloadKeys, _RMModelPredicateBase._payloadType,
-                          _RMModelSecretCredentialsDeclaration._payloadSecret, _RMModelStatusBase._statusType,
-                          _RMModelStatusDeviceName._statusDeviceName, _RMModelStatusManagementTest._statusEcho,
-                          _RMModelStatusReason._statusCode, _RMModelStatusReason._statusDescription,
-                          _RMModelStatusReason._statusDetails, _RMModelStatusRemoteManagementCommands._statusCommands,
+                          _RMModelPasscodeSettingsDeclaration._payloadRequireAlphanumeric, _RMModelPayloadBase._unknownPayloadKeys,
+                          _RMModelPredicateBase._payloadType, _RMModelSecretCredentialsDeclaration._payloadSecret,
+                          _RMModelStatusBase._statusType, _RMModelStatusDeviceName._statusDeviceName,
+                          _RMModelStatusManagementTest._statusEcho, _RMModelStatusReason._statusCode,
+                          _RMModelStatusReason._statusDescription, _RMModelStatusReason._statusDetails,
+                          _RMModelStatusRemoteManagementCommands._statusCommands,
                           _RMModelStatusRemoteManagementCommands_Commands._statusIdentifier,
                           _RMModelStatusRemoteManagementCommands_Commands._statusPayload,
                           _RMModelStatusRemoteManagementCommands_Commands._statusReasons,
@@ -149,8 +149,7 @@ exports:
                           _RMModelStatusSystemVersion._statusBuildVersion, _RMModelStatusSystemVersion._statusOSVersion,
                           _RMModelSubscriptionBase._subscriptionDescription, _RMModelSubscriptionBase._subscriptionIdentifier,
                           _RMModelSubscriptionBase._subscriptionPayload, _RMModelSubscriptionBase._subscriptionServerToken,
-                          _RMModelSubscriptionBase._subscriptionType,
-                          _RMModelSubscriptionManagementTestSubscription._payloadEcho,
+                          _RMModelSubscriptionBase._subscriptionType, _RMModelSubscriptionManagementTestSubscription._payloadEcho,
                           _RMModelSubscriptionManagementTestSubscription._payloadReturnStatus,
                           _RMModelSystemCameraDeclaration._payloadAllowCamera,
                           _RMModelSystemCameraDeclaration._payloadAllowScreenRecording,

@@ -1,20 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SoftwareUpdateSettingsUI.framework/SoftwareUpdateSettingsUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SUPrefsErrorDomain, _SUSUISettingsIsBadgedForSoftwareUpdate, __SUSUILoggingFacility ]
-    objc-classes:       [ _SUSUISoftwareUpdateAutomaticUpdateController, _SUSUISoftwareUpdateController,
-                          _SUSUISoftwareUpdateManager, _StorageNeededLinkFooterView ]
+    objc-classes:       [ _SUSUISoftwareUpdateAutomaticUpdateController, _SUSUISoftwareUpdateController, _SUSUISoftwareUpdateManager,
+                          _StorageNeededLinkFooterView ]
     objc-ivars:         [ _SUSUISoftwareUpdateAutomaticUpdateController._automaticUpdateGroup,
                           _SUSUISoftwareUpdateAutomaticUpdateController._automaticUpdateSwitchSpecifier,
                           _SUSUISoftwareUpdateController._automaticUpdateGroup,
-                          _SUSUISoftwareUpdateController._automaticUpdateSpecifier,
-                          _SUSUISoftwareUpdateController._devicePasscode,
+                          _SUSUISoftwareUpdateController._automaticUpdateSpecifier, _SUSUISoftwareUpdateController._devicePasscode,
                           _SUSUISoftwareUpdateController._devicePasscodeCompletion,
                           _SUSUISoftwareUpdateController._disableInstallButton,
                           _SUSUISoftwareUpdateController._hideInsufficientStorageUI,
@@ -25,8 +25,7 @@ exports:
                           _SUSUISoftwareUpdateController._titleGroup, _SUSUISoftwareUpdateController._usageStorageController,
                           _SUSUISoftwareUpdateManager._SUManager, _SUSUISoftwareUpdateManager._actionString,
                           _SUSUISoftwareUpdateManager._allowCellularOverride, _SUSUISoftwareUpdateManager._anyScanInProgress,
-                          _SUSUISoftwareUpdateManager._autoInstallArmedAndReady,
-                          _SUSUISoftwareUpdateManager._autoInstallOperation,
+                          _SUSUISoftwareUpdateManager._autoInstallArmedAndReady, _SUSUISoftwareUpdateManager._autoInstallOperation,
                           _SUSUISoftwareUpdateManager._bypassTermsAndConditions, _SUSUISoftwareUpdateManager._clientIsBuddy,
                           _SUSUISoftwareUpdateManager._connectedToPowerSource, _SUSUISoftwareUpdateManager._delegate,
                           _SUSUISoftwareUpdateManager._download, _SUSUISoftwareUpdateManager._downloadMetadata,

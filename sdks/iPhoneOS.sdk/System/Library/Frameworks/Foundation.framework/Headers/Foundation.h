@@ -128,7 +128,16 @@
 #import <Foundation/NSURLSession.h>
 #import <Foundation/NSUserActivity.h>
 #import <Foundation/NSUUID.h>
-#endif
+
+#endif /* TARGET_OS_OSX || TARGET_OS_IPHONE */
+
+#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
+
+#import <Foundation/NSAffineTransform.h>
+#import <Foundation/NSAppleScript.h>
+#import <Foundation/NSGeometry.h>
+
+#endif /* TARGET_OS_OSX || TARGET_OS_MACCATALYST */
 
 #if TARGET_OS_OSX
 
@@ -138,7 +147,6 @@
 #import <Foundation/NSConnection.h>
 #import <Foundation/NSDistantObject.h>
 #import <Foundation/NSDistributedNotificationCenter.h>
-#import <Foundation/NSGeometry.h>
 #import <Foundation/NSPortCoder.h>
 #import <Foundation/NSPortMessage.h>
 #import <Foundation/NSPortNameServer.h>
@@ -153,14 +161,12 @@
 #import <Foundation/NSURLDownload.h>
 #import <Foundation/NSURLHandle.h>
 
-#endif
+#endif /* TARGET_OS_OSX */
 
 #if TARGET_OS_OSX
 
-#import <Foundation/NSAffineTransform.h>
 #import <Foundation/NSAppleEventDescriptor.h>
 #import <Foundation/NSAppleEventManager.h>
-#import <Foundation/NSAppleScript.h>
 #import <Foundation/NSClassDescription.h>
 #import <Foundation/NSDistributedLock.h>
 #import <Foundation/NSGarbageCollector.h>
@@ -181,6 +187,6 @@
 #import <Foundation/NSUserNotification.h>
 #import <Foundation/NSUserScriptTask.h>
 
-#endif
+#endif /* TARGET_OS_OSX */
 
 #import <Foundation/FoundationLegacySwiftCompatibility.h>

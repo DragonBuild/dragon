@@ -1,24 +1,23 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/HealthExperienceUI.framework/HealthExperienceUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    allowable-clients:  [ AppRecommendations, AppRecommendationsTests, Articles, ArticlesTests, Categories, CategoriesTests,
-                          CloudSync, CloudSyncTests, Education, EducationTests, FeatureTagSandboxPlugin, Health,
-                          HealthAppControlPlugin, HealthAppTests, HealthEducationUI, HealthEducationUITests, HealthExperience,
-                          HealthExperienceTesting, HealthExperienceTests, HealthExperienceUI, HealthExperienceUITests,
-                          HealthMenstrualCyclesContentExtension, HealthMenstrualCyclesUI, HealthMenstrualCyclesUITests,
-                          HealthPluginHost, HealthPluginHostTests, HealthProfile, HealthProfileExtensions,
-                          HealthProfileExtensionsTests, HealthProfileTests, HealthRecords, 'HealthRecordsAppPlugin-Tests',
-                          HealthRecordsUI, HealthToolboxPlugin, HealthToolboxPluginTests, HealthVisualization,
-                          HealthVisualizationTests, Heart, HeartTests, HighlightAlerts, HighlightAlertsTests, Highlights,
-                          HighlightsHeavy, HighlightsTests, MedicalID, MedicalIDTests, MenstrualCyclesAppPlugin,
-                          MenstrualCyclesAppPluginTests, NotificationExtension, OrganDonation, OrganDonationTests, ResearchApp,
-                          ResearchAppTests, Snippets, SnippetsTests, hatool, healthappd ]
+    allowable-clients:  [ AppRecommendations, AppRecommendationsTests, Articles, ArticlesTests, Categories, CategoriesTests, CloudSync,
+                          CloudSyncTests, Education, EducationTests, FeatureTagSandboxPlugin, Health, HealthAppControlPlugin, HealthAppTests,
+                          HealthEducationUI, HealthEducationUITests, HealthExperience, HealthExperienceTesting, HealthExperienceTests,
+                          HealthExperienceUI, HealthExperienceUITests, HealthMenstrualCyclesContentExtension, HealthMenstrualCyclesUI,
+                          HealthMenstrualCyclesUITests, HealthPluginHost, HealthPluginHostTests, HealthProfile, HealthProfileExtensions,
+                          HealthProfileExtensionsTests, HealthProfileTests, HealthRecords, "HealthRecordsAppPlugin-Tests", HealthRecordsUI,
+                          HealthToolboxPlugin, HealthToolboxPluginTests, HealthVisualization, HealthVisualizationTests, Heart, HeartTests,
+                          HighlightAlerts, HighlightAlertsTests, Highlights, HighlightsHeavy, HighlightsTests, MedicalID, MedicalIDTests,
+                          MenstrualCyclesAppPlugin, MenstrualCyclesAppPluginTests, NotificationExtension, OrganDonation,
+                          OrganDonationTests, ResearchApp, ResearchAppTests, Snippets, SnippetsTests, hatool, healthappd ]
     symbols:            [ _HealthExperienceUIVersionNumber, _HealthExperienceUIVersionString ]
     objc-classes:       [ __TtC18HealthExperienceUI10ShadowView, __TtC18HealthExperienceUI11PlatterView,
                           __TtC18HealthExperienceUI11SnippetView, __TtC18HealthExperienceUI12ChartContext,
@@ -36,8 +35,7 @@ exports:
                           __TtC18HealthExperienceUI23AppNavigationController, __TtC18HealthExperienceUI23ChromeHostViewTableCell,
                           __TtC18HealthExperienceUI23DataTypeDetailChartCell, __TtC18HealthExperienceUI23EmptyStateTableViewCell,
                           __TtC18HealthExperienceUI23ListFeedItemsDataSource, __TtC18HealthExperienceUI23TableHeaderWithIconView,
-                          __TtC18HealthExperienceUI24BrowseTileViewController,
-                          __TtC18HealthExperienceUI24FakeCollectionViewHeader,
+                          __TtC18HealthExperienceUI24BrowseTileViewController, __TtC18HealthExperienceUI24FakeCollectionViewHeader,
                           __TtC18HealthExperienceUI25DataTypeDetailAddDataCell,
                           __TtC18HealthExperienceUI25DismissibleTileHeaderView,
                           __TtC18HealthExperienceUI25EmbeddedViewTableViewCell,
@@ -80,7 +78,7 @@ exports:
                           __TtC18HealthExperienceUI42AppRecommendationsFetchedResultsController,
                           __TtC18HealthExperienceUI42ChromeHostViewCellWithPersonalizedTraining,
                           __TtC18HealthExperienceUI42CompoundDataSourceCollectionViewController,
-                          __TtC18HealthExperienceUI8HostView, __TtC18HealthExperienceUI8UnitCell,
-                          __TtC18HealthExperienceUIP33_E828ABD0A91630D385A83F9365D605AB17FavoritesObserver,
-                          __TtCE18HealthExperienceUICSo23_UINavigationBarPaletteP33_5F11F40652BD0C60053B51DD9E749E2B20SegmentedContentView ]
+                          __TtC18HealthExperienceUI53HealthExperienceStoreIncrementalCoreSpotlightDelegate,
+                          __TtC18HealthExperienceUI54HealthExperienceStoreIncrementalCoreSpotlightOperation,
+                          __TtC18HealthExperienceUI8HostView, __TtC18HealthExperienceUI8UnitCell ]
 ...

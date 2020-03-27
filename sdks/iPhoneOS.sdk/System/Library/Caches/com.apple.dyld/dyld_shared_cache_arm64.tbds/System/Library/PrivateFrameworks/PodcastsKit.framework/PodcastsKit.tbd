@@ -1,0 +1,37 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/PodcastsKit.framework/PodcastsKit
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _IMAMSMetricsEventTypeAppClose, _IMAMSMetricsEventTypeAppOpen, _IMAMSMetricsEventTypeClick,
+                          _IMAMSMetricsEventTypeMemory, _IMAMSMetricsEventTypePage, _IMAMSMetricsEventTypeTimer,
+                          _IMApplicationStateCreate, _IMFetchReviewAdamIDQueryParam, _IMFetchReviewDefaultEndpointURL,
+                          _IMFetchReviewEndpointURLKey, _IMFetchReviewVersionQueryParam, _IMFetchReviewVersionQueryValue,
+                          _IMMetricsSetClickEventPositionWithPoint, _IMMetricsSetClickEventPositionWithView,
+                          _IMMetricsWindowOrientationForInterfaceOrientation, _IMNetworkObserverOperatorNameChangedNotification,
+                          _IMNetworkReachabilityFlagsChangedNotification, _IMNetworkTypeChangedNotification,
+                          _IMPushNotificationSettingsServiceErrorDomain, _IMSaveReviewServiceClientParam,
+                          _IMSaveReviewServiceClientParamValue, _IMSaveReviewServiceVersionQueryParam,
+                          _IMSaveReviewServiceVersionQueryValue, _IMStoreLogCategoryDefault, _IMStoreUtilInitializeLogCategories,
+                          _MetricsAdditionalData, _MetricsContentIdentifierKey, _MetricsDataSource, _MetricsEnabledKey, _MetricsNameKey,
+                          _MetricsViewWillAppearTime, _NSStringFromIMApplicationState, _X_APPLE_STORE_FRONT_HEADER, _isUIKitClassKey,
+                          _jsonSerializableValueForCoreFoundationType, _jsonSerializableValueForValue, _kBagKeyGUIDRegex,
+                          _kBagKeyGUIDSchemes, _kBagKeyMescalSignedRequests, _kBagKeyMescalSignedResponses, _kBagKeyMetrics,
+                          _kBagKeyMetricsURL, _kBagKeyMobileNetworkConstraints, _kBagKeySignSapSetup, _kBagKeySignSapSetupCert,
+                          _kBagKeySignedActions, _kBagKeyStorePlatformLookupURL, _kBagKeyStorePlatformLookupUnpersonalizedURL,
+                          _kBagKeyTrustedDomains, _kMetricsContainerId, _kProductProfile, _kPushNotificationSettings ]
+    objc-classes:       [ _IMAMSMetricsEvent, _IMAppStateMonitor, _IMBasePlatformLookupService, _IMBaseStoreService,
+                          _IMChartLookupService, _IMClickAMSMetricsEvent, _IMClientUtil, _IMContentLookupService,
+                          _IMFetchPushNotificationSettingsService, _IMFetchReviewService, _IMIgnoreRedirectURLAction, _IMMetrics,
+                          _IMMetricsAppCloseEvent, _IMMetricsAppOpenEvent, _IMMetricsController, _IMMetricsMemoryEvent,
+                          _IMMetricsTimerEvent, _IMMetricsUtil, _IMNetworkObserver, _IMPageAMSMetricsEvent,
+                          _IMPushNotificationSettingsService, _IMSaveReviewService, _IMStoreLogging, _IMURLBag, _IMURLProtocolHandler,
+                          _IMURLRequestEncoder, _IMURLRequestService, _IMURLSession, _IMWritePushNotificationSettingsService,
+                          _MTWeakReference, _PKDurationSnapshot, _PKEpisode, _PKPlayerManifest, _PKProvider, _PKSearchResult, _PKShow,
+                          _PKStoreId ]
+...

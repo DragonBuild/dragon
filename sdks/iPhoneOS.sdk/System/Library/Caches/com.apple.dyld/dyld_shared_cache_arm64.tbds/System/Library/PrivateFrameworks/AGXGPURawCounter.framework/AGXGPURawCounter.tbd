@@ -1,0 +1,12 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/AGXGPURawCounter.framework/AGXGPURawCounter
+current-version:       1
+compatibility-version: 0
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ __ZN16AGXGPURawCounter14createInstanceEj, __ZN16AGXGPURawCounter15destroyInstanceEv,
+                          __ZN16AGXGPURawCounter8instanceEv, __ZNK16AGXGPURawCounter13bufferMinSizeEv ]
+...

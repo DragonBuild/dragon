@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/LoginUILogViewer.framework/LoginUILogViewer
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _LoginUILogViewerVersionNumber, _LoginUILogViewerVersionString, _kAnimationDuration, _kClearButtonSize,
@@ -14,7 +15,7 @@ exports:
     objc-classes:       [ _LUILogContentViewController, _LUILogFilterCurrentPredicateTableViewCell,
                           _LUILogFilterPredicateCandidateCollectionViewCell, _LUILogFilterView, _LUILogFilterViewController,
                           _LUILogLocatorView, _LUILogOptionsView, _LUILogScreenshotCollectionViewCell, _LUILogScreenshotItem,
-                          _LUILogViewerAssistiveTouch, _LUILogViewerController, _LUILogViewerView ]
+                          _LUILogViewerAssistiveTouch, _LUILogViewerController, _LUILogViewerPageViewController, _LUILogViewerView ]
     objc-ivars:         [ _LUILogContentViewController._delegate, _LUILogContentViewController._logLocatorView,
                           _LUILogContentViewController._logOptionsView, _LUILogContentViewController._panGesture,
                           _LUILogContentViewController._screenshotItems, _LUILogContentViewController._scrollIndicatorView,
@@ -28,12 +29,11 @@ exports:
                           _LUILogFilterView._horizontalSeparatorLine, _LUILogFilterView._predicateTextField,
                           _LUILogFilterView._predicatesComparisonCandidateCollectionView,
                           _LUILogFilterView._predicatesKeyCandidateCollectionView,
-                          _LUILogFilterView._predicatesValueCandidateCollectionView,
-                          _LUILogFilterView._veriticalSeparatorLineFirst, _LUILogFilterView._veriticalSeparatorLineSecond,
-                          _LUILogFilterViewController._delegate, _LUILogFilterViewController._filterView,
-                          _LUILogLocatorView._downArrowButton, _LUILogLocatorView._screenshotButton,
-                          _LUILogLocatorView._screenshotCollectionView, _LUILogLocatorView._upArrowButton,
-                          _LUILogOptionsView._buttonStackView, _LUILogOptionsView._halfHourButton,
+                          _LUILogFilterView._predicatesValueCandidateCollectionView, _LUILogFilterView._veriticalSeparatorLineFirst,
+                          _LUILogFilterView._veriticalSeparatorLineSecond, _LUILogFilterViewController._delegate,
+                          _LUILogFilterViewController._filterView, _LUILogLocatorView._downArrowButton,
+                          _LUILogLocatorView._screenshotButton, _LUILogLocatorView._screenshotCollectionView,
+                          _LUILogLocatorView._upArrowButton, _LUILogOptionsView._buttonStackView, _LUILogOptionsView._halfHourButton,
                           _LUILogOptionsView._hourButton, _LUILogOptionsView._lastDayButton, _LUILogOptionsView._streamButton,
                           _LUILogOptionsView._tenMinutesLogButton, _LUILogScreenshotCollectionViewCell._clearButton,
                           _LUILogScreenshotCollectionViewCell._clearButtonAction,

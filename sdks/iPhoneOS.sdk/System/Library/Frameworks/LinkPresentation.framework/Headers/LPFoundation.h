@@ -10,7 +10,11 @@
 #ifdef __cplusplus
 #define LP_EXTERN extern "C" __attribute__((visibility ("default")))
 #define LP_EXTERN_C extern "C"
+#define LP_EXTERN_C_BEGIN extern "C" {
+#define LP_EXTERN_C_END }
 #else
 #define LP_EXTERN extern __attribute__((visibility ("default")))
 #define LP_EXTERN_C extern
+#define LP_EXTERN_C_BEGIN
+#define LP_EXTERN_C_END
 #endif

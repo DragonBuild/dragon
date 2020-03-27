@@ -477,9 +477,7 @@ CF_ENUM(UInt32) {
 	kAudioUnitSubType_Delay					= 'dely',
 	kAudioUnitSubType_SampleDelay			= 'sdly',
 	kAudioUnitSubType_NBandEQ				= 'nbeq',
-#if !TARGET_OS_MACCATALYST
     kAudioUnitSubType_Reverb2               = 'rvb2'
-#endif
 };
 
 #if !TARGET_OS_IPHONE

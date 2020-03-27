@@ -1,17 +1,15 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/HIDPlugins/IOHIDEventSystemStatistics.plugin/IOHIDEventSystemStatistics
 current-version:       0
 compatibility-version: 0
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _IOHIDEventSystemStatisticsFactory,
-                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEvents8readFromERN2PB6ReaderE,
-                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1EOS0_,
-                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1ERKS0_, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1Ev,
-                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC2EOS0_,
+    symbols:            [ _IOHIDEventSystemStatisticsFactory, __ZN10awdmetrics26IOHIDFamilyCoverHESTEvents8readFromERN2PB6ReaderE,
+                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1EOS0_, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1ERKS0_,
+                          __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC1Ev, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC2EOS0_,
                           __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC2ERKS0_, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsC2Ev,
                           __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsD0Ev, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsD1Ev,
                           __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsD2Ev, __ZN10awdmetrics26IOHIDFamilyCoverHESTEventsaSEOS0_,
@@ -42,8 +40,8 @@ exports:
                           __ZN26IOHIDEventSystemStatistics4openEP14__IOHIDSessionj,
                           __ZN26IOHIDEventSystemStatistics4openEPvP14__IOHIDSessionj,
                           __ZN26IOHIDEventSystemStatistics5closeEP14__IOHIDSessionj,
-                          __ZN26IOHIDEventSystemStatistics5closeEPvP14__IOHIDSessionj,
-                          __ZN26IOHIDEventSystemStatistics6AddRefEPv, __ZN26IOHIDEventSystemStatistics6AddRefEv,
+                          __ZN26IOHIDEventSystemStatistics5closeEPvP14__IOHIDSessionj, __ZN26IOHIDEventSystemStatistics6AddRefEPv,
+                          __ZN26IOHIDEventSystemStatistics6AddRefEv,
                           __ZN26IOHIDEventSystemStatistics6filterEP14__IOHIDServiceP12__IOHIDEvent,
                           __ZN26IOHIDEventSystemStatistics6filterEPvP14__IOHIDServiceP12__IOHIDEvent,
                           __ZN26IOHIDEventSystemStatistics7ReleaseEPv, __ZN26IOHIDEventSystemStatistics7ReleaseEv,

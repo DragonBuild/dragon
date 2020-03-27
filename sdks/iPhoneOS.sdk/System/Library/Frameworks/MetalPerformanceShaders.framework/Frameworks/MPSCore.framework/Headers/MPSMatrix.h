@@ -282,6 +282,12 @@ MPS_CLASS_AVAILABLE_STARTING( macos(10.13), ios(10.0), macCatalyst(13.0), tvos(1
  */
 @property (readonly, nonatomic) NSUInteger matrixBytes MPS_AVAILABLE_STARTING(macos(10.13), ios(11.0), macCatalyst(13.0), tvos(11.0));
 
+/*! @property   offset
+ *  @discussion Byte-offset to the buffer where the matrix data begins - see @ref initWithBuffer: offset: descriptor: .
+ */
+@property (readonly, nonatomic) NSUInteger offset MPS_AVAILABLE_STARTING(macos(10.15), ios(13.0), macCatalyst(13.0), tvos(13.0));
+
+
 /*! @property   data
  *  @discussion An MTLBuffer to store the data.
  */
@@ -414,6 +420,12 @@ MPS_CLASS_AVAILABLE_STARTING( macos(10.13), ios(11.0), macCatalyst(13.0), tvos(1
  *              consecutive vectors.
  */
 @property (readonly, nonatomic) NSUInteger vectorBytes;
+
+/*! @property   offset
+ *  @discussion Byte-offset to the buffer where the vector data begins - see @ref initWithBuffer: offset: descriptor: .
+ */
+@property (readonly, nonatomic) NSUInteger offset MPS_AVAILABLE_STARTING(macos(10.15), ios(13.0), macCatalyst(13.0), tvos(13.0));
+
 
 /*! @property   data
  *  @discussion An MTLBuffer to store the data.

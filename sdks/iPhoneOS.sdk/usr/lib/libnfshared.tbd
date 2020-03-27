@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: A2B8BA85-49F3-3AD7-831C-4F760C09B640', 'armv7s: E4C1F381-03F6-34D8-989E-5DBE423BD091', 
-                   'arm64: 3517A7D6-D9B3-33F4-B3B1-0D827AFAF4CF', 'arm64e: 04495369-3D8B-3700-B5AB-B6AD596DE990' ]
+                   'arm64: 2384FED0-B675-3092-AB9E-60A07EABD619', 'arm64e: 59307E1A-E8BF-37BC-B5D6-A3A965FEF591' ]
 platform:        ios
 install-name:    '/usr/lib/libnfshared.dylib'
 exports:         
@@ -106,8 +106,8 @@ exports:
                        NFAWDVASTransactionException, NFAWDVersionInfo, NFCurrency, 
                        NFJSONEncoder, NFMSEIParser, NFMemoryObserver, NFNdefMessageInternal, 
                        NFNdefRecordInternal, NFPowerAssertion, NFPowerObserver, NFPreferenceObserver, 
-                       NFPropertyCoder, NFRunScriptParameters, NFTLV, NFTagInternal, 
-                       NFTimer, NFWeakReference ]
+                       NFPropertyCoder, NFReaderSessionConfig, NFRunScriptParameters, 
+                       NFTLV, NFTagInternal, NFTimer, NFVASPassConfig, NFWeakReference ]
     objc-ivars:      [ AWDExpressTransactionType._appletType, AWDExpressTransactionType._count, 
                        AWDExpressTransactionType._has, AWDExpressTransactionType._ridAndPix, 
                        AWDExpressTransactionType._spid, AWDNFCCRSAuthExceptionEvent._has, 

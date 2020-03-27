@@ -46,8 +46,13 @@ typedef NS_ENUM(NSInteger, UIImageOrientation) {
  is visually indistinguishable from UIImageResizingModeStretch.
  */
 typedef NS_ENUM(NSInteger, UIImageResizingMode) {
-    UIImageResizingModeTile,
-    UIImageResizingModeStretch,
+#if TARGET_ABI_USES_IOS_VALUES
+    UIImageResizingModeTile = 0,
+    UIImageResizingModeStretch = 1,
+#else /* TARGET_ABI_USES_IOS_VALUES */
+    UIImageResizingModeStretch = 0,
+    UIImageResizingModeTile = 1,
+#endif /* TARGET_ABI_USES_IOS_VALUES */
 };
 
 /* Images are created with UIImageRenderingModeAutomatic by default. An image with this mode is interpreted as a template image or an original image based on the context in which it is rendered. For example, navigation bars, tab bars, toolbars, and segmented controls automatically treat their foreground images as templates, while image views and web views treat their images as originals. You can use UIImageRenderingModeAlwaysTemplate to force your image to always be rendered as a template or UIImageRenderingModeAlwaysOriginal to force your image to always be rendered as an original.

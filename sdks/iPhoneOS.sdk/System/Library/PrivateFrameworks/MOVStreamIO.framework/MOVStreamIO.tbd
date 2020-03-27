@@ -1,17 +1,17 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/MOVStreamIO.framework/MOVStreamIO
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _MOVStreamIOVersionNumber, _MOVStreamIOVersionNumberString, _MOVStreamIOVersionString,
-                          __Z10timerStartv, __Z17join_bayer_bufferPKtS0_S0_S0_Ptmmmmibb,
-                          __Z18split_bayer_bufferPKtPtS1_S1_S1_mmmib, __Z24left_shift_uint16_bufferPKtPtmi,
-                          __Z25right_shift_uint16_bufferPKtPtmi, __Z27join_companded_bayer_bufferPKhS0_S0_S0_Phmmmmb,
-                          __Z28split_companded_bayer_bufferPKhPhS1_S1_S1_mmmb,
+    symbols:            [ _MOVStreamIOVersionNumber, _MOVStreamIOVersionNumberString, _MOVStreamIOVersionString, __Z10timerStartv,
+                          __Z17join_bayer_bufferPKtS0_S0_S0_Ptmmmmibb, __Z18split_bayer_bufferPKtPtS1_S1_S1_mmmib,
+                          __Z24left_shift_uint16_bufferPKtPtmi, __Z25right_shift_uint16_bufferPKtPtmi,
+                          __Z27join_companded_bayer_bufferPKhS0_S0_S0_Phmmmmb, __Z28split_companded_bayer_bufferPKhPhS1_S1_S1_mmmb,
                           __Z31VTCompressionOutputCallbackImplPvS_ijP20opaqueCMSampleBuffer, __Z8timerEndy,
                           __ZN19HEVCLosslessEncoder11EncodeFrameEP10__CVBuffer6CMTimePK14__CFDictionaryPv,
                           __ZN19HEVCLosslessEncoder15isSessionClosedEv, __ZN19HEVCLosslessEncoder16useQPCompressionEi,
@@ -19,18 +19,16 @@ exports:
                           __ZN19HEVCLosslessEncoder5CloseEv, __ZN19HEVCLosslessEncoderC1Ev, __ZN19HEVCLosslessEncoderC2Ev,
                           __ZN19HEVCLosslessEncoderD1Ev, __ZN19HEVCLosslessEncoderD2Ev, _kMIOColorStreamBitrate,
                           _kMIOExpectedFrameRateForStream, _kMIOFrameAttachmentSerializationMode, _kMIOHEVCQPValue,
-                          _kMIOMarksOutputTrackAsEnabled, _kMIOPixelFormat, _kMIORawBayerRearrangeTypeKey,
-                          _kMIOStreamEncoderType, _kMIOTimestampWhenWrittenToFileKey, _kMIOUseSlimXCompression,
-                          _kMIOVideoTransform, _kStreamErrorDomain ]
-    objc-classes:       [ _CompandedRawBayerPostProcessor, _CompandedRawBayerPreProcessor, _DefaultPostProcessor,
-                          _DefaultPreProcessor, _L016Raw14PostProcessor, _L016Raw14PreProcessor, _MOVStreamIOUtility,
-                          _MOVStreamOptions, _MOVStreamReader, _MOVStreamWriter, _MOVStreamWriterStateCancelled,
-                          _MOVStreamWriterStateCancelling, _MOVStreamWriterStateDrainFifo, _MOVStreamWriterStateFailed,
-                          _MOVStreamWriterStateFinishAVWriter, _MOVStreamWriterStateFinishQueues, _MOVStreamWriterStateFinished,
-                          _MOVStreamWriterStateForceFinish, _MOVStreamWriterStateInit, _MOVStreamWriterStatePrepareCancelling,
-                          _MOVStreamWriterStatePreparing, _MOVStreamWriterStateRecording, _PixelBufferUtility,
-                          _PostProcessorFactory, _PreProcessorFactory, _RawBayerPostProcessor, _RawBayerPreProcessor,
-                          _SampleBufferAndMetadata, _VideoEncoderInterface ]
+                          _kMIOMarksOutputTrackAsEnabled, _kMIOPixelFormat, _kMIORawBayerRearrangeTypeKey, _kMIOStreamEncoderType,
+                          _kMIOTimestampWhenWrittenToFileKey, _kMIOUseSlimXCompression, _kMIOVideoTransform, _kStreamErrorDomain ]
+    objc-classes:       [ _CompandedRawBayerPostProcessor, _CompandedRawBayerPreProcessor, _DefaultPostProcessor, _DefaultPreProcessor,
+                          _L016Raw14PostProcessor, _L016Raw14PreProcessor, _MOVStreamIOUtility, _MOVStreamOptions, _MOVStreamReader,
+                          _MOVStreamWriter, _MOVStreamWriterStateCancelled, _MOVStreamWriterStateCancelling,
+                          _MOVStreamWriterStateDrainFifo, _MOVStreamWriterStateFailed, _MOVStreamWriterStateFinishAVWriter,
+                          _MOVStreamWriterStateFinishQueues, _MOVStreamWriterStateFinished, _MOVStreamWriterStateForceFinish,
+                          _MOVStreamWriterStateInit, _MOVStreamWriterStatePrepareCancelling, _MOVStreamWriterStatePreparing,
+                          _MOVStreamWriterStateRecording, _PixelBufferUtility, _PostProcessorFactory, _PreProcessorFactory,
+                          _RawBayerPostProcessor, _RawBayerPreProcessor, _SampleBufferAndMetadata, _VideoEncoderInterface ]
     objc-ivars:         [ _MOVStreamOptions._debugMode, _MOVStreamReader._delegate, _MOVStreamReader._l010OutputFormatRAW14L016,
                           _MOVStreamReader._rawBayerMSBReplication, _MOVStreamReader.m_asset, _MOVStreamReader.m_assetReader,
                           _MOVStreamReader.m_metadataDataMap, _MOVStreamReader.m_orderedMetadataStreamNames,

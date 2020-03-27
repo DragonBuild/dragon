@@ -1829,7 +1829,7 @@ typedef NS_ENUM(NSInteger, AVCaptureColorSpace) {
     Indicates whether geometric distortion correction is enabled by the receiver.
  
  @discussion
-    Where supported, the default value is YES.
+    Where supported, the default value is YES. The receiver must be locked for configuration using lockForConfiguration: before clients can set this method, otherwise an NSGenericException is thrown.
  */
 @property(nonatomic, getter=isGeometricDistortionCorrectionEnabled) BOOL geometricDistortionCorrectionEnabled API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos) API_UNAVAILABLE(tvos, watchos);
 

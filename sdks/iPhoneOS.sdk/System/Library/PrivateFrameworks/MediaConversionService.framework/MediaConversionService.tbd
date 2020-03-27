@@ -1,21 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/MediaConversionService.framework/MediaConversionService
-current-version:       3502.24.220
+current-version:       3622.28.180
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _MediaConversionServiceVersionNumber, _MediaConversionServiceVersionString,
-                          _PAMediaConversionNameForErrorCode, _PAMediaConversionNameForJobStatus,
-                          _PAMediaConversionNameForValueType, _PAMediaConversionOptionNameToValueTypeMapping,
-                          _PAMediaConversionResourceRoleMainResource,
+                          _PAMediaConversionNameForErrorCode, _PAMediaConversionNameForJobStatus, _PAMediaConversionNameForValueType,
+                          _PAMediaConversionOptionNameToValueTypeMapping, _PAMediaConversionResourceRoleMainResource,
                           _PAMediaConversionResourceRoleMainResourceSpatialOverCapture,
                           _PAMediaConversionResourceRoleVideoComplement,
                           _PAMediaConversionResourceRoleVideoComplementSpatialOverCapture,
-                          _PAMediaConversionServiceAdjustmentDataKey,
-                          _PAMediaConversionServiceAdjustmentFinalizationDispositionKey,
+                          _PAMediaConversionServiceAdjustmentDataKey, _PAMediaConversionServiceAdjustmentFinalizationDispositionKey,
                           _PAMediaConversionServiceAdjustmentFormatIdentifierKey,
                           _PAMediaConversionServiceAdjustmentFormatVersionKey, _PAMediaConversionServiceBookmarkKey,
                           _PAMediaConversionServiceConversionEndDateKey, _PAMediaConversionServiceConversionStartDateKey,
@@ -53,8 +52,7 @@ exports:
                           _PAMediaConversionServiceOptionProgressUpdateTimeIntervalKey,
                           _PAMediaConversionServiceOptionRasterizationDPIKey,
                           _PAMediaConversionServiceOptionRotationAngleDegreesKey, _PAMediaConversionServiceOptionScaleFactorKey,
-                          _PAMediaConversionServiceOptionTargetFileSizeKey,
-                          _PAMediaConversionServiceOptionTimeScaleMultiplierKey,
+                          _PAMediaConversionServiceOptionTargetFileSizeKey, _PAMediaConversionServiceOptionTimeScaleMultiplierKey,
                           _PAMediaConversionServiceOptionTimeScaleRangeKey, _PAMediaConversionServiceOptionTrimRangeKey,
                           _PAMediaConversionServiceOptionVideoAdjustmentsPropertyListKey,
                           _PAMediaConversionServiceOptionWantsProgressKey, _PAMediaConversionServiceOptionWantsResultAsDataKey,
@@ -105,8 +103,7 @@ exports:
                           _PHMediaFormatConversionImplementation_MediaConversionService._imageConversionServiceClient,
                           _PHMediaFormatConversionImplementation_MediaConversionService._videoConversionServiceClient,
                           _PHMediaFormatConversionJob._completionHandler, _PHMediaFormatConversionJob._conversionRequest,
-                          _PHMediaFormatConversionManager._callbackQueue,
-                          _PHMediaFormatConversionManager._conversionImplementation,
+                          _PHMediaFormatConversionManager._callbackQueue, _PHMediaFormatConversionManager._conversionImplementation,
                           _PHMediaFormatConversionManager._currentlyProcessingJob,
                           _PHMediaFormatConversionManager._directoryForTemporaryFiles,
                           _PHMediaFormatConversionManager._preflightQueue, _PHMediaFormatConversionManager._queuedJobs,
@@ -117,8 +114,7 @@ exports:
                           _PHMediaFormatConversionRequest._directoryForTemporaryFiles, _PHMediaFormatConversionRequest._error,
                           _PHMediaFormatConversionRequest._forceFormatConversion,
                           _PHMediaFormatConversionRequest._formatConversionExpansionFactor,
-                          _PHMediaFormatConversionRequest._identifier,
-                          _PHMediaFormatConversionRequest._livePhotoPairingIdentifier,
+                          _PHMediaFormatConversionRequest._identifier, _PHMediaFormatConversionRequest._livePhotoPairingIdentifier,
                           _PHMediaFormatConversionRequest._livePhotoPairingIdentifierBehavior,
                           _PHMediaFormatConversionRequest._outputFilename, _PHMediaFormatConversionRequest._parentRequest,
                           _PHMediaFormatConversionRequest._passthroughConversionAdditionalByteCount,

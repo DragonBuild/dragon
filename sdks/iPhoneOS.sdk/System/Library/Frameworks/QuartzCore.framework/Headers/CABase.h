@@ -85,16 +85,6 @@
 # endif
 #endif
 
-#ifdef CA_BUILD_TESTABLE
-#  define CA_TEST 1
-#  define CA_TESTABLE CA_EXTERN
-#  define CA_TESTABLE_CLASS __attribute__((visibility("default")))
-#else
-#  define CA_TEST 0
-#  define CA_TESTABLE CA_HIDDEN
-#  define CA_TESTABLE_CLASS CA_HIDDEN
-#endif
-
 #ifndef CA_PURE
 # if CA_GNUC (3, 0)
 #  define CA_PURE __attribute__ ((pure))

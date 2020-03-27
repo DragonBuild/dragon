@@ -1,19 +1,19 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/PlatterKit.framework/PlatterKit
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    allowable-clients:  [ AppPredictionUI, CardKit, ChargingViewService, CoverSheet, RecentsAppPopover, Sharing, SpringBoard,
-                          SpringBoardCore, UserNotificationsUIKit, UserNotificationsUIKitTests, Widgets ]
+    allowable-clients:  [ AppPredictionUI, CardKit, ChargingViewService, CoverSheet, RecentsAppPopover, Sharing, SpringBoard, SpringBoardCore,
+                          UserNotificationsUIKit, UserNotificationsUIKitTests, Widgets ]
     symbols:            [ _PLCAMediaTimingFunctionForViewAnimationCurve, _PLLogGeneral, _PLLogSubsystem, _PLLogTransition,
-                          _PLMainScreenScale, _PLRectApplyOutsets, _PLRegisterPlatterKitLogging,
-                          _PLSetViewFrameMaintainingTransform, _PLViewAnimationOptionsForAnimationCurve,
-                          _PlatterKitFrameworkBundle, _PlatterKitVersionNumber, _PlatterKitVersionString,
-                          _kPLTitledMinimumContentPadding ]
+                          _PLMainScreenScale, _PLRectApplyOutsets, _PLRegisterPlatterKitLogging, _PLSetViewFrameMaintainingTransform,
+                          _PLViewAnimationOptionsForAnimationCurve, _PlatterKitFrameworkBundle, _PlatterKitVersionNumber,
+                          _PlatterKitVersionString, _kPLTitledMinimumContentPadding ]
     objc-classes:       [ _PLClickPresentationDismissalTransition, _PLClickPresentationInteractionManager,
                           _PLClickPresentationPresentationTransition, _PLClickPresentationTransition,
                           _PLExpandedPlatterHeaderContentView, _PLExpandedPlatterPresentationController,
@@ -39,7 +39,6 @@ exports:
                           _PLClickPresentationTransition._backgroundView, _PLClickPresentationTransition._completion,
                           _PLClickPresentationTransition._propagatesPresentingViewTransform,
                           _PLClickPresentationTransition._transitionContext, _PLClickPresentationTransition._transitionDelegate,
-                          _PLExpandedPlatterHeaderContentView._iconButtonShadows,
                           _PLExpandedPlatterPresentationController._activeTransitionCoordinator,
                           _PLExpandedPlatterPresentationController._additionalHomeAffordanceSpacing,
                           _PLExpandedPlatterPresentationController._childPreferredContentSize,
@@ -79,32 +78,34 @@ exports:
                           _PLGlyphControl._materialRecipe, _PLGlyphControl._visualStyle, _PLGlyphControl._visualStylingProvider,
                           _PLInterfaceActionGroupView._actionsDirty, _PLInterfaceActionGroupView._actionsGroupView,
                           _PLInterfaceActionGroupView._categoriesToProviders, _PLInterfaceActionGroupView._cornerRadius,
+                          _PLLargeTextPlatterHeaderContentViewLayoutManager._cachedTitleBoundingRectSize,
+                          _PLLargeTextPlatterHeaderContentViewLayoutManager._cachedTitleNumberOfLines,
                           _PLLargeTextPlatterHeaderContentViewLayoutManager._drawingContext,
-                          _PLLargeTextPlatterHeaderContentViewLayoutManager._widthToStringToMeasuredNumLines,
+                          _PLLargeTextPlatterHeaderContentViewLayoutManager._referenceWidth,
                           _PLPlatterCustomContentView._ancestorPlatterView,
                           _PLPlatterHeaderContentView._adjustsFontForContentSizeCategory, _PLPlatterHeaderContentView._date,
                           _PLPlatterHeaderContentView._dateAllDay, _PLPlatterHeaderContentView._dateFormatStyle,
                           _PLPlatterHeaderContentView._dateLabel, _PLPlatterHeaderContentView._fontProvider,
-                          _PLPlatterHeaderContentView._hasUpdatedContent,
-                          _PLPlatterHeaderContentView._heedsHorizontalLayoutMargins, _PLPlatterHeaderContentView._iconButtons,
-                          _PLPlatterHeaderContentView._layoutManager, _PLPlatterHeaderContentView._preferredContentSizeCategory,
-                          _PLPlatterHeaderContentView._timeZone, _PLPlatterHeaderContentView._titleLabel,
-                          _PLPlatterHeaderContentView._usesLargeTextLayout, _PLPlatterHeaderContentView._utilityButton,
+                          _PLPlatterHeaderContentView._hasUpdatedContent, _PLPlatterHeaderContentView._heedsHorizontalLayoutMargins,
+                          _PLPlatterHeaderContentView._iconButtons, _PLPlatterHeaderContentView._layoutManager,
+                          _PLPlatterHeaderContentView._preferredContentSizeCategory, _PLPlatterHeaderContentView._timeZone,
+                          _PLPlatterHeaderContentView._titleLabel, _PLPlatterHeaderContentView._usesLargeTextLayout,
+                          _PLPlatterHeaderContentView._utilityButton,
                           _PLPlatterHeaderContentView._utilityButtonHorizontalLayoutReference,
                           _PLPlatterHeaderContentView._utilityView, _PLPlatterHeaderContentView._visualStylingProvider,
                           _PLPlatterHeaderContentViewLayoutManager._headerContentView, _PLPlatterView._backgroundBlurred,
                           _PLPlatterView._backgroundView, _PLPlatterView._categoriesToProviders, _PLPlatterView._cornerRadius,
-                          _PLPlatterView._customContentView, _PLPlatterView._materialGroupNameBase,
-                          _PLPlatterView._materialRecipe, _PLPlatterView._recipeBundle, _PLPlatterView._recipeDynamic,
-                          _PLPlatterView._recipeNamesByTraitCollection, _PLPlatterView._shadowAttributes,
-                          _PLPlatterView._shadowView, _PLPlatterView._usesBackgroundView, _PLShadowView._maskCornerRadius,
-                          _PLShadowView._shadowAttributes, _PLShadowView._shadowOutsets, _PLSummaryContentView._accessoryView,
-                          _PLSummaryContentView._adjustsFontForContentSizeCategory, _PLSummaryContentView._contentInsets,
-                          _PLSummaryContentView._contentView, _PLSummaryContentView._drawingContext,
-                          _PLSummaryContentView._fontProvider, _PLSummaryContentView._preferredContentSizeCategory,
-                          _PLSummaryContentView._primaryLabel, _PLSummaryContentView._primarySubtitleLabel,
-                          _PLSummaryContentView._secondaryLabel, _PLSummaryContentView._summaryLabel,
-                          _PLSummaryContentView._thumbnailImageView, _PLSummaryContentView._visualStylingProvider,
+                          _PLPlatterView._customContentView, _PLPlatterView._materialGroupNameBase, _PLPlatterView._materialRecipe,
+                          _PLPlatterView._recipeBundle, _PLPlatterView._recipeDynamic, _PLPlatterView._recipeNamesByTraitCollection,
+                          _PLPlatterView._shadowAttributes, _PLPlatterView._shadowView, _PLPlatterView._usesBackgroundView,
+                          _PLShadowView._maskCornerRadius, _PLShadowView._shadowAttributes, _PLShadowView._shadowOutsets,
+                          _PLSummaryContentView._accessoryView, _PLSummaryContentView._adjustsFontForContentSizeCategory,
+                          _PLSummaryContentView._contentInsets, _PLSummaryContentView._contentView,
+                          _PLSummaryContentView._drawingContext, _PLSummaryContentView._fontProvider,
+                          _PLSummaryContentView._preferredContentSizeCategory, _PLSummaryContentView._primaryLabel,
+                          _PLSummaryContentView._primarySubtitleLabel, _PLSummaryContentView._secondaryLabel,
+                          _PLSummaryContentView._summaryLabel, _PLSummaryContentView._thumbnailImageView,
+                          _PLSummaryContentView._visualStylingProvider,
                           _PLSummaryContentView._widthToFontToStringToMeasuredNumLines, _PLTitledPlatterView._headerContentView,
                           _PLTitledPlatterView._largerHeaderMarginEnabled, _PLTitledSummaryPlatterView._summaryContentView,
                           _PLViewControllerAnimator._delegate, _PLViewControllerAnimator._didPrepareForTransition,

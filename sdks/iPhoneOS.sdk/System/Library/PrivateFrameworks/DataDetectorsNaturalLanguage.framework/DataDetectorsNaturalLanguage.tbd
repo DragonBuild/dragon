@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/DataDetectorsNaturalLanguage.framework/DataDetectorsNaturalLanguage
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _IPFeatureDataContextDateIsTimeOnlyAndReferrengingToSentDate,
@@ -21,8 +22,7 @@ exports:
                           _IPFeatureExtractorPreviousFeatureSentences, _IPFeatureKeywordContextDistanceToDate,
                           _IPFeatureKeywordContextExtractedFromSubject, _IPFeatureKeywordContextMatchedRatio,
                           _IPFeatureTextMessageScannerConfidenceDistanceToDates,
-                          _IPFeatureTextMessageScannerConfidenceEventVariance,
-                          _IPFeatureTextMessageScannerConfidenceMatchedRatio,
+                          _IPFeatureTextMessageScannerConfidenceEventVariance, _IPFeatureTextMessageScannerConfidenceMatchedRatio,
                           _IPFeatureTextMessageScannerConfidenceNormTextLength,
                           _IPFeatureTextMessageScannerConfidenceNumberOfEventTypes,
                           _IPFeatureTextMessageScannerConfidencePolarityFlips, _IPMessageTypeEmail, _IPMessageTypeShortMessage ]
@@ -60,9 +60,8 @@ exports:
                           _IPFeatureScanner._bodyDataDetectorsFeatures, _IPFeatureScanner._bodyKeywordFeatures,
                           _IPFeatureScanner._bodyMessageUnits, _IPFeatureScanner._bodySentenceFeatures,
                           _IPFeatureScanner._detectedEvents, _IPFeatureScanner._extractedNotesStrings,
-                          _IPFeatureScanner._filteredDetectedEvents, _IPFeatureScanner._resultType,
-                          _IPFeatureScanner._stitchedEvents, _IPFeatureSentence._fragments,
-                          _IPFeatureSentence._hasCheckedEventVocabularyIgnoreDateKeyword,
+                          _IPFeatureScanner._filteredDetectedEvents, _IPFeatureScanner._resultType, _IPFeatureScanner._stitchedEvents,
+                          _IPFeatureSentence._fragments, _IPFeatureSentence._hasCheckedEventVocabularyIgnoreDateKeyword,
                           _IPFeatureSentence._hasCheckedEventVocabularyKeyword, _IPFeatureSentence._languageID,
                           _IPFeatureSentence._responseKitSentence, _IPFeatureSentence._storedEventVocabularyIgnoreDateKeyword,
                           _IPFeatureSentence._storedEventVocabularyRejectionKeyword, _IPFeatureSentence._storedPolarity,
@@ -73,19 +72,17 @@ exports:
                           _IPFeatureTextMessageScanner._dataFeaturesExtractedInContextAndMain,
                           _IPFeatureTextMessageScanner._detectedEventsInContext, _IPFeatureTextMessageScanner._followProposal,
                           _IPMessage._dateSent, _IPMessage._htmlContent, _IPMessage._identifier, _IPMessage._isGroupConversation,
-                          _IPMessage._isReply, _IPMessage._isSenderSignificant, _IPMessage._isSent,
-                          _IPMessage._keywordsDictionary, _IPMessage._lowercaseSubject, _IPMessage._messageUnits,
-                          _IPMessage._messageUnitsTextLength, _IPMessage._recipients, _IPMessage._sender, _IPMessage._subject,
-                          _IPMessage._threadIdentifier, _IPMessage._type, _IPMessageThread._allUnits,
-                          _IPMessageThread._allUnitsSorted, _IPMessageThread._threadRoots, _IPMessageUnit._bestLanguage,
-                          _IPMessageUnit._dataFeatures, _IPMessageUnit._features, _IPMessageUnit._flatMessageThread,
-                          _IPMessageUnit._followups, _IPMessageUnit._indexInOriginalMessage, _IPMessageUnit._interactedDateRange,
-                          _IPMessageUnit._keywordFeatures, _IPMessageUnit._lowercaseText, _IPMessageUnit._neutralRanges,
-                          _IPMessageUnit._originalMessage, _IPMessageUnit._previous,
+                          _IPMessage._isReply, _IPMessage._isSenderSignificant, _IPMessage._isSent, _IPMessage._keywordsDictionary,
+                          _IPMessage._lowercaseSubject, _IPMessage._messageUnits, _IPMessage._messageUnitsTextLength,
+                          _IPMessage._recipients, _IPMessage._sender, _IPMessage._subject, _IPMessage._threadIdentifier, _IPMessage._type,
+                          _IPMessageThread._allUnits, _IPMessageThread._allUnitsSorted, _IPMessageThread._threadRoots,
+                          _IPMessageUnit._bestLanguage, _IPMessageUnit._dataFeatures, _IPMessageUnit._features,
+                          _IPMessageUnit._flatMessageThread, _IPMessageUnit._followups, _IPMessageUnit._indexInOriginalMessage,
+                          _IPMessageUnit._interactedDateRange, _IPMessageUnit._keywordFeatures, _IPMessageUnit._lowercaseText,
+                          _IPMessageUnit._neutralRanges, _IPMessageUnit._originalMessage, _IPMessageUnit._previous,
                           _IPMessageUnit._proposalAndAcceptationRanges, _IPMessageUnit._rejectionRanges,
                           _IPMessageUnit._sentenceFeatures, _IPMessageUnit._text, _IPPerson._ABUUID, _IPPerson._fullName,
                           _IPPerson._handle, _IPPerson._handleType, _IPTextMessageConversation._allMessages,
-                          _IPTextMessageConversation._eventsByMessageIdentifierDictionary,
-                          _IPTextMessageConversation._lastMessages,
+                          _IPTextMessageConversation._eventsByMessageIdentifierDictionary, _IPTextMessageConversation._lastMessages,
                           _IPTextMessageConversation._messageByMessageIdentifierDictionary ]
 ...

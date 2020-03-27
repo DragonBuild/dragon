@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/AppleNeuralEngine
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AppleNeuralEngineVersionNumber, _AppleNeuralEngineVersionString, __ANEDaemonInterface,
@@ -12,9 +13,9 @@ exports:
                           _kANEFModelANECIRValue, _kANEFModelCoreMLValue, _kANEFModelDescriptionKey,
                           _kANEFModelInputSymbolIndexArrayKey, _kANEFModelOutputSymbolIndexArrayKey, _kANEFModelPreCompiledValue,
                           _kANEFModelProcedureIDKey, _kANEFModelProceduresArrayKey, _kANEFModelTypeKey ]
-    objc-classes:       [ __ANEClient, __ANECloneHelper, __ANEDaemonConnection, __ANEDataReporter, __ANEDeviceController,
-                          __ANEDeviceInfo, __ANEErrors, __ANEHashEncoding, __ANEIOSurfaceObject, __ANELog, __ANEModel,
-                          __ANEProgramForEvaluation, __ANEQoSMapper, __ANERequest, __ANEStrings ]
+    objc-classes:       [ __ANEClient, __ANECloneHelper, __ANEDaemonConnection, __ANEDataReporter, __ANEDeviceController, __ANEDeviceInfo,
+                          __ANEErrors, __ANEHashEncoding, __ANEIOSurfaceObject, __ANELog, __ANEModel, __ANEProgramForEvaluation,
+                          __ANEQoSMapper, __ANERequest, __ANEStrings ]
     objc-ivars:         [ __ANEClient._conn, __ANEClient._queues, __ANEDaemonConnection._daemonConnection,
                           __ANEDaemonConnection._restricted, __ANEDeviceController._device, __ANEDeviceController._isPrivileged,
                           __ANEDeviceController._programHandle, __ANEDeviceController._q, __ANEDeviceController._usecount,

@@ -1,0 +1,30 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/DocumentManagerExecutables.framework/DocumentManagerExecutables
+current-version:       171.3.3
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _DOCSpotlightEnumeratedItemIdentifierActivities, _DOCSpotlightEnumeratedItemIdentifierFavoriteFolders,
+                          _DOCSpotlightEnumeratedItemIdentifierRecentDocuments, _DOCSpotlightEnumeratedItemIdentifierSearch,
+                          _DOCSpotlightEnumeratedItemIdentifierSharedItems, _DOCSpotlightEnumeratedItemIdentifierTaggedItems,
+                          _DOCSpotlightEnumeratedItemIdentifierTrashedItems, _DocumentManagerExecutablesVersionNumber,
+                          _DocumentManagerExecutablesVersionString ]
+    objc-classes:       [ _DOCChainedTagsView, _DOCDateParser, _DOCItemActionResolver, _DOCItemDecorationImageLoader, _DOCLabel,
+                          __TtC26DocumentManagerExecutables12DOCOperation, __TtC26DocumentManagerExecutables13DOCTagManager,
+                          __TtC26DocumentManagerExecutables17DOCBlockOperation,
+                          __TtC26DocumentManagerExecutables17DOCChainOperation,
+                          __TtC26DocumentManagerExecutables18DOCOperationBuffer,
+                          __TtC26DocumentManagerExecutables19DOCPostLaunchBuffer,
+                          __TtC26DocumentManagerExecutables21DOCChainableOperation,
+                          __TtC26DocumentManagerExecutables21DOCInteractionManager,
+                          __TtC26DocumentManagerExecutables23DOCContainerFittingView,
+                          __TtC26DocumentManagerExecutables23DOCQuickLookInfoPreview,
+                          __TtC26DocumentManagerExecutables24DOCEmptyContentsInfoView,
+                          __TtC26DocumentManagerExecutables24DOCTypeToFocusController,
+                          __TtC26DocumentManagerExecutables25DOCUTIDescriptorCollector,
+                          __TtC26DocumentManagerExecutables28DOCImageContainerFittingView ]
+...

@@ -1,0 +1,26 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/Coherence.framework/Coherence
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    allowable-clients:  [ BookCore, Compose ]
+    symbols:            [ _CoherenceVersionNumber, _CoherenceVersionString, __Z12updateTopoIDRK6TopoIDRK11TopoIDRangeS4_,
+                          __Z17TopoSubstringSortP13TopoSubstringS0_,
+                          __Z17traverseRecursiveP13TopoSubstringPNSt3__113unordered_mapIS0_jNS1_4hashIS0_EENS1_8equal_toIS0_EENS1_9allocatorINS1_4pairIKS0_jEEEEEEU13block_pointerFvS0_PbE,
+                          __Z17traverseRecursiveP13TopoSubstringU13block_pointerFvS0_PbE,
+                          __Z17traverseUnorderedP13TopoSubstringU13block_pointerFvS0_PbE,
+                          __Z17updateTopoIDRangeRK11TopoIDRangeS1_S1_RNSt3__16vectorIS_NS2_9allocatorIS_EEEE,
+                          __Z18minimumPermenantID6TopoIDS_, __Z23removeDirectToSinkEdgesP13TopoSubstring,
+                          __Z23traverseUnorderedSimpleP13TopoSubstringU13block_pointerFvS0_PbE, __Z7hasLoopP13TopoSubstring,
+                          __Z9minIdPathP13TopoSubstringU13block_pointerFv6TopoIDE ]
+    objc-classes:       [ _TTMergeableString, _TTMergeableStringIndex, _TTMergeableStringSelection, _TTMergeableStringUndoEditCommand,
+                          __TtC9Coherence11ObjCRenames, __TtC9Coherence11ObjCReplica, __TtC9Coherence11ObjCVersion,
+                          __TtC9Coherence13CRTextStorage, __TtC9Coherence13ObjCTimestamp, __TtC9Coherence18ObjCRenameSequence,
+                          __TtC9Coherence7ObjCRLE, __TtC9Coherence9CRContext ]
+    objc-ivars:         [ _TTMergeableStringSelection._selectionRanges ]
+...

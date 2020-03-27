@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/LocationSupport.framework/LocationSupport
-current-version:       2386.0.15
+current-version:       2389.0.8
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _CLISP_ME_TOKEN, _CLProfilingIdentify, _CLProfilingIdentifySiloInvocation, _CLWriteStackshot,
@@ -68,17 +69,15 @@ exports:
                           __ZN28CLConnectionEntitlementCache10isEntitledERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE,
                           __ZN28CLConnectionEntitlementCacheC1E13audit_token_t,
                           __ZN28CLConnectionEntitlementCacheC2E13audit_token_t, __ZNK19CLConnectionMessage13getDictionaryEv,
-                          __ZNK19CLConnectionMessage13getRawPayloadEv,
-                          __ZNK19CLConnectionMessage16getObjectOfClassEP10objc_class,
-                          __ZNK19CLConnectionMessage18copyFileDescriptorEm,
-                          __ZNK19CLConnectionMessage18getObjectOfClassesEP5NSSet,
+                          __ZNK19CLConnectionMessage13getRawPayloadEv, __ZNK19CLConnectionMessage16getObjectOfClassEP10objc_class,
+                          __ZNK19CLConnectionMessage18copyFileDescriptorEm, __ZNK19CLConnectionMessage18getObjectOfClassesEP5NSSet,
                           __ZNK19CLConnectionMessage22getDictionaryOfClassesEP5NSSet,
                           __ZNK19CLConnectionMessage26getNumberOfFileDescriptorsEv, __ZNK19CLConnectionMessage4nameEv,
                           __ZNK28CLConnectionEntitlementCache7getNameEv ]
     objc-classes:       [ _CLCppContainer, _CLCppEncodableDataContainer, _CLDispatchSilo, _CLIntersiloInterface,
                           _CLIntersiloInterfaceSelectorInfo, _CLIntersiloProxy, _CLIntersiloService, _CLIntersiloServiceMock,
-                          _CLIntersiloServiceMockPayload, _CLIntersiloUniverse, _CLRunLoopSilo, _CLServiceVendor,
-                          _CLSettingsDictionary, _CLSettingsManagerInternal, _CLSettingsMirror, _CLSilo, _CLTimer ]
+                          _CLIntersiloServiceMockPayload, _CLIntersiloUniverse, _CLRunLoopSilo, _CLServiceVendor, _CLSettingsDictionary,
+                          _CLSettingsManagerInternal, _CLSettingsMirror, _CLSilo, _CLTimer ]
     objc-ivars:         [ _CLIntersiloUniverse._silo, _CLIntersiloUniverse._vendor, _CLSettingsDictionary._internal,
                           _CLSilo._identifier ]
 ...

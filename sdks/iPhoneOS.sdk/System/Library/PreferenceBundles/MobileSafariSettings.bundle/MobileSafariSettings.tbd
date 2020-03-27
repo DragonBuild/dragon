@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PreferenceBundles/MobileSafariSettings.bundle/MobileSafariSettings
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     objc-classes:       [ _FrequentlyVisitedSitesBannedURLStore, _FrequentlyVisitedSitesController, _NonTruncatingUsageCell,
@@ -15,10 +16,9 @@ exports:
                           _SafariDownloadsTableCell, _SafariFavoritesFolderPickerContoller,
                           _SafariLocationPerSitePreferenceSettingsController,
                           _SafariMediaCapturePerSitePreferenceSettingsController,
-                          _SafariMicrophonePerSitePreferenceSettingsController,
-                          _SafariPageZoomPerSitePreferenceSettingsController, _SafariPasswordManagersController,
-                          _SafariPerSitePreferenceSettingsController, _SafariQuickWebsiteSearchSettingsController,
-                          _SafariReaderPerSitePreferenceSettingsController,
+                          _SafariMicrophonePerSitePreferenceSettingsController, _SafariPageZoomPerSitePreferenceSettingsController,
+                          _SafariPasswordManagersController, _SafariPerSitePreferenceSettingsController,
+                          _SafariQuickWebsiteSearchSettingsController, _SafariReaderPerSitePreferenceSettingsController,
                           _SafariRequestDesktopSitePerSitePreferenceSettingsController, _SafariSavedAutoFillItemsPINController,
                           _SafariSavedCreditCardDetailController, _SafariSavedCreditCardEditableTableCell,
                           _SafariSavedCreditCardExpirationDateTableCell, _SafariSavedCreditCardsController,
@@ -26,8 +26,7 @@ exports:
                           _SafariSavedPasswordsController, _SafariSettingsClass, _SafariSettingsController,
                           _SafariSettingsEditableTableCell, _SafariSettingsFeatureManager, _SafariSettingsListController,
                           _SafariSettingsTaskHandler, _SafariStorageSettingsController,
-                          _SafariWebKitExperimentalFeaturesSettingsController, _SearchEngineController, _SearchEngineInfo,
-                          _SettingsSpinnerCell ]
+                          _SafariWebKitExperimentalFeaturesSettingsController, _SettingsSpinnerCell ]
     objc-ivars:         [ _FrequentlyVisitedSitesController._bookmarkCollection,
                           _FrequentlyVisitedSitesController._bookmarksNeedToSave,
                           _FrequentlyVisitedSitesController._cachedFrequentlyVisitedBookmarks,
@@ -35,9 +34,8 @@ exports:
                           _SafariAutoFillListController._cancelBarButtonItem, _SafariAutoFillListController._deleteBarButtonItem,
                           _SafariAutoFillListController._editBarButtonItem, _SafariAutoFillListController._specifiersForAddItem,
                           _SafariAutoFillSettingsController._autoFillContactController,
-                          _SafariAutoFillSettingsController._autoFillContactIndex,
-                          _SafariAutoFillSettingsController._contactStore, _SafariAutoFillSettingsController._isMeCardSet,
-                          _SafariAutoFillSettingsController._meCardPicker,
+                          _SafariAutoFillSettingsController._autoFillContactIndex, _SafariAutoFillSettingsController._contactStore,
+                          _SafariAutoFillSettingsController._isMeCardSet, _SafariAutoFillSettingsController._meCardPicker,
                           _SafariAutoFillSettingsController._passcodeEntryCompletionHandler,
                           _SafariAutoFillSettingsController._passcodeSetupCompletionHandler,
                           _SafariAutoFillSettingsController._promptCompletionHandler,
@@ -47,8 +45,7 @@ exports:
                           _SafariDownloadsSettingsController._defaultDownloadsLocationSpecifier,
                           _SafariDownloadsSettingsController._downloadSettings,
                           _SafariDownloadsSettingsController._downloadsFolderGroupSpecifier,
-                          _SafariDownloadsSettingsController._itemManager,
-                          _SafariDownloadsSettingsController._providerSpecifiers,
+                          _SafariDownloadsSettingsController._itemManager, _SafariDownloadsSettingsController._providerSpecifiers,
                           _SafariDownloadsSettingsController._selectOtherFolderSpecifier,
                           _SafariFavoritesFolderPickerContoller._bookmarkCollection,
                           _SafariFavoritesFolderPickerContoller._cellLayoutManager,
@@ -109,12 +106,11 @@ exports:
                           _SafariSavedPasswordsController._addPasswordToolbarItem,
                           _SafariSavedPasswordsController._autoFillQuirksManager,
                           _SafariSavedPasswordsController._bundleIDToAssociatedDomains,
-                          _SafariSavedPasswordsController._cancelToolbarItem,
+                          _SafariSavedPasswordsController._callObserver, _SafariSavedPasswordsController._cancelToolbarItem,
                           _SafariSavedPasswordsController._changingPasswordStore,
                           _SafariSavedPasswordsController._contentUnavailableView,
                           _SafariSavedPasswordsController._deleteToolbarItem,
-                          _SafariSavedPasswordsController._displayNameToBundleIDs,
-                          _SafariSavedPasswordsController._editToolbarItem,
+                          _SafariSavedPasswordsController._displayNameToBundleIDs, _SafariSavedPasswordsController._editToolbarItem,
                           _SafariSavedPasswordsController._hasBeenAuthenticated, _SafariSavedPasswordsController._iconController,
                           _SafariSavedPasswordsController._initialResourceDictionary,
                           _SafariSavedPasswordsController._matchingPasswordCount,
@@ -122,8 +118,7 @@ exports:
                           _SafariSavedPasswordsController._passwordStoreChangedObserver,
                           _SafariSavedPasswordsController._queryBundleID,
                           _SafariSavedPasswordsController._receivedSharablePasswordRequiringPromptBeforeSaving,
-                          _SafariSavedPasswordsController._rightToolbarItem,
-                          _SafariSavedPasswordsController._savedPasswordAuditor,
+                          _SafariSavedPasswordsController._rightToolbarItem, _SafariSavedPasswordsController._savedPasswordAuditor,
                           _SafariSavedPasswordsController._searchController, _SafariSavedPasswordsController._searchPattern,
                           _SafariSavedPasswordsController._shouldShowSectionHeaders,
                           _SafariSavedPasswordsController._siteMetadataManager,
@@ -141,12 +136,8 @@ exports:
                           _SafariStorageSettingsController._deleteButtonSpecifiers,
                           _SafariStorageSettingsController._domainSpecifiers, _SafariStorageSettingsController._doneToolbarItem,
                           _SafariStorageSettingsController._editToolbarItem, _SafariStorageSettingsController._hasLoadedDomains,
-                          _SafariStorageSettingsController._isShowingAllDomains,
-                          _SafariStorageSettingsController._searchController, _SafariStorageSettingsController._searchPattern,
-                          _SafariStorageSettingsController._sortedDomains, _SafariStorageSettingsController._totalUsageSpecifier,
-                          _SearchEngineController._carrierTemplateParameterValues, _SearchEngineController._countryCode,
-                          _SearchEngineController._defaultSearchEngineIndex,
-                          _SearchEngineController._searchEngineArrayAccessQueue, _SearchEngineController._searchEngines,
-                          _SearchEngineController._templateParameterValues, _SearchEngineInfo._scriptName,
-                          _SearchEngineInfo._searchID, _SettingsSpinnerCell._spinner, _SettingsSpinnerCell._spinnerLabel ]
+                          _SafariStorageSettingsController._isShowingAllDomains, _SafariStorageSettingsController._searchController,
+                          _SafariStorageSettingsController._searchPattern, _SafariStorageSettingsController._sortedDomains,
+                          _SafariStorageSettingsController._totalUsageSpecifier, _SettingsSpinnerCell._spinner,
+                          _SettingsSpinnerCell._spinnerLabel ]
 ...

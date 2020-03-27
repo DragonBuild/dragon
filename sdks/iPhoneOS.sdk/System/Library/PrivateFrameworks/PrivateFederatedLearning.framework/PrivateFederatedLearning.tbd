@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/PrivateFederatedLearning.framework/PrivateFederatedLearning
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _PFLClientIsAllowedForIdentifier, _PFLClientIsEntitled, _PFLPrivatize, _PFLPrivatizeCustomNorm,
@@ -22,18 +23,16 @@ exports:
                           __ZN21PFLUniformRVGenerator27uniformRandomVariableSampleEv,
                           __ZN21PFLUniformRVGenerator34uniformRandomVariableInRangeSampleEdd,
                           __ZN22PFLGaussianRVGenerator31PFLGaussianRandomVariableSampleEdd, _count, _kPFLAllowedEntitlement,
-                          _kPFLCFMaxBetaComputation, _kPFLPrivatizeIdentifierProactivePhoneEn,
-                          _kPFLPrivatizeIdentifierQuickTypeLM, _kPFLPrivatizeIdentifierVocalClassifier,
-                          _kPFLPrivatizeTaskIdentifierQuickTypeCNNTextClassification, _kPFLPrivatizeTaskIdentifierQuickTypeLM,
-                          _temp ]
-    objc-classes:       [ _PFLDiagnosticReporting, __PFLContinuedFraction, __PFLGaussianNoiseGenerator, __PFLLog,
-                          __PFLMathHelper, __PFLModelTrainer, __PFLPrivacyParameters, __PFLRejectionSampling,
-                          __PFLVectorPrivatizer ]
-    objc-ivars:         [ __PFLGaussianNoiseGenerator._deviation, __PFLGaussianNoiseGenerator._mean,
-                          __PFLModelTrainer._imageCount, __PFLModelTrainer._mlp, __PFLModelTrainer._task,
-                          __PFLPrivacyParameters._dimension, __PFLPrivacyParameters._identifier,
-                          __PFLPrivacyParameters._maxRejection, __PFLPrivacyParameters._minCDProduct,
-                          __PFLPrivacyParameters._normmax, __PFLPrivacyParameters._precision,
-                          __PFLPrivacyParameters._reconstructionProbability, __PFLPrivacyParameters._rho,
-                          __PFLVectorPrivatizer._nu, __PFLVectorPrivatizer._r ]
+                          _kPFLCFMaxBetaComputation, _kPFLPrivatizeIdentifierPhotos, _kPFLPrivatizeIdentifierProactivePhoneEn,
+                          _kPFLPrivatizeIdentifierProactiveResponses, _kPFLPrivatizeIdentifierQuickTypeLM,
+                          _kPFLPrivatizeIdentifierVocalClassifier, _kPFLPrivatizeTaskIdentifierQuickTypeCNNTextClassification,
+                          _kPFLPrivatizeTaskIdentifierQuickTypeLM, _temp ]
+    objc-classes:       [ _PFLDiagnosticReporting, __PFLContinuedFraction, __PFLGaussianNoiseGenerator, __PFLLog, __PFLMathHelper,
+                          __PFLModelTrainer, __PFLPrivacyParameters, __PFLRejectionSampling, __PFLVectorPrivatizer ]
+    objc-ivars:         [ __PFLGaussianNoiseGenerator._deviation, __PFLGaussianNoiseGenerator._mean, __PFLModelTrainer._imageCount,
+                          __PFLModelTrainer._mlp, __PFLModelTrainer._task, __PFLPrivacyParameters._dimension,
+                          __PFLPrivacyParameters._identifier, __PFLPrivacyParameters._maxRejection,
+                          __PFLPrivacyParameters._minCDProduct, __PFLPrivacyParameters._normmax, __PFLPrivacyParameters._precision,
+                          __PFLPrivacyParameters._reconstructionProbability, __PFLPrivacyParameters._rho, __PFLVectorPrivatizer._nu,
+                          __PFLVectorPrivatizer._r ]
 ...

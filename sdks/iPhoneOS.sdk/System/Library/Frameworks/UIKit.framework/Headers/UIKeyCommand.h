@@ -61,7 +61,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(7.0)) @interface UIKeyCommand : UICommand
                           action:(SEL)action
                            input:(NSString *)input
                    modifierFlags:(UIKeyModifierFlags)modifierFlags
-                    propertyList:(nullable id)propertyList NS_REFINED_FOR_SWIFT;
+                    propertyList:(nullable id)propertyList
+    NS_SWIFT_UNAVAILABLE("Use init(title:image:action:input:modifierFlags:propertyList:alternates:discoverabilityTitle:attributes:state:) instead.");
 
 /// Initializes a key command with alternates.
 ///
@@ -79,7 +80,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(7.0)) @interface UIKeyCommand : UICommand
                            input:(NSString *)input
                    modifierFlags:(UIKeyModifierFlags)modifierFlags
                     propertyList:(nullable id)propertyList
-                      alternates:(NSArray<UICommandAlternate *> *)alternates NS_REFINED_FOR_SWIFT;
+                      alternates:(NSArray<UICommandAlternate *> *)alternates
+    NS_SWIFT_UNAVAILABLE("Use init(title:image:action:input:modifierFlags:propertyList:alternates:discoverabilityTitle:attributes:state:) instead.");
 
 // The action for UIKeyCommands should accept a single (id)sender, as do the UIResponderStandardEditActions above
 

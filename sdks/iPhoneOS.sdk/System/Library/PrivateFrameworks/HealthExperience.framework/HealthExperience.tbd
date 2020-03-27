@@ -1,24 +1,23 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/HealthExperience.framework/HealthExperience
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    allowable-clients:  [ AppRecommendations, AppRecommendationsTests, Articles, ArticlesTests, Categories, CategoriesTests,
-                          CloudSync, CloudSyncTests, Education, EducationTests, FeatureTagSandboxPlugin, Health,
-                          HealthAppControlPlugin, HealthAppTests, HealthEducationUI, HealthEducationUITests, HealthExperience,
-                          HealthExperienceTesting, HealthExperienceTests, HealthExperienceUI, HealthExperienceUITests,
-                          HealthMenstrualCyclesContentExtension, HealthMenstrualCyclesUI, HealthMenstrualCyclesUITests,
-                          HealthPluginHost, HealthPluginHostTests, HealthProfile, HealthProfileExtensions,
-                          HealthProfileExtensionsTests, HealthProfileTests, HealthRecords, 'HealthRecordsAppPlugin-Tests',
-                          HealthRecordsUI, HealthToolboxPlugin, HealthToolboxPluginTests, HealthVisualization,
-                          HealthVisualizationTests, Heart, HeartTests, HighlightAlerts, HighlightAlertsTests, Highlights,
-                          HighlightsHeavy, HighlightsTests, MedicalID, MedicalIDTests, MenstrualCyclesAppPlugin,
-                          MenstrualCyclesAppPluginTests, NotificationExtension, OrganDonation, OrganDonationTests, ResearchApp,
-                          ResearchAppTests, Snippets, SnippetsTests, hatool, healthappd ]
+    allowable-clients:  [ AppRecommendations, AppRecommendationsTests, Articles, ArticlesTests, Categories, CategoriesTests, CloudSync,
+                          CloudSyncTests, Education, EducationTests, FeatureTagSandboxPlugin, Health, HealthAppControlPlugin, HealthAppTests,
+                          HealthEducationUI, HealthEducationUITests, HealthExperience, HealthExperienceTesting, HealthExperienceTests,
+                          HealthExperienceUI, HealthExperienceUITests, HealthMenstrualCyclesContentExtension, HealthMenstrualCyclesUI,
+                          HealthMenstrualCyclesUITests, HealthPluginHost, HealthPluginHostTests, HealthProfile, HealthProfileExtensions,
+                          HealthProfileExtensionsTests, HealthProfileTests, HealthRecords, "HealthRecordsAppPlugin-Tests", HealthRecordsUI,
+                          HealthToolboxPlugin, HealthToolboxPluginTests, HealthVisualization, HealthVisualizationTests, Heart, HeartTests,
+                          HighlightAlerts, HighlightAlertsTests, Highlights, HighlightsHeavy, HighlightsTests, MedicalID, MedicalIDTests,
+                          MenstrualCyclesAppPlugin, MenstrualCyclesAppPluginTests, NotificationExtension, OrganDonation,
+                          OrganDonationTests, ResearchApp, ResearchAppTests, Snippets, SnippetsTests, hatool, healthappd ]
     symbols:            [ _HealthExperienceVersionNumber, _HealthExperienceVersionString ]
     objc-classes:       [ _HK_TPSDiscoverabilitySignal, _MedicalIDChangeObserver, _MobileGestaltBridge, _OrganDonationObserver,
                           __TtC16HealthExperience11FeedSection, __TtC16HealthExperience14AsyncOperation,
@@ -26,8 +25,7 @@ exports:
                           __TtC16HealthExperience17FavoritesProvider, __TtC16HealthExperience21AsynchronousOperation,
                           __TtC16HealthExperience23MedicalIDFetchOperation, __TtC16HealthExperience24ComposableAsyncOperation,
                           __TtC16HealthExperience24GroupConfigurationLoader, __TtC16HealthExperience26AsynchronousBlockOperation,
-                          __TtC16HealthExperience26DateRangeRelevanceProvider,
-                          __TtC16HealthExperience26RelevanceEngineCoordinator,
+                          __TtC16HealthExperience26DateRangeRelevanceProvider, __TtC16HealthExperience26RelevanceEngineCoordinator,
                           __TtC16HealthExperience27FeedItemREElementDataSource,
                           __TtC16HealthExperience27HealthExperienceStoreOracle,
                           __TtC16HealthExperience28SetDefaultFavoritesOperation,
@@ -44,8 +42,7 @@ exports:
                           __TtC16HealthExperience42HealthExperienceStoreCoreSpotlightDelegate,
                           __TtC16HealthExperience43HealthExperienceStoreCoreSpotlightOperation, __TtC16HealthExperience4Feed,
                           __TtC16HealthExperience6Plugin, __TtC16HealthExperience7Keyword, __TtC16HealthExperience8DataType,
-                          __TtC16HealthExperience8FeedItem,
-                          __TtC16HealthExperienceP33_506FB465EB8B3F67414038DB91BEF01319PopulationOperation ]
+                          __TtC16HealthExperience8FeedItem ]
     objc-ivars:         [ _HK_TPSDiscoverabilitySignal._bundleIdentifier, _HK_TPSDiscoverabilitySignal._context,
                           _HK_TPSDiscoverabilitySignal._identifier, _MedicalIDChangeObserver._delegate,
                           _MedicalIDChangeObserver._medicalIDChangedToken, _OrganDonationObserver._delegate,

@@ -28,14 +28,14 @@ typedef NS_ENUM(NSInteger, HKWorkoutSessionState) {
     HKWorkoutSessionStatePaused API_AVAILABLE(watchos(3.0)),
     HKWorkoutSessionStatePrepared API_AVAILABLE(watchos(5.0)),
     HKWorkoutSessionStateStopped API_AVAILABLE(watchos(5.0)),
-} API_AVAILABLE(watchos(2.0)) __IOS_PROHIBITED;
+} API_AVAILABLE(watchos(2.0)) __API_UNAVAILABLE(ios);
 
 
 /*!
  @class         HKWorkoutSession
  @abstract      An HKWorkoutSession is an object describing the properties of a workout activity session.
  */
-HK_EXTERN API_AVAILABLE(watchos(2.0)) __IOS_PROHIBITED
+HK_EXTERN API_AVAILABLE(watchos(2.0)) __API_UNAVAILABLE(ios)
 @interface HKWorkoutSession : NSObject <NSSecureCoding>
 
 /*!

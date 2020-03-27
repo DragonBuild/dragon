@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSCore.framework/MPSCore
-current-version:       122.0.46
+current-version:       122.2
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     allowable-clients:  [ MPSImage, MPSMatrix, MPSNDArray, MPSNeuralNetwork, MPSParallelPrimitives, MPSRayIntersector,
@@ -56,33 +57,32 @@ exports:
                           __ZN14MPSAutoTextureD1Ev, __ZN14MPSAutoTextureD2Ev,
                           __ZN15MPSDevice_MacOS10AddKernelsEPK14MPSLibraryInfoP10MPSLibrary,
                           __ZN9MPSDevice10GetSamplerE16MPSImageEdgeMode21MPSFilterSamplingMode23MPSFilterCoordinateMode,
-                          __ZN9MPSDevice11DeleteQueueEPU26objcproto15MTLCommandQueue11objc_object,
-                          __ZN9MPSDevice12GetHeapBlockEm, __ZN9MPSDevice12GetMPSDeviceEPU19objcproto9MTLDevice11objc_object,
+                          __ZN9MPSDevice11DeleteQueueEPU26objcproto15MTLCommandQueue11objc_object, __ZN9MPSDevice12GetHeapBlockEm,
+                          __ZN9MPSDevice12GetMPSDeviceEPU19objcproto9MTLDevice11objc_object,
                           __ZN9MPSDevice12GetPixelInfoE14MTLPixelFormat28MPSImageFeatureChannelFormat,
                           __ZN9MPSDevice15ReturnHeapBlockEP11objc_objecty, __ZN9MPSDevice19ExerciseLibraryListEv,
                           __ZN9MPSDevice22GetMPSLibrary_DoNotUseEPK14MPSLibraryInfo, __ZN9MPSDevice8GetQueueEv,
                           __ZN9MPSDeviceC2EPU19objcproto9MTLDevice11objc_object, __ZN9MPSDeviceD0Ev, __ZN9MPSDeviceD1Ev,
                           __ZN9MPSDeviceD2Ev, __ZNK13MPSAutoBuffer5PrintEv, _kMPSEmptyLibraryInfo ]
-    objc-classes:       [ _MPSCommandBuffer, _MPSExternalPluginBase, _MPSImage, _MPSImageDescriptor, _MPSKernel,
-                          _MPSKeyedUnarchiver, _MPSMatrix, _MPSMatrixDescriptor, _MPSNDArray, _MPSNDArrayDescriptor,
-                          _MPSParallelExclusiveScan, _MPSParallelInclusiveScan, _MPSParallelRadixSort, _MPSParallelRandom,
+    objc-classes:       [ _MPSCommandBuffer, _MPSExternalPluginBase, _MPSImage, _MPSImageDescriptor, _MPSKernel, _MPSKeyedUnarchiver,
+                          _MPSMatrix, _MPSMatrixDescriptor, _MPSNDArray, _MPSNDArrayDescriptor, _MPSParallelExclusiveScan,
+                          _MPSParallelInclusiveScan, _MPSParallelRadixSort, _MPSParallelRandom,
                           _MPSParallelRandomDistributionDescriptor, _MPSParallelRandomMTGP32, _MPSParallelRandomPhilox,
                           _MPSParallelReduceArgMax, _MPSParallelReduceArgMin, _MPSParallelReduceMax, _MPSParallelReduceMin,
                           _MPSParallelReduceSum, _MPSPredicate, _MPSPredicatedCommandEncoder, _MPSState, _MPSStateResourceList,
                           _MPSTemporaryImage, _MPSTemporaryMatrix, _MPSTemporaryNDArray, _MPSTemporaryVector, _MPSVector,
                           _MPSVectorDescriptor, _MPSVirtualImage ]
-    objc-ivars:         [ _MPSExternalPluginBase._self, _MPSImage._device, _MPSImage._featureChannelFormat,
-                          _MPSImage._featureChannels, _MPSImage._featureChannelsLayout, _MPSImage._height,
-                          _MPSImage._numberOfImages, _MPSImage._pixelInfo, _MPSImage._texture, _MPSImage._textureType,
-                          _MPSImage._width, _MPSImageDescriptor._featureChannels, _MPSImageDescriptor._height,
-                          _MPSImageDescriptor._width, _MPSKernel._allowedOptions, _MPSKernel._device,
+    objc-ivars:         [ _MPSExternalPluginBase._self, _MPSImage._device, _MPSImage._featureChannelFormat, _MPSImage._featureChannels,
+                          _MPSImage._featureChannelsLayout, _MPSImage._height, _MPSImage._numberOfImages, _MPSImage._pixelInfo,
+                          _MPSImage._texture, _MPSImage._textureType, _MPSImage._width, _MPSImageDescriptor._featureChannels,
+                          _MPSImageDescriptor._height, _MPSImageDescriptor._width, _MPSKernel._allowedOptions, _MPSKernel._device,
                           _MPSKernel._enableConcurrency, _MPSKernel._fileVersion, _MPSKernel._label, _MPSKernel._library,
-                          _MPSKernel._options, _MPSKernel._privateOptions, _MPSMatrix._buffer, _MPSMatrix._columns,
-                          _MPSMatrix._dataType, _MPSMatrix._matrixBytes, _MPSMatrix._offset, _MPSMatrix._rowBytes,
-                          _MPSMatrix._rows, _MPSNDArray._dataType, _MPSNDArray._dimensionLengths, _MPSNDArray._dimensionOrder,
-                          _MPSNDArray._numberOfDimensions, _MPSNDArray._rowBytes, _MPSNDArray._sliceLengths,
-                          _MPSNDArray._sliceOffsets, _MPSNDArrayDescriptor._dimensionOrder,
-                          _MPSParallelRandomMTGP32._bernoulliParameter, _MPSParallelRandomPhilox._bernoulliParameter,
-                          _MPSState._flags, _MPSState._readCount, _MPSState._resourceCount, _MPSState._resources,
-                          _MPSTemporaryImage._readCount, _MPSVector._buffer, _MPSVector._offset ]
+                          _MPSKernel._options, _MPSKernel._privateOptions, _MPSMatrix._buffer, _MPSMatrix._columns, _MPSMatrix._dataType,
+                          _MPSMatrix._matrixBytes, _MPSMatrix._offset, _MPSMatrix._rowBytes, _MPSMatrix._rows, _MPSNDArray._dataType,
+                          _MPSNDArray._dimensionLengths, _MPSNDArray._dimensionOrder, _MPSNDArray._numberOfDimensions,
+                          _MPSNDArray._rowBytes, _MPSNDArray._sliceLengths, _MPSNDArray._sliceOffsets,
+                          _MPSNDArrayDescriptor._dimensionOrder, _MPSParallelRandomMTGP32._bernoulliParameter,
+                          _MPSParallelRandomPhilox._bernoulliParameter, _MPSState._flags, _MPSState._readCount,
+                          _MPSState._resourceCount, _MPSState._resources, _MPSTemporaryImage._readCount, _MPSVector._buffer,
+                          _MPSVector._offset ]
 ...

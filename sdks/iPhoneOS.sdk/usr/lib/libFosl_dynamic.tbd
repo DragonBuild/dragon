@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 60478AE5-DC20-3161-A6D4-33B700A9B82D', 'armv7s: 8FA96C55-B4EC-3629-9FEF-B0239CA6D7FF', 
-                   'arm64: A1BBE5A6-6745-3215-9078-EDD3DB7EB0F8', 'arm64e: 043C05AF-EBDC-3769-B4CF-4E3AE21FF5D8' ]
+                   'arm64: 2B0DCDD9-A2B1-3FA4-9AB0-62847D427BD7', 'arm64e: 745FE7AA-4D66-357B-84DF-64A9A2711C3D' ]
 platform:        ios
 install-name:    '/usr/lib/libFosl_dynamic.dylib'
 current-version: 0

@@ -129,10 +129,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0),tvos(13.0),watchos(6.0))
 
 - (NSDiffableDataSourceSnapshot<SectionIdentifierType,ItemIdentifierType>*)snapshot;
 
-// Apply a snapshot to the collection view committing to the new data source state.
+// Apply a snapshot to the table view committing to the new data source state.
 //
 //   animatingDifferences == YES: perform a diff between the current UITableView state and the snapshot and animate the update.
-//   animatingDifferences == NO: commit to the new collection view state from the snapshot. The changes will not be animated.
+//   animatingDifferences == NO: commit to the new table view state from the snapshot. The changes will not be animated.
 //
 //   If the (optional) completion block is specified, it will be called on the main queue when the animations are completed.
 //

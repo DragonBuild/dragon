@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 221F905D-A13F-378B-91C4-1C100FCE6804', 'armv7s: 63893D47-39D7-338F-9158-88A2B232CA8C', 
-                   'arm64: 8600F9E0-BCF0-3BBB-8F1C-C1ABF6F6A348', 'arm64e: 382039BA-B648-3A36-9567-ECCB58DF0BF6' ]
+                   'arm64: 4EA442F5-77B1-3733-B632-9624433C547D', 'arm64e: FEF9ABC3-3F26-334A-A3A1-56F044D91787' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftSwiftOnoneSupport.dylib'
 current-version: 1100.2.255

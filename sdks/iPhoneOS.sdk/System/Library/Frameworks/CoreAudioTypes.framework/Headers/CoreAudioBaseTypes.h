@@ -946,11 +946,11 @@ CF_ENUM(AudioChannelLabel)
 	
     kAudioChannelLabel_Haptic                   = 45,
 	
-	kAudioChannelLabel_LeftTopFront             = 46,
-	kAudioChannelLabel_CenterTopFront           = 47,
-	kAudioChannelLabel_RightTopFront            = 48,
+	kAudioChannelLabel_LeftTopFront             = kAudioChannelLabel_VerticalHeightLeft,
+	kAudioChannelLabel_CenterTopFront           = kAudioChannelLabel_VerticalHeightCenter,
+	kAudioChannelLabel_RightTopFront            = kAudioChannelLabel_VerticalHeightRight,
 	kAudioChannelLabel_LeftTopMiddle            = 49,
-	kAudioChannelLabel_CenterTopMiddle          = 50,
+	kAudioChannelLabel_CenterTopMiddle          = kAudioChannelLabel_TopCenterSurround,
 	kAudioChannelLabel_RightTopMiddle           = 51,
 	kAudioChannelLabel_LeftTopRear              = 52,
 	kAudioChannelLabel_CenterTopRear            = 53,
@@ -1053,11 +1053,11 @@ typedef CF_OPTIONS(UInt32, AudioChannelBitmap)
     kAudioChannelBit_TopBackLeft                = (1U<<15),
     kAudioChannelBit_TopBackCenter              = (1U<<16),
     kAudioChannelBit_TopBackRight               = (1U<<17),
-	kAudioChannelBit_LeftTopFront             	= (1U<<18),
-	kAudioChannelBit_CenterTopFront           	= (1U<<19),
-	kAudioChannelBit_RightTopFront            	= (1U<<20),
+	kAudioChannelBit_LeftTopFront             	= kAudioChannelBit_VerticalHeightLeft,
+	kAudioChannelBit_CenterTopFront           	= kAudioChannelBit_VerticalHeightCenter,
+	kAudioChannelBit_RightTopFront            	= kAudioChannelBit_VerticalHeightRight,
 	kAudioChannelBit_LeftTopMiddle              = (1U<<21),
-	kAudioChannelBit_CenterTopMiddle            = (1U<<22),
+	kAudioChannelBit_CenterTopMiddle            = kAudioChannelBit_TopCenterSurround,
 	kAudioChannelBit_RightTopMiddle             = (1U<<23),
 	kAudioChannelBit_LeftTopRear                = (1U<<24),
 	kAudioChannelBit_CenterTopRear              = (1U<<25),
@@ -1145,11 +1145,7 @@ CF_ENUM(AudioChannelLayoutTag)
     // Vhl - vertical height left
     // Vhc - vertical height center
     // Vhr - vertical height right
-	// Ltf - left top front
-	// Ctf - center top front
-	// Rtf - right top front
 	// Ltm - left top middle
-	// Ctm - center top middle
 	// Rtm - right top middle
 	// Ltr - left top rear
 	// Ctr - center top rear
@@ -1324,8 +1320,8 @@ CF_ENUM(AudioChannelLayoutTag)
     kAudioChannelLayoutTag_HOA_ACN_N3D              = (191U<<16) | 0,                        // Higher Order Ambisonics, Ambisonics Channel Number, N3D normalization
                                                                                              // needs to be ORed with the actual number of channels (not the HOA order)
 
-	kAudioChannelLayoutTag_Atmos_7_1_4              = (192U<<16) | 12,                       // L R C LFE Ls Rs Rls Rrs Ltf Rtf Ltr Rtr
-	kAudioChannelLayoutTag_Atmos_9_1_6              = (193U<<16) | 16,                       // L R C LFE Ls Rs Rls Rrs Lw Rw Ltf Rtf Ltm Rtm Ltr Rtr
+	kAudioChannelLayoutTag_Atmos_7_1_4              = (192U<<16) | 12,                       // L R C LFE Ls Rs Rls Rrs Vhl Vhr Ltr Rtr
+	kAudioChannelLayoutTag_Atmos_9_1_6              = (193U<<16) | 16,                       // L R C LFE Ls Rs Rls Rrs Lw Rw Vhl Vhr Ltm Rtm Ltr Rtr
 	kAudioChannelLayoutTag_Atmos_5_1_2              = (194U<<16) | 8,                        // L R C LFE Ls Rs Ltm Rtm
 
     kAudioChannelLayoutTag_DiscreteInOrder          = (147U<<16) | 0,                        // needs to be ORed with the actual number of channels

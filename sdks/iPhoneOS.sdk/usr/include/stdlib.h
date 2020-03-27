@@ -340,6 +340,8 @@ void	 qsort_r(void *__base, size_t __nel, size_t __width, void *,
 	    int (* _Nonnull __compar)(void *, const void *, const void *));
 int	 radixsort(const unsigned char **__base, int __nel, const unsigned char *__table,
 	    unsigned __endbyte);
+int	rpmatch(const char *)
+	__API_AVAILABLE(macos(10.15), ios(13.0), tvos(13.0), watchos(6.0));
 int	 sradixsort(const unsigned char **__base, int __nel, const unsigned char *__table,
 	    unsigned __endbyte);
 void	 sranddev(void);

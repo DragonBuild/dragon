@@ -1,0 +1,27 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/ToneKit.framework/ToneKit
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _TKBackdropViewOverlayBlendModeFromUIBackdropViewOverlayBlendMode,
+                          _TKDisplayLinkManagerDefaultFrameInterval, _TKFloatCeilForScale, _TKFloatEqualToFloat, _TKFloatFloorForScale,
+                          _TKFloatGetSafeScaleForValue, _TKFloatGreaterThanOrEqualToFloat, _TKFloatLessThanOrEqualToFloat,
+                          _TKFloatRoundForScale, _TKPointGetDistanceToPoint,
+                          _UIBackdropViewOverlayBlendModeFromTKBackdropViewOverlayBlendMode ]
+    objc-classes:       [ _TKDisplayLinkManager, _TKDisplayLinkManagerObserver, _TKDownloadIndicatorView, _TKLabelContainerView,
+                          _TKPickerDividerItem, _TKPickerDividerTableViewCell, _TKPickerItem, _TKPickerRowItem, _TKPickerSectionItem,
+                          _TKPickerSelectableItem, _TKPickerTableViewCell, _TKStyleProvider, _TKToneClassicsPickerItem,
+                          _TKToneClassicsTableViewController, _TKTonePickerController, _TKTonePickerItem, _TKTonePickerSectionItem,
+                          _TKTonePickerTableView, _TKTonePickerTableViewCellLayoutManager, _TKTonePickerViewController,
+                          _TKUIKitConstants, _TKVibrationInterfaceUtilities, _TKVibrationPickerTableViewCell,
+                          _TKVibrationPickerViewController, _TKVibrationRecorderContentViewController,
+                          _TKVibrationRecorderProgressDotImageView, _TKVibrationRecorderProgressView,
+                          _TKVibrationRecorderRippleRingLayer, _TKVibrationRecorderRippleTouchContext, _TKVibrationRecorderRippleView,
+                          _TKVibrationRecorderTouchSurface, _TKVibrationRecorderTouchSurfaceRecordedDataWrapper,
+                          _TKVibrationRecorderView, _TKVibrationRecorderViewController, _TKVibratorController ]
+...

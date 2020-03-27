@@ -77,6 +77,9 @@ CT_EXPORT const CFStringRef kCTFontManagerErrorFontAssetNameKey CT_AVAILABLE(ios
                 The file could not be registered because of a duplicated font name.
     @constant   kCTFontManagerErrorInvalidFilePath
                 The file is not in an allowed location. It must be either in the application's bundle or an on-demand resource.
+    @constant   kCTFontManagerErrorExceededResourceLimit
+                The operation failed due to a system limitation.
+
 */
 typedef CF_ENUM(CFIndex, CTFontManagerError) {
     kCTFontManagerErrorFileNotFound             = 101,
@@ -84,6 +87,7 @@ typedef CF_ENUM(CFIndex, CTFontManagerError) {
     kCTFontManagerErrorUnrecognizedFormat       = 103,
     kCTFontManagerErrorInvalidFontData          = 104,
     kCTFontManagerErrorAlreadyRegistered        = 105,
+    kCTFontManagerErrorExceededResourceLimit    = 106,
     kCTFontManagerErrorNotRegistered            = 201,
     kCTFontManagerErrorInUse                    = 202,
     kCTFontManagerErrorSystemRequired           = 203,

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SDAPI.framework/SDAPI
 current-version:       1
 compatibility-version: 1
@@ -15,7 +15,7 @@ exports:
                           _SDVoc_GetCollationName, _SDVoc_GetColls, _SDVoc_GetInfo, _SDVoc_New, _SDVoc_Save,
                           _SDVoc_SetAllowedWordCollations, _SDWord_DeleteList, _SDWord_GetHumanReadableProns, _SDWord_New,
                           _TPApi_Initialize, _TPItn_Close, _TPItn_DeleteResult, _TPItn_GetResultAlignment, _TPItn_GetResultText,
-                          _TPItn_Open, _TPItn_WordSequenceToResult, _TPLexicon_Close, _TPLexicon_GetHeadClone,
-                          _TPLexicon_GetInfo, _TPLexicon_Open, _TPToken_Close, _TPToken_DeleteResult, _TPToken_GetResultData,
-                          _TPToken_GetResultInfo, _TPToken_Open, _TPToken_Tokenize ]
+                          _TPItn_Open, _TPItn_WordSequenceToResult, _TPLexicon_Close, _TPLexicon_GetHeadClone, _TPLexicon_GetInfo,
+                          _TPLexicon_Open, _TPToken_Close, _TPToken_DeleteResult, _TPToken_GetResultData, _TPToken_GetResultInfo,
+                          _TPToken_Open, _TPToken_Tokenize ]
 ...

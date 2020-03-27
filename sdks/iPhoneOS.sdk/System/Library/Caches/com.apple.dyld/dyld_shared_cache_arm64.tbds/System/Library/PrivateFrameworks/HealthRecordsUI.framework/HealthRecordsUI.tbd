@@ -1,0 +1,49 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/HealthRecordsUI.framework/HealthRecordsUI
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _HBXLocalizedString, _HRErrorDomain, _HRLocalizedLegalString, _HRLocalizedString, _HRNewlineJoinedStrings ]
+    objc-classes:       [ _HRAccountErrorTableViewCell, _HRAccountTableViewCell, _HRAccountsTableViewController, _HRConceptHeaderCell,
+                          _HRConceptTitleTableHeaderView, _HRContentStatusCell, _HRContentStatusView, _HRFeatures,
+                          _HRHealthRecordsMigrator, _HRMedicalRecordFormatter, _HRMedicationDispenseFormatter, _HRSourceTableViewCell,
+                          _HRStandardTableViewCell, _HRTapToRadarManager, _HRTimelineHeaderView, _HRViewControllerFactory,
+                          __TtC15HealthRecordsUI11AccountView, __TtC15HealthRecordsUI14LabelStackView,
+                          __TtC15HealthRecordsUI15AccountIconView, __TtC15HealthRecordsUI16IconTextListView,
+                          __TtC15HealthRecordsUI18NotificationPolicy, __TtC15HealthRecordsUI20LoadingTableViewCell,
+                          __TtC15HealthRecordsUI20RecordDataSourceCell, __TtC15HealthRecordsUI20RecordDetailItemCell,
+                          __TtC15HealthRecordsUI20SingleValueChartData, __TtC15HealthRecordsUI22AllergyRecordFormatter,
+                          __TtC15HealthRecordsUI22BloodPressureChartData, __TtC15HealthRecordsUI22RecordPrimaryTitleCell,
+                          __TtC15HealthRecordsUI22SettingsViewController, __TtC15HealthRecordsUI23MedicalRecordChartPoint,
+                          __TtC15HealthRecordsUI24AccountErrorFeedItemView, __TtC15HealthRecordsUI24AllergyReactionFormatter,
+                          __TtC15HealthRecordsUI24BloodPressureChartSeries, __TtC15HealthRecordsUI24ConditionRecordFormatter,
+                          __TtC15HealthRecordsUI24MedicalRecordChartSeries, __TtC15HealthRecordsUI24MedicationOrderFormatter,
+                          __TtC15HealthRecordsUI24ProcedureRecordFormatter, __TtC15HealthRecordsUI24RecordReferenceRangeCell,
+                          __TtC15HealthRecordsUI24WeakNotificationObserver, __TtC15HealthRecordsUI25ClinicalOnboardingManager,
+                          __TtC15HealthRecordsUI25MedicationDosageFormatter, __TtC15HealthRecordsUI25MedicationRecordFormatter,
+                          __TtC15HealthRecordsUI26AccountStateChangeListener, __TtC15HealthRecordsUI26VaccinationRecordFormatter,
+                          __TtC15HealthRecordsUI27ClinicalSourcesDataProvider, __TtC15HealthRecordsUI28FilterSettingsViewController,
+                          __TtC15HealthRecordsUI28MedicalRecordChartCoordinate,
+                          __TtC15HealthRecordsUI28MedicalRecordChartDataSource,
+                          __TtC15HealthRecordsUI28MedicalRecordChartableSeries,
+                          __TtC15HealthRecordsUI28RecordCategoryViewController,
+                          __TtC15HealthRecordsUI29DiagnosticTestReportFormatter,
+                          __TtC15HealthRecordsUI29DiagnosticTestResultFormatter,
+                          __TtC15HealthRecordsUI29SingleValueChartConfiguration,
+                          __TtC15HealthRecordsUI31BloodPressureChartConfiguration,
+                          __TtC15HealthRecordsUI31MedicalRecordChartabilityResult,
+                          __TtC15HealthRecordsUI32MedicalRecordChartOverlayContext,
+                          __TtC15HealthRecordsUI35MedicalRecordChartabilityDeterminer,
+                          __TtC15HealthRecordsUI35SingleValueAnnotationViewDataSource,
+                          __TtC15HealthRecordsUI36HealthRecordsSupportedChangeListener,
+                          __TtC15HealthRecordsUI37MedicalRecordAnnotationViewDataSource,
+                          __TtC15HealthRecordsUI37SingleValueCurrentValueViewDataSource,
+                          __TtC15HealthRecordsUI39BloodPressureCurrentValueViewDataSource,
+                          __TtC15HealthRecordsUI39OnboardingSuggestedActionViewController,
+                          __TtC15HealthRecordsUI43OAuthViewControllerNotificationUserInfoKeys ]
+...

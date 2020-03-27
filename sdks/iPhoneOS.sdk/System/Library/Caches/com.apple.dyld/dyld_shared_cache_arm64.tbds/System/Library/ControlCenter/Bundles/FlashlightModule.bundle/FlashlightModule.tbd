@@ -1,0 +1,14 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/ControlCenter/Bundles/FlashlightModule.bundle/FlashlightModule
+current-version:       0
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _FlashlightModuleVersionNumber, _FlashlightModuleVersionString ]
+    objc-classes:       [ _CCUIFlashlightBackgroundViewController, _CCUIFlashlightModule, _CCUIFlashlightModuleViewController ]
+    objc-ivars:         [ _CCUIFlashlightModule._backgroundViewController, _CCUIFlashlightModule._viewController ]
+...

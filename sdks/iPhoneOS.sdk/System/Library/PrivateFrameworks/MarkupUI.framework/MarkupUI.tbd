@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/MarkupUI.framework/MarkupUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _MUAnimationIconImage, _MUAnimationMaskRect, _MUAnimationSourceRect, _MUAnimationTargetRect,
@@ -15,8 +16,7 @@ exports:
                           _MUCGPDFStampAnnotationAdaptor, _MUCGPDFTextWidgetAnnotationAdaptor, _MUContentViewController,
                           _MUImageContentViewController, _MUImageDownsamplingUtilities, _MUImageReader, _MUImageScrollView,
                           _MUImageWriter, _MUPDFAnnotationAdaptorHelper, _MUPDFContentViewController, _MUPDFPageLabelView,
-                          _MUPDFUtilities, _MUPDFView, _MUPayloadEncryption, _MURemoteViewController, _MUStatistics,
-                          _MarkupViewController ]
+                          _MUPDFUtilities, _MUPDFView, _MUPayloadEncryption, _MURemoteViewController, _MUStatistics, _MarkupViewController ]
     objc-ivars:         [ _MUCGPDFFormWrapper._pdfForm, _MUContentViewController._annotationController,
                           _MUContentViewController._delegate, _MUImageContentViewController._centersIgnoringContentInsets,
                           _MUImageContentViewController._combinedContentView, _MUImageContentViewController._didSetup,
@@ -24,13 +24,14 @@ exports:
                           _MUImageContentViewController._editingAnnotaiton, _MUImageContentViewController._firstLoadZoomToFit,
                           _MUImageContentViewController._imageView, _MUImageContentViewController._inDoubleTapZoom,
                           _MUImageContentViewController._inkStyle, _MUImageContentViewController._loadCompletionBlock,
-                          _MUImageContentViewController._localDoubleTapRecognizer,
-                          _MUImageContentViewController._maxImageDimension, _MUImageContentViewController._pageController,
-                          _MUImageContentViewController._pointToCenterAfterRotation, _MUImageContentViewController._scrollView,
-                          _MUImageContentViewController._sourceContent, _MUImageContentViewController._sourceImagePixelSize,
+                          _MUImageContentViewController._localDoubleTapRecognizer, _MUImageContentViewController._maxImageDimension,
+                          _MUImageContentViewController._pageController, _MUImageContentViewController._pointToCenterAfterRotation,
+                          _MUImageContentViewController._scrollView, _MUImageContentViewController._sourceContent,
+                          _MUImageContentViewController._sourceImagePixelSize,
                           _MUImageContentViewController._tentativePlaceholderImage,
                           _MUImageContentViewController._usePlaceholderAsDisplayImageIfPossible,
-                          _MUImageContentViewController._wasZoomToFit, _MUPDFContentViewController._cachedThumnailViewInsets,
+                          _MUImageContentViewController._wasZoomToFit, _MUImageContentViewController._zoomToFitRestoreValue,
+                          _MUPDFContentViewController._cachedThumnailViewInsets,
                           _MUPDFContentViewController._constraintsAreHorizontal, _MUPDFContentViewController._didSetup,
                           _MUPDFContentViewController._edgeInsets, _MUPDFContentViewController._forcesPDFViewTopAlignment,
                           _MUPDFContentViewController._inkStyle, _MUPDFContentViewController._navigationModeHorizontal,

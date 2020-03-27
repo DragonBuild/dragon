@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SOS.framework/SOS
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SOSClientInterface, _SOSContactsChangedNotification, _SOSD_CONNECTION_REQUEST_NOTIFICATION_NAME,
@@ -30,8 +31,8 @@ exports:
                           _SOSManager._sendingLocationUpdate, _SOSManager._sosInitiationState, _SOSManager._sosInteractiveState,
                           _SOSPersistentTimerLocationManager._delegate,
                           _SOSPersistentTimerLocationManager._forceEnableLocationAssertion,
-                          _SOSPersistentTimerLocationManager._initalRequestTimer,
-                          _SOSPersistentTimerLocationManager._lastLocation, _SOSPersistentTimerLocationManager._locationManager,
+                          _SOSPersistentTimerLocationManager._initalRequestTimer, _SOSPersistentTimerLocationManager._lastLocation,
+                          _SOSPersistentTimerLocationManager._locationManager,
                           _SOSPersistentTimerLocationManager._locationUpdateStartQueue,
                           _SOSPersistentTimerLocationManager._locationUpdateTimer,
                           _SOSPersistentTimerLocationManager._requestLocationsTimer,

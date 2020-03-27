@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Encapsulates access and mutation for a command group hierarchy.
+/// Encapsulates access and mutation for a menu hierarchy.
 API_AVAILABLE(ios(13.0)) @protocol UIMenuBuilder
 
 /// Which system we are building for.

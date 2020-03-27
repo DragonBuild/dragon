@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/DataAccess.framework/Frameworks/DADaemonSupport.framework/DADaemonSupport
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _DADAgentsStoppedNotification, _DADRequestClientStatusDumpNotification, ___RootDomainConnect,
@@ -32,8 +33,7 @@ exports:
                           _DADClient._isInternalTool, _DADClient._numOutstandingBlockingClientCalls,
                           _DADClient._numOutstandingRefreshPriorityClientCalls, _DADClient._persistent, _DADClient._updatedIDs,
                           _DADClient._watchedIDs, _DADClientAccountTimers._deferredAllFolderContentsSource,
-                          _DADClientAccountTimers._deferredFolderContentsSource,
-                          _DADClientAccountTimers._deferredFolderListSource,
+                          _DADClientAccountTimers._deferredFolderContentsSource, _DADClientAccountTimers._deferredFolderListSource,
                           _DADClientAccountTimers._folderIdToLastFolderContentsRequestDate,
                           _DADClientAccountTimers._lastAllFolderContentsRequestDate,
                           _DADClientAccountTimers._lastFolderListRequestDate, _DADClientAccountTimers._lastFolderWipeRequestDate,
@@ -75,7 +75,6 @@ exports:
                           _DATokenRegistrationRequest._finished, _DATokenRegistrationRequest._hsa2Session,
                           _DATokenRegistrationRequest._onBehalfOfBundleIdentifier, _DATokenRegistrationRequest._pushKey,
                           _DATokenRegistrationRequest._request, _DATokenRegistrationRequest._session,
-                          _DATokenRegistrationRequest._task, _DATokenRegistrationRequest._token,
-                          _DATokenRegistrationRequest._wrapper, __DAChangeHistoryABLegacyClerk._addressBook,
-                          __DAChangeHistoryContactsClerk._contactStore ]
+                          _DATokenRegistrationRequest._task, _DATokenRegistrationRequest._token, _DATokenRegistrationRequest._wrapper,
+                          __DAChangeHistoryABLegacyClerk._addressBook, __DAChangeHistoryContactsClerk._contactStore ]
 ...

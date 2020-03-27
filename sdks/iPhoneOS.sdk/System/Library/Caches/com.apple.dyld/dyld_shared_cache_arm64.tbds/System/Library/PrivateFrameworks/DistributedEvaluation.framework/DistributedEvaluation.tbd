@@ -1,0 +1,30 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /System/Library/PrivateFrameworks/DistributedEvaluation.framework/DistributedEvaluation
+current-version:       1
+compatibility-version: 0
+objc-constraint:       retain_release
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ _AddErrorToDictionary, _DESAggregatorLogEvaluation, _DESAggregatorLogRecording, _DESAmendedRecordInfo,
+                          _DESApplyAsynchronousEnumerator, _DESApplyAsynchronousEnumeratorWithCompletion,
+                          _DESDiagnosticsSubmissionAllowed, _DESEncryptedDataReadFrom, _DESGetDeviceClass, _DESGetDeviceID,
+                          _DESGetDeviceType, _DESGetOSVersion, _DESIsInternalInstall, _DESPFLNoisableReadFrom, _DESPathHasFileVault,
+                          _DESRecipeResponseLocalOnlyPrefix, _DESRecipeResponseURLPartHost, _DESRecipeResponseURLPartPath,
+                          _DESRecipeResponseURLPartQueryItemKeyAttachmentPrefix, _DESRecipeResponseURLPartQueryItemKeyBaseURL,
+                          _DESRecipeResponseURLPartQueryItemKeyCoreDuetEvents, _DESRecipeResponseURLPartQueryItemKeyDeadline,
+                          _DESRecipeResponseURLPartQueryItemKeyDeferralDate, _DESRecipeResponseURLPartQueryItemKeyLocaleIdentifier,
+                          _DESRecipeResponseURLPartQueryItemKeyRecipeId, _DESRecipeResponseURLPartQueryItemKeyRecipePath,
+                          _DESRecipeResponseURLPartQueryItemKeyRecipeType, _DESRecipeResponseURLPartScheme, _DESServiceAvailable,
+                          _DESServiceGetXPCInterface, _DESSubmissionLogDirectoryURL, _DESSubmissionLogFileURLs,
+                          _DESSubmissionLogGarbageCollect, _DESSubmissionLogSetHandler, _DESWriteSubmissionLog,
+                          _DESWriteSubmissionLogData, _DistributedEvaluationVersionNumber, _DistributedEvaluationVersionString,
+                          __DESIsHorseman, _kDESDistributedEvaluationErrorDomain ]
+    objc-classes:       [ _DESBundleRegistry, _DESDeviceIdentifierStore, _DESEncryptedData, _DESEvaluationSession,
+                          _DESExceptionCatchingEvaluator, _DESJSONPredicate, _DESPFLEncryptor, _DESPFLNoisable, _DESRecipe,
+                          _DESRecipeEvaluationSession, _DESRecordSet, _DESRecordStore, _DESServiceConnection ]
+    objc-ivars:         [ _DESEncryptedData._algorithm, _DESEncryptedData._data, _DESEncryptedData._encryptedKey,
+                          _DESEncryptedData._has, _DESEncryptedData._version ]
+...

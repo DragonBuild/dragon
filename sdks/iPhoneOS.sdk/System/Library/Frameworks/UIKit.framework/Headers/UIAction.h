@@ -50,7 +50,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) @interface UIAction : UIMenuElement
 + (instancetype)actionWithTitle:(NSString *)title
                           image:(nullable UIImage *)image
                      identifier:(nullable UIActionIdentifier)identifier
-                        handler:(UIActionHandler)handler NS_REFINED_FOR_SWIFT;
+                        handler:(UIActionHandler)handler
+    NS_SWIFT_UNAVAILABLE("Use init(title:image:identifier:discoverabilityTitle:attributes:state:handler:) instead.");
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: D560471D-F43F-30D6-9717-5252EE100F10', 'armv7s: B1764672-C89B-3366-8975-D09656107D89', 
-                   'arm64: E180E421-0D92-3FF3-BD74-C7327B35A4B8', 'arm64e: F93F7C41-F466-310E-B784-0A747D906FE0' ]
+                   'arm64: B6BD8A3B-C750-3527-A59B-648B0C8890C2', 'arm64e: AFC37302-3CFF-3C9E-9497-F5BADFF83CA2' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftDarwin.dylib'
 current-version: 0

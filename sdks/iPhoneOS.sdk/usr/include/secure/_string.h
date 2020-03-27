@@ -91,14 +91,16 @@
 #define stpcpy(dest, ...) \
 		__builtin___stpcpy_chk (dest, __VA_ARGS__, __darwin_obsz (dest))
 #endif
-#endif /* UNIFDEF_DRIVERKIT */
+#endif /* __DARWIN_C_LEVEL >= 200809L */
 
+#if __DARWIN_C_LEVEL >= 200809L
 #if __has_builtin(__builtin___stpncpy_chk) || __APPLE_CC__ >= 5666 || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)
 #undef stpncpy
 /* char *stpncpy(char *dst, const char *src, size_t n) */
 #define stpncpy(dest, ...) \
 		__builtin___stpncpy_chk (dest, __VA_ARGS__, __darwin_obsz (dest))
 #endif
+#endif /* _DARWIN_C_LEVEL >= 200809L */
 
 #if __DARWIN_C_LEVEL >= __DARWIN_C_FULL
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000 || __MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 || \

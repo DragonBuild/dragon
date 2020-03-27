@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/IdleTimerServices.framework/IdleTimerServices
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _ITIdleTimerServicesErrorConfigurationDescriptionKey, _ITIdleTimerServicesErrorDomain,
@@ -16,10 +17,9 @@ exports:
     objc-ivars:         [ _ITIdleTimerAssertion._configuration, _ITIdleTimerConfiguration._disablesTimer,
                           _ITIdleTimerConfiguration._identifier, _ITIdleTimerConfiguration._idleEventHandlerBlock,
                           _ITIdleTimerConfiguration._idleEventMask, _ITIdleTimerState._accessLock, _ITIdleTimerState._model,
-                          _ITIdleTimerState._requestHandler, _ITIdleTimerStateClient._accessLock,
-                          _ITIdleTimerStateClient._connection, _ITIdleTimerStateClient._delegate,
-                          _ITIdleTimerStateClient._serviceAvailability, _ITIdleTimerStateModel._accessLock,
-                          _ITIdleTimerStateModel._access_idleTimerAssertionsByConfigIdentifier,
+                          _ITIdleTimerState._requestHandler, _ITIdleTimerStateClient._accessLock, _ITIdleTimerStateClient._connection,
+                          _ITIdleTimerStateClient._delegate, _ITIdleTimerStateClient._serviceAvailability,
+                          _ITIdleTimerStateModel._accessLock, _ITIdleTimerStateModel._access_idleTimerAssertionsByConfigIdentifier,
                           _ITIdleTimerStateModel._requestHandler, _ITIdleTimerStateModel._stateCaptureAssertion,
                           _ITIdleTimerStateServer._accessLock, _ITIdleTimerStateServer._calloutQueue,
                           _ITIdleTimerStateServer._clientTargetsByConfigIdentifier, _ITIdleTimerStateServer._connectionListener,

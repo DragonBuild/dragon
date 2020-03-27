@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/BookDataStore.framework/BookDataStore
-current-version:       4238.2
+current-version:       4310
 compatibility-version: 0
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _BCAnnotationRangeReadFrom, _BCAnnotationsProtoBookReadFrom, _BCCloudAssetAnnotationManagerChanged,
@@ -15,17 +16,16 @@ exports:
                           _BCCollectionDefaultIDWantToRead, _BCNormalizedNumberOfStars, _BCProtoAnnotationReadFrom,
                           _BDSArrayAdditionsError, _BDSCloudGlobalMetadataManagerChanged,
                           _BDSCloudGlobalMetadataManagerFetchedRecordsChanged, _BDSCloudKitAudiobookLog, _BDSCloudKitLog,
-                          _BDSErrorDomain, _BDSReachabilityErrorDomain, _BDSReportAssertionFailureWithMessage,
-                          _BDSServiceCenterLog, _BDSServiceLog, _BDSSyncedPreferencePrefix,
-                          _BDSUserPreferenceAudiobookSkipBackward, _BDSUserPreferenceAudiobookSkipForward,
-                          _BDSUserPreferenceOverrideRecentBookAlgorithm, _BDSUserPreferenceSyncEnabledForReadingNow,
-                          _BDSUserPreferenceTimeThresholdPromotionOverride, _BookDataStoreBundle, _BookDataStoreCFBundle,
-                          _NSManagedObjectContextIMAdditionsSafeAccessState, _bc_isRunningTests,
-                          _bc_turnProtoAnnotationIntoTombstone, _kBCAssetAnnotationsRecord, _kBCCloudKitAssetDetailBookmarkTime,
-                          _kBCCloudKitAssetDetailDateFinished, _kBCCloudKitAssetDetailDatePlaybackTimeUpdated,
-                          _kBCCloudKitAssetDetailIsFinished, _kBCCloudKitAssetDetailLastOpenDate,
-                          _kBCCloudKitAssetDetailNotFinished, _kBCCloudKitAssetDetailReadingPosition,
-                          _kBCCloudKitAssetDetailReadingPositionAbsolutePhysicalLocation,
+                          _BDSErrorDomain, _BDSReachabilityErrorDomain, _BDSReportAssertionFailureWithMessage, _BDSServiceCenterLog,
+                          _BDSServiceLog, _BDSSyncedPreferencePrefix, _BDSUserPreferenceAudiobookSkipBackward,
+                          _BDSUserPreferenceAudiobookSkipForward, _BDSUserPreferenceOverrideRecentBookAlgorithm,
+                          _BDSUserPreferenceSyncEnabledForReadingNow, _BDSUserPreferenceTimeThresholdPromotionOverride,
+                          _BookDataStoreBundle, _BookDataStoreCFBundle, _NSManagedObjectContextIMAdditionsSafeAccessState,
+                          _bc_isRunningTests, _bc_turnProtoAnnotationIntoTombstone, _kBCAssetAnnotationsRecord,
+                          _kBCCloudKitAssetDetailBookmarkTime, _kBCCloudKitAssetDetailDateFinished,
+                          _kBCCloudKitAssetDetailDatePlaybackTimeUpdated, _kBCCloudKitAssetDetailIsFinished,
+                          _kBCCloudKitAssetDetailLastOpenDate, _kBCCloudKitAssetDetailNotFinished,
+                          _kBCCloudKitAssetDetailReadingPosition, _kBCCloudKitAssetDetailReadingPositionAbsolutePhysicalLocation,
                           _kBCCloudKitAssetDetailReadingPositionAnnotationVersion,
                           _kBCCloudKitAssetDetailReadingPositionAssetVersion,
                           _kBCCloudKitAssetDetailReadingPositionLocationRangeEnd,
@@ -33,9 +33,8 @@ exports:
                           _kBCCloudKitAssetDetailReadingPositionLocationUpdateDate,
                           _kBCCloudKitAssetDetailReadingPositionStorageUUID, _kBCCloudKitAssetDetailReadingPositionUserData,
                           _kBCCloudKitAssetDetailReadingProgress, _kBCCloudKitAssetDetailReadingProgressHighWaterMark,
-                          _kBCCloudKitAssetDetailRecordType, _kBCCloudKitAssetDetailTaste,
-                          _kBCCloudKitAssetDetailTasteSyncedToStore, _kBCCloudKitAssetReviewRecordType,
-                          _kBCCloudKitAssetReviewReviewBody, _kBCCloudKitAssetReviewReviewTitle,
+                          _kBCCloudKitAssetDetailRecordType, _kBCCloudKitAssetDetailTaste, _kBCCloudKitAssetDetailTasteSyncedToStore,
+                          _kBCCloudKitAssetReviewRecordType, _kBCCloudKitAssetReviewReviewBody, _kBCCloudKitAssetReviewReviewTitle,
                           _kBCCloudKitAssetReviewStarRating, _kBCCloudKitCollectionDetailCollectionDescription,
                           _kBCCloudKitCollectionDetailHidden, _kBCCloudKitCollectionDetailName,
                           _kBCCloudKitCollectionDetailRecordType, _kBCCloudKitCollectionDetailSortMode,
@@ -44,9 +43,9 @@ exports:
                           _kBCCloudKitGlobalMetadataRecordType, _kBCCloudKitGlobalMetadataValue, _kBCCloudKitLocalRecordID,
                           _kBCCloudKitLocalRecordIDEncrypted, _kBCCloudKitModificationDate,
                           _kBCCloudKitReadingNowDetailIsTrackedAsRecent, _kBCCloudKitReadingNowDetailLastEngagedDate,
-                          _kBCCloudKitReadingNowDetailRecordType, _kBCCloudKitSecureUserDataKey,
-                          _kBCCloudKitSecureUserDataRecordType, _kBCCloudKitSecureUserDataValue, _kBCCloudKitStoreItemRecordType,
-                          _kBCCloudKitSyncGeneration, _kBCCloudKitSyncVersionsCloudVersion, _kBCCloudKitSyncVersionsDataType,
+                          _kBCCloudKitReadingNowDetailRecordType, _kBCCloudKitSecureUserDataKey, _kBCCloudKitSecureUserDataRecordType,
+                          _kBCCloudKitSecureUserDataValue, _kBCCloudKitStoreItemRecordType, _kBCCloudKitSyncGeneration,
+                          _kBCCloudKitSyncVersionsCloudVersion, _kBCCloudKitSyncVersionsDataType,
                           _kBCCloudKitSyncVersionsHistoryToken, _kBCCloudKitSyncVersionsHistoryTokenOffset,
                           _kBCCloudKitSyncVersionsLocalVersion, _kBCCloudKitSyncVersionsSyncVersion, _kBCCloudKitSystemFields,
                           _kBCCloudKitZoneAsset, _kBCCloudKitZoneCollection, _kBCCloudKitZoneGlobalMetadata,
@@ -57,17 +56,16 @@ exports:
                           _BCCloudCollectionsManager, _BCCloudData, _BCCloudDataManager, _BCCloudDataNullPrivacyDelegate,
                           _BCCloudDataSource, _BCCloudDataSyncManager, _BCCloudKitConfiguration, _BCCloudKitController,
                           _BCCloudKitDataChangedTransaction, _BCCloudKitDatabaseController, _BCCloudKitFetchChangesTransaction,
-                          _BCCloudKitRecordZone, _BCCloudKitSecureConfiguration, _BCCloudKitSyncToCKTransaction,
-                          _BCCloudKitTransaction, _BCCloudKitTransactionManager, _BCCloudSecureUserDataManager,
-                          _BCCloudSyncVersions, _BCCollectionDetail, _BCCollectionMember, _BCGlobalMetadatum,
-                          _BCMutableAssetAnnotations, _BCMutableAssetDetail, _BCMutableAssetReview, _BCMutableCloudData,
-                          _BCMutableCloudSyncVersions, _BCMutableCollectionDetail, _BCMutableCollectionMember,
-                          _BCMutableGlobalMetadatum, _BCMutableReadingNowDetail, _BCMutableSecureUserDatum, _BCMutableStoreItem,
-                          _BCProtoAnnotation, _BCReadingNowDetail, _BCSecureUserDatum, _BCStoreItem, _BDSAppGroupContainer,
-                          _BDSAppVersion, _BDSApplication, _BDSCloudGlobalMetadataManager, _BDSICloudIdentityToken,
-                          _BDSICloudIdentityTokenTracker, _BDSLiverpoolStatusMonitor, _BDSMediaLibraryUtils,
-                          _BDSNBPinningManager, _BDSOSTransaction, _BDSReachability, _BDSServiceCenter, _BDSServiceProxy,
-                          _BDSSyncUserDefaults, _BDSUserAccount, _BDSUserPreferencesSync, _BookDataStoreBundleLookupClass ]
+                          _BCCloudKitRecordZone, _BCCloudKitSecureConfiguration, _BCCloudKitSyncToCKTransaction, _BCCloudKitTransaction,
+                          _BCCloudKitTransactionManager, _BCCloudSecureUserDataManager, _BCCloudSyncVersions, _BCCollectionDetail,
+                          _BCCollectionMember, _BCGlobalMetadatum, _BCMutableAssetAnnotations, _BCMutableAssetDetail,
+                          _BCMutableAssetReview, _BCMutableCloudData, _BCMutableCloudSyncVersions, _BCMutableCollectionDetail,
+                          _BCMutableCollectionMember, _BCMutableGlobalMetadatum, _BCMutableReadingNowDetail, _BCMutableSecureUserDatum,
+                          _BCMutableStoreItem, _BCProtoAnnotation, _BCReadingNowDetail, _BCSecureUserDatum, _BCStoreItem,
+                          _BDSAppGroupContainer, _BDSAppVersion, _BDSApplication, _BDSCloudGlobalMetadataManager, _BDSICloudIdentityToken,
+                          _BDSICloudIdentityTokenTracker, _BDSLiverpoolStatusMonitor, _BDSMediaLibraryUtils, _BDSNBPinningManager,
+                          _BDSOSTransaction, _BDSReachability, _BDSServiceCenter, _BDSServiceProxy, _BDSSyncUserDefaults, _BDSUserAccount,
+                          _BDSUserPreferencesSync, _BookDataStoreBundleLookupClass ]
     objc-ivars:         [ _BCAnnotationRange._length, _BCAnnotationRange._location, _BCAnnotationsProtoBook._annotations,
                           _BCAnnotationsProtoBook._appVersion, _BCAnnotationsProtoBook._assetID,
                           _BCAnnotationsProtoBook._assetVersion, _BCProtoAnnotation._annotationVersion,

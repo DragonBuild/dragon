@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B50844F0-7855-3341-907D-F2B04804D7C9', 'armv7s: 084CEABB-1A60-3FC1-82C5-16CBC56FF582', 
-                   'arm64: E96EB537-10AB-37BD-A80C-1199C91080DC', 'arm64e: 77DDD620-8FA3-386E-B1E0-C67B9FB47611' ]
+                   'arm64: 454AD872-8CBD-3DDB-9370-BFF9F4091E9F', 'arm64e: EB077E5F-A299-31FE-BAEB-5C5BF4D00502' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftMapKit.dylib'
 current-version: 0

@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/HealthAlgorithms.framework/HealthAlgorithms
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _HealthAlgorithmsVersionNumber, _HealthAlgorithmsVersionString, __ZN11Nightingale12gaussian_pdfEddd,
@@ -60,7 +61,10 @@ exports:
                           __ZN11Nightingale19ngt_periodExtractorD2Ev, __ZN11Nightingale22ngt_DayStreamProcessor12computeStatsEib,
                           __ZN11Nightingale22ngt_DayStreamProcessor12getHistoricsEv,
                           __ZN11Nightingale22ngt_DayStreamProcessor12qualify_coefEd,
+                          __ZN11Nightingale22ngt_DayStreamProcessor14isFinite_aGradERKNSt3__18optionalINS_12ngt_GradientEEE,
+                          __ZN11Nightingale22ngt_DayStreamProcessor14isFinite_aProjERKNS_14ngt_PredictionE,
                           __ZN11Nightingale22ngt_DayStreamProcessor16normalizeGadientERNSt3__16vectorIfNS1_9allocatorIfEEEE,
+                          __ZN11Nightingale22ngt_DayStreamProcessor18isFiniteVectorRealERKNSt3__16vectorIfNS1_9allocatorIfEEEE,
                           __ZN11Nightingale22ngt_DayStreamProcessor24computeEndTailStartIndexERNS_12ngt_GradientEd,
                           __ZN11Nightingale22ngt_DayStreamProcessor24computeStartTailEndIndexERNS_12ngt_GradientEd,
                           __ZN11Nightingale22ngt_DayStreamProcessor31computeLowerAndUpperTailIndicesEiibbb,
@@ -92,8 +96,8 @@ exports:
                           __ZN11cin_RTHREstC2Ef, __ZN11cin_RTHREstD1Ev, __ZN11cin_RTHREstD2Ev, __ZN11gaussFilter10makeFilterEv,
                           __ZN11gaussFilter15makeAbscissaVecEv, __ZN11gaussFilter5resetEv, __ZN11gaussFilter7processEPfS0_j,
                           __ZN11gaussFilterC1Ef, __ZN11gaussFilterC2Ef, __ZN11gaussFilterD1Ev, __ZN11gaussFilterD2Ev,
-                          __ZN12cin_RTFilter5resetEv, __ZN12cin_RTFilter7processEPKfPfj, __ZN12cin_RTFilterC1Eh,
-                          __ZN12cin_RTFilterC2Eh, __ZN12cin_RTFilterD1Ev, __ZN12cin_RTFilterD2Ev, __ZN16BWSubtractionIIR5resetEv,
+                          __ZN12cin_RTFilter5resetEv, __ZN12cin_RTFilter7processEPKfPfj, __ZN12cin_RTFilterC1Eh, __ZN12cin_RTFilterC2Eh,
+                          __ZN12cin_RTFilterD1Ev, __ZN12cin_RTFilterD2Ev, __ZN16BWSubtractionIIR5resetEv,
                           __ZN16BWSubtractionIIR7processEPfS0_j, __ZN16BWSubtractionIIRC1Ej, __ZN16BWSubtractionIIRC2Ej,
                           __ZN16BWSubtractionIIRD1Ev, __ZN16BWSubtractionIIRD2Ev,
                           __ZN17health_algorithms15MimosaDistiller7distillEPKSt4bytem,
@@ -111,13 +115,11 @@ exports:
                           __ZN6mimosa5Codec11PatchHeader17is_start_of_patchEh,
                           __ZN6mimosa5Codec11PatchHeader20parse_representationEPKSt4byteS4_,
                           __ZN6mimosa5Codec11PatchHeader21uint64_representationEv, __ZN6mimosa5Codec11apply_patchERKNS0_5PatchE,
-                          __ZN6mimosa5Codec14start_sequenceE, __ZN6mimosa5Codec9signatureE, __ZN6mimosa5Codec9to_packetEv,
-                          __ZN6mimosa6Packet20set_ticks_per_secondEj,
+                          __ZN6mimosa5Codec9to_packetEv, __ZN6mimosa6Packet20set_ticks_per_secondEj,
                           __ZN6mimosa6Packet27parse_legacy_representationERKNSt3__16vectorISt4byteNS1_9allocatorIS3_EEEE,
                           __ZN6mimosa6Packet27parse_modern_representationERKNSt3__16vectorISt4byteNS1_9allocatorIS3_EEEE,
                           __ZN6mimosa6Packet28legacy_binary_representationEv, __ZN6mimosa6PacketC1EPKSt4bytemd,
-                          __ZN6mimosa6PacketC2EPKSt4bytemd,
-                          __ZN6mimosa7Decoder12decode_patchERKNS_5Codec11PatchHeaderEPKSt4byteS7_,
+                          __ZN6mimosa6PacketC2EPKSt4bytemd, __ZN6mimosa7Decoder12decode_patchERKNS_5Codec11PatchHeaderEPKSt4byteS7_,
                           __ZN6mimosa7Decoder14decode_versionERPKSt4byteS3_, __ZN6mimosa7Decoder15decode_metadataERPKSt4byteS3_,
                           __ZN6mimosa7Decoder20decode_accel_changesERNS_5Codec5PatchERPKSt4byteS6_b,
                           __ZN6mimosa7Decoder23decode_pgg_flag_changesERNS_5Codec5PatchERPKSt4byteS6_b,
@@ -154,8 +156,7 @@ exports:
                           __ZN8CinnAlgs6CnAlgs12accumBadDataEPhj, __ZN8CinnAlgs6CnAlgs13chkCrownStateEPK15cn_hal_output_t,
                           __ZN8CinnAlgs6CnAlgs13setSampleRateEf, __ZN8CinnAlgs6CnAlgs14procPktRunningEPK15cn_hal_output_t,
                           __ZN8CinnAlgs6CnAlgs16filterForDisplayEPKfPfj, __ZN8CinnAlgs6CnAlgs17packOfflineOutputEv,
-                          __ZN8CinnAlgs6CnAlgs17procContactDetectEPK15cn_hal_output_t,
-                          __ZN8CinnAlgs6CnAlgs18flushOfflineOutputEv,
+                          __ZN8CinnAlgs6CnAlgs17procContactDetectEPK15cn_hal_output_t, __ZN8CinnAlgs6CnAlgs18flushOfflineOutputEv,
                           __ZN8CinnAlgs6CnAlgs18procPktInitializedEPK15cn_hal_output_t,
                           __ZN8CinnAlgs6CnAlgs19procPktEndOfSessionEPK15cn_hal_output_t,
                           __ZN8CinnAlgs6CnAlgs20generateSigQualAlertEPhj,
@@ -181,20 +182,18 @@ exports:
                           _erb_iirSos_getDemeanOffset, _erb_iirSos_new, _erb_iirSos_process, _erb_iirSos_reset,
                           _erb_iirSos_setDemeanOffset, _erb_iirSos_updateCoef, _erb_inputChecker_delete, _erb_inputChecker_new,
                           _erb_inputChecker_process, _erb_inputChecker_reset, _erb_lineNoiseFltr_delete, _erb_lineNoiseFltr_new,
-                          _erb_lineNoiseFltr_process, _erb_lineNoiseFltr_reset, _erb_lineNoiseFltr_updateSampFreq,
-                          _erb_medFilt_delete, _erb_medFilt_getMAD, _erb_medFilt_new, _erb_medFilt_process, _erb_medFilt_reset,
-                          _erb_medFilter_isPrimed, _erb_qrsDetect_delete, _erb_qrsDetect_new, _erb_qrsDetect_process,
-                          _erb_qrsDetect_reset, _erb_signalQuality_delete, _erb_signalQuality_new, _erb_signalQuality_process,
-                          _erb_signalQuality_reset, _findPeaks, _firFilt_delete, _firFilt_new, _firFilt_process, _firFilt_reset,
-                          _firFilt_setCoeffs, _firFilt_setState, _ha_get_log, _ha_is_sensitive_logging_enabled,
-                          _ha_set_sensitive_logging_enabled, _waveform_pad ]
+                          _erb_lineNoiseFltr_process, _erb_lineNoiseFltr_reset, _erb_lineNoiseFltr_updateSampFreq, _erb_medFilt_delete,
+                          _erb_medFilt_getMAD, _erb_medFilt_new, _erb_medFilt_process, _erb_medFilt_reset, _erb_medFilter_isPrimed,
+                          _erb_qrsDetect_delete, _erb_qrsDetect_new, _erb_qrsDetect_process, _erb_qrsDetect_reset,
+                          _erb_signalQuality_delete, _erb_signalQuality_new, _erb_signalQuality_process, _erb_signalQuality_reset,
+                          _findPeaks, _firFilt_delete, _firFilt_new, _firFilt_process, _firFilt_reset, _firFilt_setCoeffs, _firFilt_setState,
+                          _ha_get_log, _ha_is_sensitive_logging_enabled, _ha_set_sensitive_logging_enabled, _waveform_pad ]
     objc-classes:       [ _HAECGExporter, _HAECGSample, _HAMenstrualAlgorithmsAnalysis, _HAMenstrualAlgorithmsDayInput,
                           _HAMenstrualAlgorithmsDayStreamProcessor, _HAMenstrualAlgorithmsDayStreamProcessorConfig,
                           _HAMenstrualAlgorithmsHistoricalAnalyzer, _HAMenstrualAlgorithmsHistoricalCycle,
                           _HAMenstrualAlgorithmsPrediction, _HAMenstrualAlgorithmsStats, _HAPPGExporter, _HAPreferences ]
     objc-ivars:         [ _HAECGExporter._cinAlgs, _HAECGExporter._currentLiveWaveform, _HAECGExporter._fromRightWrist,
-                          _HAECGSample._representation, _HAECGSample._timestamp,
-                          _HAMenstrualAlgorithmsAnalysis._fertilityPredictions,
+                          _HAECGSample._representation, _HAECGSample._timestamp, _HAMenstrualAlgorithmsAnalysis._fertilityPredictions,
                           _HAMenstrualAlgorithmsAnalysis._menstruationPredictions, _HAMenstrualAlgorithmsAnalysis._stats,
                           _HAMenstrualAlgorithmsDayInput._flow, _HAMenstrualAlgorithmsDayInput._flowUpdatedJulianDay,
                           _HAMenstrualAlgorithmsDayInput._julianDay, _HAMenstrualAlgorithmsDayInput._ovulationTestResult,
@@ -233,8 +232,8 @@ exports:
                           _HAMenstrualAlgorithmsStats._lowerCycleLengthPercentile,
                           _HAMenstrualAlgorithmsStats._lowerMenstruationLengthPercentile,
                           _HAMenstrualAlgorithmsStats._medianCycleLength, _HAMenstrualAlgorithmsStats._medianMenstruationLength,
-                          _HAMenstrualAlgorithmsStats._numberOfCyclesFound,
-                          _HAMenstrualAlgorithmsStats._upperCycleLengthPercentile,
+                          _HAMenstrualAlgorithmsStats._numberOfCyclesFound, _HAMenstrualAlgorithmsStats._upperCycleLengthPercentile,
                           _HAMenstrualAlgorithmsStats._upperMenstruationLengthPercentile, _HAPPGExporter._mimosaData,
                           _HAPPGExporter._srTimestamp, _HAPreferences._globalDefaults, _HAPreferences._sensitiveLoggingEnabled ]
+    weak-def-symbols:   [ __ZN6mimosa5Codec14start_sequenceE, __ZN6mimosa5Codec9signatureE ]
 ...

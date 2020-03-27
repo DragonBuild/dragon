@@ -1,0 +1,14 @@
+--- !tapi-tbd-v2
+archs:                 [ x86_64 ]
+platform:              ios
+flags:                 [ flat_namespace ]
+install-name:          /usr/lib/libETLDIAGLoggingDynamic.dylib
+current-version:       1
+compatibility-version: 0
+exports:
+  - archs:              [ x86_64 ]
+    symbols:            [ __Z23ETLDIAGLoggingConfigureR20ETLDIAGLoggingParamsRNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE,
+                          __Z24ETLDIAGLoggingCreateHashRKNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE,
+                          __Z25ETLDIAGLoggingUnconfigureR20ETLDIAGLoggingParamsRNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE,
+                          __Z29ETLDIAGLoggingGetStringForKeymPPKcPv ]
+...

@@ -22,19 +22,11 @@ typedef NS_ENUM(NSInteger, VSSubscriptionAccessLevel)
     VSSubscriptionAccessLevelFreeWithAccount, /// The customer has access to content that is offered for free to users with a valid account.  This value corresponds content in your availability feed with the "account" offering type.
     VSSubscriptionAccessLevelPaid, /// The customer also has access to content that is offered as part of a paid subscription.  The value corresponds content in your availability feed with the "subscription" offering type.
 }
-#if TARGET_OS_IPHONE
-API_AVAILABLE(ios(11.0), tvos(11.0));
-#else
-;
-#endif // TARGET_OS_IPHONE
+API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(macCatalyst);
 
 /// A VSSubscription instance describes the extent to which a subscriber has
 /// access to content.
-#if TARGET_OS_IPHONE
-VS_EXPORT API_AVAILABLE(ios(11.0), tvos(11.0))
-#else
-VS_EXPORT
-#endif // #if TARGET_OS_IPHONE
+VS_EXPORT API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSSubscription : NSObject
 
 /// After this point in time, the subscription will be considered inactive.
@@ -69,12 +61,7 @@ VS_EXPORT
 /// Identifies the billing group associated with the subscription.  May be used,
 /// for example, to restrict content availability based on the proximity of the
 /// billing address to a specific venue.
-@property (nonatomic, copy, nullable) NSString *billingIdentifier
-#if TARGET_OS_IPHONE
-API_AVAILABLE(ios(11.3), tvos(11.3));
-#else
-;
-#endif // TARGET_OS_IPHONE
+@property (nonatomic, copy, nullable) NSString *billingIdentifier API_AVAILABLE(ios(11.3), tvos(11.3));
 
 @end
 

@@ -288,7 +288,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  */
 - (nullable id <MTLParallelRenderCommandEncoder>)parallelRenderCommandEncoderWithDescriptor:(MTLRenderPassDescriptor *)renderPassDescriptor;
 
-- (nullable id<MTLResourceStateCommandEncoder>) resourceStateCommandEncoder API_AVAILABLE(macos(10.15), ios(13.0));
+- (nullable id<MTLResourceStateCommandEncoder>) resourceStateCommandEncoder API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst);
 
 /*!
  @method pushDebugGroup:

@@ -1,23 +1,22 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SystemStatusServer.framework/SystemStatusServer
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _STEntitledDomainsForEntitlementValue, _STStatusDomainNameForEntitlementValue,
                           _STSystemStatusLogTelephonyState, _STTelephonyCachedBooleanDebugName,
                           _STTelephonyCallForwardingIndicatorDebugName, _STTelephonyDataConnectionTypeDebugName,
-                          _STTelephonyRegistrationStatusDebugName, _SystemStatusServerVersionNumber,
-                          _SystemStatusServerVersionString ]
+                          _STTelephonyRegistrationStatusDebugName, _SystemStatusServerVersionNumber, _SystemStatusServerVersionString ]
     objc-classes:       [ _STMutableTelephonyCarrierBundleInfo, _STMutableTelephonyMobileEquipmentInfo,
                           _STMutableTelephonySubscriptionInfo, _STStatusDomainPublisherXPCClientHandle,
-                          _STStatusDomainPublisherXPCClientListener, _STStatusDomainXPCClientHandle,
-                          _STStatusDomainXPCClientListener, _STStatusServer, _STTelephonyCarrierBundleInfo,
-                          _STTelephonyMobileEquipmentInfo, _STTelephonyStateProvider, _STTelephonyStatusDomainDataProvider,
-                          _STTelephonySubscriptionContext, _STTelephonySubscriptionInfo ]
+                          _STStatusDomainPublisherXPCClientListener, _STStatusDomainXPCClientHandle, _STStatusDomainXPCClientListener,
+                          _STStatusServer, _STTelephonyCarrierBundleInfo, _STTelephonyMobileEquipmentInfo, _STTelephonyStateProvider,
+                          _STTelephonyStatusDomainDataProvider, _STTelephonySubscriptionContext, _STTelephonySubscriptionInfo ]
     objc-ivars:         [ _STStatusDomainPublisherXPCClientHandle._clientXPCConnection,
                           _STStatusDomainPublisherXPCClientHandle._dataByDomain,
                           _STStatusDomainPublisherXPCClientHandle._entitledDomains,
@@ -47,8 +46,7 @@ exports:
                           _STTelephonyStateProvider._hasCellularTelephony, _STTelephonyStateProvider._internalQueue,
                           _STTelephonyStateProvider._observerQueue, _STTelephonyStateProvider._observers,
                           _STTelephonyStateProvider._radiosPreferences, _STTelephonyStateProvider._serverConnection,
-                          _STTelephonyStateProvider._slot1SubscriptionContext,
-                          _STTelephonyStateProvider._slot2SubscriptionContext,
+                          _STTelephonyStateProvider._slot1SubscriptionContext, _STTelephonyStateProvider._slot2SubscriptionContext,
                           _STTelephonyStateProvider._telephonyDaemonRestartHandlerCanceled,
                           _STTelephonyStatusDomainDataProvider._telephonyDomainPublisher,
                           _STTelephonyStatusDomainDataProvider._telephonyStateProvider,

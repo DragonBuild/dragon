@@ -1,16 +1,16 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/WebUI.framework/WebUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     re-exports:         [ /System/Library/PrivateFrameworks/SafariShared.framework/SafariShared ]
     symbols:            [ _WBUABAddressKey, _WBUABStreetKey, _WBUAutoFillClearDataClasses, _WBUAutoFillDisableDataClasses,
-                          _WBUAutoFillGetEnabledDataClasses,
-                          _WBUFeatureManagerCloudKitBookmarksAvailabilityDidChangeNotification,
+                          _WBUAutoFillGetEnabledDataClasses, _WBUFeatureManagerCloudKitBookmarksAvailabilityDidChangeNotification,
                           _WBUFeatureManagerCloudTabsAvailabilityDidChangeNotification,
                           _WBUFormAutoFillPasswordGenerationAssistanceBecameAvailableNotification,
                           _WBUPasswordGenerationExistingPasswordOverwrittenOnAppSuspendAggdKey,
@@ -30,9 +30,8 @@ exports:
                           _WBUFeatureManager._internalQueue, _WBUFeatureManager._managementState,
                           _WBUFeatureManager._offlineReadingListAvailable, _WBUFeatureManager._readingListAvailable,
                           _WBUFormAutoFillWhiteList._cache, _WBUFormDataController._autoFillCorrectionManager,
-                          _WBUFormDataController._autoFillFeedbackProcessor,
-                          _WBUFormDataController._cachedAutoFillRestrictionValue, _WBUFormDataController._savePending,
-                          _WBUGeneratedPasswordCredentialUpdateRequest._generatedPassword,
+                          _WBUFormDataController._autoFillFeedbackProcessor, _WBUFormDataController._cachedAutoFillRestrictionValue,
+                          _WBUFormDataController._savePending, _WBUGeneratedPasswordCredentialUpdateRequest._generatedPassword,
                           _WBUGeneratedPasswordCredentialUpdateRequest._lastGeneratedPassword,
                           _WBUGeneratedPasswordCredentialUpdateRequest._protectionSpace,
                           _WBUGeneratedPasswordCredentialUpdateRequest._shouldSaveNewCredential,
@@ -40,16 +39,15 @@ exports:
                           _WBUGeneratedPasswordCredentialUpdateRequest._username, _WBUGeneratedPasswordCredentialUpdater._queue,
                           _WBUGeneratedPasswordCredentialUpdater._urlsScheduledForUpdating,
                           _WBUGeneratedPasswordCredentialUpdater._urlsToUpdateRequests, _WBUHistory._shouldScheduleMaintenance,
-                          _WBUPrintPageRenderer._URLString, _WBUPrintPageRenderer._URLWidth,
-                          _WBUPrintPageRenderer._contentFormatter, _WBUPrintPageRenderer._contentOffset,
-                          _WBUPrintPageRenderer._dateString, _WBUPrintPageRenderer._dateWidth, _WBUPrintPageRenderer._delegate,
-                          _WBUPrintPageRenderer._footerColor, _WBUPrintPageRenderer._footerFont,
+                          _WBUPrintPageRenderer._URLString, _WBUPrintPageRenderer._URLWidth, _WBUPrintPageRenderer._contentFormatter,
+                          _WBUPrintPageRenderer._contentOffset, _WBUPrintPageRenderer._dateString, _WBUPrintPageRenderer._dateWidth,
+                          _WBUPrintPageRenderer._delegate, _WBUPrintPageRenderer._footerColor, _WBUPrintPageRenderer._footerFont,
                           _WBUPrintPageRenderer._footerOffset, _WBUPrintPageRenderer._numberFormatter,
                           _WBUPrintPageRenderer._printFooter, _WBUPrintPageRenderer._printWidth, _WBUSheetController._alert,
                           _WBUSheetController._alertController, _WBUSheetController._alertInvocationQueue,
                           _WBUSheetController._delegate, _WebUIAlert._actionHandler, _WebUIAlert._bodyText, _WebUIAlert._context,
                           _WebUIAlert._defaultAction, _WebUIAlert._hideAction, _WebUIAlert._identities,
-                          _WebUIAlert._indexOfSelectedIdentity, _WebUIAlert._otherAction, _WebUIAlert._tableAction,
-                          _WebUIAlert._title, _WebUIAlert._titles, _WebUIAlert._type, __WBUDynamicMeCard._blocksPendingMeCard,
-                          __WBUDynamicMeCard._me, __WBUDynamicMeCard._meCardExists ]
+                          _WebUIAlert._indexOfSelectedIdentity, _WebUIAlert._otherAction, _WebUIAlert._tableAction, _WebUIAlert._title,
+                          _WebUIAlert._titles, _WebUIAlert._type, __WBUDynamicMeCard._blocksPendingMeCard, __WBUDynamicMeCard._me,
+                          __WBUDynamicMeCard._meCardExists ]
 ...

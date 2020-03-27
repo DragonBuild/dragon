@@ -1,17 +1,17 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/RemoteManagement.framework/Frameworks/RemoteManagementProtocol.framework/RemoteManagementProtocol
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _RMProtocolChannelDevice, _RMProtocolChannelUser, _RMProtocolEndpointClientCapabilities,
-                          _RMProtocolEndpointCommand, _RMProtocolEndpointDeclarationActivation,
-                          _RMProtocolEndpointDeclarationAsset, _RMProtocolEndpointDeclarationConfiguration,
-                          _RMProtocolEndpointEnroll, _RMProtocolEndpointEnrollment, _RMProtocolEndpointManifest,
-                          _RMProtocolEndpointOrganizationDetails, _RMProtocolEndpointPushToken,
+                          _RMProtocolEndpointCommand, _RMProtocolEndpointDeclarationActivation, _RMProtocolEndpointDeclarationAsset,
+                          _RMProtocolEndpointDeclarationConfiguration, _RMProtocolEndpointEnroll, _RMProtocolEndpointEnrollment,
+                          _RMProtocolEndpointManifest, _RMProtocolEndpointOrganizationDetails, _RMProtocolEndpointPushToken,
                           _RMProtocolEndpointServerCapabilities, _RMProtocolEndpointStatus, _RMProtocolEndpointSubscription,
                           _RMProtocolEndpointWellknown, _RMProtocolEnrollResponse_PushEnvironment_demo,
                           _RMProtocolEnrollResponse_PushEnvironment_development,
@@ -23,28 +23,27 @@ exports:
                           _RMProtocolErrorResponse_Code_unknown, _RMProtocolErrorResponse_Code_userAuthInvalid,
                           _RMProtocolErrorResponse_Code_userAuthMissing, _RMProtocolErrorResponse_Code_userAuthNotAllowed ]
     objc-classes:       [ _RMProtocolClientCapabilitiesRequest, _RMProtocolCommandResponse, _RMProtocolDeclarationResponse,
-                          _RMProtocolEnrollRequest, _RMProtocolEnrollResponse, _RMProtocolErrorResponse,
-                          _RMProtocolManifestResponse, _RMProtocolManifestResponse_Declarations,
-                          _RMProtocolManifestResponse_ManifestCommandItem, _RMProtocolManifestResponse_ManifestDeclarationItem,
-                          _RMProtocolManifestResponse_ManifestSubscriptionItem, _RMProtocolOrganizationDetails,
-                          _RMProtocolOrganizationDetailsResponse, _RMProtocolOrganizationDetails_Proof, _RMProtocolPushMessage,
-                          _RMProtocolPushTokenRequest, _RMProtocolServerCapabilitiesResponse, _RMProtocolStatusReport,
-                          _RMProtocolSubscriptionResponse, _RMProtocolSupportedFeatures, _RMProtocolSupportedPayloads,
-                          _RMProtocolSupportedPayloads_Declarations, _RMProtocolWellKnownResponse,
-                          _RMProtocolWellKnownResponse_WellKnownResponseServer ]
+                          _RMProtocolEnrollRequest, _RMProtocolEnrollResponse, _RMProtocolErrorResponse, _RMProtocolManifestResponse,
+                          _RMProtocolManifestResponse_Declarations, _RMProtocolManifestResponse_ManifestCommandItem,
+                          _RMProtocolManifestResponse_ManifestDeclarationItem, _RMProtocolManifestResponse_ManifestSubscriptionItem,
+                          _RMProtocolOrganizationDetails, _RMProtocolOrganizationDetailsResponse,
+                          _RMProtocolOrganizationDetails_Proof, _RMProtocolPushMessage, _RMProtocolPushTokenRequest,
+                          _RMProtocolServerCapabilitiesResponse, _RMProtocolStatusReport, _RMProtocolSubscriptionResponse,
+                          _RMProtocolSupportedFeatures, _RMProtocolSupportedPayloads, _RMProtocolSupportedPayloads_Declarations,
+                          _RMProtocolWellKnownResponse, _RMProtocolWellKnownResponse_WellKnownResponseServer ]
     objc-ivars:         [ _RMProtocolClientCapabilitiesRequest._requestSupportedFeatures,
                           _RMProtocolClientCapabilitiesRequest._requestSupportedPayloads,
                           _RMProtocolClientCapabilitiesRequest._requestSupportedVersions,
                           _RMProtocolCommandResponse._responseDescription, _RMProtocolCommandResponse._responseIdentifier,
                           _RMProtocolCommandResponse._responsePayload, _RMProtocolCommandResponse._responseType,
-                          _RMProtocolDeclarationResponse._responseDescription,
-                          _RMProtocolDeclarationResponse._responseIdentifier, _RMProtocolDeclarationResponse._responsePayload,
-                          _RMProtocolDeclarationResponse._responseServerToken, _RMProtocolDeclarationResponse._responseType,
-                          _RMProtocolEnrollRequest._requestBuildVersion, _RMProtocolEnrollRequest._requestEnrollmentToken,
-                          _RMProtocolEnrollRequest._requestOSVersion, _RMProtocolEnrollRequest._requestProductName,
-                          _RMProtocolEnrollRequest._requestSerialNumber, _RMProtocolEnrollRequest._requestSupportedFeatures,
-                          _RMProtocolEnrollRequest._requestSupportedPayloads, _RMProtocolEnrollRequest._requestSupportedVersions,
-                          _RMProtocolEnrollRequest._requestUDID, _RMProtocolEnrollResponse._responseCapabilitiesToken,
+                          _RMProtocolDeclarationResponse._responseDescription, _RMProtocolDeclarationResponse._responseIdentifier,
+                          _RMProtocolDeclarationResponse._responsePayload, _RMProtocolDeclarationResponse._responseServerToken,
+                          _RMProtocolDeclarationResponse._responseType, _RMProtocolEnrollRequest._requestBuildVersion,
+                          _RMProtocolEnrollRequest._requestEnrollmentToken, _RMProtocolEnrollRequest._requestOSVersion,
+                          _RMProtocolEnrollRequest._requestProductName, _RMProtocolEnrollRequest._requestSerialNumber,
+                          _RMProtocolEnrollRequest._requestSupportedFeatures, _RMProtocolEnrollRequest._requestSupportedPayloads,
+                          _RMProtocolEnrollRequest._requestSupportedVersions, _RMProtocolEnrollRequest._requestUDID,
+                          _RMProtocolEnrollResponse._responseCapabilitiesToken,
                           _RMProtocolEnrollResponse._responseOrganizationDetails,
                           _RMProtocolEnrollResponse._responseOrganizationDetailsToken,
                           _RMProtocolEnrollResponse._responsePushEnvironment, _RMProtocolEnrollResponse._responsePushTopic,
@@ -72,11 +71,10 @@ exports:
                           _RMProtocolServerCapabilitiesResponse._responseCapabilitiesToken,
                           _RMProtocolServerCapabilitiesResponse._responseSupportedFeatures,
                           _RMProtocolServerCapabilitiesResponse._responseVersion, _RMProtocolStatusReport._requestItems,
-                          _RMProtocolSubscriptionResponse._responseDescription,
-                          _RMProtocolSubscriptionResponse._responseIdentifier, _RMProtocolSubscriptionResponse._responsePayload,
-                          _RMProtocolSubscriptionResponse._responseServerToken, _RMProtocolSubscriptionResponse._responseType,
-                          _RMProtocolSupportedPayloads._payloadsCommands, _RMProtocolSupportedPayloads._payloadsDeclarations,
-                          _RMProtocolSupportedPayloads._payloadsSubscriptions,
+                          _RMProtocolSubscriptionResponse._responseDescription, _RMProtocolSubscriptionResponse._responseIdentifier,
+                          _RMProtocolSubscriptionResponse._responsePayload, _RMProtocolSubscriptionResponse._responseServerToken,
+                          _RMProtocolSubscriptionResponse._responseType, _RMProtocolSupportedPayloads._payloadsCommands,
+                          _RMProtocolSupportedPayloads._payloadsDeclarations, _RMProtocolSupportedPayloads._payloadsSubscriptions,
                           _RMProtocolSupportedPayloads_Declarations._payloadsActivations,
                           _RMProtocolSupportedPayloads_Declarations._payloadsAssets,
                           _RMProtocolSupportedPayloads_Declarations._payloadsConfigurations,

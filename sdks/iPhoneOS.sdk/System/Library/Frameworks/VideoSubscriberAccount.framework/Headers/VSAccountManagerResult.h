@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Represents an in-flight request to an account manger.
-VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0))
+VS_EXPORT API_AVAILABLE(ios(10.0), tvos(10.0)) API_UNAVAILABLE(macCatalyst)
 @interface VSAccountManagerResult : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

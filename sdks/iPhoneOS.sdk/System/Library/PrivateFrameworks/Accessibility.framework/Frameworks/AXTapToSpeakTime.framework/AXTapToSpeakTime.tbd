@@ -1,13 +1,15 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/Accessibility.framework/Frameworks/AXTapToSpeakTime.framework/AXTapToSpeakTime
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _AXStringFromTapToSpeakTimeVoice, _AXTapToSpeakTimeVersionNumber, _AXTapToSpeakTimeVersionString ]
+    symbols:            [ _AXStringFromTapToSpeakTimeGesture, _AXStringFromTapToSpeakTimeVoice, _AXTapToSpeakTimeVersionNumber,
+                          _AXTapToSpeakTimeVersionString ]
     objc-classes:       [ _AXTapToSpeakTimeManager, _AXTapticChimeAsset, _AXTapticChimesScheduler, _AXTimeOutputPreferences ]
     objc-ivars:         [ _AXTapToSpeakTimeManager._cachedRingerIsMuted, _AXTapToSpeakTimeManager._dateFormatter,
                           _AXTapToSpeakTimeManager._lastMediaVolume, _AXTapToSpeakTimeManager._queue,

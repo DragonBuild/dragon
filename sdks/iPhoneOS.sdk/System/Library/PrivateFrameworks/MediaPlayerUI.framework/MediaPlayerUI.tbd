@@ -1,19 +1,19 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/MediaPlayerUI.framework/MediaPlayerUI
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     re-exports:         [ /System/Library/PrivateFrameworks/MPUFoundation.framework/MPUFoundation ]
     symbols:            [ _MPUApplicationDefaultsDidChangeNotification, _MPUStoreFrontURLForMediaType ]
-    objc-classes:       [ _MPUAdaptiveCollectionViewController, _MPUApplicationDefaults, _MPUArtworkView,
-                          _MPUCollectionViewController, _MPUCompletionFooterView, _MPUCompletionQueryDataSource,
-                          _MPUGradientView, _MPUItemOfferButton, _MPUNavigationController, _MPUNowPlayingController,
-                          _MPUNowPlayingMetadata, _MPUPlaybackAlertController, _MPURatingControl, _MPUTextButton, _MPUTheme,
-                          _MPUTransportControlsView, _MPUVignetteBackgroundView ]
+    objc-classes:       [ _MPUAdaptiveCollectionViewController, _MPUApplicationDefaults, _MPUArtworkView, _MPUCollectionViewController,
+                          _MPUCompletionFooterView, _MPUCompletionQueryDataSource, _MPUGradientView, _MPUItemOfferButton,
+                          _MPUNavigationController, _MPUNowPlayingController, _MPUNowPlayingMetadata, _MPUPlaybackAlertController,
+                          _MPURatingControl, _MPUTextButton, _MPUTheme, _MPUTransportControlsView, _MPUVignetteBackgroundView ]
     objc-ivars:         [ _MPUAdaptiveCollectionViewController._contentInsetAdditions,
                           _MPUAdaptiveCollectionViewController._scrollIndicatorInsetsAdditions,
                           _MPUAdaptiveCollectionViewController._sizeClassToClassMap, _MPUApplicationDefaults._accessQueue,
@@ -47,22 +47,19 @@ exports:
                           _MPUNowPlayingController._currentNowPlayingAppDisplayID,
                           _MPUNowPlayingController._currentNowPlayingAppIsRunning,
                           _MPUNowPlayingController._currentNowPlayingAppParentApp,
-                          _MPUNowPlayingController._currentNowPlayingArtworkDigest,
-                          _MPUNowPlayingController._currentNowPlayingInfo, _MPUNowPlayingController._delegate,
-                          _MPUNowPlayingController._hasValidCurrentNowPlayingAppDisplayID, _MPUNowPlayingController._isPlaying,
-                          _MPUNowPlayingController._isRegisteredForNowPlayingNotifications,
+                          _MPUNowPlayingController._currentNowPlayingArtworkDigest, _MPUNowPlayingController._currentNowPlayingInfo,
+                          _MPUNowPlayingController._delegate, _MPUNowPlayingController._hasValidCurrentNowPlayingAppDisplayID,
+                          _MPUNowPlayingController._isPlaying, _MPUNowPlayingController._isRegisteredForNowPlayingNotifications,
                           _MPUNowPlayingController._isUpdatingNowPlayingApp, _MPUNowPlayingController._isUpdatingNowPlayingInfo,
                           _MPUNowPlayingController._isUpdatingPlaybackState,
-                          _MPUNowPlayingController._shouldUpdateNowPlayingArtwork,
-                          _MPUNowPlayingController._timeInformationTimer,
+                          _MPUNowPlayingController._shouldUpdateNowPlayingArtwork, _MPUNowPlayingController._timeInformationTimer,
                           _MPUNowPlayingController._timeInformationUpdateInterval,
                           _MPUNowPlayingController._wantsTimeInformationUpdates, _MPUNowPlayingMetadata._nowPlayingInfo,
                           _MPUPlaybackAlertController._error, _MPUPlaybackAlertController._item,
                           _MPUPlaybackAlertController._playbackAlertType, _MPURatingControl._delegate,
                           _MPURatingControl._hitTestEdgeInsets, _MPURatingControl._imageViews,
-                          _MPURatingControl._panGestureRecognizer, _MPURatingControl._rating,
-                          _MPURatingControl._tapGestureRecognizer, _MPUTextButton._titleAlignment,
-                          _MPUTransportControlsView._availableTransportControls,
+                          _MPURatingControl._panGestureRecognizer, _MPURatingControl._rating, _MPURatingControl._tapGestureRecognizer,
+                          _MPUTextButton._titleAlignment, _MPUTransportControlsView._availableTransportControls,
                           _MPUTransportControlsView._classByReuseIdentifier, _MPUTransportControlsView._dataSource,
                           _MPUTransportControlsView._delegate, _MPUTransportControlsView._insetsForExpandingButtons,
                           _MPUTransportControlsView._layoutDelegate,
@@ -71,7 +68,6 @@ exports:
                           _MPUTransportControlsView._reuseIdentifierByButton, _MPUTransportControlsView._sortByGroup,
                           _MPUTransportControlsView._sortedVisibleControlsWithBlanks,
                           _MPUTransportControlsView._sortedVisibleControlsWithBlanksNeedsReload,
-                          _MPUTransportControlsView._typesOfControlsToReload,
-                          _MPUTransportControlsView._usesLegacyLayoutHeuristics,
+                          _MPUTransportControlsView._typesOfControlsToReload, _MPUTransportControlsView._usesLegacyLayoutHeuristics,
                           _MPUTransportControlsView._visibleButtonByControlType ]
 ...

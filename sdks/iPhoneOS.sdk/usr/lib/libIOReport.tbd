@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: E81339E2-D752-3E5C-BBB9-E7AE0F70E418', 'arm64e: C5FC645A-54A5-30C1-9FCB-8E6C6C91FCD1' ]
+                   'arm64: 61799CD5-0FFD-3618-9B9B-FE0B569492E1', 'arm64e: F64C72BB-B78E-3E7D-8E2F-82A610C632EB' ]
 platform:        ios
 install-name:    '/usr/lib/libIOReport.dylib'
 exports:         

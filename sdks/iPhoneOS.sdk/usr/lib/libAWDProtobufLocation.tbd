@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 70372A84-D1CA-38CF-BF15-BCB414C82854', 'armv7s: 3D191589-81F3-34EA-BC3D-96041048C17D', 
-                   'arm64: FFB571C9-2434-36E2-BFEF-56C982A2F94C', 'arm64e: 91FF30C8-F9F6-3FB0-99D7-0607293193FF' ]
+                   'arm64: 22A41A2B-31B8-3FC1-B46F-225521CCF8D4', 'arm64e: 2C59D11D-13BC-36C7-B4F8-BA4611039059' ]
 platform:        ios
 install-name:    '/usr/lib/libAWDProtobufLocation.dylib'
 exports:         
@@ -218,6 +218,7 @@ exports:
                        __ZN3awd7metrics14CompassSession10Level3DMedE, __ZN3awd7metrics14CompassSession10UnreliableE, 
                        __ZN3awd7metrics14CompassSession11Level2DWeakE, __ZN3awd7metrics14CompassSession11Level3DWeakE, 
                        __ZN3awd7metrics14CompassSession21CheckTypeAndMergeFromERKN20wireless_diagnostics6google8protobuf11MessageLiteE, 
+                       __ZN3awd7metrics14CompassSession25kFinalAccuracyFieldNumberE, 
                        __ZN3awd7metrics14CompassSession27MergePartialFromCodedStreamEPN20wireless_diagnostics6google8protobuf2io16CodedInputStreamE, 
                        __ZN3awd7metrics14MotionSOSEvent21CheckTypeAndMergeFromERKN20wireless_diagnostics6google8protobuf11MessageLiteE, 
                        __ZN3awd7metrics14MotionSOSEvent27MergePartialFromCodedStreamEPN20wireless_diagnostics6google8protobuf2io16CodedInputStreamE, 

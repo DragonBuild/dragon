@@ -287,8 +287,8 @@ API_AVAILABLE(macos(10.15), ios(11.0)) API_UNAVAILABLE(watchos, tvos)
 @property (readonly) NEFilterAction action API_AVAILABLE(macos(10.15), ios(11.0)) API_UNAVAILABLE(watchos, tvos);
 
 /*!
- * @property type
- * @discussion The type of the report.
+ * @property event
+ * @discussion The type of event that the report is reporting.
  */
 @property (readonly) NEFilterReportEvent event API_AVAILABLE(macos(10.15), ios(13.0)) API_UNAVAILABLE(watchos, tvos);
 

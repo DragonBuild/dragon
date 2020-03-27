@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 95601C5A-569C-3E46-AF0D-A43A4665AADA', 'armv7s: 96588F43-C027-3B90-A19C-D6F816FF623B', 
-                   'arm64: AC93372F-0BD3-3443-A3E3-E3D197A4C6DB', 'arm64e: 009C4C37-0FD6-39B9-8F4E-74B5CF025AA8' ]
+                   'arm64: 55DB51C3-D2A6-333A-9296-0F49553EF2B1', 'arm64e: AA754E36-28C7-3F4E-A1EE-41AE0595E4C2' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftAccelerate.dylib'
 current-version: 0

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F7D48C84-7A26-3D92-967E-E51F7E7E4D49', 'armv7s: 9CF336B4-358A-3280-93A9-0381D3A515EB', 
-                   'arm64: 4D40E0CD-3E8D-3A70-8592-2A35FE412AE4', 'arm64e: 83C7A345-F485-3055-A6AD-79AE2A9E28A1' ]
+                   'arm64: 369F863C-D1FF-355F-93D7-1806298A9D23', 'arm64e: CF65398D-020F-3177-95AC-BF8C9FD7F957' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftNaturalLanguage.dylib'
 current-version: 0

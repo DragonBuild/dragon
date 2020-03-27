@@ -1,34 +1,33 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SystemStatus.framework/SystemStatus
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _STStatusDomainEntitlement, _STStatusDomainEntitlementValueBattery,
                           _STStatusDomainEntitlementValueTelephony, _STStatusDomainEntitlementValueVoiceControl,
                           _STStatusDomainEntitlementValueWifi, _STStatusDomainPublisherEntitlement,
-                          _STStatusDomainPublisherServiceName, _STStatusDomainPublisherXPCServerInterface,
-                          _STStatusDomainServiceName, _STStatusDomainXPCClientInterface, _STStatusDomainXPCServerInterface,
-                          _STSystemStatusDescriptionForDomain, _STSystemStatusLoggingSubsystem, _SystemStatusVersionNumber,
-                          _SystemStatusVersionString ]
+                          _STStatusDomainPublisherServiceName, _STStatusDomainPublisherXPCServerInterface, _STStatusDomainServiceName,
+                          _STStatusDomainXPCClientInterface, _STStatusDomainXPCServerInterface, _STSystemStatusDescriptionForDomain,
+                          _STSystemStatusLoggingSubsystem, _SystemStatusVersionNumber, _SystemStatusVersionString ]
     objc-classes:       [ _STBatteryStatusDomain, _STBatteryStatusDomainData, _STBatteryStatusDomainDataDiff,
-                          _STBatteryStatusDomainPublisher, _STMutableBatteryStatusDomainData,
-                          _STMutableTelephonyStatusDomainData, _STMutableTelephonyStatusDomainSIMInfo,
-                          _STMutableVoiceControlStatusDomainData, _STMutableWifiStatusDomainData, _STStatusDomain,
-                          _STStatusDomainPublisher, _STStatusDomainPublisherXPCServerHandle, _STStatusDomainXPCServerHandle,
-                          _STTelephonyStatusDomain, _STTelephonyStatusDomainData, _STTelephonyStatusDomainDataDiff,
-                          _STTelephonyStatusDomainPublisher, _STTelephonyStatusDomainSIMInfo,
-                          _STTelephonyStatusDomainSIMInfoDiff, _STVoiceControlStatusDomain, _STVoiceControlStatusDomainData,
-                          _STVoiceControlStatusDomainDataDiff, _STVoiceControlStatusDomainPublisher, _STWifiStatusDomain,
-                          _STWifiStatusDomainData, _STWifiStatusDomainDataDiff, _STWifiStatusDomainPublisher ]
+                          _STBatteryStatusDomainPublisher, _STMutableBatteryStatusDomainData, _STMutableTelephonyStatusDomainData,
+                          _STMutableTelephonyStatusDomainSIMInfo, _STMutableVoiceControlStatusDomainData,
+                          _STMutableWifiStatusDomainData, _STStatusDomain, _STStatusDomainPublisher,
+                          _STStatusDomainPublisherXPCServerHandle, _STStatusDomainXPCServerHandle, _STTelephonyStatusDomain,
+                          _STTelephonyStatusDomainData, _STTelephonyStatusDomainDataDiff, _STTelephonyStatusDomainPublisher,
+                          _STTelephonyStatusDomainSIMInfo, _STTelephonyStatusDomainSIMInfoDiff, _STVoiceControlStatusDomain,
+                          _STVoiceControlStatusDomainData, _STVoiceControlStatusDomainDataDiff, _STVoiceControlStatusDomainPublisher,
+                          _STWifiStatusDomain, _STWifiStatusDomainData, _STWifiStatusDomainDataDiff, _STWifiStatusDomainPublisher ]
     objc-ivars:         [ _STBatteryStatusDomainData._batterySaverModeActive, _STBatteryStatusDomainData._chargingDescription,
                           _STBatteryStatusDomainData._chargingDescriptionType, _STBatteryStatusDomainData._chargingState,
                           _STBatteryStatusDomainData._percentCharge, _STBatteryStatusDomainDataDiff._changes,
-                          _STStatusDomain._dataChangedBlock, _STStatusDomain._serverHandle,
-                          _STStatusDomainPublisher._serverHandle, _STStatusDomainPublisherXPCServerHandle._dataByDomain,
+                          _STStatusDomain._dataChangedBlock, _STStatusDomain._serverHandle, _STStatusDomainPublisher._serverHandle,
+                          _STStatusDomainPublisherXPCServerHandle._dataByDomain,
                           _STStatusDomainPublisherXPCServerHandle._hasSentDataByDomain,
                           _STStatusDomainPublisherXPCServerHandle._internalQueue,
                           _STStatusDomainPublisherXPCServerHandle._serverXPCConnection,
@@ -40,9 +39,8 @@ exports:
                           _STTelephonyStatusDomainDataDiff._SIMOneInfoDiff, _STTelephonyStatusDomainDataDiff._SIMTwoInfoDiff,
                           _STTelephonyStatusDomainDataDiff._changes, _STTelephonyStatusDomainSIMInfo._SIMPresent,
                           _STTelephonyStatusDomainSIMInfo._callForwardingEnabled,
-                          _STTelephonyStatusDomainSIMInfo._cellularServiceState,
-                          _STTelephonyStatusDomainSIMInfo._dataNetworkType, _STTelephonyStatusDomainSIMInfo._label,
-                          _STTelephonyStatusDomainSIMInfo._maxSignalStrengthBars,
+                          _STTelephonyStatusDomainSIMInfo._cellularServiceState, _STTelephonyStatusDomainSIMInfo._dataNetworkType,
+                          _STTelephonyStatusDomainSIMInfo._label, _STTelephonyStatusDomainSIMInfo._maxSignalStrengthBars,
                           _STTelephonyStatusDomainSIMInfo._preferredForDataConnections,
                           _STTelephonyStatusDomainSIMInfo._providingDataConnection,
                           _STTelephonyStatusDomainSIMInfo._registeredWithoutCellular,

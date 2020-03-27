@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 919E78A0-46AF-3D43-B730-A0E54A1ECDAF', 'armv7s: 92603052-4E99-3925-A1FC-A0A84553BED2', 
-                   'arm64: E3D83DC3-2DD5-3DF1-8007-540F532D0537', 'arm64e: 98FD8EAD-E00C-33DA-B9DE-E85538D6310E' ]
+                   'arm64: 176291D8-E2A9-3805-BF4C-6DA70C9894FD', 'arm64e: 1543CD56-3950-3835-AF5A-CCF561CC809C' ]
 platform:        ios
 install-name:    '/usr/lib/libmecabra.dylib'
-current-version: 875.1
+current-version: 883
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _MecabraAnalysisContextAddCandidate, _MecabraAnalysisContextAdjust, 

@@ -1,20 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/EasyConfig.framework/EasyConfig
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _EasyConfigCreateDictionaryFromTLV, _EasyConfigCreateTLVfromDictionary,
-                          _EasyConfigDeviceProgressNotification, _EasyConfigDeviceStoppedNotification,
-                          _EasyConfigKey_AdminPassword, _EasyConfigKey_AllowPairing, _EasyConfigKey_BundleSeedID,
-                          _EasyConfigKey_CountryCode, _EasyConfigKey_DeviceID, _EasyConfigKey_FirmwareRevision,
-                          _EasyConfigKey_Flags, _EasyConfigKey_HardwareRevision, _EasyConfigKey_IndoorOutdoorMode,
-                          _EasyConfigKey_Language, _EasyConfigKey_MFiProtocols, _EasyConfigKey_Manufacturer,
-                          _EasyConfigKey_Model, _EasyConfigKey_Name, _EasyConfigKey_OperationType, _EasyConfigKey_PlayPassword,
-                          _EasyConfigKey_Progress, _EasyConfigKey_ReasonError, _EasyConfigKey_Response,
+                          _EasyConfigDeviceProgressNotification, _EasyConfigDeviceStoppedNotification, _EasyConfigKey_AdminPassword,
+                          _EasyConfigKey_AllowPairing, _EasyConfigKey_BundleSeedID, _EasyConfigKey_CountryCode, _EasyConfigKey_DeviceID,
+                          _EasyConfigKey_FirmwareRevision, _EasyConfigKey_Flags, _EasyConfigKey_HardwareRevision,
+                          _EasyConfigKey_IndoorOutdoorMode, _EasyConfigKey_Language, _EasyConfigKey_MFiProtocols,
+                          _EasyConfigKey_Manufacturer, _EasyConfigKey_Model, _EasyConfigKey_Name, _EasyConfigKey_OperationType,
+                          _EasyConfigKey_PlayPassword, _EasyConfigKey_Progress, _EasyConfigKey_ReasonError, _EasyConfigKey_Response,
                           _EasyConfigKey_SerialNumber, _EasyConfigKey_WiFiEAPTLSCertificate, _EasyConfigKey_WiFiPSK,
                           _EasyConfigKey_WiFiRouterCertificate, _EasyConfigKey_WiFiSSID, _EasyConfigLogControl ]
     objc-classes:       [ _AWDEasyConfigCompleted, _EasyConfigDevice ]
@@ -40,18 +40,16 @@ exports:
                           _AWDEasyConfigCompleted._userChangedFriendlyName, _AWDEasyConfigCompleted._wifiJoinDestinationAPError,
                           _AWDEasyConfigCompleted._wifiJoinSWAPError, _EasyConfigDevice._airplayBonjourInfo,
                           _EasyConfigDevice._airplayBrowser, _EasyConfigDevice._applyConfigFinishTime,
-                          _EasyConfigDevice._applyConfigStartTime, _EasyConfigDevice._configResponse,
-                          _EasyConfigDevice._configSeed, _EasyConfigDevice._configStartTime, _EasyConfigDevice._configuration,
-                          _EasyConfigDevice._deviceIdentifier, _EasyConfigDevice._deviceInfo,
-                          _EasyConfigDevice._enterSetupCodeMs, _EasyConfigDevice._features,
+                          _EasyConfigDevice._applyConfigStartTime, _EasyConfigDevice._configResponse, _EasyConfigDevice._configSeed,
+                          _EasyConfigDevice._configStartTime, _EasyConfigDevice._configuration, _EasyConfigDevice._deviceIdentifier,
+                          _EasyConfigDevice._deviceInfo, _EasyConfigDevice._enterSetupCodeMs, _EasyConfigDevice._features,
                           _EasyConfigDevice._findPostConfigFoundTime, _EasyConfigDevice._findPostConfigStartTime,
                           _EasyConfigDevice._findPreConfigFoundTime, _EasyConfigDevice._findPreConfigStartTime,
                           _EasyConfigDevice._firstErr, _EasyConfigDevice._hapBonjourInfo, _EasyConfigDevice._hapBrowser,
                           _EasyConfigDevice._hasPairingDelegate, _EasyConfigDevice._httpClient, _EasyConfigDevice._internalQueue,
-                          _EasyConfigDevice._mfiConfigBonjourInfo, _EasyConfigDevice._mfiConfigBrowser,
-                          _EasyConfigDevice._mfiSAP, _EasyConfigDevice._model, _EasyConfigDevice._name,
-                          _EasyConfigDevice._pairSetupFlags, _EasyConfigDevice._pairVerifyFlags,
-                          _EasyConfigDevice._pairingDelegate, _EasyConfigDevice._pairingSession,
+                          _EasyConfigDevice._mfiConfigBonjourInfo, _EasyConfigDevice._mfiConfigBrowser, _EasyConfigDevice._mfiSAP,
+                          _EasyConfigDevice._model, _EasyConfigDevice._name, _EasyConfigDevice._pairSetupFlags,
+                          _EasyConfigDevice._pairVerifyFlags, _EasyConfigDevice._pairingDelegate, _EasyConfigDevice._pairingSession,
                           _EasyConfigDevice._pausesAfterApply, _EasyConfigDevice._postConfigCheckFinishTime,
                           _EasyConfigDevice._postConfigCheckStartTime, _EasyConfigDevice._postConfigMetrics,
                           _EasyConfigDevice._postConfigMetricsSet, _EasyConfigDevice._preConfigMetrics,

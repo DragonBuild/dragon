@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 09C195D8-D3CC-3930-8AF9-E19028BA30B8', 'armv7s: 5B729089-475E-376D-B505-64CE47CDBE77', 
-                   'arm64: 67A99405-1578-3133-9882-BB1E2D186DD1', 'arm64e: D52DB16E-DB3A-3071-93EF-BA13753992A5' ]
+                   'arm64: 085E7361-3941-3892-859F-1FCE954DB8F5', 'arm64e: 00F53D66-8ED2-3A1F-8BEA-B0949C884BB8' ]
 platform:        ios
 install-name:    '/usr/lib/libspindump.dylib'
 exports:         

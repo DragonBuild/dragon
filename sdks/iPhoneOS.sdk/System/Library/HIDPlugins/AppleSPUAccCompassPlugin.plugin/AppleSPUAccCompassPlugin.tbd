@@ -1,7 +1,7 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/HIDPlugins/AppleSPUAccCompassPlugin.plugin/AppleSPUAccCompassPlugin
 current-version:       0
 compatibility-version: 0
@@ -28,6 +28,5 @@ exports:
                           __ZN24AppleSPUAccCompassPlugin5matchEP14__IOHIDServicej, __ZN24AppleSPUAccCompassPlugin6AddRefEv,
                           __ZN24AppleSPUAccCompassPlugin6filterEP12__IOHIDEvent, __ZN24AppleSPUAccCompassPlugin7ReleaseEv,
                           __ZN24AppleSPUAccCompassPluginC1EPK13__CFAllocator, __ZN24AppleSPUAccCompassPluginC2EPK13__CFAllocator,
-                          __ZN24AppleSPUAccCompassPluginD1Ev, __ZN24AppleSPUAccCompassPluginD2Ev,
-                          __ZN24AppleSPUAccCompassPlugindlEPv ]
+                          __ZN24AppleSPUAccCompassPluginD1Ev, __ZN24AppleSPUAccCompassPluginD2Ev, __ZN24AppleSPUAccCompassPlugindlEPv ]
 ...

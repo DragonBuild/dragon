@@ -1,15 +1,16 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/WirelessCoexManager.framework/WirelessCoexManager
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _WCMEnabled, _WirelessRadioManagerDumpLog, _WirelessRadioManagerSetLogToFile ]
-    objc-classes:       [ _WCMClientProxy, _WCMSetting, _WRMClientInterface, _WRM_iRATInterface,
-                          _WRM_iRATProximityRecommendation, _WRM_iRATProximityRecommendationLogging ]
+    objc-classes:       [ _WCMClientProxy, _WCMSetting, _WRMClientInterface, _WRM_iRATInterface, _WRM_iRATProximityRecommendation,
+                          _WRM_iRATProximityRecommendationLogging ]
     objc-ivars:         [ _WCMClientProxy.mConnection, _WCMClientProxy.mDelegate, _WCMClientProxy.mIsRegistered,
                           _WCMClientProxy.mProcessId, _WCMClientProxy.mQueue, _WRMClientInterface.mConnection,
                           _WRMClientInterface.mNotificationBlock, _WRMClientInterface.mProcessId, _WRMClientInterface.mQueue,
@@ -25,8 +26,7 @@ exports:
                           _WRM_iRATInterface.mProximitySubscribeLinkRecommendationEnabled,
                           _WRM_iRATInterface.mProximitySubscribeLinkRecommendationHandler,
                           _WRM_iRATInterface.mTelephoneAssertionEnabled, _WRM_iRATInterface.mTelephonyStateEnabled,
-                          _WRM_iRATProximityRecommendation._RecommendationType,
-                          _WRM_iRATProximityRecommendation._linkIsRecommended,
+                          _WRM_iRATProximityRecommendation._RecommendationType, _WRM_iRATProximityRecommendation._linkIsRecommended,
                           _WRM_iRATProximityRecommendation._linkRecommendationIsValid, _WRM_iRATProximityRecommendation._metrics,
                           _WRM_iRATProximityRecommendationLogging._Uuid, _WRM_iRATProximityRecommendationLogging._beaconPER,
                           _WRM_iRATProximityRecommendationLogging._btRSSI,

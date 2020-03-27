@@ -1,20 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/RemoteTextInput.framework/RemoteTextInput
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _RTICanLogMessageAtLevel, _RTILogFacility, _RTIServiceAnonymousName, _RTIServiceIOSMacName,
-                          _RTIServiceMediaRemoteName, _RTIServiceRapportName, _RTIServiceSharingName,
-                          _RTIServiceSharingSafariName, _RTIServiceTVControlServicesName, _RemoteTextInputVersionNumber,
-                          _RemoteTextInputVersionString, __RTI_NSStringFromCGRect ]
-    objc-classes:       [ _RTIDataPayload, _RTIDocumentState, _RTIDocumentTraits, _RTIInputSystemClient,
-                          _RTIInputSystemClientSession, _RTIInputSystemDataPayload, _RTIInputSystemService,
-                          _RTIInputSystemServiceSession, _RTIInputSystemSession, _RTIInputSystemSourceSession,
-                          _RTIStyledIntermediateText, _RTITextOperations, _RTIUtilities ]
+                          _RTIServiceMediaRemoteName, _RTIServiceRapportName, _RTIServiceSharingName, _RTIServiceSharingSafariName,
+                          _RTIServiceTVControlServicesName, _RemoteTextInputVersionNumber, _RemoteTextInputVersionString,
+                          __RTI_NSStringFromCGRect ]
+    objc-classes:       [ _RTIDataPayload, _RTIDocumentState, _RTIDocumentTraits, _RTIInputSystemClient, _RTIInputSystemClientSession,
+                          _RTIInputSystemDataPayload, _RTIInputSystemService, _RTIInputSystemServiceSession, _RTIInputSystemSession,
+                          _RTIInputSystemSourceSession, _RTIStyledIntermediateText, _RTITextOperations, _RTIUtilities ]
     objc-ivars:         [ _RTIDataPayload._data, _RTIDataPayload._version, _RTIDocumentState.__selectionRects,
                           _RTIDocumentState._caretRectInWindow, _RTIDocumentState._documentState,
                           _RTIDocumentState._firstSelectionRectInWindow, _RTIDocumentState._textCheckingAnnotatedString,
@@ -32,8 +32,8 @@ exports:
                           _RTIInputSystemDataPayload._documentState, _RTIInputSystemDataPayload._documentTraits,
                           _RTIInputSystemDataPayload._sessionUUID, _RTIInputSystemDataPayload._textOperations,
                           _RTIInputSystemService._currentSession, _RTIInputSystemService._delegate,
-                          _RTIInputSystemService._dispatchQueue, _RTIInputSystemService._enabled,
-                          _RTIInputSystemService._listener, _RTIInputSystemService._machName, _RTIInputSystemService._sessions,
+                          _RTIInputSystemService._dispatchQueue, _RTIInputSystemService._enabled, _RTIInputSystemService._listener,
+                          _RTIInputSystemService._machName, _RTIInputSystemService._sessions,
                           _RTIInputSystemServiceSession._connection, _RTIInputSystemServiceSession._internalQueue,
                           _RTIInputSystemServiceSession._isPaused, _RTIInputSystemSession._documentState,
                           _RTIInputSystemSession._documentTraits, _RTIInputSystemSession._extraSessionDelegates,

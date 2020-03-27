@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/SearchAds.framework/SearchAds
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _SearchAdsVersionNumber, _SearchAdsVersionString ]
@@ -12,15 +13,15 @@ exports:
                           _ADSearchObject, _ADSearchSession ]
     objc-ivars:         [ _ADDataObject._error, _ADDataObject._iAdData, _ADInstallAttributionData._adNetworkID,
                           _ADInstallAttributionData._adamID, _ADInstallAttributionData._campaignID,
-                          _ADInstallAttributionData._signature, _ADInstallAttributionData._timestamp,
-                          _ADInstallAttributionData._uuid, _ADLocationManager._actualLocation, _ADLocationManager._callerStatus,
-                          _ADLocationManager._currentPlacemark, _ADLocationManager._isLocationInitialized,
-                          _ADLocationManager._isLocationUpdating, _ADLocationManager._lastPlacemarkLocation,
-                          _ADLocationManager._listeners, _ADLocationManager._locationManager, _ADLocationManager._locationQueue,
+                          _ADInstallAttributionData._signature, _ADInstallAttributionData._timestamp, _ADInstallAttributionData._uuid,
+                          _ADLocationManager._actualLocation, _ADLocationManager._callerStatus, _ADLocationManager._currentPlacemark,
+                          _ADLocationManager._isLocationInitialized, _ADLocationManager._isLocationUpdating,
+                          _ADLocationManager._lastPlacemarkLocation, _ADLocationManager._listeners,
+                          _ADLocationManager._locationManager, _ADLocationManager._locationQueue,
                           _ADLocationManager._updatingPlacemark, _ADResponseData._algoID, _ADResponseData._clientRequestID,
                           _ADResponseData._format, _ADResponseData._impressionID, _ADResponseData._installAttribution,
-                          _ADResponseData._lineItem, _ADResponseData._metadata, _ADResponseData._odmlResponse,
-                          _ADResponseData._privacy, _ADResponseData._templateType, _ADSearchAdsSettings._algoID,
+                          _ADResponseData._lineItem, _ADResponseData._metadata, _ADResponseData._odmlResponse, _ADResponseData._privacy,
+                          _ADResponseData._templateType, _ADSearchAdsSettings._algoID,
                           _ADSearchAdsSettings._clickExpirationThresholdInSeconds, _ADSearchAdsSettings._clientSettings,
                           _ADSearchAdsSettings._defaultAdTargetingServerURL, _ADSearchAdsSettings._defaultToroServerURL,
                           _ADSearchAdsSettings._frequencyCapExpirationInSeconds, _ADSearchAdsSettings._isBaseline,

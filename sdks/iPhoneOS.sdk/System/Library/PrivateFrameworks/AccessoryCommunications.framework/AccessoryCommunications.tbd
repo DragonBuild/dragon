@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/AccessoryCommunications.framework/AccessoryCommunications
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AccessoryCommunicationsVersionNumber, _AccessoryCommunicationsVersionString,
@@ -34,14 +35,13 @@ exports:
                           _kACCCommunications_ListUpdate_Favorites_AddressBookID,
                           _kACCCommunications_ListUpdate_Favorites_DisplayName, _kACCCommunications_ListUpdate_Favorites_Label,
                           _kACCCommunications_ListUpdate_Favorites_RemoteID, _kACCCommunications_ListUpdate_Favorites_Service,
-                          _kACCCommunications_ListUpdate_Recents_AddressBookID,
-                          _kACCCommunications_ListUpdate_Recents_DisplayName, _kACCCommunications_ListUpdate_Recents_Duration,
-                          _kACCCommunications_ListUpdate_Recents_Label, _kACCCommunications_ListUpdate_Recents_Occurrences,
-                          _kACCCommunications_ListUpdate_Recents_RemoteID, _kACCCommunications_ListUpdate_Recents_Service,
-                          _kACCCommunications_ListUpdate_Recents_Type, _kACCCommunications_ListUpdate_Recents_UnixTimestamp,
-                          _kCFACCCommunications_CallStateUpdate_AddressBookID, _kCFACCCommunications_CallStateUpdate_CallUUID,
-                          _kCFACCCommunications_CallStateUpdate_ConferenceGroup, _kCFACCCommunications_CallStateUpdate_Direction,
-                          _kCFACCCommunications_CallStateUpdate_DisconnectReason,
+                          _kACCCommunications_ListUpdate_Recents_AddressBookID, _kACCCommunications_ListUpdate_Recents_DisplayName,
+                          _kACCCommunications_ListUpdate_Recents_Duration, _kACCCommunications_ListUpdate_Recents_Label,
+                          _kACCCommunications_ListUpdate_Recents_Occurrences, _kACCCommunications_ListUpdate_Recents_RemoteID,
+                          _kACCCommunications_ListUpdate_Recents_Service, _kACCCommunications_ListUpdate_Recents_Type,
+                          _kACCCommunications_ListUpdate_Recents_UnixTimestamp, _kCFACCCommunications_CallStateUpdate_AddressBookID,
+                          _kCFACCCommunications_CallStateUpdate_CallUUID, _kCFACCCommunications_CallStateUpdate_ConferenceGroup,
+                          _kCFACCCommunications_CallStateUpdate_Direction, _kCFACCCommunications_CallStateUpdate_DisconnectReason,
                           _kCFACCCommunications_CallStateUpdate_DisplayName, _kCFACCCommunications_CallStateUpdate_IsConferenced,
                           _kCFACCCommunications_CallStateUpdate_Label, _kCFACCCommunications_CallStateUpdate_RemoteID,
                           _kCFACCCommunications_CallStateUpdate_Service, _kCFACCCommunications_CallStateUpdate_StartTimestamp,
@@ -65,13 +65,11 @@ exports:
                           _kCFACCCommunications_CommunicationsUpdate_TTYStatus,
                           _kCFACCCommunications_CommunicationsUpdate_TelephonyEnabled,
                           _kCFACCCommunications_ListUpdate_Favorites_AddressBookID,
-                          _kCFACCCommunications_ListUpdate_Favorites_DisplayName,
-                          _kCFACCCommunications_ListUpdate_Favorites_Label, _kCFACCCommunications_ListUpdate_Favorites_RemoteID,
-                          _kCFACCCommunications_ListUpdate_Favorites_Service,
+                          _kCFACCCommunications_ListUpdate_Favorites_DisplayName, _kCFACCCommunications_ListUpdate_Favorites_Label,
+                          _kCFACCCommunications_ListUpdate_Favorites_RemoteID, _kCFACCCommunications_ListUpdate_Favorites_Service,
                           _kCFACCCommunications_ListUpdate_Recents_AddressBookID,
-                          _kCFACCCommunications_ListUpdate_Recents_DisplayName,
-                          _kCFACCCommunications_ListUpdate_Recents_Duration, _kCFACCCommunications_ListUpdate_Recents_Label,
-                          _kCFACCCommunications_ListUpdate_Recents_Occurrences,
+                          _kCFACCCommunications_ListUpdate_Recents_DisplayName, _kCFACCCommunications_ListUpdate_Recents_Duration,
+                          _kCFACCCommunications_ListUpdate_Recents_Label, _kCFACCCommunications_ListUpdate_Recents_Occurrences,
                           _kCFACCCommunications_ListUpdate_Recents_RemoteID, _kCFACCCommunications_ListUpdate_Recents_Service,
                           _kCFACCCommunications_ListUpdate_Recents_Type, _kCFACCCommunications_ListUpdate_Recents_UnixTimestamp,
                           _kCFACCCommunications_SubscriberList_CallStateUpdates,

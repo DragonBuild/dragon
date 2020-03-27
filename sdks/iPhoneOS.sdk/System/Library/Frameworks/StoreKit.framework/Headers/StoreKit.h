@@ -6,6 +6,7 @@
 //
 
 #import <StoreKit/SKAdNetwork.h>
+#import <StoreKit/SKArcadeService.h>
 #import <StoreKit/SKCloudServiceController.h>
 #import <StoreKit/SKCloudServiceSetupViewController.h>
 #import <StoreKit/SKDownload.h>

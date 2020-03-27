@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64 ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 67A79DA5-065C-3CF8-B281-7D91E35F84F3' ]
+                   'arm64: 10C56A5B-F647-314D-88F9-416C38599FE5' ]
 platform:        ios
 install-name:    '/usr/lib/libSMC.dylib'
 current-version: 20

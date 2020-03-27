@@ -35,6 +35,7 @@
 
 #include <mach/machine/_structs.h>
 #include <mach/message.h>
+#include <mach/vm_types.h>
 #include <mach/arm/thread_state.h>
 
 /*

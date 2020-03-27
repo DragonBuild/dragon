@@ -2,7 +2,7 @@
  *  CTFramesetter.h
  *  CoreText
  *
- *  Copyright (c) 2003-2018 Apple Inc. All rights reserved.
+ *  Copyright (c) 2003-2019 Apple Inc. All rights reserved.
  *
  */
 
@@ -55,8 +55,7 @@ CFTypeID CTFramesetterGetTypeID( void ) CT_AVAILABLE(macos(10.5), ios(3.2), watc
     @param      typesetter
                 The typesetter to be used by the newly-created framesetter.
 
-    @result     This function will return a reference to a CTFramesetter if
-                the call was successful. Otherwise, it will return NULL.
+    @result     This function will return a reference to a CTFramesetter object.
 
     @seealso    CTTypesetterCreateWithAttributedStringAndOptions
 */
@@ -73,16 +72,14 @@ CTFramesetterRef CTFramesetterCreateWithTypesetter(
     @discussion The resultant framesetter object can be used to create and
                 fill text frames with the CTFramesetterCreateFrame call.
 
-    @param      string
-                The run with which you want to construct the framesetter
-                object with.
+    @param      attrString
+                The attributed string to construct the framesetter with.
 
-    @result     This function will return a reference to a CTFramesetter if
-                the call was successful. Otherwise, it will return NULL.
+    @result     This function will return a reference to a CTFramesetter object.
 */
 
 CTFramesetterRef CTFramesetterCreateWithAttributedString(
-    CFAttributedStringRef string ) CT_AVAILABLE(macos(10.5), ios(3.2), watchos(2.0), tvos(9.0));
+    CFAttributedStringRef attrString ) CT_AVAILABLE(macos(10.5), ios(3.2), watchos(2.0), tvos(9.0));
 
 
 /* --------------------------------------------------------------------------- */

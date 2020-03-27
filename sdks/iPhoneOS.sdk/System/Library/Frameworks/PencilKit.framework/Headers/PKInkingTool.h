@@ -63,6 +63,15 @@ API_AVAILABLE(ios(13.0))
 #if TARGET_OS_IPHONE
 @property (nonatomic, readonly) UIColor *color;
 
+/// Converts a color from one user interface style to another.
+///
+/// A dark color in a light user interface style is converted to a lighter color in a
+/// dark user interface style. This conversion is not guaranteed to roundtrip losslessly, or to
+/// be consistent between different OS versions.
+///
+/// @param color The color to convert
+/// @param fromUserInterfaceStyle The user interface style to convert the color from.
+/// @param toUserInterfaceStyle The user interface style to convert the color to.
 + (UIColor *)convertColor:(UIColor *)color fromUserInterfaceStyle:(UIUserInterfaceStyle)fromUserInterfaceStyle to:(UIUserInterfaceStyle)toUserInterfaceStyle;
 #else
 @property (nonatomic, readonly) NSColor *color;

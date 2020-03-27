@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 9D77BEB1-1D90-363E-8F50-713A9AE44C36', 'arm64e: A5A74462-D7B9-3368-8387-262663996597' ]
+                   'arm64: 272DB77E-FBEF-34D5-8129-3AF883557441', 'arm64e: C06C5232-DF31-3377-964F-4840D80F5653' ]
 platform:        ios
 install-name:    '/usr/lib/libimg4.dylib'
 current-version: 61

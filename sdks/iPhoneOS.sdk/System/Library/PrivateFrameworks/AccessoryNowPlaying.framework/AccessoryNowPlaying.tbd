@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/AccessoryNowPlaying.framework/AccessoryNowPlaying
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _AccessoryNowPlayingVersionNumber, _AccessoryNowPlayingVersionString,
@@ -47,16 +48,15 @@ exports:
                           _kACCNowPlaying_NowPlayingUpdate_PlaybackAttributes_iTunesRadioStationMediaPlaylistPersistentID,
                           _kACCNowPlaying_PlaybackQueueContentInfo_Available, _kACCNowPlaying_PlaybackQueueContentInfo_Count,
                           _kACCNowPlaying_PlaybackQueueContentInfo_List, _kACCNowPlaying_PlaybackQueueContentInfo_NonLibrary,
-                          _kACCNowPlaying_PlaybackQueueContentInfo_RequestID,
-                          _kACCNowPlaying_PlaybackQueueContentInfo_StartIndex,
+                          _kACCNowPlaying_PlaybackQueueContentInfo_RequestID, _kACCNowPlaying_PlaybackQueueContentInfo_StartIndex,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_AlbumArtist,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_AlbumTitle,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_Artist,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_Composer,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_Genre,
                           _kACCNowPlaying_PlaybackQueueContentItemAttributes_PersistentID,
-                          _kACCNowPlaying_PlaybackQueueContentItemAttributes_Title,
-                          _kACCNowPlaying_SetNowPlayingInfo_ElapsedTime, _kACCNowPlaying_SetNowPlayingInfo_PlaybackQueueIndex,
+                          _kACCNowPlaying_PlaybackQueueContentItemAttributes_Title, _kACCNowPlaying_SetNowPlayingInfo_ElapsedTime,
+                          _kACCNowPlaying_SetNowPlayingInfo_PlaybackQueueIndex,
                           _kCFACCNowPlaying_NowPlayingUpdate_MediaItemAttributes,
                           _kCFACCNowPlaying_NowPlayingUpdate_MediaItemAttributes_AlbumDiscCount,
                           _kCFACCNowPlaying_NowPlayingUpdate_MediaItemAttributes_AlbumDiscNum,
@@ -105,12 +105,9 @@ exports:
                           _kCFACCNowPlaying_PlaybackQueueContentItemAttributes_Genre,
                           _kCFACCNowPlaying_PlaybackQueueContentItemAttributes_PersistentID,
                           _kCFACCNowPlaying_PlaybackQueueContentItemAttributes_Title,
-                          _kCFACCNowPlaying_SetNowPlayingInfo_ElapsedTime,
-                          _kCFACCNowPlaying_SetNowPlayingInfo_PlaybackQueueIndex,
-                          _kCFACCNowPlaying_SubscriberList_MediaItemArtwork,
-                          _kCFACCNowPlaying_SubscriberList_MediaItemAttributes,
-                          _kCFACCNowPlaying_SubscriberList_PlaybackAttributes,
-                          _kCFACCNowPlaying_SubscriberList_PlaybackQueueList ]
+                          _kCFACCNowPlaying_SetNowPlayingInfo_ElapsedTime, _kCFACCNowPlaying_SetNowPlayingInfo_PlaybackQueueIndex,
+                          _kCFACCNowPlaying_SubscriberList_MediaItemArtwork, _kCFACCNowPlaying_SubscriberList_MediaItemAttributes,
+                          _kCFACCNowPlaying_SubscriberList_PlaybackAttributes, _kCFACCNowPlaying_SubscriberList_PlaybackQueueList ]
     objc-classes:       [ _AccessoryNowPlayingClient ]
     objc-ivars:         [ _AccessoryNowPlayingClient._delegate, _AccessoryNowPlayingClient._remoteObject,
                           _AccessoryNowPlayingClient._serverConnection, _AccessoryNowPlayingClient._shouldSendArtwork,

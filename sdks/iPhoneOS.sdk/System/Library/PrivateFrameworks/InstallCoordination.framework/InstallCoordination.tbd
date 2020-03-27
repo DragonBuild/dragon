@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/InstallCoordination.framework/InstallCoordination
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _IXAlertUserErrorKey, _IXAppMayUninstallNotificationName, _IXAppRemovabilityChangedNotificationName,
@@ -13,26 +14,25 @@ exports:
                           _IXDictionaryContainsOnlyClassesCheckingValueTypes, _IXDisplayUserPresentableErrorForApp,
                           _IXDisplayUserPresentableErrorForAppWithLocalizedName, _IXDisplayUserPresentableErrorForApps,
                           _IXErrorDomain, _IXFunctionNameErrorKey, _IXGetLoggingHandle, _IXGetRemovabilityForApp,
-                          _IXGetUncachedRemovabilityForApp, _IXOncePerBootWorkNeeded, _IXPathArgumentErrorKey,
-                          _IXRunOncePerBootWork, _IXSetContainsOnlyClass, _IXSetOncePerBootWorkCompleted,
-                          _IXSetRemovabilityStorageURLOverride, _IXSourceFileLineErrorKey, _IXStringForAppRemovability,
-                          _IXStringForClientID, _IXStringForCoordinatorImportance, _IXStringForIXError, _IXStringifyObject,
-                          _IXUserPresentableErrorCodeIsHardError, _IXUserPresentableErrorDomain,
-                          _InstallCoordinationVersionNumber, _InstallCoordinationVersionString, _LoadInfoPlistFromBundle,
-                          _LoadInfoPlistFromBundleAtURL, __CreateError, __CreateErrorV, _kIXLoggingSubsystem ]
+                          _IXGetUncachedRemovabilityForApp, _IXOncePerBootWorkNeeded, _IXPathArgumentErrorKey, _IXRunOncePerBootWork,
+                          _IXSetContainsOnlyClass, _IXSetOncePerBootWorkCompleted, _IXSetRemovabilityStorageURLOverride,
+                          _IXSourceFileLineErrorKey, _IXStringForAppRemovability, _IXStringForClientID,
+                          _IXStringForCoordinatorImportance, _IXStringForIXError, _IXStringifyObject,
+                          _IXUserPresentableErrorCodeIsHardError, _IXUserPresentableErrorDomain, _InstallCoordinationVersionNumber,
+                          _InstallCoordinationVersionString, _LoadInfoPlistFromBundle, _LoadInfoPlistFromBundleAtURL, __CreateError,
+                          __CreateErrorV, _kIXLoggingSubsystem ]
     objc-classes:       [ _IXAppInstallCoordinator, _IXAppInstallCoordinatorSeed, _IXAppInstallObserver,
                           _IXAppInstallObserverProtocolInterface, _IXClientDelegateProtocolInterface, _IXClientProtocolInterface,
                           _IXDataPromise, _IXDataPromiseSeed, _IXDemotingAppInstallCoordinator, _IXFileManager,
                           _IXGizmoInstallingAppInstallCoordinator, _IXGlobalConfiguration, _IXInitiatingAppInstallCoordinator,
-                          _IXOpaqueDataPromise, _IXOpaqueDataPromiseSeed, _IXOwnedDataPromise, _IXOwnedDataPromiseSeed,
-                          _IXPlaceholder, _IXPlaceholderAttributes, _IXPlaceholderSeed, _IXPromisedInMemoryData,
-                          _IXPromisedInMemoryDataSeed, _IXPromisedInMemoryDictionary, _IXPromisedInMemoryDictionarySeed,
-                          _IXPromisedOutOfBandStreamingZipTransfer, _IXPromisedOutOfBandStreamingZipTransferSeed,
-                          _IXPromisedOutOfBandTransfer, _IXPromisedOutOfBandTransferSeed, _IXPromisedStreamingZipTransfer,
-                          _IXPromisedStreamingZipTransferSeed, _IXPromisedTransferToPath, _IXPromisedTransferToPathSeed,
-                          _IXPromotingAppInstallCoordinator, _IXRestoringAppInstallCoordinator,
-                          _IXRestoringDemotedAppInstallCoordinator, _IXServerConnection, _IXUpdatingAppInstallCoordinator,
-                          __IXDemoteToPlaceholderDelegate, __IXSimpleInstallerDelegate ]
+                          _IXOpaqueDataPromise, _IXOpaqueDataPromiseSeed, _IXOwnedDataPromise, _IXOwnedDataPromiseSeed, _IXPlaceholder,
+                          _IXPlaceholderAttributes, _IXPlaceholderSeed, _IXPromisedInMemoryData, _IXPromisedInMemoryDataSeed,
+                          _IXPromisedInMemoryDictionary, _IXPromisedInMemoryDictionarySeed, _IXPromisedOutOfBandStreamingZipTransfer,
+                          _IXPromisedOutOfBandStreamingZipTransferSeed, _IXPromisedOutOfBandTransfer,
+                          _IXPromisedOutOfBandTransferSeed, _IXPromisedStreamingZipTransfer, _IXPromisedStreamingZipTransferSeed,
+                          _IXPromisedTransferToPath, _IXPromisedTransferToPathSeed, _IXPromotingAppInstallCoordinator,
+                          _IXRestoringAppInstallCoordinator, _IXRestoringDemotedAppInstallCoordinator, _IXServerConnection,
+                          _IXUpdatingAppInstallCoordinator, __IXDemoteToPlaceholderDelegate, __IXSimpleInstallerDelegate ]
     objc-ivars:         [ _IXAppInstallCoordinator._complete, _IXAppInstallCoordinator._error,
                           _IXAppInstallCoordinator._errorSourceIdentifier, _IXAppInstallCoordinator._internalQueue,
                           _IXAppInstallCoordinator._observer, _IXAppInstallCoordinator._observerCalloutQueue,
@@ -40,13 +40,12 @@ exports:
                           _IXAppInstallCoordinatorSeed._bundleID, _IXAppInstallCoordinatorSeed._creator,
                           _IXAppInstallCoordinatorSeed._intent, _IXAppInstallCoordinatorSeed._uniqueIdentifier,
                           _IXAppInstallObserver._delegate, _IXAppInstallObserver._delegateQueue, _IXAppInstallObserver._listener,
-                          _IXDataPromise._complete, _IXDataPromise._error, _IXDataPromise._errorSourceIdentifier,
-                          _IXDataPromise._seed, _IXDataPromiseSeed._creatorIdentifier, _IXDataPromiseSeed._name,
-                          _IXDataPromiseSeed._totalBytesNeededOnDisk, _IXDataPromiseSeed._uniqueIdentifier,
-                          _IXGlobalConfiguration._dynamicPropertyLock, _IXGlobalConfiguration._mobileHome,
-                          _IXGlobalConfiguration._rootPath, _IXGlobalConfiguration._systemContainerPath,
-                          _IXOwnedDataPromise._stagedPath, _IXOwnedDataPromiseSeed._stagingBaseDir,
-                          _IXPlaceholderAttributes._bundleVersion,
+                          _IXDataPromise._complete, _IXDataPromise._error, _IXDataPromise._errorSourceIdentifier, _IXDataPromise._seed,
+                          _IXDataPromiseSeed._creatorIdentifier, _IXDataPromiseSeed._name, _IXDataPromiseSeed._totalBytesNeededOnDisk,
+                          _IXDataPromiseSeed._uniqueIdentifier, _IXGlobalConfiguration._dynamicPropertyLock,
+                          _IXGlobalConfiguration._mobileHome, _IXGlobalConfiguration._rootPath,
+                          _IXGlobalConfiguration._systemContainerPath, _IXOwnedDataPromise._stagedPath,
+                          _IXOwnedDataPromiseSeed._stagingBaseDir, _IXPlaceholderAttributes._bundleVersion,
                           _IXPlaceholderAttributes._companionBundleIdentifierForWatchApp,
                           _IXPlaceholderAttributes._extensionDictionary, _IXPlaceholderAttributes._launchProhibited,
                           _IXPlaceholderAttributes._lsCounterpartIdentifiers, _IXPlaceholderAttributes._minimumOSVersion,

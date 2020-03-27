@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1BD5CB31-31FC-328B-A827-73EA51BB6041', 'armv7s: 90FA13FC-A8DB-3A60-AB0C-CECDB553232D', 
-                   'arm64: 0067A925-DEF9-3BFB-889A-9CAC89484B43', 'arm64e: 05E7D397-8C5A-3F9E-8318-86C03A3379D2' ]
+                   'arm64: BC89175B-051E-3BAF-88F5-0550EFCE466B', 'arm64e: 4B62E8BD-978C-359B-A1B9-B76A093CC7EA' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftObjectiveC.dylib'
 current-version: 0

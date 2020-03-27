@@ -1,19 +1,20 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/AttentionAwareness.framework/AttentionAwareness
 current-version:       82.0.1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ __AWAttentionServiceEventFilterFactory ]
     objc-classes:       [ _AWAttentionAwareService, _AWAttentionAwarenessClient, _AWAttentionAwarenessClientConfig,
                           _AWAttentionAwarenessConfiguration, _AWAttentionEvent, _AWAttentionLostEvent, _AWAttentionSampler,
                           _AWClientPollWaiter, _AWClientPreferences, _AWEventStatistics, _AWFaceDetectAttentionEvent,
-                          _AWPearlAttentionSampler, _AWPersistentDataManager, _AWRemoteAttentionEvent, _AWRemoteClient,
-                          _AWSampleLogData, _AWSampleLogger, _AWScheduler, _AWServiceManager, _AWUnitTestFaceDetectOperation,
-                          _AWUnitTestPearlDevice, _AWUnitTestSampler ]
+                          _AWPearlAttentionSampler, _AWPersistentDataManager, _AWRemoteAttentionEvent, _AWRemoteClient, _AWSampleLogData,
+                          _AWSampleLogger, _AWScheduler, _AWServiceManager, _AWUnitTestFaceDetectOperation, _AWUnitTestPearlDevice,
+                          _AWUnitTestSampler ]
     objc-ivars:         [ _AWAttentionAwareService._clientCount, _AWAttentionAwareService._queue,
                           _AWAttentionAwareService._schedulers, _AWAttentionAwareService._supportedEvents,
                           _AWAttentionAwareService._supportedEventsNotify, _AWAttentionAwareService._unitTestScheduler,
@@ -33,11 +34,9 @@ exports:
                           _AWAttentionAwarenessConfiguration._attentionLostEventMask,
                           _AWAttentionAwarenessConfiguration._attentionLostEventMaskExplicitlySet,
                           _AWAttentionAwarenessConfiguration._attentionLostTimeoutDictionary,
-                          _AWAttentionAwarenessConfiguration._attentionLostTimeouts,
-                          _AWAttentionAwarenessConfiguration._eventMask, _AWAttentionAwarenessConfiguration._identifier,
-                          _AWAttentionAwarenessConfiguration._notificationMask,
-                          _AWAttentionAwarenessConfiguration._sampleWhileAbsent,
-                          _AWAttentionAwarenessConfiguration._samplingDelay,
+                          _AWAttentionAwarenessConfiguration._attentionLostTimeouts, _AWAttentionAwarenessConfiguration._eventMask,
+                          _AWAttentionAwarenessConfiguration._identifier, _AWAttentionAwarenessConfiguration._notificationMask,
+                          _AWAttentionAwarenessConfiguration._sampleWhileAbsent, _AWAttentionAwarenessConfiguration._samplingDelay,
                           _AWAttentionAwarenessConfiguration._samplingDelayExplicitlySet,
                           _AWAttentionAwarenessConfiguration._samplingInterval, _AWAttentionAwarenessConfiguration._tag,
                           _AWAttentionAwarenessConfiguration._tagIndex, _AWAttentionEvent._eventMask, _AWAttentionEvent._tag,
@@ -47,15 +46,14 @@ exports:
                           _AWAttentionSampler._lastPitch, _AWAttentionSampler._lastPollTimeoutTime,
                           _AWAttentionSampler._lastPositiveDetectTime, _AWAttentionSampler._lastRoll,
                           _AWAttentionSampler._lastTriggerTime, _AWAttentionSampler._lastYaw, _AWAttentionSampler._nextDeadline,
-                          _AWAttentionSampler._queue, _AWAttentionSampler._sampleLogger,
-                          _AWAttentionSampler._samplingSuppressedMask, _AWAttentionSampler._stateChangedCallback,
-                          _AWAttentionSampler._unitTestSampling, _AWClientPollWaiter._client, _AWClientPollWaiter._clientBlock,
-                          _AWClientPollWaiter._clientQueue, _AWClientPollWaiter._pollState, _AWClientPollWaiter._queue,
-                          _AWClientPollWaiter._timer, _AWEventStatistics._lastLogDate, _AWEventStatistics._lastLogTime,
-                          _AWEventStatistics._queue, _AWEventStatistics._stats, _AWEventStatistics._timer,
-                          _AWEventStatistics._timerResumed, _AWFaceDetectAttentionEvent._metadataValid,
-                          _AWFaceDetectAttentionEvent._orientation, _AWFaceDetectAttentionEvent._pitch,
-                          _AWFaceDetectAttentionEvent._roll, _AWFaceDetectAttentionEvent._yaw,
+                          _AWAttentionSampler._queue, _AWAttentionSampler._sampleLogger, _AWAttentionSampler._samplingSuppressedMask,
+                          _AWAttentionSampler._stateChangedCallback, _AWAttentionSampler._unitTestSampling,
+                          _AWClientPollWaiter._client, _AWClientPollWaiter._clientBlock, _AWClientPollWaiter._clientQueue,
+                          _AWClientPollWaiter._pollState, _AWClientPollWaiter._queue, _AWClientPollWaiter._timer,
+                          _AWEventStatistics._lastLogDate, _AWEventStatistics._lastLogTime, _AWEventStatistics._queue,
+                          _AWEventStatistics._stats, _AWEventStatistics._timer, _AWEventStatistics._timerResumed,
+                          _AWFaceDetectAttentionEvent._metadataValid, _AWFaceDetectAttentionEvent._orientation,
+                          _AWFaceDetectAttentionEvent._pitch, _AWFaceDetectAttentionEvent._roll, _AWFaceDetectAttentionEvent._yaw,
                           _AWPearlAttentionSampler._displayNotifyToken, _AWPearlAttentionSampler._displayState,
                           _AWPearlAttentionSampler._finishingPresenceOperation, _AWPearlAttentionSampler._lastErrorTime,
                           _AWPearlAttentionSampler._operationCreateTime, _AWPearlAttentionSampler._operationStalledTimer,
@@ -71,13 +69,12 @@ exports:
                           _AWRemoteClient._sampleWhileAbsent, _AWRemoteClient._samplingDelay, _AWRemoteClient._samplingInterval,
                           _AWRemoteClient._scheduler, _AWRemoteClient._tagIndex, _AWSampleLogData._cumulativeSamplingTime,
                           _AWSampleLogData._identifier, _AWSampleLogData._pollingClient, _AWSampleLogData._samplingInterval,
-                          _AWSampleLogData._samplingStartTime, _AWSampleLogger._addedClientLogData,
-                          _AWSampleLogger._clientLogData, _AWSampleLogger._cumulativeSamplingTime,
-                          _AWSampleLogger._outstandingClientLogData, _AWSampleLogger._pollsRequested,
-                          _AWSampleLogger._powerLogQueue, _AWSampleLogger._queue, _AWSampleLogger._samplesRequested,
-                          _AWSampleLogger._samplesSucceeded, _AWSampleLogger._samplingStartTime, _AWSampleLogger._timer,
-                          _AWScheduler._attentionSampler, _AWScheduler._clients, _AWScheduler._observer, _AWScheduler._queue,
-                          _AWScheduler._timer, _AWServiceManager._connection, _AWServiceManager._queue,
+                          _AWSampleLogData._samplingStartTime, _AWSampleLogger._addedClientLogData, _AWSampleLogger._clientLogData,
+                          _AWSampleLogger._cumulativeSamplingTime, _AWSampleLogger._outstandingClientLogData,
+                          _AWSampleLogger._pollsRequested, _AWSampleLogger._powerLogQueue, _AWSampleLogger._queue,
+                          _AWSampleLogger._samplesRequested, _AWSampleLogger._samplesSucceeded, _AWSampleLogger._samplingStartTime,
+                          _AWSampleLogger._timer, _AWScheduler._attentionSampler, _AWScheduler._clients, _AWScheduler._observer,
+                          _AWScheduler._queue, _AWScheduler._timer, _AWServiceManager._connection, _AWServiceManager._queue,
                           _AWServiceManager._serviceObservers, _AWUnitTestFaceDetectOperation._awInitTimer,
                           _AWUnitTestFaceDetectOperation._awQueue, _AWUnitTestFaceDetectOperation._deadlineTimer,
                           _AWUnitTestFaceDetectOperation._finished, _AWUnitTestFaceDetectOperation._started,

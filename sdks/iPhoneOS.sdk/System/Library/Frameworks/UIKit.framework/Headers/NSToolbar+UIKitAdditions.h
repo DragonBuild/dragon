@@ -14,6 +14,7 @@
 #import <UIKit/UIWindowScene.h>
 #import <UIKit/UIActivityItemsConfigurationReading.h>
 #import <AppKit/NSToolbarItem.h>
+#import <AppKit/NSMenuToolbarItem.h>
 #import <AppKit/NSSharingServicePickerToolbarItem.h>
 
 @class UITitlebar, NSToolbar, UIBarButtonItem;
@@ -65,6 +66,22 @@ API_AVAILABLE(macCatalyst(13.0))
  UIBarButtonItems with a UIBarButtonSystemItem will be appropriately configured as well.
  */
 + (instancetype)itemWithItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier barButtonItem:(UIBarButtonItem *)barButtonItem API_AVAILABLE(macCatalyst(13.0));
+
+/*
+ When the window is too small to display an item, it will be clipped but remain accessible from a "clipped items" menu containing the menu item returned here.
+ Singleton menu items will be clickable, while submenu items will be represented as a pull down.
+ By default, this method returns a singleton menu item with item label as the title. For standard items, the target, action is set.
+ */
+@property (nonatomic, nullable, copy) UIMenuElement *itemMenuFormRepresentation API_AVAILABLE(macCatalyst(13.0));
+@end
+
+@interface NSMenuToolbarItem (NSToolbarAdditions)
+/*
+ The menu presented to the user from the item.
+ If the item has an action, an arrow will be shown to the user next to the button to access the menu.
+ This will also be shown as the actionMenuFormRepresentation unless otherwise set.
+ */
+@property (nonatomic, copy) UIMenu *itemMenu API_AVAILABLE(macCatalyst(13.0));
 @end
 
 @interface NSSharingServicePickerToolbarItem (UIActivityItemsConfiguration)

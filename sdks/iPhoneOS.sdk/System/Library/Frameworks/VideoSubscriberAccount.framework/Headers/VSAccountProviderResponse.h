@@ -16,15 +16,15 @@ typedef NSString *VSAccountProviderAuthenticationScheme NS_EXTENSIBLE_STRING_ENU
 /// The authentication scheme for responses that use the SAML protocol.
 VS_EXTERN VSAccountProviderAuthenticationScheme const VSAccountProviderAuthenticationSchemeSAML
 NS_SWIFT_NAME(saml)
-API_AVAILABLE(ios(10.2), tvos(10.1));
+API_AVAILABLE(ios(10.2), tvos(10.1)) API_UNAVAILABLE(macCatalyst);
 
 /// The identifier for responses that use any authentication protocol.
 VS_EXTERN VSAccountProviderAuthenticationScheme const VSAccountProviderAuthenticationSchemeAPI
 NS_SWIFT_NAME(api)
-API_AVAILABLE(ios(13.0), tvos(13.0));
+API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(macCatalyst);
 
 /// A value object that encapsulates the response given by an account provider.
-VS_EXPORT API_AVAILABLE(ios(10.2), tvos(10.1))
+VS_EXPORT API_AVAILABLE(ios(10.2), tvos(10.1)) API_UNAVAILABLE(macCatalyst)
 @interface VSAccountProviderResponse : NSObject
 
 /// Identifies the protocol used in constructing this response.

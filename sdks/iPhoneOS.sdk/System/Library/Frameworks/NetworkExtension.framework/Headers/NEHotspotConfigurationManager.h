@@ -381,7 +381,7 @@ NEHSCFG_EXPORT NSString * const NEHotspotConfigurationErrorDomain API_AVAILABLE(
  * @const NEHotspotConfigurationErrorApplicationIsNotInForeground The application is not in the foreground.
  * @const NEHotspotConfigurationErrorInvalidSSIDPrefix The given SSID Prefix string is invalid.
  */
-typedef NS_ERROR_ENUM(NEHotspotConfigurationErrorDomain, NEHotspotConfigurationError) {
+typedef NS_ENUM(NSInteger, NEHotspotConfigurationError) {
 	NEHotspotConfigurationErrorInvalid 				= 0,
 	NEHotspotConfigurationErrorInvalidSSID 				= 1,
 	NEHotspotConfigurationErrorInvalidWPAPassphrase 		= 2,

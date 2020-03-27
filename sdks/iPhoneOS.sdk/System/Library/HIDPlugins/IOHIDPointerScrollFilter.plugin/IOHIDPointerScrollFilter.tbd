@@ -1,7 +1,7 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/HIDPlugins/IOHIDPointerScrollFilter.plugin/IOHIDPointerScrollFilter
 current-version:       0
 compatibility-version: 0
@@ -9,8 +9,7 @@ exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _IOHIDPointerScrollFilterFactory, __ZN22IOHIDScrollAccelerator10accelerateEPdmy,
                           __ZN22IOHIDScrollAccelerator9_timebaseE, __ZN22IOHIDSimpleAccelerator10accelerateEPdmy,
-                          __ZN22IOHIDTableAcceleration10multiplierEd,
-                          __ZN22IOHIDTableAcceleration15CreateWithTableEPK8__CFDataddd,
+                          __ZN22IOHIDTableAcceleration10multiplierEd, __ZN22IOHIDTableAcceleration15CreateWithTableEPK8__CFDataddd,
                           __ZN22IOHIDTableAcceleration16InterpolatePointERK11ACCEL_POINTS2_S2_d,
                           __ZN22IOHIDTableAcceleration16InterpolatePointERK11ACCEL_POINTS2_S2_di,
                           __ZN22IOHIDTableAcceleration19InterpolateFunctionEPK17ACCEL_TABLE_ENTRYS2_dRNSt3__13setI11ACCEL_POINTNS3_4lessIS5_EENS3_9allocatorIS5_EEEE,
@@ -21,8 +20,7 @@ exports:
                           __ZN24IOHIDPointerScrollFilter15accelerateEventEP12__IOHIDEvent,
                           __ZN24IOHIDPointerScrollFilter16setEventCallbackEPFvPvS0_S0_P12__IOHIDEventjES0_S0_,
                           __ZN24IOHIDPointerScrollFilter16setEventCallbackEPvPFvS0_S0_S0_P12__IOHIDEventjES0_S0_,
-                          __ZN24IOHIDPointerScrollFilter17setupAccelerationEv,
-                          __ZN24IOHIDPointerScrollFilter19_cachedPropertyListE,
+                          __ZN24IOHIDPointerScrollFilter17setupAccelerationEv, __ZN24IOHIDPointerScrollFilter19_cachedPropertyListE,
                           __ZN24IOHIDPointerScrollFilter19accelerateChildrensEP12__IOHIDEvent,
                           __ZN24IOHIDPointerScrollFilter20setPropertyForClientEPK10__CFStringPKvS4_,
                           __ZN24IOHIDPointerScrollFilter20setPropertyForClientEPvPK10__CFStringPKvS5_,
@@ -52,9 +50,9 @@ exports:
                           __ZNK11ACCEL_TABLE5entryEi, __ZNK11ACCEL_TABLE5scaleIdEET_v, __ZNK11ACCEL_TABLE5scaleIiEET_v,
                           __ZNK11ACCEL_TABLE9signatureEv, __ZNK17ACCEL_TABLE_ENTRY12accelerationIdEET_v,
                           __ZNK17ACCEL_TABLE_ENTRY12accelerationIiEET_v, __ZNK17ACCEL_TABLE_ENTRY1xIdEET_j,
-                          __ZNK17ACCEL_TABLE_ENTRY1xIiEET_j, __ZNK17ACCEL_TABLE_ENTRY1yIdEET_j,
-                          __ZNK17ACCEL_TABLE_ENTRY1yIiEET_j, __ZNK17ACCEL_TABLE_ENTRY5countEv, __ZNK17ACCEL_TABLE_ENTRY5pointEj,
-                          __ZNK17ACCEL_TABLE_ENTRY6lengthEv, __ZNK22IOHIDScrollAccelerator9serializeEP14__CFDictionary,
+                          __ZNK17ACCEL_TABLE_ENTRY1xIiEET_j, __ZNK17ACCEL_TABLE_ENTRY1yIdEET_j, __ZNK17ACCEL_TABLE_ENTRY1yIiEET_j,
+                          __ZNK17ACCEL_TABLE_ENTRY5countEv, __ZNK17ACCEL_TABLE_ENTRY5pointEj, __ZNK17ACCEL_TABLE_ENTRY6lengthEv,
+                          __ZNK22IOHIDScrollAccelerator9serializeEP14__CFDictionary,
                           __ZNK22IOHIDSimpleAccelerator9serializeEP14__CFDictionary,
                           __ZNK22IOHIDTableAcceleration9serializeEP14__CFDictionary,
                           __ZNK23IOHIDPointerAccelerator9serializeEP14__CFDictionary,

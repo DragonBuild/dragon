@@ -1,22 +1,22 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/TextInputChinese.framework/TextInputChinese
 current-version:       1
 compatibility-version: 1
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _TIKeyboardInputManager_zh_ja_ResponseKitTimeoutInMilliseconds,
-                          __Z37handwritingResponseKitBackgroundQueuev, _kCangjieMode, _kDefaultLayoutTag,
-                          _kDisambiguationLayoutTag, _kFacemarkLookupKey, _kGB18030LookupKey, _kHalfWidthPunctuationLayoutTag,
-                          _kSeparatorLayoutTag, _kSimplifiedChinese, _kTraditionalCantonese, _kTraditionalChinese,
-                          _kUnicodeLookupKey, _kWubihuaMode ]
+                          __Z37handwritingResponseKitBackgroundQueuev, _kCangjieMode, _kDefaultLayoutTag, _kDisambiguationLayoutTag,
+                          _kFacemarkLookupKey, _kGB18030LookupKey, _kHalfWidthPunctuationLayoutTag, _kSeparatorLayoutTag,
+                          _kSimplifiedChinese, _kTraditionalCantonese, _kTraditionalChinese, _kUnicodeLookupKey, _kWubihuaMode ]
     objc-classes:       [ _CIMCandidateData, _RecognizeDrawingOperation, _RecognizePredictionOperation, _RecognizerProvider,
-                          _TIConversionHistory, _TIConvertedCandidate, _TIInputManagerHandwriting,
-                          _TIKeyboardHandwritingSpecialization, _TIKeyboardInputManagerCangjie, _TIKeyboardInputManagerChinese,
-                          _TIKeyboardInputManagerChinesePhonetic, _TIKeyboardInputManagerShapeBased, _TIKeyboardInputManagerWubi,
-                          _TIWordSearchCangjie, _TIWordSearchCangjie_yue_Hant, _TIWordSearchChinesePhonetic,
+                          _TIConversionHistory, _TIConvertedCandidate, _TIInputManagerHandwriting, _TIKeyboardHandwritingSpecialization,
+                          _TIKeyboardInputManagerCangjie, _TIKeyboardInputManagerChinese, _TIKeyboardInputManagerChinesePhonetic,
+                          _TIKeyboardInputManagerShapeBased, _TIKeyboardInputManagerWubi, _TIWordSearchCangjie,
+                          _TIWordSearchCangjie_yue_Hant, _TIWordSearchChinesePhonetic,
                           _TIWordSearchChinesePhoneticOperationGetCandidates, _TIWordSearchShapeBased, _TIWordSearchWubihua,
                           _TIWordSearchWubihua_yue_Hant, _TIWordSearchWubihua_zh_Hans, _TIWordSearchWubihua_zh_Hant ]
     objc-ivars:         [ _CIMCandidateData._candidateInfoCache, _CIMCandidateData._inputMode, _CIMCandidateData._sortingMethod,
@@ -47,13 +47,12 @@ exports:
                           _TIKeyboardInputManagerChinese._candidateData, _TIKeyboardInputManagerChinese._currentKeyHint,
                           _TIKeyboardInputManagerChinese._duringDeleteFromInputWithContext,
                           _TIKeyboardInputManagerChinese._isAlphabeticPlane, _TIKeyboardInputManagerChinese._isInCompletionMode,
-                          _TIKeyboardInputManagerChinese._language,
-                          _TIKeyboardInputManagerChinese._mathSymbolPunctuationController,
+                          _TIKeyboardInputManagerChinese._language, _TIKeyboardInputManagerChinese._mathSymbolPunctuationController,
                           _TIKeyboardInputManagerChinese._modeName, _TIKeyboardInputManagerChinese._operationQueue,
                           _TIKeyboardInputManagerChinese._pairedPunctuationOpenQuote,
                           _TIKeyboardInputManagerChinese._pairedPunctuationSelectedText,
-                          _TIKeyboardInputManagerChinese._shouldLearnAcceptedCandidate,
-                          _TIKeyboardInputManagerChinese._wordSearch, _TIKeyboardInputManagerChinesePhonetic._acceptingCandidate,
+                          _TIKeyboardInputManagerChinese._shouldLearnAcceptedCandidate, _TIKeyboardInputManagerChinese._wordSearch,
+                          _TIKeyboardInputManagerChinesePhonetic._acceptingCandidate,
                           _TIKeyboardInputManagerChinesePhonetic._candidateData,
                           _TIKeyboardInputManagerChinesePhonetic._composedTextBeforeFirstSyllableLocked,
                           _TIKeyboardInputManagerChinesePhonetic._conversionHistory,
@@ -69,6 +68,7 @@ exports:
                           _TIKeyboardInputManagerChinesePhonetic._replacedAmbiguousPinyinSyllable,
                           _TIKeyboardInputManagerChinesePhonetic._replacementUnambiguousPinyinSyllable,
                           _TIKeyboardInputManagerChinesePhonetic._selectedPinyinSyllableCandidateIndex,
+                          _TIKeyboardInputManagerChinesePhonetic._shouldClearBeforeContinuousPath,
                           _TIKeyboardInputManagerChinesePhonetic._skipSetMarkedTextDuringInput,
                           _TIKeyboardInputManagerChinesePhonetic._usesCandidateSelection,
                           _TIKeyboardInputManagerShapeBased._keepRemainingInput,

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/ApplePDPHelper.framework/ApplePDPHelper
 current-version:       1
 compatibility-version: 1
@@ -13,8 +13,7 @@ exports:
                           __ZN23ApplePDPHelperInterface11getInstanceEv, __ZN23ApplePDPHelperInterface14copyWakeBufferEPhmPmPy,
                           __ZN23ApplePDPHelperInterface15blockPDPTrafficEjb,
                           __ZN23ApplePDPHelperInterface15fillupPortListsEPtjPKhmPjj,
-                          __ZN23ApplePDPHelperInterface15getDormancyTimeEPj,
-                          __ZN23ApplePDPHelperInterface15getOpenPortsExtEjjPtjPm,
+                          __ZN23ApplePDPHelperInterface15getDormancyTimeEPj, __ZN23ApplePDPHelperInterface15getOpenPortsExtEjjPtjPm,
                           __ZN23ApplePDPHelperInterface16callScalarMethodEjPKcPyjS2_Pj,
                           __ZN23ApplePDPHelperInterface16callStructMethodEjPKcPvjS2_Pj,
                           __ZN23ApplePDPHelperInterface17getTimeAdjustmentEP13mach_timespec,
@@ -35,7 +34,7 @@ exports:
                           __ZN23ApplePDPHelperInterface7getFlowE27AppleIPAppenderTrafficClassPj,
                           __ZN23ApplePDPHelperInterface8callbackEPvjjS0_,
                           __ZN23ApplePDPHelperInterface9getStatusEP23AppleIPAppenderStatus_t, __ZN23ApplePDPHelperInterfaceC1Ev,
-                          __ZN23ApplePDPHelperInterfaceC2Ev, __ZN23ApplePDPHelperInterfaceD1Ev,
-                          __ZN23ApplePDPHelperInterfaceD2Ev, __ZTIN23ApplePDPHelperInterface7HandlerE,
-                          __ZTSN23ApplePDPHelperInterface7HandlerE, __ZTVN23ApplePDPHelperInterface7HandlerE ]
+                          __ZN23ApplePDPHelperInterfaceC2Ev, __ZN23ApplePDPHelperInterfaceD1Ev, __ZN23ApplePDPHelperInterfaceD2Ev,
+                          __ZTIN23ApplePDPHelperInterface7HandlerE, __ZTSN23ApplePDPHelperInterface7HandlerE,
+                          __ZTVN23ApplePDPHelperInterface7HandlerE ]
 ...

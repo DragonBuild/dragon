@@ -1,10 +1,11 @@
 --- !tapi-tbd-v2
 archs:                 [ armv7, armv7s, arm64, arm64e ]
 platform:              ios
-flags:                 [ flat_namespace, not_app_extension_safe ]
+flags:                 [ flat_namespace ]
 install-name:          /System/Library/PrivateFrameworks/CloudDocsUI.framework/CloudDocsUI
-current-version:       142.4
+current-version:       151
 compatibility-version: 0
+objc-constraint:       retain_release
 exports:
   - archs:              [ armv7, armv7s, arm64, arm64e ]
     symbols:            [ _BRCompareImages, _BRFormatPhoneNumber, _BRLayerSnapshot, _BRSnapshotOfView,
@@ -15,10 +16,9 @@ exports:
                           __UIDocumentPickerCollectionViewTightMarginsTrait,
                           __UIDocumentPickerDescriptorCloudEnabledStatusDidChange, __UIDocumentPickerManageIdentifier,
                           __UIDocumentPickerModelModifiedThumbnailKey, __UIDocumentPickerModelUpdatedNotification,
-                          __UIDocumentPickerModelUpdatedNotificationChangesKey,
-                          __UIDocumentPickerModelUpdatedNotificationModelKey, __UIDocumentPickerUnavailableIdentifier,
-                          __UIDocumentPickerUserDefaultsEnabledKey, __UIDocumentPickerUserDefaultsKey,
-                          __UIDocumentPickerUserDefaultsOrderKey, _cdui_default_log, _cdui_perf_log ]
+                          __UIDocumentPickerModelUpdatedNotificationChangesKey, __UIDocumentPickerModelUpdatedNotificationModelKey,
+                          __UIDocumentPickerUnavailableIdentifier, __UIDocumentPickerUserDefaultsEnabledKey,
+                          __UIDocumentPickerUserDefaultsKey, __UIDocumentPickerUserDefaultsOrderKey, _cdui_default_log, _cdui_perf_log ]
     objc-classes:       [ _BRGeometry, _BRObservableFile, _BRTintColorButton, _BRUITestDiagnostic, _BRUITestMessageCenter,
                           __BRObservableFilePresenter, __BRSuffixToTypeMapping, __UIContainerHuggingTableViewController,
                           __UIDocumentListController, __UIDocumentPickerAllContainersModel, __UIDocumentPickerCell,
@@ -74,8 +74,7 @@ exports:
                           __UIDocumentPickerCloudDirectoryObserver._afterInitialUpdate,
                           __UIDocumentPickerCloudDirectoryObserver._firstURL,
                           __UIDocumentPickerCloudDirectoryObserver._lastSnapshotDate,
-                          __UIDocumentPickerCloudDirectoryObserver._query,
-                          __UIDocumentPickerCloudDirectoryObserver._queryPredicate,
+                          __UIDocumentPickerCloudDirectoryObserver._query, __UIDocumentPickerCloudDirectoryObserver._queryPredicate,
                           __UIDocumentPickerCloudDirectoryObserver._queryQueue,
                           __UIDocumentPickerCloudDirectoryObserver._queryWorkerQueue,
                           __UIDocumentPickerCloudDirectoryObserver._recursive, __UIDocumentPickerCloudDirectoryObserver._scopes,
@@ -98,18 +97,15 @@ exports:
                           __UIDocumentPickerContainerMetadataItem._cachedSortPath,
                           __UIDocumentPickerContainerMetadataItem._cachedSubtitle,
                           __UIDocumentPickerContainerMetadataItem._cachedSubtitle2,
-                          __UIDocumentPickerContainerMetadataItem._cachedTags,
-                          __UIDocumentPickerContainerMetadataItem._cachedTitle,
-                          __UIDocumentPickerContainerMetadataItem._cachedType,
-                          __UIDocumentPickerContainerMetadataItem._cachedURL,
+                          __UIDocumentPickerContainerMetadataItem._cachedTags, __UIDocumentPickerContainerMetadataItem._cachedTitle,
+                          __UIDocumentPickerContainerMetadataItem._cachedType, __UIDocumentPickerContainerMetadataItem._cachedURL,
                           __UIDocumentPickerContainerMetadataItem._cachedURLInLocalContainer,
                           __UIDocumentPickerContainerModel._sortOrder, __UIDocumentPickerContainerModel._thumbnailQueue,
                           __UIDocumentPickerContainerModel._underlyingQueue, __UIDocumentPickerContainerModel._updateHandlers,
                           __UIDocumentPickerContainerURLItem._cachedContentModifiedDate,
                           __UIDocumentPickerContainerURLItem._cachedContentType,
-                          __UIDocumentPickerContainerURLItem._cachedIndentation,
-                          __UIDocumentPickerContainerURLItem._cachedIsAlias, __UIDocumentPickerContainerURLItem._cachedSortPath,
-                          __UIDocumentPickerContainerURLItem._cachedSubtitle,
+                          __UIDocumentPickerContainerURLItem._cachedIndentation, __UIDocumentPickerContainerURLItem._cachedIsAlias,
+                          __UIDocumentPickerContainerURLItem._cachedSortPath, __UIDocumentPickerContainerURLItem._cachedSubtitle,
                           __UIDocumentPickerContainerURLItem._cachedSubtitle2, __UIDocumentPickerContainerURLItem._cachedTags,
                           __UIDocumentPickerContainerURLItem._cachedTitle, __UIDocumentPickerContainerURLItem._cachedType,
                           __UIDocumentPickerContainerURLItem._generationIdentifier, __UIDocumentPickerContainerURLItem._url,
@@ -148,18 +144,16 @@ exports:
                           __UIDocumentPickerLocalDirectoryObserver._queryWorkerQueue,
                           __UIDocumentPickerLocalDirectoryObserver._resultsForSources,
                           __UIDocumentPickerLocalDirectoryObserver._sortDescriptors,
-                          __UIDocumentPickerLocalDirectoryObserver._sources,
-                          __UIDocumentPickerLocalDirectoryObserver._staticItems,
+                          __UIDocumentPickerLocalDirectoryObserver._sources, __UIDocumentPickerLocalDirectoryObserver._staticItems,
                           __UIDocumentPickerLocalDirectoryObserver._updateScheduled,
                           __UIDocumentPickerManagementViewController._allPickers,
-                          __UIDocumentPickerManagementViewController._fileTypes,
-                          __UIDocumentPickerManagementViewController._mode,
+                          __UIDocumentPickerManagementViewController._fileTypes, __UIDocumentPickerManagementViewController._mode,
                           __UIDocumentPickerManagementViewControllerCell._newlyAddedView,
                           __UIDocumentPickerOverviewViewController._allPickers,
                           __UIDocumentPickerOverviewViewController._auxiliaryOptions,
-                          __UIDocumentPickerOverviewViewController._delegate,
-                          __UIDocumentPickerOverviewViewController._fileTypes, __UIDocumentPickerOverviewViewController._manage,
-                          __UIDocumentPickerOverviewViewController._mode, __UIDocumentPickerOverviewViewControllerCell._iconView,
+                          __UIDocumentPickerOverviewViewController._delegate, __UIDocumentPickerOverviewViewController._fileTypes,
+                          __UIDocumentPickerOverviewViewController._manage, __UIDocumentPickerOverviewViewController._mode,
+                          __UIDocumentPickerOverviewViewControllerCell._iconView,
                           __UIDocumentPickerOverviewViewControllerCell._newlyAddedView,
                           __UIDocumentPickerRootContainerModel._isObservingContainers,
                           __UIDocumentPickerSearchContainerModel._queryString,
@@ -199,8 +193,7 @@ exports:
                           __UIDocumentPickerViewServiceViewController._sortOrder,
                           __UIDocumentPickerViewServiceViewController._uploadURL, __UIDocumentPickerVnodeDispatchSource._source,
                           __UIDocumentPickerVnodeDispatchSource._target, __UIDocumentPickerVnodeDispatchSource._url,
-                          __UIDocumentSearchListController._model,
-                          __UIDocumentTargetSelectionController._completedInitialDisplay,
+                          __UIDocumentSearchListController._model, __UIDocumentTargetSelectionController._completedInitialDisplay,
                           __UIDocumentTargetSelectionController._containedNavigationController,
                           __UIDocumentTargetSelectionController._containerName,
                           __UIDocumentTargetSelectionController._containerViewController,
