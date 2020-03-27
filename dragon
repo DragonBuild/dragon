@@ -121,7 +121,11 @@ if [ $build == 1 ]; then
         subsb=(${project_dirs})
         set +f 
         for i in "${subsb[@]}"; do
-            echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
+            if [ $i == "." ]; then 
+                echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
+            else
+                echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
+            fi
             cd $i
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja || cleanbuildfail
             rm build.ninja 
