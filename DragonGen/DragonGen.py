@@ -39,19 +39,22 @@ bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
 bvars['tweak']['lopts'] = ''
 bvars['tweak']['frameworks'] = []
+bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
 
 # This is the default location for a pref bundle, which we can assume is what the user wants by default
 bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
-bvars['bundle']['target'] = '$pdirname/_$location$name.dylib'
+bvars['bundle']['target'] = '$pdirname/_$location$name'
 bvars['bundle']['libs'] = []
 bvars['bundle']['lopts']= ''
 bvars['bundle']['frameworks'] = []
+bvars['bundle']['stage2'] = ''
 
 bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
 bvars['library']['lopts']= ''
 bvars['library']['frameworks'] = []
+bvars['library']['stage2'] = ''
 
 # User modifiable variables
 
@@ -103,11 +106,11 @@ def process_package(package_config):
     uvars['dsym'] = 'dsymutil'
     uvars['plutil'] = 'plutil'
     uvars['logos']= '$dragondir/bin/logos.pl'
-    uvars['stage'] = ''
+    uvars['stage'] = 'true;'
     uvars['arc'] = '-fobjc-arc'
     uvars['targ'] = '-DTARGET_IPHONE=1'
 
-    uvars['warnings'] = 'all' #'-W' + this
+    uvars['warnings'] = '-Wall' #'-W' + this
     uvars['optim'] = '0'
     uvars['debug'] = '-fcolor-diagnostics'
 
@@ -144,6 +147,8 @@ def create_buildfile(ninja, type, uvars):
 
     ninja.variable('location', bvars[type]['location'] if uvars['installLocation'] == '' else uvars['installLocation'])
     ninja.variable('target', bvars[type]['target'])
+    ninja.newline()
+    ninja.variable('stage2', bvars[type]['stage2'])
     ninja.newline()
 
     ninja.variable('builddir', dragonvars['builddir'])
@@ -183,7 +188,7 @@ def create_buildfile(ninja, type, uvars):
 
     ninja.variable('arc', '-fobjc-arc')
     ninja.variable('btarg', uvars['targ'])
-    ninja.variable('warnings', '-W' + uvars['warnings'])
+    ninja.variable('warnings', uvars['warnings'])
     ninja.variable('optim', '-O' + uvars['optim'])
     ninja.variable('debug', uvars['debug'])
     ninja.newline()
@@ -199,11 +204,11 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('lopt', bvars['all']['lopts'])
     ninja.newline()
 
-    cflags = '$cinclude $arcs $arc $fwSearch $libSearch -mios-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
+    cflags = '$cinclude $arcs $arc $fwSearch -mios-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
     ninja.variable('cflags', cflags)
     ninja.newline()
 
-    lflags = '$cflags $frameworks $libs $lopt $usrLDflags'
+    lflags = '$cflags $frameworks $libs $lopt $libSearch $usrLDflags'
     ninja.variable('lflags', lflags)
     ninja.newline()
 
@@ -229,7 +234,7 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
     ninja.rule('sign', description="Signing $name", command="$ldid $usrLDIDFlags $in && mv $in $target")
     ninja.newline()
-    ninja.rule('stage', description="Running Stage for $name", command="$stage")
+    ninja.rule('stage', description="Running Stage for $name", command="$stage $stage2")
     ninja.newline()
 
     outputs = []
