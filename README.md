@@ -8,13 +8,16 @@ It's aimed at both speed and configurability. Every single factor of it is confi
 ## Table of Contents
 
 - [DragonBuild](#dragonbuild)
-  * [Notes](#notes)
-  * [Basic Usage](#basic-usage)
   * [Installing DragonBuild](#installing-dragonbuild)
-  * [Setting your project up for DragonBuild](#setting-your-project-up-for-dragonbuild)
-  * **[Credits](#credits)**
-  * [Under the Hood](#under-the-hood)
-    + [Ninja Build file gen Proccess](#ninja-build-file-gen-proccess)
+  * [Setting up your Project](#setting-up-your-project-for-dragonbuild)
+    + [DragonMake Syntax](#dragonmake-syntax)
+    + [DragonMake Format](#dragonmake-format)
+    + [DragonMake Variables](#dragonmake-variables)
+  * [DragonBuild Commands](#dragonbuild-commands)
+    + [Building and Installing](#building-and-installing-your-tweak)
+    + [Clean Rebuilds](#forcing-a-rebuild)
+    + [clangd Helper](#generating-compile-commands-for-clangd-or-other-tools)
+  * [Helpful Links](#helpful-links)
 
 ## Notes
 
@@ -177,4 +180,4 @@ Using the `c` or `clean` command will perform a clean regen and rebuild of your 
 
 @sbinger, for patiently helping me add arm64e support to tbdump (turns out its easy when you know what you're doing :))
 
-@theos, and the badass team there, who created a good amount of the resources this project depends on. 
+@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. 
