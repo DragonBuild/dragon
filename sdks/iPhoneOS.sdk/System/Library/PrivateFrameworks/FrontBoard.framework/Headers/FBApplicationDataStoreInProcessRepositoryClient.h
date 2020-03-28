@@ -15,7 +15,7 @@
 {
     id <FBApplicationDataStoreRepository> _dataStore;
     NSCountedSet *_prefetchedKeys;
-    NSMutableDictionary _prefetchedKeyValues;
+    NSMutableDictionary *_prefetchedKeyValues;
     NSObject<OS_dispatch_queue> *_prefetchQueue;
     NSObject<OS_dispatch_queue> *_clientCalloutQueue;
 //     struct os_unfair_lock_s _observersLock;

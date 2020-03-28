@@ -18,13 +18,11 @@ make_match = '(.*)=(.*)#?'
 dm_wildcard = '\$wildcard\("(.*)",.*"(.*)"\)'
 dm_eval = '\$eval\("(.*)"\)'
 
-
 dragonvars = {}
 dragonvars['pdirname'] = '.dragon'
 dragonvars['builddir'] = '$pdirname/build'
 dragonvars['objdir'] = '$pdirname/obj'
 dragonvars['signdir'] = '$pdirname/sign'
-
 
 # These are variables set as default per project type.
 # They sometimes get modified by uvars, when the relevant uvar is specified

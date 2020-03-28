@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <UIKit/_UISettings.h>
+#import <UIKitCore/_UISettings.h>
 
 @interface SBUISettings : _UISettings
 {

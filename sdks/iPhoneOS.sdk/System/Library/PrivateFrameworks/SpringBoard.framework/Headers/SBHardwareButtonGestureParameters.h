@@ -25,7 +25,7 @@
 - (id)succinctDescriptionBuilder;
 - (id)succinctDescription;
 @property(readonly, copy) NSString *description;
-- (id)mutableCopyWithZone:(_NSZone )arg1;
+- (id)mutableCopyWithZone:(NSZone )arg1;
 // - (id)copyWithZone:(_NSZone )arg1;
 
 @end

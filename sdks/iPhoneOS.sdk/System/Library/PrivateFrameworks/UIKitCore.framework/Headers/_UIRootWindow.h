@@ -3,9 +3,22 @@
 //
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
+#import <UIKit/UIWindow.h>
 
-#import "UIWindow.h"
-
+typedef struct {
+	id field1;
+	BOOL field2;
+	BOOL field3;
+	BOOL field4;
+	BOOL field5;
+	BOOL field6;
+	BOOL field7;
+	BOOL field8;
+	BOOL field9;
+	BOOL field10;
+	BOOL field11;
+	BOOL field12;
+} SCD_Struct_UI11;
 @class NSString, RBSAssertion;
 
 @interface _UIRootWindow : UIWindow
@@ -34,7 +47,7 @@
 - (void)_configureRootLayer:(id)arg1 sceneTransformLayer:(id)arg2 transformLayer:(id)arg3;
 - (BOOL)_transformLayerIncludesScreenRotation;
 - (void)_configureContextOptions:(id)arg1;
-- (CDStruct_a002d41c)_bindingDescription;
+- (SCD_Struct_UI11)_bindingDescription;
 - (id)_layerForCoordinateSpaceConversion;
 - (BOOL)_touchesInsideShouldHideCalloutBar;
 - (BOOL)_isWindowServerHostingManaged;

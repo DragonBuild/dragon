@@ -12,7 +12,7 @@
 @class FBWorkspaceEventQueue, NSMapTable, NSMutableArray, NSString, NSXPCListener, SBStatusBarTapManager;
 @protocol OS_dispatch_queue, OS_dispatch_source;
 
-@interface SBStatusBarStyleOverridesAssertionManager : NSObject <NSXPCListenerDelegate, SBStatusBarStyleOverridesAssertionServer, BSDescriptionProviding>
+@interface SBStatusBarStyleOverridesAssertionManager : NSObject <SBStatusBarStyleOverridesAssertionServer, BSDescriptionProviding>
 {
     NSMutableArray *_runningUpdateTransactions;
     int _statusBarStyleOverrides;

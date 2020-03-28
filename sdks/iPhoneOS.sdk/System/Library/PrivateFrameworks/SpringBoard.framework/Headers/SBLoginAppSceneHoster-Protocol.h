@@ -5,7 +5,7 @@
 //
 
 
-@class NSString, SBApplication, UIView;
+@class NSString, SBApplication, UIView, FBSMutableSceneSettings, FBSSceneTransitionContext;
 @protocol SBLoginAppSceneHosterDelegate;
 
 @protocol SBLoginAppSceneHoster <NSObject>

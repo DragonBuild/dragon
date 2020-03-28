@@ -4,42 +4,48 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <objc/NSObject.h>
-
 #import <FrontBoard/BSDescriptionProviding-Protocol.h>
 
+typedef struct {
+	unsigned field1[8];
+} SCD_Struct_FB8;
 @class NSString;
 
-@interface FBServiceClientAuthenticator : NSObject <BSDescriptionProviding>
-{
-    NSString *_entitlement;
-    NSUInteger _credentials;
+@interface FBServiceClientAuthenticator : NSObject <BSDescriptionProviding> {
+
+	NSString* _entitlement;
+	unsigned long long _credentials;
 }
+@property (nonatomic,copy,readonly) NSString * entitlement;                 //@synthesize entitlement=_entitlement - In the implementation block
+@property (nonatomic,readonly) unsigned long long credentials;              //@synthesize credentials=_credentials - In the implementation block
+@property (readonly) unsigned long long hash; 
+@property (readonly) Class superclass; 
+@property (copy,readonly) NSString * description; 
+@property (copy,readonly) NSString * debugDescription; 
++(id)sharedSystemClientAuthenticator;
++(id)_errorForCode:(long long)arg1 process:(id)arg2 failedEntitlement:(id)arg3 ;
++(id)sharedUIAppClientAuthenticator;
++(id)sharedForegroundUIAppClientAuthenticator;
++(BOOL)authenticateAuditToken:(SCD_Struct_FB8)arg1 forEntitlement:(id)arg2 error:(out id*)arg3 ;
 
-+ (id)_errorForCode:(long long)arg1 process:(id)arg2 failedEntitlement:(id)arg3;
-+ (BOOL)authenticateAuditToken:(CDStruct_6ad76789)arg1 forEntitlement:(id)arg2 error:(out id )arg3;
-+ (id)sharedForegroundUIAppClientAuthenticator;
-+ (id)sharedUIAppClientAuthenticator;
-+ (id)sharedSystemClientAuthenticator;
-@property(readonly, nonatomic) NSUInteger credentials; // @synthesize credentials=_credentials;
-@property(readonly, copy, nonatomic) NSString *entitlement; // @synthesize entitlement=_entitlement;
-// - (void).cxx_destruct;
-- (id)descriptionBuilderWithMultilinePrefix:(id)arg1;
-- (id)descriptionWithMultilinePrefix:(id)arg1;
-- (id)succinctDescriptionBuilder;
-- (id)succinctDescription;
-- (int)_authenticateProcessHandle:(id)arg1 entitlement:(id)arg2 error:(out id )arg3 withResult:(id /* CDUnknownBlockType */)arg4;
-- (int)authenticateAuditToken:(CDStruct_6ad76789 )arg1 forEntitlement:(id)arg2 withResult:(id /* CDUnknownBlockType */)arg3;
-- (int)authenticateClient:(id)arg1 withResult:(id /* CDUnknownBlockType */)arg2;
-- (int)authenticateAuditToken:(CDStruct_6ad76789 )arg1 withResult:(id /* CDUnknownBlockType */)arg2;
-- (BOOL)authenticateAuditToken:(id)arg1 error:(out id )arg2;
-- (BOOL)authenticateAuditToken:(id)arg1;
-- (BOOL)authenticateClient:(id)arg1 error:(out id )arg2;
-- (BOOL)authenticateClient:(id)arg1;
-- (id)initWithEntitlement:(id)arg1 additionalCredentials:(NSUInteger)arg2;
-- (id)initWithCredentials:(NSUInteger)arg1;
-- (id)initWithEntitlement:(id)arg1;
-- (id)init;
-
+ 
+-(id)init;
+-(id)succinctDescription;
+-(id)descriptionWithMultilinePrefix:(id)arg1 ;
+-(id)succinctDescriptionBuilder;
+-(id)descriptionBuilderWithMultilinePrefix:(id)arg1 ;
+-(unsigned long long)credentials;
+-(id)initWithEntitlement:(id)arg1 ;
+-(BOOL)authenticateClient:(id)arg1 error:(out id*)arg2 ;
+-(BOOL)authenticateClient:(id)arg1 ;
+-(NSString *)entitlement;
+-(id)initWithCredentials:(unsigned long long)arg1 ;
+-(id)initWithEntitlement:(id)arg1 additionalCredentials:(unsigned long long)arg2 ;
+-(int)_authenticateProcessHandle:(id)arg1 entitlement:(id)arg2 error:(out id*)arg3 withResult:(/*^block*/id)arg4 ;
+-(BOOL)authenticateAuditToken:(id)arg1 error:(out id*)arg2 ;
+-(int)authenticateAuditToken:(SCD_Struct_FB8*)arg1 forEntitlement:(id)arg2 withResult:(/*^block*/id)arg3 ;
+-(BOOL)authenticateAuditToken:(id)arg1 ;
+-(int)authenticateAuditToken:(SCD_Struct_FB8*)arg1 withResult:(/*^block*/id)arg2 ;
+-(int)authenticateClient:(id)arg1 withResult:(/*^block*/id)arg2 ;
 @end
 

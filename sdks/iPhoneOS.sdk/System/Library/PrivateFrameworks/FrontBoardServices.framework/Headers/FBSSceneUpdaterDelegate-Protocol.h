@@ -5,7 +5,7 @@
 //
 
 
-@class FBSSceneMessage, FBSSceneSettings, FBSSceneSettingsDiff, FBSSceneTransitionContext, NSSet;
+@class FBSSceneMessage, FBSSceneSettings, FBSSceneSettingsDiff, FBSSceneTransitionContext, FBSWorkspaceSceneUpdateResponse, NSSet;
 @protocol FBSSceneUpdater;
 
 @protocol FBSSceneUpdaterDelegate <NSObject>

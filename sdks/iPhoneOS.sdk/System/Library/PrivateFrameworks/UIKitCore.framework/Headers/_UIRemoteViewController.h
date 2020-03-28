@@ -4,8 +4,10 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import "UIViewController.h"
-
+#import <UIKit/UIViewController.h>
+typedef struct {
+	unsigned val[8];
+} SCD_Struct_UI40;
 #import <UIKitCore/_UIRemoteViewController_ViewControllerOperatorInterface-Protocol.h>
 
 @class BKSTouchDeliveryPolicyAssertion, FBSDisplayIdentity, NSArray, NSError, NSString, UIAlertController, UIDimmingView, UIView, _UIAsyncInvocation, _UIRemoteView, _UIRemoteViewService, _UISizeTrackingView, _UITextEffectsRemoteView, _UITextServiceSession, _UIViewServiceInterface;
@@ -224,7 +226,7 @@
 - (void)_setSecurityModeForViewsLayer;
 - (BOOL)inheritsSecurity;
 - (void)setInheritsSecurity:(BOOL)arg1;
-@property(readonly, nonatomic) CDStruct_4c969caf serviceAuditToken;
+@property(readonly, nonatomic) SCD_Struct_UI40 serviceAuditToken;
 @property(readonly, nonatomic) int serviceProcessIdentifier;
 @property(readonly, nonatomic) NSString *serviceBundleIdentifier;
 - (void)synchronizeAnimationsInActions:(id /* CDUnknownBlockType */)arg1;

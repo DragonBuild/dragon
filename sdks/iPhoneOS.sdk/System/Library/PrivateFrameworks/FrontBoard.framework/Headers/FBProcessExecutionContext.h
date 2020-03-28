@@ -39,8 +39,8 @@
 @property(copy, nonatomic) NSArray *arguments; // @synthesize arguments=_arguments;
 @property(copy, nonatomic) RBSProcessIdentity *identity; // @synthesize identity=_identity;
 // - (void).cxx_destruct;
-- (id)mutableCopyWithZone:(_NSZone )arg1;
-// - (id)copyWithZone:(_NSZone )arg1;
+- (id)mutableCopyWithZone:(NSZone )arg1;
+- (id)copyWithZone:(NSZone )arg1;
 - (unsigned int)_launchAssertionFlags;
 - (id)_initWithExecutionContext:(id)arg1;
 - (id)initWithIdentity:(id)arg1;

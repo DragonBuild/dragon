@@ -11,7 +11,6 @@
 @interface SBEntityRemovalSlideOffscreenSwitcherModifier : SBTransitionSwitcherModifier
 {
     BOOL _isSecondStage;
-    NSUUID *_transitionID;
     SBAppLayout *_appLayout;
     SBSwitcherModifier *_multitaskingModifier;
     NSUInteger _direction;

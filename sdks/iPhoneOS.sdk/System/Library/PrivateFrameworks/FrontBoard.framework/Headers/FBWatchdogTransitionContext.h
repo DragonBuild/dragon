@@ -20,8 +20,8 @@
 @property(retain, nonatomic) id <FBProcessWatchdogProviding> watchdogProvider; // @synthesize watchdogProvider=_watchdogProvider;
 @property(nonatomic) long long watchdogBehavior; // @synthesize watchdogBehavior=_watchdogBehavior;
 // - (void).cxx_destruct;
-- (id)mutableCopyWithZone:(_NSZone )arg1;
-// - (id)copyWithZone:(_NSZone )arg1;
+- (id)mutableCopyWithZone:(NSZone )arg1;
+- (id)copyWithZone:(NSZone )arg1;
 
 @end
 

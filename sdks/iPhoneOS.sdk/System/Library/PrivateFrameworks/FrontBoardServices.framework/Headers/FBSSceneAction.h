@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import "BSAction.h"
+#import <BaseBoard/BSAction.h>
 
 @class FBSScene, FBSSerialQueue;
 

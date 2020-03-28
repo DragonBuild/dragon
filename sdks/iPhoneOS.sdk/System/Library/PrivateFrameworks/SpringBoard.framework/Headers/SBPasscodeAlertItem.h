@@ -23,7 +23,7 @@
 - (void)didEndCall;
 - (void)_setErrorString:(id)arg1;
 - (BOOL)shouldShowInLockScreen;
-- (BOOL)textField:(id)arg1 shouldChangeCharactersInRange:(_NSRange)arg2 replacementString:(id)arg3;
+- (BOOL)textField:(id)arg1 shouldChangeCharactersInRange:(NSRange)arg2 replacementString:(id)arg3;
 - (void)configureTextField:(id)arg1;
 - (void)configure:(BOOL)arg1 requirePasscodeForActions:(BOOL)arg2;
 - (void)_clearAlertController;

@@ -12,8 +12,6 @@
 {
     long long _launchingInterfaceOrientation;
     _UIApplicationInfoParser *_plistParser;
-    NSArray *_lazy_folderNames;
-    NSString *_lazy_fallbackFolderName;
     BOOL _canChangeBackgroundStyle;
     BOOL _statusBarHidden;
     BOOL _statusBarHiddenWhenVerticallyCompact;

@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <FrontBoardServices/BSAbstractDefaultDomain.h>
+#import <BaseBoard/BSAbstractDefaultDomain.h>
 
 @interface FBPreferences : BSAbstractDefaultDomain
 {

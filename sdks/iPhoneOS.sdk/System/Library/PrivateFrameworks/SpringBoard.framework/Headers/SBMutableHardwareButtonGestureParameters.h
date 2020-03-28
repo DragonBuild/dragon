@@ -7,12 +7,6 @@
 #import <SpringBoard/SBHardwareButtonGestureParameters.h>
 
 @interface SBMutableHardwareButtonGestureParameters : SBHardwareButtonGestureParameters
-{
-    long long _maximumPressCount;
-    double _longPressTimeInterval;
-    double _multiplePressTimeInterval;
-}
-
 @property(nonatomic) double multiplePressTimeInterval; // @synthesize multiplePressTimeInterval=_multiplePressTimeInterval;
 @property(nonatomic) double longPressTimeInterval; // @synthesize longPressTimeInterval=_longPressTimeInterval;
 @property(nonatomic) long long maximumPressCount; // @synthesize maximumPressCount=_maximumPressCount;

@@ -29,7 +29,7 @@
 + (void)verifyIsFloorModifier;
 + (id)newContextCache;
 + (id)newQueryCache;
-+ (id)newCacheWithSelectorList:(id)arg1 subsequentMethodCacheFunc:(/* void * /* void * CDUnknownFunctionPointerType */ */)arg2 cachingDictionary:(id)arg3;
++ (id)newCacheWithSelectorList:(id)arg1 subsequentMethodCacheFunc:(void *)arg2 cachingDictionary:(id)arg3;
 + (id)contextSelectors;
 + (id)querySelectors;
 + (void)initalizeIMPCaching;

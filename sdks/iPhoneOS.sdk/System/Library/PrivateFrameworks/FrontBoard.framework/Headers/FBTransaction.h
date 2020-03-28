@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <FrontBoardServices/BSTransaction.h>
+#import <BaseBoard/BSTransaction.h>
 
 @interface FBTransaction : BSTransaction
 {

@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <UIKit/_UIRootWindow.h>
+#import <UIKitCore/_UIRootWindow.h>
 
 @interface SBInteractiveScreenshotGestureRootWindow : _UIRootWindow
 {

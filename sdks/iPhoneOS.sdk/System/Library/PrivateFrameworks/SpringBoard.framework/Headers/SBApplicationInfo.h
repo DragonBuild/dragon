@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <UIKit/_UIApplicationInfo.h>
+#import <UIKitCore/_UIApplicationInfo.h>
 
 @class CRCarPlayAppDeclaration, NSArray, NSSet, NSString, NSURL, NSUserDefaults, XBSnapshotContainerIdentity;
 
@@ -12,7 +12,6 @@
 {
     NSString *_applicationShortcutWidgetBundleIdentifier;
     NSArray *_staticApplicationShortcutItems;
-    NSString *_displayName;
     Class _iconClass;
     CRCarPlayAppDeclaration *_carPlayDeclaration;
     NSArray *_domainsToPreheat;
@@ -31,7 +30,6 @@
     long long _defaultStatusBarStyle;
     NSUInteger _uninstallCapability;
     NSUInteger _voipClass;
-    long long _whitePointAdaptivityStyle;
     NSUInteger _allowedNKNotificationsPerDay;
     long long _forcedUserInterfaceStyle;
     int _networkUsageTypes;
@@ -66,7 +64,6 @@
     BOOL _shouldSkipCrossfadeToLive;
     BOOL _supports64Bit;
     BOOL _isNewsstand;
-    BOOL _canChangeBackgroundStyle;
     BOOL _allowNonDefaultBackgroundStyle;
     BOOL _supportsDirectToAirplay;
     BOOL _alwaysReceivesOpenURLSource;

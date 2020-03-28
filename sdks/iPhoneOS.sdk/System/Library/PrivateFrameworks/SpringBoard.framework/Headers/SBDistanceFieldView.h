@@ -16,7 +16,7 @@
 @property double lineWidth;
 @property double sharpness;
 @property double offset;
-@property CGColor foregroundColor;
+@property struct CGColor foregroundColor;
 @property BOOL invertsShape;
 @property(copy, nonatomic) NSString *renderMode;
 - (BOOL)_shouldAnimatePropertyWithKey:(id)arg1;

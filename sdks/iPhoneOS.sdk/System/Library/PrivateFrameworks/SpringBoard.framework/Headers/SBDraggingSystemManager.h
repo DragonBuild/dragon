@@ -9,7 +9,7 @@
 
 @class NSHashTable, NSMapTable;
 
-@interface SBDraggingSystemManager : NSObject <UIDraggingSystemMonitorDelegate>
+@interface SBDraggingSystemManager : NSObject
 {
     NSHashTable *_observers;
     NSMapTable *_commandeerReasons;

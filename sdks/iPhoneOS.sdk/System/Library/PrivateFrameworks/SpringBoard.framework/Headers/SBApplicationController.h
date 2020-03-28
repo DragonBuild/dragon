@@ -10,77 +10,79 @@
 #import <SpringBoard/SBApplicationLifecycleObserver-Protocol.h>
 #import <SpringBoard/SBApplicationRestrictionDataSource-Protocol.h>
 
-@class FBSApplicationLibrary, NSMutableDictionary, NSSet, SBApplicationInfo, SBApplicationLibraryObserver, SBApplicationRestrictionController, SBReverseCountedSemaphore;
+@class NSMutableDictionary, NSSet, SBApplicationRestrictionController, SBApplicationLibraryObserver, FBSApplicationLibrary, SBApplicationInfo, SBReverseCountedSemaphore, NSString;
 
-@interface SBApplicationController : NSObject <SBApplicationRestrictionDataSource, BKSTerminationAssertionObserver, SBApplicationLifecycleObserver>
-{
-    NSMutableDictionary *_applicationsByBundleIdentifer;
-//     struct os_unfair_lock_s _applicationsLock;
-    NSMutableDictionary *_systemAppsVisibilityOverrides;
-    NSSet *_cachedSystemAppsWithVisibilityOverrideHidden;
-    SBApplicationRestrictionController *_restrictionController;
-    SBApplicationLibraryObserver *_appLibraryObserver;
-    FBSApplicationLibrary *_appLibrary;
-    SBApplicationInfo *_systemAppInfo;
-    SBReverseCountedSemaphore *_uninstallationReverseSemaphore;
+@interface SBApplicationController : NSObject <SBApplicationRestrictionDataSource, BKSTerminationAssertionObserver, SBApplicationLifecycleObserver> {
+
+	NSMutableDictionary* _applicationsByBundleIdentifer;
+	os_unfair_lock_s _applicationsLock;
+	NSMutableDictionary* _systemAppsVisibilityOverrides;
+	NSSet* _cachedSystemAppsWithVisibilityOverrideHidden;
+	SBApplicationRestrictionController* _restrictionController;
+	SBApplicationLibraryObserver* _appLibraryObserver;
+	FBSApplicationLibrary* _appLibrary;
+	SBApplicationInfo* _systemAppInfo;
+	SBReverseCountedSemaphore* _uninstallationReverseSemaphore;
 }
+@property (readonly) unsigned long long hash; 
+@property (readonly) Class superclass; 
 
-+ (void)_setClearAllLegacySnapshotsWhenLoaded:(BOOL)arg1;
-+ (void)_setClearSystemAppSnapshotsWhenLoaded:(BOOL)arg1;
-+ (id)sharedInstanceIfExists;
-+ (id)sharedInstance;
-+ (id)_sharedInstanceCreateIfNecessary:(BOOL)arg1;
-// - (void).cxx_destruct;
-- (void)noteTerminationAssertionEfficacyChangedTo:(NSUInteger)arg1 forBundleIdentifier:(id)arg2;
-- (id)bundleIdentifiersWithVisibilityOverrideHidden;
-- (void)applicationRestrictionsMayHaveChanged;
-- (void)applicationVisibilityMayHaveChanged;
-- (void)applicationsDemoted:(id)arg1;
-- (void)applicationsRemoved:(id)arg1;
-- (void)applicationsUpdated:(id)arg1;
-- (void)applicationsReplaced:(id)arg1;
-- (void)applicationsAdded:(id)arg1;
-- (void)_updateVisibilityOverrides;
-- (void)_removeApplicationsFromModelWithBundleIdentifier:(id)arg1 forInstall:(BOOL)arg2 withReason:(id)arg3;
-- (void)_loadApplications:(id)arg1 remove:(id)arg2;
-- (id)_appInfosToBundleIDs:(id)arg1;
-- (id)_loadApplicationFromApplicationInfo:(id)arg1;
-- (Class)_appClassForInfo:(id)arg1;
-- (void)_sendInstalledAppsDidChangeNotification:(id)arg1 removed:(id)arg2 replaced:(id)arg3 updated:(id)arg4;
-- (void)_preLoadApplications;
-- (void)_memoryWarningReceived;
-- (void)_finishDeferredMajorVersionMigrationTasks_FlushLegacySnapshots;
-- (void)_finishDeferredMajorVersionMigrationTasks_FlushSystemSnapshots;
-- (id)_lock_applicationWithBundleIdentifier:(id)arg1;
-- (id)_appLibraryObserver;
-- (id)_appLibrary;
-- (id)restrictionController;
-- (id)notesApplication;
-- (id)testFlightApplication;
-- (id)loginApplication;
-- (id)webApplication;
-- (id)mapsApplication;
-- (id)iPodOutApplication;
-- (id)cameraApplication;
-- (id)clockApplication;
-- (id)inCallServiceApp;
-- (id)faceTimeApp;
-- (id)mobilePhone;
-- (id)setupApplication;
-- (id)dataActivationApplication;
-- (id)musicApplication;
-- (id)alwaysAvailableApplicationBundleIdentifiers;
-- (void)waitForUninstallsToComplete;
-- (void)requestUninstallApplicationWithBundleIdentifier:(id)arg1 withCompletion:(id /* CDUnknownBlockType */)arg2;
-- (void)requestUninstallApplication:(id)arg1 withCompletion:(id /* CDUnknownBlockType */)arg2;
-- (void)uninstallApplication:(id)arg1;
-- (id)applicationWithPid:(int)arg1;
-- (id)applicationWithBundleIdentifier:(id)arg1;
-- (id)runningApplications;
-- (id)allApplications;
-- (id)allBundleIdentifiers;
-- (void)dealloc;
-- (id)init;
-
+ 
+@property (copy,readonly) NSString * description; 
+@property (copy,readonly) NSString * debugDescription; 
++(id)sharedInstance;
++(id)sharedInstanceIfExists;
++(id)_sharedInstanceCreateIfNecessary:(BOOL)arg1 ;
++(void)_setClearSystemAppSnapshotsWhenLoaded:(BOOL)arg1 ;
++(void)_setClearAllLegacySnapshotsWhenLoaded:(BOOL)arg1 ;
+-(id)init;
+-(void)dealloc;
+-(id)allApplications;
+-(void)noteTerminationAssertionEfficacyChangedTo:(unsigned long long)arg1 forBundleIdentifier:(id)arg2 ;
+-(id)_appLibrary;
+-(id)mobilePhone;
+-(id)allBundleIdentifiers;
+-(id)applicationWithBundleIdentifier:(id)arg1 ;
+-(id)runningApplications;
+-(void)waitForUninstallsToComplete;
+-(id)restrictionController;
+-(id)applicationWithPid:(int)arg1 ;
+-(id)setupApplication;
+-(id)musicApplication;
+-(id)dataActivationApplication;
+-(void)uninstallApplication:(id)arg1 ;
+-(id)cameraApplication;
+-(void)requestUninstallApplicationWithBundleIdentifier:(id)arg1 withCompletion:(/*^block*/id)arg2 ;
+-(id)webApplication;
+-(void)_loadApplications:(id)arg1 remove:(id)arg2 ;
+-(void)_memoryWarningReceived;
+-(void)_finishDeferredMajorVersionMigrationTasks_FlushSystemSnapshots;
+-(void)_finishDeferredMajorVersionMigrationTasks_FlushLegacySnapshots;
+-(id)_lock_applicationWithBundleIdentifier:(id)arg1 ;
+-(void)_removeApplicationsFromModelWithBundleIdentifier:(id)arg1 forInstall:(BOOL)arg2 withReason:(id)arg3 ;
+-(void)_sendInstalledAppsDidChangeNotification:(id)arg1 removed:(id)arg2 replaced:(id)arg3 updated:(id)arg4 ;
+-(Class)_appClassForInfo:(id)arg1 ;
+-(void)_preLoadApplications;
+-(id)_loadApplicationFromApplicationInfo:(id)arg1 ;
+-(id)_appInfosToBundleIDs:(id)arg1 ;
+-(void)_updateVisibilityOverrides;
+-(id)alwaysAvailableApplicationBundleIdentifiers;
+-(id)bundleIdentifiersWithVisibilityOverrideHidden;
+-(void)applicationsAdded:(id)arg1 ;
+-(void)applicationsReplaced:(id)arg1 ;
+-(void)applicationsUpdated:(id)arg1 ;
+-(void)applicationsRemoved:(id)arg1 ;
+-(void)applicationsDemoted:(id)arg1 ;
+-(void)applicationVisibilityMayHaveChanged;
+-(void)applicationRestrictionsMayHaveChanged;
+-(void)requestUninstallApplication:(id)arg1 withCompletion:(/*^block*/id)arg2 ;
+-(id)faceTimeApp;
+-(id)inCallServiceApp;
+-(id)clockApplication;
+-(id)iPodOutApplication;
+-(id)mapsApplication;
+-(id)loginApplication;
+-(id)testFlightApplication;
+-(id)notesApplication;
+-(id)_appLibraryObserver;
 @end
-

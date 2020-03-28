@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <FrontBoardServices/BSEventQueueLock.h>
+#import <BaseBoard/BSEventQueueLock.h>
 
 @interface FBWorkspaceEventQueueLock : BSEventQueueLock
 {

@@ -5,9 +5,13 @@
 //
 
 #import <UIKit/UIView.h>
-
+typedef struct UIRectCornerRadii {
+	double topLeft;
+	double bottomLeft;
+	double bottomRight;
+	double topRight;
+} UIRectCornerRadii;
 #import <SpringBoard/PTSettingsKeyObserver-Protocol.h>
-
 @class SBAppSwitcherPageShadowView, SBAppSwitcherSettings, SBWallpaperEffectView;
 @protocol SBAppSwitcherPageContentView;
 

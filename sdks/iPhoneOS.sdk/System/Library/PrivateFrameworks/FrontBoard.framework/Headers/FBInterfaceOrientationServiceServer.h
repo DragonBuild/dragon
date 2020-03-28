@@ -11,7 +11,6 @@
 
 @interface FBInterfaceOrientationServiceServer : FBSServiceFacility
 {
-    NSObject<OS_dispatch_queue> *_queue;
     NSMutableSet *_interestedClients;
     long long _interfaceOrientation;
     NSUInteger _sequenceNumber;

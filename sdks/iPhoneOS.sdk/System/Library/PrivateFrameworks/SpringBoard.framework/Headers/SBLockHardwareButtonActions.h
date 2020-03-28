@@ -9,7 +9,7 @@
 #import <SpringBoard/SBHardwareButtonGestureParametersObserver-Protocol.h>
 
 @class SBAccessibilityHardwareButtonInteraction, SBApplication, SBHardwareButtonGestureParameters, SBHardwareButtonService, SBProximitySensorManager, SBSiriHardwareButtonInteraction, SBSleepWakeHardwareButtonInteraction, SBWalletPreArmController, SOSManager;
-@protocol SBHardwareButtonInteraction><SBHardwareButtonGestureParametersProvider;
+
 
 @interface SBLockHardwareButtonActions : SBHardwareButtonGestureParametersProviderBase <SBHardwareButtonGestureParametersObserver>
 {
@@ -27,10 +27,10 @@
     SBSiriHardwareButtonInteraction *_siriButtonInteraction;
     SBAccessibilityHardwareButtonInteraction *_accessibilityButtonInteraction;
     SBSleepWakeHardwareButtonInteraction *_sleepWakeButtonInteraction;
-    id <SBHardwareButtonInteraction><SBHardwareButtonGestureParametersProvider> _proximitySensorButtonInteraction;
+    id _proximitySensorButtonInteraction;
 }
 
-@property(retain, nonatomic) id <SBHardwareButtonInteraction><SBHardwareButtonGestureParametersProvider> proximitySensorButtonInteraction; // @synthesize proximitySensorButtonInteraction=_proximitySensorButtonInteraction;
+@property(retain, nonatomic) id proximitySensorButtonInteraction; // @synthesize proximitySensorButtonInteraction=_proximitySensorButtonInteraction;
 @property(retain, nonatomic) SBSleepWakeHardwareButtonInteraction *sleepWakeButtonInteraction; // @synthesize sleepWakeButtonInteraction=_sleepWakeButtonInteraction;
 @property(retain, nonatomic) SBAccessibilityHardwareButtonInteraction *accessibilityButtonInteraction; // @synthesize accessibilityButtonInteraction=_accessibilityButtonInteraction;
 @property(retain, nonatomic) SBSiriHardwareButtonInteraction *siriButtonInteraction; // @synthesize siriButtonInteraction=_siriButtonInteraction;

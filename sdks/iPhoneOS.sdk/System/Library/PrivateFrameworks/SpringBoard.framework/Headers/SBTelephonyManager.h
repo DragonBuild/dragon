@@ -7,7 +7,10 @@
 #import <objc/NSObject.h>
 
 #import <SpringBoard/STTelephonyStateObserver-Protocol.h>
-
+typedef struct {
+	int field1;
+	int field2;
+} SCD_Struct_SB12;
 @class CoreTelephonyClient, NSString, NWSystemPathMonitor, SBAlertItem, SBBluetoothController, STTelephonyStateProvider, STWifiStatusDomain, TUCall;
 @protocol OS_dispatch_queue;
 
@@ -132,7 +135,7 @@
 - (BOOL)hasCellularTelephony;
 - (BOOL)containsCellularRadio;
 - (void)_handleTelephonyDaemonRestart;
-- (void)_serverConnectionDidError:(CDStruct_1ef3fb1f)arg1;
+- (void)_serverConnectionDidError:(SCD_Struct_SB12)arg1;
 - (void)_avSystemControllerDidError:(id)arg1;
 - (struct __CTServerConnection )_serverConnection;
 - (void)_performQueryInBackground:(id /* CDUnknownBlockType */)arg1 withMainQueueResultHandler:(id /* CDUnknownBlockType */)arg2;

@@ -11,6 +11,11 @@
 #import <PlatterKit/PLPlatter-Protocol.h>
 #import <PlatterKit/PLPlatterInternal-Protocol.h>
 
+typedef struct {
+	float field1;
+	CGSize field2;
+	double field3;
+} SCD_Struct_PL3;
 @class MTMaterialShadowView, MTMaterialView, NSArray, NSBundle, NSDictionary, NSMutableDictionary, NSString, PLShadowView;
 
 @interface PLPlatterView : UIView <PLPlatterInternal, PLPlatter, MTVisualStylingRequiring, MTMaterialGrouping>
@@ -27,11 +32,11 @@
     UIView *_backgroundView;
     long long _materialRecipe;
     double _cornerRadius;
-    CDStruct_b48b9fb5 _shadowAttributes;
+    SCD_Struct_PL3 _shadowAttributes;
 }
 
 @property(nonatomic) double cornerRadius; // @synthesize cornerRadius=_cornerRadius;
-@property(nonatomic) CDStruct_b48b9fb5 shadowAttributes; // @synthesize shadowAttributes=_shadowAttributes;
+@property(nonatomic) SCD_Struct_PL3 shadowAttributes; // @synthesize shadowAttributes=_shadowAttributes;
 @property(nonatomic) long long materialRecipe; // @synthesize materialRecipe=_materialRecipe;
 @property(retain, nonatomic) UIView *backgroundView; // @synthesize backgroundView=_backgroundView;
 @property(nonatomic) BOOL usesBackgroundView; // @synthesize usesBackgroundView=_usesBackgroundView;

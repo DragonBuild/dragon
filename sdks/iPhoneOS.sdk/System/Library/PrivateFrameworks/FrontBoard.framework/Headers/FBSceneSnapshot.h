@@ -21,7 +21,7 @@
 - (id)_collectLayersToSnapshotFromScene:(id)arg1 withSnapshotContext:(id)arg2 rootContext:(id)arg3;
 @property(readonly, nonatomic) IOSurface *fallbackIOSurface;
 - (BOOL)capture;
-@property(readonly, nonatomic) CGImage CGImage;
+@property(readonly, nonatomic) struct CGImage CGImage;
 @property(readonly, nonatomic) IOSurface *IOSurface;
 @property(readonly, nonatomic) BOOL hasProtectedContent;
 - (id)initWithScene:(id)arg1 snapshotContext:(id)arg2;

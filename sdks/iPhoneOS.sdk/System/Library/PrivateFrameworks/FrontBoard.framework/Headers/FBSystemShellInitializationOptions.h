@@ -28,7 +28,7 @@
 @property(readonly, nonatomic) BOOL resetDarkBootState; // @synthesize resetDarkBootState=_resetDarkBootState;
 @property(readonly, nonatomic) BOOL initializeReadyForInteraction; // @synthesize initializeReadyForInteraction=_initializeReadyForInteraction;
 // - (void).cxx_destruct;
-- (id)mutableCopyWithZone:(_NSZone )arg1;
+- (id)mutableCopyWithZone:(NSZone )arg1;
 // - (id)copyWithZone:(_NSZone )arg1;
 - (BOOL)isEqual:(id)arg1;
 - (NSUInteger)hash;

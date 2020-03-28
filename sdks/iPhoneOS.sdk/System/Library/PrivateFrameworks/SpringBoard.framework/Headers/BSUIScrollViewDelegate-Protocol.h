@@ -6,12 +6,16 @@
 
 
 @class UIScrollView;
-
+typedef struct {
+	long long field1;
+	CGPoint field2;
+	CGPoint field3;
+} SCD_Struct_SB18;
 @protocol BSUIScrollViewDelegate <UIScrollViewDelegate>
 
 @optional
 - (void)scrollViewDidEndScrolling:(UIScrollView *)arg1;
-- (void)scrollViewDidScroll:(UIScrollView *)arg1 withContext:(CDStruct_3b09cf25)arg2;
+- (void)scrollViewDidScroll:(UIScrollView *)arg1 withContext:(SCD_Struct_SB18)arg2;
 - (void)scrollViewWillBeginScrolling:(UIScrollView *)arg1;
 @end
 

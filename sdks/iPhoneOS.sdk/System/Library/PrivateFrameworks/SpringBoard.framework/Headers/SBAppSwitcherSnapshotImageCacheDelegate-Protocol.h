@@ -15,7 +15,7 @@
 - (long long)orientationForSnapshotOfAppLayout:(SBAppLayout *)arg1 inImageCache:(SBAppSwitcherSnapshotImageCache *)arg2;
 - (NSArray *)highPriorityAppLayoutsForImageCache:(SBAppSwitcherSnapshotImageCache *)arg1;
 - (BOOL)biasForwardForImageCache:(SBAppSwitcherSnapshotImageCache *)arg1;
-- (_NSRange)visibleAppLayoutRangeForImageCache:(SBAppSwitcherSnapshotImageCache *)arg1;
+- (NSRange)visibleAppLayoutRangeForImageCache:(SBAppSwitcherSnapshotImageCache *)arg1;
 - (NSArray *)appLayoutsForImageCache:(SBAppSwitcherSnapshotImageCache *)arg1;
 @end
 

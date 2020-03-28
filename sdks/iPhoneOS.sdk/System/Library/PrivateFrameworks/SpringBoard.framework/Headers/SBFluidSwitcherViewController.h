@@ -23,6 +23,11 @@
 #import <SpringBoard/SBSwitcherLiveContentOverlayCoordinatorDelegate-Protocol.h>
 #import <SpringBoard/SBTetheredSwitcherContentViewControlling-Protocol.h>
 
+typedef struct {
+	long long field1;
+	CGPoint field2;
+	CGPoint field3;
+} SBC_Struct_SB18;
 @class BSAnimationSettings, NSArray, NSMutableArray, NSMutableDictionary, NSString, SBAppSwitcherScrollView, SBAppSwitcherSettings, SBAppSwitcherSnapshotImageCache, SBAppSwitcherSnapshotLockoutViewControllerProvider, SBBestAppSuggestion, SBFHomeGrabberSettings, SBFloatingDockBehaviorAssertion, SBFloatingDockWindowLevelAssertion, SBFluidSwitcherButton, SBFluidSwitcherContentView, SBFluidSwitcherLayoutContext, SBFluidSwitcherModifierTimelineController, SBFluidSwitcherPageContentViewProvider, SBFluidSwitcherTitledButton, SBLayoutStateTransitionCoordinator, SBSceneManager, SBSwitcherModifier, SBViewMorphAnimator, SBWorkspaceApplicationSceneTransitionContext, UIApplicationSceneDeactivationAssertion, UILabel, UINotificationFeedbackGenerator, UIPanGestureRecognizer, UITapGestureRecognizer, UIView;
 @protocol BSInvalidatable, SBFluidSwitcherScrollProviding, SBSwitcherContentViewControllerDataSource, SBSwitcherContentViewControllerDelegate, SBSwitcherLiveContentOverlayCoordinating, SBTetheredSwitcherContentViewControlling;
 
@@ -33,7 +38,7 @@
     id <SBSwitcherLiveContentOverlayCoordinating> _liveContentOverlayCoordinator;
     NSMutableDictionary *_liveContentOverlays;
     NSMutableDictionary *_appLayoutToHeaderItemController;
-    _NSRange _visibleItemRange;
+    NSRange _visibleItemRange;
     CGPoint _scrollViewLastContentOffset;
     BOOL _scrollViewLastScrolledForward;
     SBFluidSwitcherPageContentViewProvider *_pageContentViewProvider;
@@ -225,7 +230,7 @@
 - (long long)orientationForSnapshotOfAppLayout:(id)arg1 inImageCache:(id)arg2;
 - (id)highPriorityAppLayoutsForImageCache:(id)arg1;
 - (BOOL)biasForwardForImageCache:(id)arg1;
-- (_NSRange)visibleAppLayoutRangeForImageCache:(id)arg1;
+- (NSRange)visibleAppLayoutRangeForImageCache:(id)arg1;
 - (id)appLayoutsForImageCache:(id)arg1;
 - (id)delegateForForSnapshotPageViewFromProvider:(id)arg1;
 - (id)viewControllerForTransientOverlayAppLayout:(id)arg1 fromProvider:(id)arg2;
@@ -235,7 +240,7 @@
 - (CGPoint)_scrollView:(id)arg1 adjustedOffsetForOffset:(CGPoint)arg2 translation:(CGPoint)arg3 startPoint:(CGPoint)arg4 locationInView:(CGPoint)arg5 horizontalVelocity:(inout double )arg6 verticalVelocity:(inout double )arg7;
 - (void)scrollViewDidEndDragging:(id)arg1 willDecelerate:(BOOL)arg2;
 - (void)scrollViewWillEndDragging:(id)arg1 withVelocity:(CGPoint)arg2 targetContentOffset:(inout CGPoint )arg3;
-- (void)scrollViewDidScroll:(id)arg1 withContext:(CDStruct_3b09cf25)arg2;
+- (void)scrollViewDidScroll:(id)arg1 withContext:(SBC_Struct_SB18)arg2;
 - (id)_itemContainerForAppLayoutIfExists:(id)arg1;
 - (id)_appLayoutForItemContainerIfExists:(id)arg1;
 - (void)_applyStyleToLiveContentOverlay:(id)arg1 forItemContainer:(id)arg2;

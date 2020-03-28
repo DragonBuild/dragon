@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <FrontBoardServices/BSWatchdog.h>
+#import <BaseBoard/BSWatchdog.h>
 
 @class FBTransaction;
 

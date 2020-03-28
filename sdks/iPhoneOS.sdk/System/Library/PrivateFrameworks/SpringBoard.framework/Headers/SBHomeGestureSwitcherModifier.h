@@ -103,7 +103,7 @@
 - (BOOL)wantsResignActiveAssertion;
 - (id)layoutSettingsForIndex:(NSUInteger)arg1;
 - (id)cornerRadiusSettingsForIndex:(NSUInteger)arg1;
-- (_NSRange)fullSizeSnapshotsRange;
+- (NSRange)fullSizeSnapshotsRange;
 - (NSUInteger)numberOfAppLayoutsToCacheSnapshots;
 - (BOOL)isSwitcherWindowUserInteractionEnabled;
 - (BOOL)isSwitcherWindowVisible;

@@ -5,7 +5,12 @@
 //
 
 #import <SpringBoard/SBChainableModifierQuery-Protocol.h>
-
+typedef struct UIRectCornerRadii {
+	double topLeft;
+	double bottomLeft;
+	double bottomRight;
+	double topRight;
+} UIRectCornerRadii;
 @class NSArray, NSString, SBAppLayout, SBFFluidBehaviorSettings;
 
 @protocol SBSwitcherQueryProviding <SBChainableModifierQuery>
@@ -46,7 +51,7 @@
 - (SBFFluidBehaviorSettings *)opacitySettings;
 - (SBFFluidBehaviorSettings *)layoutSettings;
 - (long long)preferredSnapshotOrientation;
-- (_NSRange)fullSizeSnapshotsRange;
+- (NSRange)fullSizeSnapshotsRange;
 - (NSUInteger)numberOfAppLayoutsToCacheSnapshots;
 - (NSUInteger)numberOfDefaultAppLayoutsToCacheSnapshots;
 - (BOOL)isSwitcherWindowUserInteractionEnabled;

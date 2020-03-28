@@ -7,7 +7,7 @@
 #import <objc/NSObject.h>
 
 
-@interface SBApplicationStateServiceDelegate : NSObject <UISApplicationStateServiceDelegate>
+@interface SBApplicationStateServiceDelegate : NSObject
 {
 }
 

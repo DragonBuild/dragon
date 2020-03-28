@@ -14,7 +14,6 @@
 @interface CSPageViewController : CSPresentationViewController <CSPageViewControllerProtocol>
 {
     id <CSCoverSheetViewControllerProtocol> _coverSheetViewController;
-    BOOL _transitioning;
     BOOL _authenticated;
     CSLayoutStrategy *_layoutStrategy;
 }

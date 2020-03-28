@@ -4,7 +4,7 @@
 //  Copyright (C) 1997-2019 Steve Nygard.
 //
 
-#import <UIKit/UIHBClickGestureRecognizer.h>
+#import <UIKitCore/UIHBClickGestureRecognizer.h>
 
 @interface SBHBInitialPressDownGestureRecognizer : UIHBClickGestureRecognizer
 {

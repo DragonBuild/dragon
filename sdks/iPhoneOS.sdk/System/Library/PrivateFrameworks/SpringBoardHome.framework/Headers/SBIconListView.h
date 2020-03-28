@@ -66,7 +66,7 @@
 @property(nonatomic) double iconContentScale; // @synthesize iconContentScale=_iconContentScale;
 @property(nonatomic) BOOL iconsNeedLayout; // @synthesize iconsNeedLayout=_iconsNeedLayout;
 @property(nonatomic) struct SBIconListPredictedVisibleColumn predictedVisibleColumn; // @synthesize predictedVisibleColumn=_predictedVisibleColumn;
-@property(nonatomic) _NSRange visibleColumnRange; // @synthesize visibleColumnRange=_visibleColumnRange;
+@property(nonatomic) NSRange visibleColumnRange; // @synthesize visibleColumnRange=_visibleColumnRange;
 @property(copy, nonatomic) NSString *iconLocation; // @synthesize iconLocation=_iconLocation;
 @property(nonatomic) __weak id <SBIconViewProviding> iconViewProvider; // @synthesize iconViewProvider=_iconViewProvider;
 @property(retain, nonatomic) SBIconListModel *model; // @synthesize model=_model;
