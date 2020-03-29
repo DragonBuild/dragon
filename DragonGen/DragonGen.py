@@ -202,7 +202,7 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('lopt', bvars['all']['lopts'])
     ninja.newline()
 
-    cflags = '$cinclude $arcs $arc $fwSearch -mios-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
+    cflags = '$cinclude $arcs $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
     ninja.variable('cflags', cflags)
     ninja.newline()
 
