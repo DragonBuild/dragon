@@ -84,8 +84,6 @@ while [ "$1" != "" ]; do
 done
 
 cwd=$(basename $PWD)
-hash=$(md5sum DragonMake)
-lasthash=$(cat .dragon/hash)
 
 if [ -f "DragonMake" ]; then  
     true
@@ -160,7 +158,6 @@ if [ $build == 1 ]; then
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
     echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
     echo "${GENOUTPUT}" > .dragon/last_package
-    md5 DragonMake > .dragon/hash
 fi
 
 
