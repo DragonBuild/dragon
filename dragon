@@ -83,12 +83,6 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ $clean == 1 ]; then 
-    rm -rf .dragon/build 
-    rm -rf .dragon/obj
-    rm -rf .dragon/hash
-fi
-
 cwd=$(basename $PWD)
 hash=$(md5sum DragonMake)
 lasthash=$(cat .dragon/hash)
@@ -121,6 +115,17 @@ if [ $build == 1 ]; then
         subsb=(${project_dirs})
         set +f 
         for i in "${subsb[@]}"; do
+
+            if [ $clean == 1 ]; then 
+                if [ $i == "." ]; then 
+                    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning ${TWEAK_NAME}${NC}"
+                else
+                    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning ${i}${NC}"
+                fi
+                rm -rf .dragon/build 
+                rm -rf .dragon/obj
+                rm -rf .dragon/hash
+            fi
             if [ $i == "." ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
             else
@@ -128,6 +133,10 @@ if [ $build == 1 ]; then
             fi
             cd $i
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja || cleanbuildfail
+            if [ $exportt == 1 ]; then 
+                echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
+                ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
+            fi
             rm build.ninja 
             cp -R .dragon/_ ../.dragon
             if [ $i == "." ]; then 
@@ -137,12 +146,6 @@ if [ $build == 1 ]; then
             fi
         done
     fi
-
-    if [ $exportt == 1 ]; then 
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
-        ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
-    fi
-    rm build.ninja 
 
     echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
     mkdir -p .dragon/_/DEBIAN 
