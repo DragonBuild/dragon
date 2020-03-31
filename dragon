@@ -177,10 +177,10 @@ if [ $install == 1 ]; then
         exit 
     fi
 
-    scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
+    scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
     
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
-    ssh root@$DRBIP "${INSTALL_CMD}"
+    ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}"
 fi
 
 rm -rf .dragon/packages > /dev/null
