@@ -120,6 +120,8 @@ def process_package(package_config):
     uvars['ldidflags']= '-S'
 
     uvars['installLocation'] = ''
+    uvars['resourceDir'] = 'Resources'
+    uvars['nocomp']  = 0
 
     uvars['frameworkSearchDirs'] = ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks']
     uvars['additionalFrameworkSearchDirs'] = []
@@ -143,7 +145,8 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('pdirname', dragonvars['pdirname'])
     ninja.newline()
 
-    ninja.variable('location', bvars[type]['location'] if uvars['installLocation'] == '' else uvars['installLocation'])
+    ninja.variable('location', bvars[type]['location'].replace(' ', '$ ') if uvars['installLocation'] == '' else uvars['installLocation'].replace(' ', '$ '))
+    ninja.variable('resourcedir', uvars['resourceDir'].replace(' ', '$ '))
     ninja.variable('target', bvars[type]['target'])
     ninja.newline()
     ninja.variable('stage2', bvars[type]['stage2'])
@@ -224,7 +227,7 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
     ninja.rule('link', description="Linking $name", command="$ld $lflags -o $out $in")
     ninja.newline()
-    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p .dragon/_$location/; cp -r Resources/ .dragon/_$location && cp $in $out && find .dragon/_$location -type f -name \"*.plist\" -exec $plutil -convert binary1 \"{}\" \;", pool='solo')
+    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p \".dragon/_$location/\" && cp -r \"$resourcedir/\" \".dragon/_$location\" && cp $in $out && find \".dragon/_$location\" -type f -name \"*.plist\" -exec $plutil -convert binary1 \"{}\" \;", pool='solo')
     ninja.newline()
     ninja.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
     ninja.newline()
@@ -236,74 +239,74 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
 
     outputs = []
-    targets = ['$target']
+    targets = ['$target'] if uvars['nocomp'] == 0 else []
     logos = uvars['logos_files']
     files = uvars['files']
     plists = uvars['plists']
+    if uvars['nocomp'] == 0:
+        for i in logos:
+            wc = re.match(dm_wildcard, i)
+            ev = re.match(dm_eval, i)
+            if wc:
+                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            elif ev:
+                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            else:
+                if uvars['dir'] != '.':
+                    i = '../' + i
+                continue 
 
-    for i in logos:
-        wc = re.match(dm_wildcard, i)
-        ev = re.match(dm_eval, i)
-        if wc:
-            out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        elif ev:
-            out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        else:
             if uvars['dir'] != '.':
-                i = '../' + i
-            continue 
+                logos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+            else:
+                logos += str(out).split(' ')
+            logos.remove(i)
+            
+        for i in files:
+            wc = re.match(dm_wildcard, i)
+            ev = re.match(dm_eval, i)
+            if wc:
+                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            elif ev:
+                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            else:
+                if uvars['dir'] != '.':
+                    i = '../' + i
+                continue 
 
-        if uvars['dir'] != '.':
-            logos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-        else:
-            logos += str(out).split(' ')
-        logos.remove(i)
-        
-    for i in files:
-        wc = re.match(dm_wildcard, i)
-        ev = re.match(dm_eval, i)
-        if wc:
-            out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        elif ev:
-            out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        else:
             if uvars['dir'] != '.':
-                i = '../' + i
-            continue 
+                files += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+            else:
+                files += str(out).split(' ')
+            files.remove(i)
 
-        if uvars['dir'] != '.':
-            files += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-        else:
-            files += str(out).split(' ')
-        files.remove(i)
+        for i in plists:
+            wc = re.match(dm_wildcard, i)
+            ev = re.match(dm_eval, i)
+            if wc:
+                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            elif ev:
+                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            else:
+                if uvars['dir'] != '.':
+                    i = '../' + i
+                continue 
 
-    for i in plists:
-        wc = re.match(dm_wildcard, i)
-        ev = re.match(dm_eval, i)
-        if wc:
-            out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        elif ev:
-            out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-        else:
             if uvars['dir'] != '.':
-                i = '../' + i
-            continue 
+                plists += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+            else:
+                plists += str(out).split(' ')
+            plists.remove(i)
 
-        if uvars['dir'] != '.':
-            plists += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-        else:
-            plists += str(out).split(' ')
-        plists.remove(i)
+        for f in logos:
+            ninja.build(f'$builddir/{os.path.split(f)[1]}.mm', 'logos', f)
+            files.append(f'$builddir/{os.path.split(f)[1]}.mm')
+            ninja.newline()
 
-    for f in logos:
-        ninja.build(f'$builddir/{os.path.split(f)[1]}.mm', 'logos', f)
-        files.append(f'$builddir/{os.path.split(f)[1]}.mm')
-        ninja.newline()
-
-    for f in files:
-        ninja.build(f'$builddir/{os.path.split(f)[1]}.o', 'compile', f)
-        outputs.append(f'$builddir/{os.path.split(f)[1]}.o')
-        ninja.newline()
+        for f in files:
+            ninja.build(f'$builddir/{os.path.split(f)[1]}.o', 'compile', f)
+            outputs.append(f'$builddir/{os.path.split(f)[1]}.o')
+            ninja.newline()
 
 
     if type == 'bundle':
@@ -312,7 +315,7 @@ def create_buildfile(ninja, type, uvars):
         targets.append('$builddir/trash/bundles')
         ninja.newline()
     
-    ninja.build('$builddir/trash/stage', 'stage', '$target')
+    ninja.build('$builddir/trash/stage', 'stage', ('$target' if uvars['nocomp'] == 0 else 'build.ninja'))
     targets.append('$builddir/trash/stage')
     ninja.newline()
 

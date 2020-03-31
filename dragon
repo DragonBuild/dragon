@@ -74,8 +74,7 @@ while [ "$1" != "" ]; do
         h | help | -h)          usage
                                 exit
                                 ;;
-        v | -v )                printBan
-                                exit
+        v | -v )                alias ninja="ninja -v"
                                 ;;
         * )                     usage
                                 exit 1
@@ -130,7 +129,7 @@ if [ $build == 1 ]; then
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
             cd $i
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja || cleanbuildfail
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j50 || cleanbuildfail
             if [ $exportt == 1 ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
                 ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
