@@ -162,6 +162,9 @@ fi
 
 
 if [ $install == 1 ]; then 
+    if [ -z "$DRBPORT" ]; then
+        DRBPORT=22
+    fi
     if [ -z "$DRBIP" ]; then
         echo -e "${PrefixColor}[Dragon]${NC} The \$DRBIP variable is not set!"
         rm -rf .dragon/packages > /dev/null
@@ -174,7 +177,7 @@ if [ $install == 1 ]; then
         exit 
     fi
 
-    scp packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
+    scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} && ssh root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" && ssh root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
     
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
     ssh root@$DRBIP "${INSTALL_CMD}"
