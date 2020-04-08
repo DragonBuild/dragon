@@ -26,33 +26,40 @@ dragonvars['signdir'] = '$pdirname/sign'
 
 # These are variables set as default per project type.
 # They sometimes get modified by uvars, when the relevant uvar is specified
-bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}}
+bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}, 'cli':{}, 'raw':{}}
 
 bvars['all']['libs'] = ['objc', 'c++']
-bvars['all']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
-bvars['all']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
+bvars['all']['lopts'] = ''
+bvars['all']['frameworks'] = []
 
 bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
 bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
-bvars['tweak']['lopts'] = ''
-bvars['tweak']['frameworks'] = []
+bvars['tweak']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['tweak']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
 
 # This is the default location for a pref bundle, which we can assume is what the user wants by default
 bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
 bvars['bundle']['target'] = '$pdirname/_$location$name'
 bvars['bundle']['libs'] = []
-bvars['bundle']['lopts']= ''
-bvars['bundle']['frameworks'] = []
+bvars['bundle']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['bundle']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['bundle']['stage2'] = ''
 
 bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
-bvars['library']['lopts']= ''
+bvars['library']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['library']['frameworks'] = []
 bvars['library']['stage2'] = ''
+
+bvars['cli']['location'] = '/usr/bin'
+bvars['cli']['target'] = '$pdirname/_$location$name'
+bvars['cli']['libs'] = []
+bvars['cli']['lopts'] = ''
+bvars['cli']['frameworks'] = []
+bvars['cli']['stage2'] = ''
 
 # User modifiable variables
 
@@ -90,6 +97,7 @@ def process_package(package_config):
     uvars['name'] = ''
     uvars['type'] = ''
 
+    uvars['prelogos_files'] = []
     uvars['logos_files'] = []
     uvars['files'] = []
     uvars['plists'] = []
@@ -179,15 +187,17 @@ def create_buildfile(ninja, type, uvars):
 
     ninja.variable('targetios', uvars['targetios'])
     ninja.newline()
+    fws = uvars['frameworks'] + bvars[type]['frameworks'] + bvars['all']['frameworks']
+    if len(fws) > 0:
+        ninja.variable('frameworks','-framework ' + ' -framework '.join(fws))
 
-    ninja.variable('frameworks','-framework ' + ' -framework '.join(uvars['frameworks'] + bvars[type]['frameworks'] + bvars['all']['frameworks']))
     ninja.newline()
     ninja.variable('libs', '-l' + ' -l'.join(uvars['libs'] + bvars[type]['libs'] + bvars['all']['libs']))
     ninja.newline()
     ninja.variable('arcs', '-arch ' + ' -arch '.join(uvars['archs']))
     ninja.newline()
 
-    ninja.variable('arc', '-fobjc-arc')
+    ninja.variable('arc', uvars['arc'])
     ninja.variable('btarg', uvars['targ'])
     ninja.variable('warnings', uvars['warnings'])
     ninja.variable('optim', '-O' + uvars['optim'])
@@ -202,7 +212,7 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('usrLDIDFlags', uvars['ldidflags'])
     ninja.newline()
 
-    ninja.variable('lopt', bvars['all']['lopts'])
+    ninja.variable('lopt', bvars['all']['lopts'] + bvars[type]['lopts'])
     ninja.newline()
 
     cflags = '$cinclude $arcs $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
@@ -221,6 +231,8 @@ def create_buildfile(ninja, type, uvars):
     ninja.pool('solo', '1')
     ninja.newline()
 
+    ninja.rule('prelogos', description="Processing $in with Pre/Logos",command="cat $in | python3 $$DRAGONBUILD/bin/prelogos.py > $out")
+    ninja.newline()
     ninja.rule('logos', description="Processing $in with Logos",command="$logos $in > $out")
     ninja.newline()
     ninja.rule('compile', description="Compiling $in", command="$cc $cflags -c $in -o $out")
@@ -240,10 +252,28 @@ def create_buildfile(ninja, type, uvars):
 
     outputs = []
     targets = ['$target'] if uvars['nocomp'] == 0 else []
+    prelogos = uvars['prelogos_files']
     logos = uvars['logos_files']
     files = uvars['files']
     plists = uvars['plists']
     if uvars['nocomp'] == 0:
+        for i in prelogos:
+            wc = re.match(dm_wildcard, i)
+            ev = re.match(dm_eval, i)
+            if wc:
+                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            elif ev:
+                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
+            else:
+                if uvars['dir'] != '.':
+                    i = '../' + i
+                continue 
+
+            if uvars['dir'] != '.':
+                prelogos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
+            else:
+                prelogos += str(out).split(' ')
+            prelogos.remove(i)
         for i in logos:
             wc = re.match(dm_wildcard, i)
             ev = re.match(dm_eval, i)
@@ -297,6 +327,11 @@ def create_buildfile(ninja, type, uvars):
             else:
                 plists += str(out).split(' ')
             plists.remove(i)
+
+        for f in prelogos:
+            ninja.build(f'$builddir/{os.path.split(f)[1]}.xm', 'prelogos', f)
+            logos.append(f'$builddir/{os.path.split(f)[1]}.xm')
+            ninja.newline()
 
         for f in logos:
             ninja.build(f'$builddir/{os.path.split(f)[1]}.mm', 'logos', f)
