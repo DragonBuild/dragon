@@ -26,16 +26,18 @@ dragonvars['signdir'] = '$pdirname/sign'
 
 # These are variables set as default per project type.
 # They sometimes get modified by uvars, when the relevant uvar is specified
-bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}, 'cli':{}, 'raw':{}}
+bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}, 'cli':{}, 'app':{}, 'raw':{}}
 
 bvars['all']['libs'] = ['objc', 'c++']
 bvars['all']['lopts'] = ''
 bvars['all']['frameworks'] = []
+bvars['all']['cflags'] = ''
 
 bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
 bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
 bvars['tweak']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['tweak']['cflags'] = '-install_name @executable_path$location$name'
 bvars['tweak']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
 
@@ -43,6 +45,7 @@ bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/Dyn
 bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
 bvars['bundle']['target'] = '$pdirname/_$location$name'
 bvars['bundle']['libs'] = []
+bvars['bundle']['cflags'] = '-install_name @executable_path$location$name'
 bvars['bundle']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['bundle']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['bundle']['stage2'] = ''
@@ -50,16 +53,27 @@ bvars['bundle']['stage2'] = ''
 bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
+bvars['library']['cflags'] = '-install_name @executable_path$location$name'
 bvars['library']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['library']['frameworks'] = []
 bvars['library']['stage2'] = ''
 
-bvars['cli']['location'] = '/usr/bin'
+bvars['cli']['location'] = '/usr/bin/'
 bvars['cli']['target'] = '$pdirname/_$location$name'
 bvars['cli']['libs'] = []
 bvars['cli']['lopts'] = ''
+bvars['cli']['cflags'] = ''
 bvars['cli']['frameworks'] = []
 bvars['cli']['stage2'] = ''
+
+
+bvars['app']['location'] = '/Applications/'
+bvars['app']['target'] = '$pdirname/_$location$name.app/$name'
+bvars['app']['libs'] = []
+bvars['app']['lopts'] = ''
+bvars['app']['cflags'] = ''
+bvars['app']['frameworks'] = []
+bvars['app']['stage2'] = ''
 
 # User modifiable variables
 
@@ -107,6 +121,7 @@ def process_package(package_config):
     uvars['archs'] = ['armv7', 'arm64', 'arm64e']
     uvars['sysroot'] = '$dragondir/sdks/iPhoneOS.sdk'
     uvars['cc'] = 'clang++'
+    uvars['ccpp'] = 'clang++'
     uvars['ld'] = 'clang++'
     uvars['ldid'] = 'ldid'
     uvars['dsym'] = 'dsymutil'
@@ -127,19 +142,22 @@ def process_package(package_config):
     uvars['ldflags'] = ''
     uvars['ldidflags']= '-S'
 
-    uvars['installLocation'] = ''
-    uvars['resourceDir'] = 'Resources'
+    uvars['install_location'] = ''
+    uvars['resource_dir'] = 'Resources'
     uvars['nocomp']  = 0
 
-    uvars['frameworkSearchDirs'] = ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks']
-    uvars['additionalFrameworkSearchDirs'] = []
+    uvars['framework_search_dirs'] = ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks']
+    uvars['additional_framework_search_dirs'] = []
 
-    uvars['librarySearchDirs'] = ['$dragondir/lib', '.']
-    uvars['additionalLibrarySearchDirs'] = []
+    uvars['library_search_dirs'] = ['$dragondir/lib', '.']
+    uvars['additional_library_search_dirs'] = []
 
     uvars['cinclude'] = '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
 
     uvars.update(package_config)
+
+    if uvars['type'] == 'lib':
+        uvars['type'] = 'library'
 
     return uvars
 
@@ -153,8 +171,8 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('pdirname', dragonvars['pdirname'])
     ninja.newline()
 
-    ninja.variable('location', bvars[type]['location'].replace(' ', '$ ') if uvars['installLocation'] == '' else uvars['installLocation'].replace(' ', '$ '))
-    ninja.variable('resourcedir', uvars['resourceDir'].replace(' ', '$ '))
+    ninja.variable('location', bvars[type]['location'].replace(' ', '$ ') if uvars['install_location'] == '' else uvars['install_location'].replace(' ', '$ '))
+    ninja.variable('resource_dir', uvars['resource_dir'].replace(' ', '$ '))
     ninja.variable('target', bvars[type]['target'])
     ninja.newline()
     ninja.variable('stage2', bvars[type]['stage2'])
@@ -172,17 +190,18 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('sysroot', uvars['sysroot'])
     ninja.newline()
 
-    ninja.variable('fwSearch', '-F' + ' -F'.join(uvars['frameworkSearchDirs'] + uvars['additionalFrameworkSearchDirs']))
-    ninja.variable('libSearch', '-L' + ' -L'.join(uvars['librarySearchDirs'] + uvars['additionalLibrarySearchDirs']))
+    ninja.variable('fwSearch', '-F' + ' -F'.join(uvars['framework_search_dirs'] + uvars['additional_framework_search_dirs']))
+    ninja.variable('libSearch', '-L' + ' -L'.join(uvars['library_search_dirs'] + uvars['additional_library_search_dirs']))
     ninja.newline()
 
     ninja.variable('cc', uvars['cc'])
+    ninja.variable('ccpp', uvars['ccpp'])
     ninja.variable('ld', uvars['ld'])
     ninja.variable('ldid', uvars['ldid'])
     ninja.variable('dsym', uvars['dsym'])
     ninja.variable('logos', uvars['logos'])
     ninja.variable('plutil', uvars['plutil'])
-    ninja.variable('stage', uvars['stage'] if isinstance(uvars['stage'], str) else '; '.join(uvars['stage']))
+    ninja.variable('stage', uvars['stage'] if isinstance(uvars['stage'], str) else ' && '.join(uvars['stage']))
     ninja.newline()
 
     ninja.variable('targetios', uvars['targetios'])
@@ -213,9 +232,10 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
 
     ninja.variable('lopt', bvars['all']['lopts'] + bvars[type]['lopts'])
+    ninja.variable('typeflags', bvars['all']['cflags'] + bvars[type]['cflags'])
     ninja.newline()
 
-    cflags = '$cinclude $arcs $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
+    cflags = '$cinclude $typeflags $arcs $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
     ninja.variable('cflags', cflags)
     ninja.newline()
 
@@ -237,15 +257,17 @@ def create_buildfile(ninja, type, uvars):
     ninja.newline()
     ninja.rule('compile', description="Compiling $in", command="$cc $cflags -c $in -o $out")
     ninja.newline()
+    ninja.rule('compilepp', description="Compiling $in", command="$ccpp $cflags -c $in -o $out")
+    ninja.newline()
     ninja.rule('link', description="Linking $name", command="$ld $lflags -o $out $in")
     ninja.newline()
-    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p \".dragon/_$location/\" && cp -r \"$resourcedir/\" \".dragon/_$location\" && cp $in $out && find \".dragon/_$location\" -type f -name \"*.plist\" -exec $plutil -convert binary1 \"{}\" \;", pool='solo')
+    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p \".dragon/_$location/\" && cp -r \"$resource_dir/\" \".dragon/_$location\" && cp $in $out", pool='solo')
     ninja.newline()
     ninja.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
     ninja.newline()
-    ninja.rule('debug', description="Generating Debug Symbols for $name", command="$dsym \"$in\" 2&> /dev/null; mv $in $out")
+    ninja.rule('debug', description="Generating Debug Symbols for $name", command="$dsym \"$in\" 2&> /dev/null; cp $in $out")
     ninja.newline()
-    ninja.rule('sign', description="Signing $name", command="$ldid $usrLDIDFlags $in && mv $in $target")
+    ninja.rule('sign', description="Signing $name", command="$ldid $usrLDIDFlags $in && cp $in $target")
     ninja.newline()
     ninja.rule('stage', description="Running Stage for $name", command="$stage $stage2")
     ninja.newline()
