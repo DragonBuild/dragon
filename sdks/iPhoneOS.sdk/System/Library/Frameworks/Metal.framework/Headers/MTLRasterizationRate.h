@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
  @interface MTLRasterizationRateSampleArray
  @abstract A helper object for convient access to samples stored in an array.
  */
-MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
+MTL_EXPORT API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
 @interface MTLRasterizationRateSampleArray : NSObject
 
 /*!
@@ -42,7 +42,7 @@ MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
  MTLRasterizationRateLayerDescriptor instances will be stored inside a MTLRasterizationRateMapDescriptor which in turn is compiled by MTLDevice into a MTLRasterizationRateMap.
  Because MTLDevice may not support the requested granularity, the provided samples may be rounded up (towards higher quality) during compilation.
  */
-MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
+MTL_EXPORT API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
 @interface MTLRasterizationRateLayerDescriptor : NSObject <NSCopying>
 
 /*!
@@ -110,7 +110,7 @@ MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
  @interface MTLRasterizationRateLayerArray
  @abstract Mutable array of MTLRasterizationRateLayerDescriptor
  */
-MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
+MTL_EXPORT API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
 @interface MTLRasterizationRateLayerArray : NSObject
 
 /*!
@@ -134,7 +134,7 @@ MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
  @abstract Describes a MTLRasterizationRateMap containing an arbitrary number of MTLRasterizationRateLayerDescriptor instances.
  @discussion An MTLRasterizationRateMapDescriptor is compiled into an MTLRasterizationRateMap using MTLDevice.
  */
-MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
+MTL_EXPORT API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
 @interface MTLRasterizationRateMapDescriptor : NSObject <NSCopying>
 
 /*!
@@ -225,7 +225,7 @@ MTL_EXPORT API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
  Because a smaller area of the framebuffer is populated, less fragment shader invocations are required to render content, and less bandwidth is consumed to store the shaded values.
  Use a rasterization rate map to reduce rendering quality in less-important or less-sampled regions of the framebuffer, such as the periphery of a VR/AR display or a far-away cascade of a shadow map.
  */
-API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst)
+API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4))
 @protocol MTLRasterizationRateMap <NSObject>
 
 /*!

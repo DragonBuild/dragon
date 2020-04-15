@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 0501AFBC-C7B8-351D-99F7-81FD28B353F9', 'armv7s: 1DEBB879-2DFB-36D4-9260-C7D7E1E1F4BD', 
-                   'arm64: E6F20C83-17C5-37BA-A830-3AA46ACD6B21', 'arm64e: BC0441B8-A449-36ED-83B4-26DCA9569404' ]
+                   'arm64: 7940B1E1-E9B3-3782-860A-C608BFD44FBC', 'arm64e: A28E7E72-33F1-3765-ACF6-2E43FF7D1612' ]
 platform:        ios
 install-name:    '/usr/lib/libcoretls_cfhelpers.dylib'
 current-version: 167

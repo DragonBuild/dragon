@@ -1,0 +1,12 @@
+--- !tapi-tbd-v2
+archs:           [ armv7, armv7s, arm64 ]
+uuids:           [ 'armv7: 74CA8923-A413-3811-B0DF-13D3067168C4', 'armv7s: FF5AFFA2-2EAB-3DE1-86BD-2BEDAFB2B627', 
+                   'arm64: F9FD52E0-00BF-3DC3-8813-7A450007F879' ]
+platform:        ios
+install-name:    /System/Library/CoreServices/Encodings/libTraditionalChineseConverter.dylib
+current-version: 69
+objc-constraint: none
+exports:         
+  - archs:           [ armv7, armv7s, arm64 ]
+    symbols:         [ ___CFStringEncodingGetTraditionalChineseConverterDefinition ]
+...

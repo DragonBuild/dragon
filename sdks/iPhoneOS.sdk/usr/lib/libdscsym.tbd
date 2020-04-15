@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: BF99A13A-2F3B-324C-AE50-A5D20716940F', 'armv7s: 7E47FA0F-1951-3646-81C8-56612A989CFF', 
-                   'arm64: 7FD1EAE1-254D-3466-B0DC-2CB7F0FD36B6', 'arm64e: 8850ADF5-2966-3722-B843-CCE8B5B4819C' ]
+                   'arm64: 0B0F4385-A47F-3EEB-9CC3-85864A69B909', 'arm64e: C78F0C35-9A44-3FAD-B155-900425A5E6CD' ]
 platform:        ios
 install-name:    '/usr/lib/libdscsym.dylib'
-current-version: 243
+current-version: 243.2
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _dscsymVersionNumber, _dscsymVersionString, _kSPSharedCacheInfo_BinariesKey, 

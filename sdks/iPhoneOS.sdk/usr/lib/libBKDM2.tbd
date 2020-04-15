@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: CE99624E-28DC-396A-943C-BCE5455D0CC3', 'arm64e: 41D2CC04-6387-323C-81DE-F78AA8EF3476' ]
+                   'arm64: 8498C7A5-8288-37B6-95A9-82F21027029C', 'arm64e: 36C8A3B1-60E2-321C-9876-EBFF3FCD7090' ]
 platform:        ios
 install-name:    '/usr/lib/libBKDM2.dylib'
 exports:         

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 643B292F-8A31-3D37-9A13-43DEF65B2C39', 'armv7s: 4249F7CC-12B9-3B39-AD74-BB96779CCBEC', 
-                   'arm64: C5E05944-4CB2-3340-9EE1-866CF476D133', 'arm64e: 37DB9FC3-41FD-3822-90B6-E5495EC48613' ]
+                   'arm64: 26DC6A29-97FE-345D-8C9E-1BBB99ECEF02', 'arm64e: B954D40F-43BD-3593-A5BB-0F21D97CA9EE' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftContacts.dylib'
 current-version: 0

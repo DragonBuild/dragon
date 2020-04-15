@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3AB9F99F-3C69-3E0F-911C-456EFF45BE49', 'armv7s: CDD01DC1-E224-33F4-905D-2C74C000D6E8', 
-                   'arm64: C4004C09-E65A-3B75-A0CC-6FC3153E902B', 'arm64e: 0805A3C5-9FDB-3446-97AF-982893612FAE' ]
+                   'arm64: C8DDC687-6517-30E4-A3CF-DADC5DF5E549', 'arm64e: 95085844-5F28-304A-A896-6A1DEAE3964D' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftPhotos.dylib'
 current-version: 0

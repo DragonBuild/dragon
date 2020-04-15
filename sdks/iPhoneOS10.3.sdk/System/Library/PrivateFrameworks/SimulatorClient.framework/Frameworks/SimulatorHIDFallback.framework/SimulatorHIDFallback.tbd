@@ -1,0 +1,26 @@
+---
+archs:                 [ armv7, armv7s, arm64 ]
+platform:              ios
+install-name:          "@rpath/SimulatorHIDFallback.framework/SimulatorHIDFallback"
+current-version:       719
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64 ]
+    symbols:              [ _SimulatorHIDFallbackVersionNumber,
+                            _SimulatorHIDFallbackVersionString ]
+    objc-classes:         [ _ISCVirtualService, _ISCVirtualServiceManager,
+                            _ISCVirtualServicePropertyProvider,
+                            _ISCVirtualServiceSimulatorUpstreamProvider,
+                            _SimulatorHIDFallbackSystem ]
+    objc-ivars:           [ _ISCVirtualService._hidCallbackDelegate,
+                            _ISCVirtualService._hidEventSystem,
+                            _ISCVirtualService._hidService,
+                            _ISCVirtualService._identifier,
+                            _ISCVirtualServiceManager._externalKeyboardService,
+                            _ISCVirtualServiceManager._mainDisplayButtonsService,
+                            _ISCVirtualServiceManager._mainDisplayTouchService,
+                            _ISCVirtualServicePropertyProvider._properties,
+                            _ISCVirtualServiceSimulatorUpstreamProvider._properties,
+                            _ISCVirtualServiceSimulatorUpstreamProvider._target,
+                            _SimulatorHIDFallbackSystem._simulatorAppEventSource ]
+...

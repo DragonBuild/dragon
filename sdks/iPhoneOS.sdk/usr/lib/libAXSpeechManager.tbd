@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: CA74637E-4BA9-37CD-BC26-6E4512906685', 'armv7s: 65DBE8F9-72B4-381D-8670-91B327ECB8D3', 
-                   'arm64: D9A1C27B-C92B-361A-95AF-FF36480A2A25', 'arm64e: 64C4201B-A949-375C-8EEF-E3D70291B372' ]
+                   'arm64: 0EC202B2-5E95-39BF-AF0C-1624320330E9', 'arm64e: 2A5867C9-EDFD-3EA9-BA62-400EA1252032' ]
 platform:        ios
 install-name:    '/usr/lib/libAXSpeechManager.dylib'
 exports:         
@@ -10,9 +10,10 @@ exports:
     objc-classes:    [ AXSpeechThread ]
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _AXAVSpeechSynthesisVoiceFromTTSSpeechVoice, _AXAVVoiceQualityFromTTSFootprint, 
-                       _AXAlexVoiceIdentifier, _AXRemapLanguageCodeForSpeech, _AXSiriFemaleVoiceIdentifier, 
-                       _AXSiriMaleVoiceIdentifier, _AXSpeechLanguageCanonicalFormToGeneralLanguage, 
-                       _AXSpeechTransformText, _AXSpeechTransformTextWithLanguage, 
-                       _VOTBundle, _isSpeakableEmojiString ]
+                       _AXAlexVoiceIdentifier, _AXNeuralSiriFemaleVoiceIdentifier, 
+                       _AXNeuralSiriMaleVoiceIdentifier, _AXRemapLanguageCodeForSpeech, 
+                       _AXSiriFemaleVoiceIdentifier, _AXSiriMaleVoiceIdentifier, 
+                       _AXSpeechLanguageCanonicalFormToGeneralLanguage, _AXSpeechTransformText, 
+                       _AXSpeechTransformTextWithLanguage, _VOTBundle, _isSpeakableEmojiString ]
     objc-classes:    [ AXEmojiUtilities, AXSpeechAction, AXSpeechManager ]
 ...

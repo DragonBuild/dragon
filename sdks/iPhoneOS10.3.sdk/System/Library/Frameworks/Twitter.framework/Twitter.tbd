@@ -1,0 +1,12 @@
+--- !tapi-tbd-v2
+archs:           [ armv7, armv7s, arm64 ]
+uuids:           [ 'armv7: DD8F5769-48E4-3CBA-928B-B099D37A0FE3', 'armv7s: AFFDBDA8-C98C-33E5-9324-1856C7FC4FB5', 
+                   'arm64: BBE2E6F2-ADD0-30BC-81F9-4A24F0C50BD9' ]
+platform:        ios
+install-name:    /System/Library/Frameworks/Twitter.framework/Twitter
+current-version: 164
+objc-constraint: none
+exports:         
+  - archs:           [ armv7, armv7s, arm64 ]
+    objc-classes:    [ _TWRequest, _TWTweetComposeViewController ]
+...

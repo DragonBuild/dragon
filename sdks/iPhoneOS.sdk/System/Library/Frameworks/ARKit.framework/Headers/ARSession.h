@@ -37,7 +37,9 @@ typedef NS_OPTIONS(NSUInteger, ARSessionRunOptions) {
     ARSessionRunOptionRemoveExistingAnchors   = (1 << 1),
     
     /** The session will stop currently active tracked raycasts. */
-    ARSessionRunOptionStopTrackedRaycasts   = (1 << 2)
+    ARSessionRunOptionStopTrackedRaycasts     = (1 << 2),
+    /** The session will reset scene reconstruction. */
+    ARSessionRunOptionResetSceneReconstruction     = (1 << 3)
 } NS_SWIFT_NAME(ARSession.RunOptions);
 
 /**
@@ -64,6 +66,7 @@ API_AVAILABLE(ios(11.0))
  */
 @property (nonatomic, strong, nullable) dispatch_queue_t delegateQueue;
 
+
 /**
  The current frame of the session.
  */
@@ -73,7 +76,6 @@ API_AVAILABLE(ios(11.0))
  The configuration currently being used by the session.
  */
 @property (nonatomic, copy, nullable, readonly) ARConfiguration *configuration;
-
 
 
 

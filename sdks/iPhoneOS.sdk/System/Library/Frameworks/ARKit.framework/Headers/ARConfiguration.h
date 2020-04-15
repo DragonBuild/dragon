@@ -21,7 +21,7 @@ Option set indicating semantic understanding types of the image frame.
 API_AVAILABLE(ios(13.0))
 typedef NS_OPTIONS(NSUInteger, ARFrameSemantics) {
     /** No semantic operation is run. */
-    ARFrameSemanticNone                              = 0,
+    ARFrameSemanticNone                                = 0,
     
     /**
     Person segmentation.
@@ -29,7 +29,7 @@ typedef NS_OPTIONS(NSUInteger, ARFrameSemantics) {
     @see -[ARFrame segmentationBuffer]
     @see ARSegmentationClass
     */
-    ARFrameSemanticPersonSegmentation                = (1 << 0),
+    ARFrameSemanticPersonSegmentation                  = (1 << 0),
     
     /**
      Person segmentation with depth.
@@ -100,6 +100,20 @@ typedef NS_OPTIONS(NSUInteger, ARPlaneDetection) {
     ARPlaneDetectionVertical API_AVAILABLE(ios(11.3)) = (1 << 1)
 } NS_SWIFT_NAME(ARWorldTrackingConfiguration.PlaneDetection);
 
+/**
+ Types of scene reconstruction.
+ */
+API_AVAILABLE(ios(13.4))
+typedef NS_OPTIONS(NSUInteger, ARSceneReconstruction) {
+    /** No scene reconstruction is run. */
+    ARSceneReconstructionNone                   = 0,
+    
+    /** Scene reconstruction generates a mesh of the world */
+    ARSceneReconstructionMesh                   = (1 << 0),
+    
+    /** Scene reconstruction generates a mesh of the world with classification for each face. */
+    ARSceneReconstructionMeshWithClassification = (1 << 1) | (1 << 0)
+} NS_SWIFT_NAME(ARConfiguration.SceneReconstruction);
 
 /**
  An object to describe and configure the Augmented Reality techniques to be used in an ARSession.
@@ -267,7 +281,18 @@ API_AVAILABLE(ios(11.0))
  @see ARFaceAnchor
  */
 @property (nonatomic, assign, getter=userFaceTrackingEnabled) BOOL userFaceTrackingEnabled API_AVAILABLE(ios(13.0));
+/**
+ Indicates whether the scene reconstruction type is supported for the configuration on this device.
+ */
++ (BOOL)supportsSceneReconstruction:(ARSceneReconstruction)sceneReconstruction API_AVAILABLE(ios(13.4));
 
+/**
+ Type of scene reconstruction to run. Defaults to ARSceneReconstructionNone.
+ @see ARMeshAnchor
+ @discussion If set to a value other than ARSceneReconstructionNone, output of scene reconstruction will be added to the session as
+ ARMeshAnchor objects.
+ */
+@property (nonatomic, assign) ARSceneReconstruction sceneReconstruction API_AVAILABLE(ios(13.4));
 - (instancetype)init;
 + (instancetype)new NS_SWIFT_UNAVAILABLE("Use init() instead");
 

@@ -1,12 +1,12 @@
 --- !tapi-tbd-v3
-archs:           [ armv7, armv7s, arm64 ]
+archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 10C56A5B-F647-314D-88F9-416C38599FE5' ]
+                   'arm64: 877EB397-93AC-3D21-BBE7-984633139506', 'arm64e: D6DEB2AB-0151-3359-B4EC-DE84134A2425' ]
 platform:        ios
 install-name:    '/usr/lib/libSMC.dylib'
 current-version: 20
 exports:         
-  - archs:           [ armv7, armv7s, arm64 ]
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _AccumSetupSettingsCPU, _AccumSetupSettingsGPU, _AccumSetupSettingsHP, 
                        _AccumulatorPlatformStructLookupArray, _SMCAEPopulatePlatform, 
                        _SMCAccumCheckMinMaxSupport, _SMCAccumGetChannelInfoForKey, 

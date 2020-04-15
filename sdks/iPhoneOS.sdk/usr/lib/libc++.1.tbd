@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B41C63AE-D89D-3E89-9582-FA88DFB4A813', 'armv7s: 8D4659D4-1F05-3002-AD00-9152E1483631', 
-                   'arm64: DF28407A-A890-32BF-B7E1-11E48C8CF5AD', 'arm64e: 3ACC748C-C387-35F1-999B-2A02AC4063B9' ]
+                   'arm64: D7934E7F-3EED-3C07-8D13-42FE55250C88', 'arm64e: CD3DD206-DFC5-3D7A-87FA-84C638FE62A4' ]
 platform:        ios
 install-name:    '/usr/lib/libc++.1.dylib'
-current-version: 800.7
+current-version: 902
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ __ZNKSt3__18messagesIcE6do_getEiiiRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE, 
@@ -79,8 +79,6 @@ exports:
                        __ZTv0_n12_NSt3__114basic_iostreamIcNS_11char_traitsIcEEED1Ev, 
                        __ZTv0_n12_NSt3__19strstreamD0Ev, __ZTv0_n12_NSt3__19strstreamD1Ev, 
                        ___gxx_personality_sj0 ]
-  - archs:           [ arm64e ]
-    symbols:         [ __ZNSt3__111char_traitsIcE2eqEcc, __ZNSt3__111char_traitsIwE2eqEww ]
   - archs:           [ arm64, arm64e ]
     symbols:         [ __ZNKSt12bad_any_cast4whatEv, __ZNKSt12experimental15fundamentals_v112bad_any_cast4whatEv, 
                        __ZNKSt18bad_variant_access4whatEv, __ZNKSt19bad_optional_access4whatEv, 
@@ -1313,10 +1311,10 @@ exports:
                        ___cxa_free_exception, ___cxa_get_exception_ptr, ___cxa_get_globals, 
                        ___cxa_get_globals_fast, ___cxa_guard_abort, ___cxa_guard_acquire, 
                        ___cxa_guard_release, ___cxa_pure_virtual, ___cxa_rethrow, 
-                       ___cxa_throw, ___cxa_vec_cctor, ___cxa_vec_cleanup, ___cxa_vec_ctor, 
-                       ___cxa_vec_delete, ___cxa_vec_delete2, ___cxa_vec_delete3, 
-                       ___cxa_vec_dtor, ___cxa_vec_new, ___cxa_vec_new2, ___cxa_vec_new3, 
-                       ___dynamic_cast ]
+                       ___cxa_throw, ___cxa_throw_bad_array_new_length, ___cxa_uncaught_exceptions, 
+                       ___cxa_vec_cctor, ___cxa_vec_cleanup, ___cxa_vec_ctor, ___cxa_vec_delete, 
+                       ___cxa_vec_delete2, ___cxa_vec_delete3, ___cxa_vec_dtor, ___cxa_vec_new, 
+                       ___cxa_vec_new2, ___cxa_vec_new3, ___dynamic_cast ]
     weak-def-symbols: [ __ZTISt11range_error, __ZTISt12domain_error, __ZTISt12length_error, 
                         __ZTISt12out_of_range, __ZTISt14overflow_error, __ZTISt15underflow_error, 
                         __ZTISt16invalid_argument, __ZTISt16nested_exception, __ZdaPv, 

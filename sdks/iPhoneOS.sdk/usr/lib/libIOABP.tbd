@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 4CCC2633-D333-390F-B59E-3650F764FA77', 'arm64e: 651753B1-2F38-3742-A505-683BEACB0E9E' ]
+                   'arm64: B85D5602-F415-356D-9945-9968076549BB', 'arm64e: 3CC89AE4-A7F1-3A7C-A389-7E5857547568' ]
 platform:        ios
 install-name:    '/usr/lib/libIOABP.dylib'
 exports:         

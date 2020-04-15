@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
-#import "ARRaycastQuery.h"
+#import <ARKit/ARRaycastQuery.h>
 
 @class ARAnchor;
 

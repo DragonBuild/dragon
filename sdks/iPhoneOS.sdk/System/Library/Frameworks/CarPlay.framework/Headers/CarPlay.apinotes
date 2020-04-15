@@ -26,6 +26,15 @@ Protocols:
   - Selector: 'templateApplicationScene:didDisconnectInterfaceController:fromWindow:'
     SwiftName: 'templateApplicationScene(_:didDisconnect:from:)'
     MethodKind: Instance
+- Name: CPTemplateApplicationDashboardSceneDelegate
+  Methods:
+  - Selector: 'templateApplicationDashboardScene:didDisconnectDashboardController:fromWindow:'
+    SwiftName: 'templateApplicationDashboardScene(_:didDisconnect:from:)'
+    MethodKind: Instance
+  - Selector: 'templateApplicationDashboardScene:didConnectDashboardController:toWindow:'
+    SwiftName: 'templateApplicationDashboardScene(_:didConnect:to:)'
+    MethodKind: Instance
+
 
 Tags:
 - Name: CPAlertActionStyle

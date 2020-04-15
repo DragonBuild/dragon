@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: AF387F6C-2E50-3AD0-9D72-C9C20A8C62D9', 'armv7s: A938100E-B177-35A1-A0C7-8E410E6FA742', 
-                   'arm64: 1A0ECB48-95D4-3917-84C2-CD31DBB2C5D1', 'arm64e: 9D7D53CF-1D39-34D5-8950-E1C338710183' ]
+                   'arm64: 80723664-0750-3038-B0E1-ECCD42C12F23', 'arm64e: 2CF4CB4C-69B3-3055-8F2B-EAC19E8B4FDD' ]
 platform:        ios
 install-name:    '/usr/lib/libbsm.0.dylib'
 exports:         

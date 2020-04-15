@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 8A2C41F4-4190-34D5-8C55-A75473EC3D1C', 'armv7s: ABA4CAC2-F9BA-3EFA-8C47-F7035C10AE35', 
-                   'arm64: 6825EC38-C751-3A69-858D-1F4A3E4095F5', 'arm64e: 91090A39-C28F-3705-81F3-F4C26831B251' ]
+                   'arm64: 52926FFD-CFD0-3978-81E9-3A4DF6893672', 'arm64e: F2ADA8E3-D47A-337E-A495-81E8CF4243C6' ]
 platform:        ios
 install-name:    '/usr/lib/libAWDSupport.dylib'
 exports:         

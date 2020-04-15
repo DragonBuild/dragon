@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 6A5AF0FF-2F94-3A5E-B085-562E37443F8B', 'armv7s: 951C1A3E-58D3-3D59-B67B-3FF1225E2587', 
-                   'arm64: FC39C0F1-5335-3D84-B423-B72304960E88', 'arm64e: F34BE9AF-2A6C-3984-954B-91A9BBAC2B05' ]
+                   'arm64: 9859845B-6093-314C-9804-C0D846BBAD4B', 'arm64e: B51C351A-2309-30B8-8989-E9DA378765F1' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftMediaPlayer.dylib'
 current-version: 0

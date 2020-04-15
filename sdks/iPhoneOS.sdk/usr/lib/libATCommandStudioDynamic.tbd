@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: D59CE129-C866-32F5-BC44-B0C0C98B97E3', 'armv7s: 2CB83F1D-A2E1-306B-BC61-42E0696F2021', 
-                   'arm64: 5916AD66-6D99-3F2E-8AB8-C282E653F894', 'arm64e: DA8943FE-9BFD-3A4D-8E1C-BE6496888F47' ]
+                   'arm64: 7029F413-7AA1-3B90-BAF1-C64445C0BDC5', 'arm64e: F84F41E5-B0A5-3B58-AC7B-039407F277CE' ]
 platform:        ios
 install-name:    '/usr/lib/libATCommandStudioDynamic.dylib'
 exports:         

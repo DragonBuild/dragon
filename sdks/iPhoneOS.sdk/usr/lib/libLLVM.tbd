@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 5616809F-A97F-3AA0-BF01-C8B373878C2F', 'armv7s: 15A51163-BDD6-30B1-96FF-F3EF99A3DABC', 
-                   'arm64: CCB75F5B-8DC6-344E-9A9C-37F55AD98139', 'arm64e: 0C835AF9-2B85-3A8E-B183-A3F88822956A' ]
+                   'arm64: 63B58E74-67F3-3F4F-920C-FF04D90B07F6', 'arm64e: 2DD28BD2-BA0F-3B84-BCCA-CF7B110A415E' ]
 platform:        ios
 install-name:    '/usr/lib/libLLVM.dylib'
-current-version: 3902.58
+current-version: 3902.67.1
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _ConvertUTF16toUTF32, _ConvertUTF16toUTF8, _ConvertUTF32toUTF16, 
@@ -1359,8 +1359,8 @@ exports:
                        __ZThn16_NK4llvm20LibCallAliasAnalysis16getAnalysisUsageERNS_13AnalysisUsageE, 
                        __ZThn16_NK4llvm7objcarc20ObjCARCAliasAnalysis16getAnalysisUsageERNS_13AnalysisUsageE, 
                        __ZThn4_N4llvm14PassNameParserD0Ev, __ZThn4_N4llvm14PassNameParserD1Ev, 
-                       ___gesf2, ___lesf2, ___ltsf2, ___nesf2, _getNumBytesForUTF8, 
-                       _isLegalUTF8Sequence, _isLegalUTF8String ]
+                       ___gesf2, ___lesf2, _getNumBytesForUTF8, _isLegalUTF8Sequence, 
+                       _isLegalUTF8String ]
     weak-def-symbols: [ __ZN11flatbuffers25flatbuffer_version_stringE, __ZN4llvm12LoopInfoBaseINS_10BasicBlockENS_4LoopEE7analyzeERKNS_17DominatorTreeBaseIS1_EE, 
                         __ZN4llvm14RegionInfoBaseINS_12RegionTraitsINS_8FunctionEEEE10splitBlockEPNS_10BasicBlockES6_, 
                         __ZN4llvm14object_creatorINS_11LLVMContextEEEPvv, __ZN4llvm14object_creatorINS_11SmallVectorINSt3__14pairINS_18PassManagerBuilder16ExtensionPointTyEPFvRKS4_RNS_6legacy15PassManagerBaseEEEELj8EEEEEPvv, 
@@ -1743,6 +1743,9 @@ exports:
                         __ZTSNSt3__121__basic_string_commonILb1EEE, __ZTSPFN4llvm19TargetTransformInfoERNS_8FunctionEE, 
                         __ZTSPFPN4llvm10ModulePassEvE, __ZTSPFPN4llvm12FunctionPassEvE, 
                         __ZTSPFPN4llvm4PassEvE ]
+  - archs:           [ armv7, armv7s, arm64e ]
+    symbols:         [ ___eqdf2, ___eqsf2, ___gtdf2, ___gtsf2, ___ltdf2, ___ltsf2, 
+                       ___nedf2, ___nesf2 ]
   - archs:           [ arm64, arm64e ]
     symbols:         [ __Z12CreateFPIntrPN4llvm6ModuleERNS_9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEENS_9Intrinsic2IDEPNS_5ValueESA_, 
                        __Z13CreateFPIntr3PN4llvm6ModuleERNS_9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEENS_9Intrinsic2IDEPNS_5ValueESA_SA_b, 

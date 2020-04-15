@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 90E01384-60A0-3420-A5DE-74F0D93745E1', 'arm64e: 3A3C76FC-9028-3DC7-840E-CCB3D9FE0BAF' ]
+                   'arm64: 50A1E067-9612-3DB8-AF9B-DC15A2C82DFE', 'arm64e: 0CC0F70F-45B8-331A-9715-8E436D228B90' ]
 platform:        ios
 install-name:    '/usr/lib/libapple_nghttp2.dylib'
 current-version: 1.39.2

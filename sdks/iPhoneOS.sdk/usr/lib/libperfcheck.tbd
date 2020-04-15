@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 5FEA6749-1E58-30E2-AF18-78D3D050160E', 'arm64e: 50071E8D-6BA5-3E56-8ABC-45B36F2CAB4E' ]
+                   'arm64: 3BA9A8FD-8A77-3231-AB96-0D7701333C63', 'arm64e: 29C519AA-10A4-316D-B854-3EC0A6215278' ]
 platform:        ios
 install-name:    '/usr/lib/libperfcheck.dylib'
 exports:         

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 2376D7F9-AB03-3686-B63B-49EB1BF2D982', 'armv7s: 7BF68907-D121-3065-B36D-FF98D7E5C399', 
-                   'arm64: 934A91F8-AC08-3B75-8B05-045470ADF13F', 'arm64e: EE872319-FEA7-3D05-A988-DB61F4E5FABA' ]
+                   'arm64: D8850CF8-8D07-3AD4-A09D-BFD3E623231A', 'arm64e: 5FED79D5-0DD1-364B-9B5F-B099A2A917E5' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftGameplayKit.dylib'
 current-version: 0

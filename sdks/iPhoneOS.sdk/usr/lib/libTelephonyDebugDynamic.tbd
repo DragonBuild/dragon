@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 313375A3-9C25-329A-A4B4-B26F4138ADCD', 'armv7s: 625AAF2B-E8C2-3B12-93AA-CA6EF45E5E34', 
-                   'arm64: 1F0E4ACE-C29A-3DE8-BEDD-77A4B0510D41', 'arm64e: A2D28845-1478-352D-8556-AA1E16E7C263' ]
+                   'arm64: 389A2713-5A1B-3FD3-A54E-D21582243C46', 'arm64e: 65CA489F-7079-384C-BDAD-D6DE677CC193' ]
 platform:        ios
 install-name:    '/usr/lib/libTelephonyDebugDynamic.dylib'
 exports:         

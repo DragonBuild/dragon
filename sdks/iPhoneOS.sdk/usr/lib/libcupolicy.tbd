@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 02FE4EE0-2AD8-392A-82C0-2B2968496356', 'armv7s: B7C116E6-BE1E-3571-8B56-0690CC899C67', 
-                   'arm64: D3DD5BE2-1DF4-35EF-9C7D-1FAEAF02037E', 'arm64e: AC53277F-54B1-314E-B4A6-DB3491F11500' ]
+                   'arm64: 39FD4F3C-B58E-35AB-8095-F873BEED4007', 'arm64e: 7E30B06C-94B7-3D38-982B-F383CE6990E7' ]
 platform:        ios
 install-name:    '/usr/lib/libcupolicy.dylib'
 exports:         

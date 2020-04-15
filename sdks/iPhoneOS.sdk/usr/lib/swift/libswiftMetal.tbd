@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 0C0DAD1E-CEE6-30D9-B2CF-70462CE9C100', 'armv7s: 38AA3E92-4B79-3576-AA29-9FFD1502A95E', 
-                   'arm64: F277A9CB-ECF0-3255-9BA6-0F2DEF8DFC44', 'arm64e: 8674010D-B9E4-3F20-9C6A-BB36A03BFB40' ]
+                   'arm64: 23A9EA2B-B79E-3351-8D47-C8EF06B87CA0', 'arm64e: 05A6EC8A-A1A1-30F3-B77E-B180A9BF23E6' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftMetal.dylib'
 current-version: 0

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 9CB02590-A89F-32F3-9429-D6A9950E0780', 'armv7s: 97C513C9-24E7-3D99-88CD-6DA14DF95CE5', 
-                   'arm64: 3B97F9F5-39B6-302D-B701-0E6962813464', 'arm64e: 4139BF08-CF63-323C-9F44-BEB4E83F9CC9' ]
+                   'arm64: F6C94E8F-C06A-3BEE-900D-6E1005F79A79', 'arm64e: 9025E9D0-606F-3541-A15D-89BD64B95276' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftAVFoundation.dylib'
 current-version: 0

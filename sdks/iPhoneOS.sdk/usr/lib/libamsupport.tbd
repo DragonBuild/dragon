@@ -1,12 +1,15 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 4F4DD213-D764-3608-B154-30AB4D097883', 'armv7s: 132F1194-C3C8-3150-826A-0680C574FC35', 
-                   'arm64: 3F701644-7899-3697-9ABD-CD7F33BCC616', 'arm64e: 88A446D4-C8A0-3751-A59F-5BA0D27F1CBA' ]
+                   'arm64: 8D3B0B67-D356-36E4-9A3E-D21C20B49582', 'arm64e: 647266A5-2D74-3B10-A8EA-2085A2A62A11' ]
 platform:        ios
 install-name:    '/usr/lib/libamsupport.dylib'
 exports:         
   - archs:           [ armv7, armv7s ]
-    symbols:         [ ___gesf2, ___lesf2, ___ltsf2, ___nesf2 ]
+    symbols:         [ ___gesf2, ___lesf2 ]
+  - archs:           [ armv7, armv7s, arm64e ]
+    symbols:         [ ___eqdf2, ___eqsf2, ___gtdf2, ___gtsf2, ___ltdf2, ___ltsf2, 
+                       ___nedf2, ___nesf2 ]
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _AMSupportApplyBlockToDictionary, _AMSupportApplyDictionaryOverrides, 
                        _AMSupportBase64Decode, _AMSupportBase64Encode, _AMSupportCFArrayCreateWithObjects, 

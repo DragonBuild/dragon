@@ -12,6 +12,8 @@
 #import <CarPlay/CPAlertTemplate.h>
 #import <CarPlay/CPBarButton.h>
 #import <CarPlay/CPBarButtonProviding.h>
+#import <CarPlay/CPDashboardButton.h>
+#import <CarPlay/CPDashboardController.h>
 #import <CarPlay/CPGridButton.h>
 #import <CarPlay/CPGridTemplate.h>
 #import <CarPlay/CPImageSet.h>
@@ -28,6 +30,7 @@
 #import <CarPlay/CPSessionConfiguration.h>
 #import <CarPlay/CPTemplate.h>
 #import <CarPlay/CPTemplateApplicationScene.h>
+#import <CarPlay/CPTemplateApplicationDashboardScene.h>
 #import <CarPlay/CPTravelEstimates.h>
 #import <CarPlay/CPTrip.h>
 #import <CarPlay/CPTripPreviewTextConfiguration.h>

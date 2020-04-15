@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 6F72ACD6-27AD-33E8-BE4B-17A924ABFECC', 'armv7s: 808A53E8-E57A-3CD0-A262-01038052BC15', 
-                   'arm64: D49BD961-D288-3297-A451-0DC9D067B03D', 'arm64e: 150CF27F-9556-3A4C-B7F6-4B62C933F2B1' ]
+                   'arm64: C53DA33C-928A-3323-AB58-2B5C59B20FD8', 'arm64e: DB8893AB-73B7-30A8-8D3B-19BAA76A2239' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftQuartzCore.dylib'
 current-version: 0

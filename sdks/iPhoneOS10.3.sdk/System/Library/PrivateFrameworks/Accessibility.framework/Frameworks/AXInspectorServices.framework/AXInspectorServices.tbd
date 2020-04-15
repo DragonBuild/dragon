@@ -1,0 +1,21 @@
+---
+archs:                 [ armv7, armv7s, arm64 ]
+platform:              ios
+install-name:          "/System/Library/PrivateFrameworks/Accessibility.framework/Frameworks/AXInspectorServices.framework/AXInspectorServices"
+current-version:       1
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64 ]
+    objc-classes:         [ _AXInspectorElement, _AXInspectorNotification,
+                            _AXInspectorServices ]
+    objc-ivars:           [ _AXInspectorElement._frame,
+                            _AXInspectorElement._hint,
+                            _AXInspectorElement._label,
+                            _AXInspectorElement._language,
+                            _AXInspectorElement._path,
+                            _AXInspectorElement._traits,
+                            _AXInspectorElement._value,
+                            _AXInspectorNotification._notification,
+                            _AXInspectorNotification._value,
+                            _AXInspectorServices._client ]
+...

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 391F992B-3B09-3701-98CC-3E1DFCFC5346', 'arm64e: 26F4B54E-7642-30A5-9E83-36C7960DA710' ]
+                   'arm64: 5E0EC0BF-47F0-3853-A777-EA0123CDECAA', 'arm64e: 89E49FA0-DE8C-377A-A658-07E29FAD8606' ]
 platform:        ios
 install-name:    '/usr/lib/libAudioToolboxUtility.dylib'
 exports:         
@@ -62,11 +62,7 @@ exports:
                        __ZN12CASerializerC1EP8__CFData, __ZN12CASerializerC2EP8__CFData, 
                        __ZN12CASerializerD1Ev, __ZN12CASerializerD2Ev, __ZN12KaiserWindowC1Ejd, 
                        __ZN12KaiserWindowC2Ejd, __ZN12KaiserWindowD1Ev, __ZN12KaiserWindowD2Ev, 
-                       __ZN12MemAllocator10InitializeEm, __ZN12MemAllocator15sMemoryResourceE, 
-                       __ZN12MemAllocator15sReferenceCountE, __ZN12MemAllocator19sBaseMemoryResourceE, 
-                       __ZN12MemAllocator7DestroyEv, __ZN12MemAllocator7FreeMemEPvm, 
-                       __ZN12MemAllocator7ReleaseEv, __ZN12MemAllocator8AllocMemEm, 
-                       __ZN12MemAllocator9ReferenceEv, __ZN12MemoryStream11GetPositionEv, 
+                       __ZN12MemAllocator8ResourceEv, __ZN12MemoryStream11GetPositionEv, 
                        __ZN12MemoryStream4ReadEPvm, __ZN12MemoryStream4SeekEx, __ZN12MemoryStream4SkipEx, 
                        __ZN12MemoryStream5WriteEPvm, __ZN12MemoryStream7GetDataEv, 
                        __ZN12MemoryStreamC1EPK8__CFData, __ZN12MemoryStreamC1ERK7TStreami, 
@@ -127,8 +123,8 @@ exports:
                        __ZN15OpaqueObjectMgr6removeEj, __ZN15OpaqueObjectMgr9sInstanceE, 
                        __ZN15OpaqueObjectMgrC1Ev, __ZN15OpaqueObjectMgrC2Ev, __ZN15XBasicMIGServer22SetServerDispatchQueueERKN10applesauce8dispatch2v15queueE, 
                        __ZN16BaseOpaqueObject16ResolveOpaqueRefERKNS_4RTTIENS_3RefE, 
-                       __ZN16BaseOpaqueObject16destroyOpaqueRefEv, __ZN16BaseOpaqueObject5sRTTIE, 
-                       __ZN16BaseOpaqueObject9checkRTTIERKNS_4RTTIE, __ZN16BaseOpaqueObjectC2Ev, 
+                       __ZN16BaseOpaqueObject16destroyOpaqueRefEv, __ZN16BaseOpaqueObject9checkRTTIERKNS_4RTTIE, 
+                       __ZN16BaseOpaqueObject9sBaseRTTIE, __ZN16BaseOpaqueObjectC2Ev, 
                        __ZN16BaseOpaqueObjectD0Ev, __ZN16BaseOpaqueObjectD1Ev, __ZN16BaseOpaqueObjectD2Ev, 
                        __ZN16XMachReceivePort11SetMachPortEj, __ZN16XMachReceivePort14CreateMachPortEi, 
                        __ZN16XMachReceivePortD1Ev, __ZN16XMachReceivePortD2Ev, __ZN17PlatformUtilities11ProcessNameEi, 

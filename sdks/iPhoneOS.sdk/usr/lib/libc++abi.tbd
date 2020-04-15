@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F5651A85-EC21-3698-AEF4-E081B4D51491', 'armv7s: 2F042367-7472-387D-A05F-4C9EBD7DA5BC', 
-                   'arm64: C6CDEC6F-981B-31D8-9412-9EB3CA9EFBDD', 'arm64e: BEF405AD-732A-3185-B18E-A53A1ED4246B' ]
+                   'arm64: F07199AC-8A90-3127-B17F-0A906FFB7302', 'arm64e: 7773C226-504F-342B-8879-A9DFCBB953F2' ]
 platform:        ios
 install-name:    '/usr/lib/libc++abi.dylib'
-current-version: 800.6
+current-version: 902
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ __ZNKSt16bad_array_length4whatEv, __ZNSt16bad_array_lengthC1Ev, 
@@ -13,10 +13,7 @@ exports:
                        __ZTISt16bad_array_length, __ZTSSt16bad_array_length, __ZTVSt16bad_array_length, 
                        ___gxx_personality_sj0 ]
   - archs:           [ arm64, arm64e ]
-    symbols:         [ __ZN10__cxxabiv119__getExceptionClassEPK17_Unwind_Exception, 
-                       __ZN10__cxxabiv119__setExceptionClassEP17_Unwind_Exceptiony, 
-                       __ZN10__cxxabiv121__isOurExceptionClassEPK17_Unwind_Exception, 
-                       __ZTIDu, __ZTIPDu, __ZTIPKDu, __ZTSDu, __ZTSPDu, __ZTSPKDu, 
+    symbols:         [ __ZTIDu, __ZTIPDu, __ZTIPKDu, __ZTSDu, __ZTSPDu, __ZTSPKDu, 
                        ___gxx_personality_v0 ]
     weak-def-symbols: [ __ZdaPvSt11align_val_t, __ZdaPvSt11align_val_tRKSt9nothrow_t, 
                         __ZdaPvm, __ZdaPvmSt11align_val_t, __ZdlPvSt11align_val_t, 

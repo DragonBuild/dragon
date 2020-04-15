@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: FAE1A66F-6D6C-3F14-81DD-793D40160D02', 'arm64e: 783CCBD1-CF65-399D-92AC-DF74562ABE1C' ]
+                   'arm64: D3A85665-DEAE-3CF2-98F0-626C538775EE', 'arm64e: B5CB7E0F-FF89-3A67-85B9-935785B755E9' ]
 platform:        ios
 install-name:    '/usr/lib/ACIPCBTLib.dylib'
 exports:         

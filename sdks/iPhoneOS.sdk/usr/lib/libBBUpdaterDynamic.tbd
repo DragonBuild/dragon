@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: E011C850-E7AD-3718-AE62-5AE2195A2682', 'armv7s: F84CC2C0-2D0D-3627-B948-1D46F0B531C8', 
-                   'arm64: D7D91389-D6BC-3F83-A980-B63DB3364181', 'arm64e: 960F964C-C081-3486-BB76-4F2C65A9BCAD' ]
+                   'arm64: 4DFC0F76-A261-3DDB-8D93-7D3DF5FF4C3E', 'arm64e: 6C3829A8-9998-3117-B5A6-68C0537DDCAE' ]
 platform:        ios
 install-name:    '/usr/lib/libBBUpdaterDynamic.dylib'
 exports:         

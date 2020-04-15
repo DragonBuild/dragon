@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 98E21887-D83E-3D52-8C31-B5243CF49051', 'armv7s: 4763863C-5348-3215-8027-CD3AE83A8246', 
-                   'arm64: EC64C9FA-3742-3E4C-AE33-B579AE0B1E47', 'arm64e: 106A223F-DE6F-39CA-93AC-F514E3EECA4D' ]
+                   'arm64: 0CDB2591-82A5-3366-BD48-43D0D7351030', 'arm64e: B7374466-A826-3809-99FF-24B0D651225B' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftModelIO.dylib'
 current-version: 0

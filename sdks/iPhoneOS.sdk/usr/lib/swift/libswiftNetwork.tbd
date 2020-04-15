@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 995D6DA1-E159-365C-A365-EA63BE3AE2FD', 'armv7s: C667532E-441D-3975-838E-C8EA6E057451', 
-                   'arm64: BD941C22-2443-352C-9F28-A0A04E18A118', 'arm64e: 48CE91FD-232E-3302-9CA5-CBBDAE8A5E63' ]
+                   'arm64: F28CA7AE-606D-338F-8FF5-F1937FBF13EC', 'arm64e: 4D5DBA4E-2738-31EF-B50D-90F07B3DCB56' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftNetwork.dylib'
 current-version: 0

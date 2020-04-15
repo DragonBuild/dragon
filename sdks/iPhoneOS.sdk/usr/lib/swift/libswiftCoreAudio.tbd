@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: F93EEFBF-327B-3340-A251-435F885A684B', 'armv7s: 04FB3BB9-DD94-3C95-B1A9-544B06D8C02C', 
-                   'arm64: 0F3DC096-78A1-3E5F-B948-8AD7B5F7199F', 'arm64e: 4525A043-E65A-3F64-A275-4767934057DC' ]
+                   'arm64: B592A969-021D-36BB-ACAD-A028A20E50AD', 'arm64e: D5BB1B4C-B5BE-3C8E-A1A1-D5CFE4346373' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftCoreAudio.dylib'
 current-version: 0

@@ -2,11 +2,12 @@
 //  CLSContext.h
 //  ClassKit
 //
-//  Copyright © 2018 Apple Inc. All rights reserved.
+//  Copyright © 2016-2019 Apple Inc. All rights reserved.
 //
 
 #import <ClassKit/CLSDefines.h>
 #import <ClassKit/CLSObject.h>
+#import <CoreGraphics/CGImage.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +34,8 @@ typedef NS_ENUM(NSInteger, CLSContextType) {
     CLSContextTypeAudio,
     CLSContextTypeVideo,
 
+    CLSContextTypeCourse API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos),
+    CLSContextTypeCustom API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos)
 } API_AVAILABLE(ios(11.3)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
 
 typedef NSString * CLSContextTopic NS_STRING_ENUM API_AVAILABLE(ios(11.3)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
@@ -61,23 +64,36 @@ API_AVAILABLE(ios(11.3)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos)
 - (instancetype)init NS_UNAVAILABLE;
 
 /*!
+ @abstract      Context identifier path of this context.
+ @discussion    The identifier path starts with the main app context object and finishes with the identifier of this context.  This is the identifier path that one would use in @code -[CLSDataStore contextsMatchingIdintifierPath:completion:] @endcode to find `this' context.
+ */
+@property (nonatomic, copy, readonly) NSArray<NSString *> *identifierPath API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
+
+/*!
  @abstract      App-assigned identifier. This identifier should work across users and devices and be unique with regards to its siblings within its parent.
  @discussion    The identifier could be used to embed information later used for deep linking. For example: @em hydrogen-element, or @em chapter-1.
  */
 @property (nonatomic, copy, readonly) NSString *identifier;
 
-
 /*!
  @abstract      Alternative deep link URL using universal links.
  @discussion    If your app supports universal links, you can supply them here to link the content this context represents.
  */
-@property (nullable, nonatomic, strong) NSURL *universalLinkURL API_AVAILABLE(ios(11.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, strong, nullable) NSURL *universalLinkURL API_AVAILABLE(ios(11.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
 
 /*!
  @abstract      Type of this context
  @discussion    The type that best describes this context.
  */
 @property (nonatomic, assign, readonly) CLSContextType type;
+
+/*!
+@abstract       An optional user-visible name for the context if its type is CLSContextTypeCustom.
+@discussion     This property is relevant only if the type is CLSContextTypeCustom. This string should be localized.
+                If this property is not set for a context of type CLSContextTypeCustom, Schoolwork app will use a
+                default localized string ‘Custom’ as the name of the activity representing this context.
+*/
+@property (nonatomic, copy, nullable) NSString *customTypeName API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
 
 /*!
  @abstract      Title of this context.
@@ -96,14 +112,27 @@ API_AVAILABLE(ios(11.3)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos)
  @abstract      Topic associated with this context.
  @discussion    See above for valid, predefined topics.
  */
-@property (nullable, nonatomic, copy) CLSContextTopic topic;
+@property (nonatomic, copy, nullable) CLSContextTopic topic;
 
 /*!
-@abstract      Initialize and configure the type of content this context represents.
+@abstract       An optional user-visible summary describing the context limited to 4000 characters in length.
+@discussion     This may be used to provide information about the types of activities available under a given context or the context itself. This string should be localized.
+*/
+@property (nonatomic, copy, nullable) NSString *summary API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
+
+/*!
+@abstract       An optional thumbnail image associated with the context.
+@discussion     The size of this image should be equal to or larger than 80x80 pixels and equal to or smaller than 330x330 pixels.
+                Images larger than 330x330 pixels will be scaled down. Images with both dimensions smaller than 80x80 pixels will not be accepted.
+*/
+@property (nonatomic, nullable) CGImageRef thumbnail API_AVAILABLE(ios(13.4)) API_UNAVAILABLE(macos) API_UNAVAILABLE(watchos, tvos);
+
+/*!
+@abstract       Initialize and configure the type of content this context represents.
  @param         identifier     App-assigned identifier for this context. 256 characters max length.
  @param         type           The type of content this context represents.
  @param         title          Title for what this context represents. 256 characters max length.
-*/
+ */
 - (instancetype)initWithType:(CLSContextType)type
                   identifier:(NSString *)identifier
                        title:(NSString *)title NS_DESIGNATED_INITIALIZER;

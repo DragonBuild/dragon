@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: DDC85AD8-B9B9-34E5-ADE5-6B2ADF8134F0', 'armv7s: A4F93D2B-AF23-3786-8591-0EEDAEAC19A3', 
-                   'arm64: E56DF811-440E-31F5-8B31-6A216DD7A645', 'arm64e: 70D0AAF8-116C-3E41-B6D9-BDAE56024EF2' ]
+                   'arm64: 724EEE51-EB3B-386D-8F2E-06A2F878234A', 'arm64e: 66DB88F0-8EE5-3146-87AC-C2B803929855' ]
 platform:        ios
 install-name:    '/usr/lib/libauthinstall.dylib'
 exports:         
@@ -24,15 +24,15 @@ exports:
                        _AMAuthInstallApplyRequestEntries, _AMAuthInstallBasebandCopyCustomFirmware, 
                        _AMAuthInstallBasebandCopyFirmware, _AMAuthInstallBasebandCreateUpdaterStateInfo, 
                        _AMAuthInstallBasebandEnablePersonalization, _AMAuthInstallBasebandGetChipID, 
-                       _AMAuthInstallBasebandHandleUpdaterStatus, _AMAuthInstallBasebandPersonalizationEnabled, 
-                       _AMAuthInstallBasebandPersonalizationRequired, _AMAuthInstallBasebandPersonalizeFirmware, 
-                       _AMAuthInstallBasebandSetAntennaType, _AMAuthInstallBasebandSetBehavior, 
-                       _AMAuthInstallBasebandSetDevelopmentFusingProgram, _AMAuthInstallBasebandSetFusingProfileName, 
-                       _AMAuthInstallBasebandSetFusings, _AMAuthInstallBasebandSetKeyHash, 
-                       _AMAuthInstallBasebandSetNonce, _AMAuthInstallBasebandSetParametersWithUpdaterOutput, 
-                       _AMAuthInstallBasebandSetSkeyID, _AMAuthInstallBasebandSetVendorData, 
-                       _AMAuthInstallBasebandSupportsFDR, _AMAuthInstallBundleAllowLinks, 
-                       _AMAuthInstallBundleAppendRecoveryOSiBootFirmwareEntriesToAssetArray, 
+                       _AMAuthInstallBasebandGetRFSelfTestTicket, _AMAuthInstallBasebandHandleUpdaterStatus, 
+                       _AMAuthInstallBasebandPersonalizationEnabled, _AMAuthInstallBasebandPersonalizationRequired, 
+                       _AMAuthInstallBasebandPersonalizeFirmware, _AMAuthInstallBasebandSetAntennaType, 
+                       _AMAuthInstallBasebandSetBehavior, _AMAuthInstallBasebandSetDevelopmentFusingProgram, 
+                       _AMAuthInstallBasebandSetFusingProfileName, _AMAuthInstallBasebandSetFusings, 
+                       _AMAuthInstallBasebandSetKeyHash, _AMAuthInstallBasebandSetNonce, 
+                       _AMAuthInstallBasebandSetParametersWithUpdaterOutput, _AMAuthInstallBasebandSetSkeyID, 
+                       _AMAuthInstallBasebandSetVendorData, _AMAuthInstallBasebandSupportsFDR, 
+                       _AMAuthInstallBundleAllowLinks, _AMAuthInstallBundleAppendRecoveryOSiBootFirmwareEntriesToAssetArray, 
                        _AMAuthInstallBundleCopyBuildIdentityForVariant, _AMAuthInstallBundleCopyFullPathForBuildIdentityKey, 
                        _AMAuthInstallBundleCopyNextBasebandComponentName, _AMAuthInstallBundleCopyPersonalizedFUDFirmwareImages, 
                        _AMAuthInstallBundleCopyPersonalizedFUDFirmwareURLs, _AMAuthInstallBundleCopyPersonalizedFirmwareImages, 
@@ -129,8 +129,9 @@ exports:
                        _kAMAuthInstallTagApImg4Ticket, _kAMAuthInstallTagApNonce, 
                        _kAMAuthInstallTagApProductionMode, _kAMAuthInstallTagApRequestImg4Ticket, 
                        _kAMAuthInstallTagApSecurityDomain, _kAMAuthInstallTagApSecurityMode, 
-                       _kAMAuthInstallTagApSepNonce, _kAMAuthInstallTagImageDigest, 
-                       _kAMAuthInstallTagImageEffectiveProductionMode, _kAMAuthInstallTagImageEffectiveSecurityMode, 
-                       _kAMAuthInstallTagImageTBMDigests, _kAMAuthInstallTagImageTrusted, 
-                       _kAMAuthInstallUpdaterOptionName, _kAMAuthInstallUpdaterRequestTags ]
+                       _kAMAuthInstallTagApSepNonce, _kAMAuthInstallTagBbFieldDiagsEnable, 
+                       _kAMAuthInstallTagImageDigest, _kAMAuthInstallTagImageEffectiveProductionMode, 
+                       _kAMAuthInstallTagImageEffectiveSecurityMode, _kAMAuthInstallTagImageTBMDigests, 
+                       _kAMAuthInstallTagImageTrusted, _kAMAuthInstallUpdaterOptionName, 
+                       _kAMAuthInstallUpdaterRequestTags ]
 ...

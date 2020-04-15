@@ -1,0 +1,14 @@
+---
+archs:                 [ armv7, armv7s, arm64 ]
+platform:              ios
+install-name:          "/System/Library/PrivateFrameworks/SimulatorClient.framework/SimulatorClient"
+current-version:       719
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64 ]
+    symbols:              [ _IndigoHIDMainScreen, _IndigoHIDStarkScreen,
+                            _IndigoHIDSystemSpawnLoopback,
+                            _IndigoTvOutExtendedState, _IndigoTvOutUniqueId,
+                            _SimulatorClientVersionNumber,
+                            _SimulatorClientVersionString ]
+...

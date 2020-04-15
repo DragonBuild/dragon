@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import string
+from datetime import datetime
 import subprocess
 import re 
 import os
@@ -28,16 +29,18 @@ dragonvars['signdir'] = '$pdirname/sign'
 # They sometimes get modified by uvars, when the relevant uvar is specified
 bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}, 'cli':{}, 'app':{}, 'raw':{}}
 
+bvars['archfiles'] = {}
+
 bvars['all']['libs'] = ['objc', 'c++']
 bvars['all']['lopts'] = ''
 bvars['all']['frameworks'] = []
-bvars['all']['cflags'] = ''
+bvars['all']['ldflags'] = ''
 
 bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
 bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
 bvars['tweak']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
-bvars['tweak']['cflags'] = '-install_name @executable_path$location$name'
+bvars['tweak']['ldflags'] = '-install_name $location$name'
 bvars['tweak']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
 
@@ -45,7 +48,7 @@ bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/Dyn
 bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
 bvars['bundle']['target'] = '$pdirname/_$location$name'
 bvars['bundle']['libs'] = []
-bvars['bundle']['cflags'] = '-install_name @executable_path$location$name'
+bvars['bundle']['ldflags'] = '-install_name $location$name'
 bvars['bundle']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['bundle']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['bundle']['stage2'] = ''
@@ -53,7 +56,7 @@ bvars['bundle']['stage2'] = ''
 bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
-bvars['library']['cflags'] = '-install_name @executable_path$location$name'
+bvars['library']['ldflags'] = '-install_name $location$name.dylib'
 bvars['library']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
 bvars['library']['frameworks'] = []
 bvars['library']['stage2'] = ''
@@ -62,7 +65,7 @@ bvars['cli']['location'] = '/usr/bin/'
 bvars['cli']['target'] = '$pdirname/_$location$name'
 bvars['cli']['libs'] = []
 bvars['cli']['lopts'] = ''
-bvars['cli']['cflags'] = ''
+bvars['cli']['ldflags'] = ''
 bvars['cli']['frameworks'] = []
 bvars['cli']['stage2'] = ''
 
@@ -71,7 +74,7 @@ bvars['app']['location'] = '/Applications/'
 bvars['app']['target'] = '$pdirname/_$location$name.app/$name'
 bvars['app']['libs'] = []
 bvars['app']['lopts'] = ''
-bvars['app']['cflags'] = ''
+bvars['app']['ldflags'] = ''
 bvars['app']['frameworks'] = []
 bvars['app']['stage2'] = ''
 
@@ -139,8 +142,9 @@ def process_package(package_config):
     uvars['frameworks'] = []
 
     uvars['cflags'] = ''
+    uvars['c_header_search_dirs'] = ['']
     uvars['ldflags'] = ''
-    uvars['ldidflags']= '-S'
+    uvars['ldidflags'] = '-S'
 
     uvars['install_location'] = ''
     uvars['resource_dir'] = 'Resources'
@@ -166,6 +170,9 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('name', uvars['name'])
     ninja.variable('lowername', uvars['name'].lower())
     ninja.newline()
+    name = uvars['name']
+    ninja.comment(f'Build file for {name}')
+    ninja.comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}')
     ninja.newline()
 
     ninja.variable('pdirname', dragonvars['pdirname'])
@@ -207,13 +214,12 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('targetios', uvars['targetios'])
     ninja.newline()
     fws = uvars['frameworks'] + bvars[type]['frameworks'] + bvars['all']['frameworks']
-    if len(fws) > 0:
-        ninja.variable('frameworks','-framework ' + ' -framework '.join(fws))
+    ninja.variable('frameworks',arg_list(fws, '-framework '))
 
     ninja.newline()
-    ninja.variable('libs', '-l' + ' -l'.join(uvars['libs'] + bvars[type]['libs'] + bvars['all']['libs']))
-    ninja.newline()
-    ninja.variable('arcs', '-arch ' + ' -arch '.join(uvars['archs']))
+    libs = uvars['libs'] + bvars[type]['libs'] + bvars['all']['libs']
+    
+    ninja.variable('libs', arg_list(libs, '-l'))
     ninja.newline()
 
     ninja.variable('arc', uvars['arc'])
@@ -222,24 +228,25 @@ def create_buildfile(ninja, type, uvars):
     ninja.variable('optim', '-O' + uvars['optim'])
     ninja.variable('debug', uvars['debug'])
     ninja.newline()
-
+    
+    ninja.variable('header_includes', arg_list(uvars['c_header_search_dirs'], '-I'))
     ninja.variable('cinclude', uvars['cinclude'])
     ninja.newline()
 
-    ninja.variable('usrCflags', uvars['cflags'])
-    ninja.variable('usrLDflags', uvars['ldflags'])
-    ninja.variable('usrLDIDFlags', uvars['ldidflags'])
+    ninja.variable('usrCflags', arg_list(uvars['cflags']))
+    ninja.variable('usrLDflags', arg_list(uvars['ldflags']))
+    ninja.variable('usrLDIDFlags', arg_list(uvars['ldidflags']))
     ninja.newline()
 
     ninja.variable('lopt', bvars['all']['lopts'] + bvars[type]['lopts'])
-    ninja.variable('typeflags', bvars['all']['cflags'] + bvars[type]['cflags'])
+    ninja.variable('typeldflags', bvars['all']['ldflags'] + bvars[type]['ldflags'])
     ninja.newline()
 
-    cflags = '$cinclude $typeflags $arcs $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags'
+    cflags = '$cinclude -fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=.dragon/modules/ -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags $header_includes'
     ninja.variable('cflags', cflags)
     ninja.newline()
 
-    lflags = '$cflags $frameworks $libs $lopt $libSearch $usrLDflags'
+    lflags = '$cflags $typeldflags $frameworks $libs $lopt $libSearch $usrLDflags'
     ninja.variable('lflags', lflags)
     ninja.newline()
 
@@ -254,12 +261,37 @@ def create_buildfile(ninja, type, uvars):
     ninja.rule('prelogos', description="Processing $in with Pre/Logos",command="cat $in | python3 $$DRAGONBUILD/bin/prelogos.py > $out")
     ninja.newline()
     ninja.rule('logos', description="Processing $in with Logos",command="$logos $in > $out")
+    
     ninja.newline()
-    ninja.rule('compile', description="Compiling $in", command="$cc $cflags -c $in -o $out")
+    ninja.rule('compilearm64', description="Compiling $in for arm64", command="$cc -arch arm64 $cflags -c $in -o $out")
     ninja.newline()
-    ninja.rule('compilepp', description="Compiling $in", command="$ccpp $cflags -c $in -o $out")
+    ninja.rule('compilexxarm64', description="Compiling $in for arm64", command="$cxx -arch arm64 $cflags -c $in -o $out")
     ninja.newline()
-    ninja.rule('link', description="Linking $name", command="$ld $lflags -o $out $in")
+    ninja.rule('linkarm64', description="Linking $name for arm64", command="$ld -arch arm64 $lflags -o $out $in")
+    
+    ninja.newline()
+    ninja.rule('compilearm64e', description="Compiling $in for arm64e", command="$cc -arch arm64e $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('compilexxarm64e', description="Compiling $in for arm64e", command="$cxx -arch arm64e $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('linkarm64e', description="Linking $name for arm64e", command="$ld -arch arm64e $lflags -o $out $in")
+    
+    ninja.newline()
+    ninja.rule('compilearmv7', description="Compiling $in for armv7", command="$cc -arch armv7 $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('compilexxarmv7', description="Compiling $in for armv7", command="$cxx -arch armv7 $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('linkarmv7', description="Linking $name for armv7", command="$ld -arch armv7 $lflags -o $out $in")
+    
+    ninja.newline()
+    ninja.rule('compilex86_64', description="Compiling $in for x86_64", command="$cc -arch x86_64 $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('compilexxx86_64', description="Compiling $in for x86_64", command="$cxx -arch x86_64 $cflags -c $in -o $out")
+    ninja.newline()
+    ninja.rule('linkx86_64', description="Linking $name for x86_64", command="$ld -arch x86_64 $lflags -o $out $in")
+    
+    ninja.newline()
+    ninja.rule('lipo', description='Merging architectures', command='lipo -create $in -output $out')
     ninja.newline()
     ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p \".dragon/_$location/\" && cp -r \"$resource_dir/\" \".dragon/_$location\" && cp $in $out", pool='solo')
     ninja.newline()
@@ -351,19 +383,26 @@ def create_buildfile(ninja, type, uvars):
             plists.remove(i)
 
         for f in prelogos:
-            ninja.build(f'$builddir/{os.path.split(f)[1]}.xm', 'prelogos', f)
-            logos.append(f'$builddir/{os.path.split(f)[1]}.xm')
+            ninja.build(f'$builddir/prelogos/{os.path.split(f)[1]}.xm', 'prelogos', f)
+            logos.append(f'$builddir/prelogos/{os.path.split(f)[1]}.xm')
             ninja.newline()
 
         for f in logos:
-            ninja.build(f'$builddir/{os.path.split(f)[1]}.mm', 'logos', f)
-            files.append(f'$builddir/{os.path.split(f)[1]}.mm')
+            ninja.build(f'$builddir/logos/{os.path.split(f)[1]}.mm', 'logos', f)
+            files.append(f'$builddir/logos/{os.path.split(f)[1]}.mm')
             ninja.newline()
 
-        for f in files:
-            ninja.build(f'$builddir/{os.path.split(f)[1]}.o', 'compile', f)
-            outputs.append(f'$builddir/{os.path.split(f)[1]}.o')
-            ninja.newline()
+        for a in uvars['archs']:
+
+            archfiles = []
+
+            for f in files:
+                ninja.build(f'$builddir/{a}/{os.path.split(f)[1]}.o', f'compile{a}', f)
+                archfiles.append(f'$builddir/{a}/{os.path.split(f)[1]}.o')
+                ninja.newline()
+
+            ninja.build(f'$builddir/$name.{a}', f'link{a}', archfiles)
+            outputs.append(f'$builddir/$name.{a}')
 
 
     if type == 'bundle':
@@ -376,7 +415,7 @@ def create_buildfile(ninja, type, uvars):
     targets.append('$builddir/trash/stage')
     ninja.newline()
 
-    ninja.build('$symtarget', 'link', outputs)
+    ninja.build('$symtarget', 'lipo', outputs)
     ninja.newline()
 
     ninja.build('$signtarget', 'debug', '$symtarget')
@@ -393,6 +432,20 @@ def create_buildfile(ninja, type, uvars):
     ninja.default(targets)
     ninja.newline()
 
+def arg_list(items, prefix=''):
+    if not items:
+        return ''
+
+    litems = items.split(' ') if isinstance(items, str) else items 
+
+    if litems == ['']:
+        return ''
+
+    litems = [prefix + i for i in litems]
+
+    return ' '.join(litems)
+    
+        
 
 def main():
     read_dragon_configuration()

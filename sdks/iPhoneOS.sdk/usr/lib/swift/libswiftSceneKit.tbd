@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 23B066CB-1241-38AF-BD01-A71499D5F9F1', 'armv7s: A286B40A-F682-3A64-AAF7-A7E311FBBF8A', 
-                   'arm64: A53CCE36-DB41-38CA-9FC2-DD21D72DE16A', 'arm64e: 932E6A0E-581E-3B00-9FED-C5D2D764A352' ]
+                   'arm64: 326B176D-3634-39FC-ABE6-064D51F3C276', 'arm64e: E05B2939-07A0-353E-B20F-7C0D4F3AA297' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftSceneKit.dylib'
 current-version: 0

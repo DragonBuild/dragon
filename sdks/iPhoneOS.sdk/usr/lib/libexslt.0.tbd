@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 3967032D-9FC8-3F01-8FBC-CC19C64A34E7', 'armv7s: 3B2B009F-8F50-3CE3-B316-6FAE5BED3135', 
-                   'arm64: FDBC727C-9FD1-3E5C-9D81-412E48728420', 'arm64e: F656327A-EF1D-306D-99F6-CFD2D98DBF87' ]
+                   'arm64: 0F155E47-9227-320D-9259-811C08735C32', 'arm64e: E8F767C2-8B60-3295-9B2C-71E76D7C578F' ]
 platform:        ios
 install-name:    '/usr/lib/libexslt.0.dylib'
 current-version: 9.15

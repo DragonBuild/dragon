@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 2525A841-1536-3068-932C-EE3C4FA154C0', 'armv7s: 1A8F8A6D-C24C-3EF6-B130-FB552836D989', 
-                   'arm64: 516741F7-F1E1-3DAE-BD18-77FE4DCE8573', 'arm64e: 71F5FA1B-9D81-3564-97B7-29D5AD395672' ]
+                   'arm64: 5CC1C62F-7B62-3A93-ABA0-755BEFDFE9E8', 'arm64e: D05363BE-5F94-349A-B307-1DF46640A4DF' ]
 platform:        ios
 install-name:    '/usr/lib/libAWDProtobufGCK.dylib'
 exports:         

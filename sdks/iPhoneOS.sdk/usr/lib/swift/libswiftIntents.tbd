@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 5A05F674-C4A8-3BF6-B16B-01930457CD35', 'armv7s: 67CF0A0D-A1CA-376E-8014-52A9D930129D', 
-                   'arm64: 80A4B73F-D906-32CF-ADCF-BE9A16244EFB', 'arm64e: 9E3DA192-5CF9-34D2-AAB4-180F29E856D0' ]
+                   'arm64: 6013C811-DF4A-3278-9B66-02993BBD4B4F', 'arm64e: 429545FC-6680-319B-8747-386882DF40BD' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftIntents.dylib'
 current-version: 0

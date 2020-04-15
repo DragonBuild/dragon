@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 034AF0F7-4D9F-33CD-84E0-9C56A19CADCC', 'armv7s: 93302BF1-3720-31B5-AB85-E8A8B453CE51', 
-                   'arm64: B399A996-FDB8-3C50-81F0-67D016ABD1E4', 'arm64e: AD063549-73DF-3050-90A0-97F95F8E8F24' ]
+                   'arm64: 6304E0AC-A95F-36F8-AED7-ADDE39A043C5', 'arm64e: 21F3C6BE-3D60-3618-B24E-D9423A290E94' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftos.dylib'
 current-version: 0

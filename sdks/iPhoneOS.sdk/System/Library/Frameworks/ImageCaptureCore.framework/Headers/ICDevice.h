@@ -80,7 +80,7 @@ typedef NS_ENUM( NSUInteger, ICDeviceLocationTypeMask )
 
 CF_ASSUME_NONNULL_BEGIN
 
-typedef NSString* ICDeviceTransport NS_TYPED_ENUM IC_AVAILABLE(macos(10.15), ios(13.0));
+typedef NSString* ICDeviceTransport NS_TYPED_ENUM IC_AVAILABLE(macos(10.4), ios(13.0));
 
 //------------------------------------------------------------------------------------------------------------------------------
 // Constants used to identify the transport type used by a device.

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: D560471D-F43F-30D6-9717-5252EE100F10', 'armv7s: B1764672-C89B-3366-8975-D09656107D89', 
-                   'arm64: B6BD8A3B-C750-3527-A59B-648B0C8890C2', 'arm64e: AFC37302-3CFF-3C9E-9497-F5BADFF83CA2' ]
+                   'arm64: 3D54FB1A-DEDA-33E4-BA69-1B56BDDF23D8', 'arm64e: E213DC22-6C58-3936-A1DB-6762227DF23C' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftDarwin.dylib'
 current-version: 0
@@ -22,6 +22,8 @@ exports:
                        '_$s6Darwin0A7BooleanV11descriptionSSvg', '_$s6Darwin0A7BooleanV11descriptionSSvpMV', 
                        '_$s6Darwin0A7BooleanV12customMirrors0D0Vvg', '_$s6Darwin0A7BooleanV12customMirrors0D0VvpMV', 
                        '_$s6Darwin0A7BooleanV14booleanLiteralACSb_tcfC', '_$s6Darwin0A7BooleanV2eeoiySbAC_ACtFZ', 
+                       '_$s6Darwin0A7BooleanV6_values5UInt8VvM', '_$s6Darwin0A7BooleanV6_values5UInt8Vvg', 
+                       '_$s6Darwin0A7BooleanV6_values5UInt8VvpMV', '_$s6Darwin0A7BooleanV6_values5UInt8Vvs', 
                        '_$s6Darwin0A7BooleanV9boolValueSbvg', '_$s6Darwin0A7BooleanV9boolValueSbvpMV', 
                        '_$s6Darwin0A7BooleanVMa', '_$s6Darwin0A7BooleanVMn', '_$s6Darwin0A7BooleanVN', 
                        '_$s6Darwin0A7BooleanVSQAAMc', '_$s6Darwin0A7BooleanVs013ExpressibleByB7LiteralAAMc', 

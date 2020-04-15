@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: B49FA0E3-5125-3711-AC3E-D56C22B54098', 'armv7s: 29DDE5A3-A169-312B-A7EE-D37476E85418', 
-                   'arm64: 0468859A-AD89-3E2A-BAE4-7AD4D74DCC19', 'arm64e: B8954F75-39C3-3582-9309-544346190F33' ]
+                   'arm64: C4D010F1-00D6-3752-9E3E-B7F51677215E', 'arm64e: C5B8EC92-BA57-3AB5-9CD0-A816D594E739' ]
 platform:        ios
 install-name:    '/usr/lib/libktrace.dylib'
 exports:         
@@ -95,10 +95,10 @@ exports:
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: ECF4E96B-7946-3E8B-A69A-620B759651BC', 'arm64e: ECF74DE5-FBA1-3F95-BCB5-C0C3D10CB0E8' ]
+                   'arm64: FDDCC7C6-DE53-3589-85ED-0FE969D61468', 'arm64e: 0797C216-EC94-3DA9-9E2E-442E3F62E68B' ]
 platform:        ios
 install-name:    '/System/Library/PrivateFrameworks/ktrace.framework/ktrace'
-current-version: 354.40.7
+current-version: 354.100.2
 exports:         
   - archs:           [ arm64, arm64e ]
     symbols:         [ __Z25ktrace_address_space_sortP20ktrace_address_space, __Z27ktrace_address_space_appendP20ktrace_address_space11SymbolOwner, 
@@ -229,8 +229,8 @@ exports:
                        _ktrace_ignore_process_filter_for_event, _ktrace_is_kernel_64_bit, 
                        _ktrace_iter_copy, _ktrace_iter_destroy, _ktrace_iter_equal, 
                        _ktrace_iter_get_event, _ktrace_iter_next, _ktrace_iter_next_until, 
-                       _ktrace_iter_prev, _ktrace_iterate_threads, _ktrace_kperf, 
-                       _ktrace_log, _ktrace_log_init, _ktrace_machine_active_cpus, 
+                       _ktrace_iter_prev, _ktrace_iterate_threads, _ktrace_kpdecode, 
+                       _ktrace_kperf, _ktrace_log, _ktrace_log_init, _ktrace_machine_active_cpus, 
                        _ktrace_machine_apple_internal, _ktrace_machine_boot_args, 
                        _ktrace_machine_boot_uuid, _ktrace_machine_copy_description, 
                        _ktrace_machine_cpu_family, _ktrace_machine_cpu_subtype, _ktrace_machine_cpu_type, 

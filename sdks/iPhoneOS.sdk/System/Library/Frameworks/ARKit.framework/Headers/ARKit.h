@@ -36,6 +36,8 @@
 #import <ARKit/ARParticipantAnchor.h>
 #import <ARKit/ARPlaneAnchor.h>
 #import <ARKit/ARPlaneGeometry.h>
+#import <ARKit/ARMeshGeometry.h>
+#import <ARKit/ARMeshAnchor.h>
 
 #import <ARKit/ARSkeleton.h>
 #import <ARKit/ARSkeletonDefinition.h>
@@ -46,5 +48,6 @@
 #import <ARKit/ARSCNView.h>
 #import <ARKit/ARSKView.h>
 #import <ARKit/ARMatteGenerator.h>
+
 
 #import <ARKit/ARQuickLookPreviewItem.h>

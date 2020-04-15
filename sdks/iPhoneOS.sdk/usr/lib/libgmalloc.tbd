@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 2FD58707-F690-3198-949A-29E0CEA75071', 'armv7s: CF23BDEE-01DF-35B2-85EC-5CBB7B6F09CD', 
-                   'arm64: 3A3698F0-125F-30D0-BCE1-F64B928B3784', 'arm64e: 673CE7DA-0CFA-31EC-AB9F-CEDC3B0B6986' ]
+                   'arm64: 85A2707F-AABC-300F-AC56-2BCD52D16553', 'arm64e: 0D192537-76D0-32D0-8384-38D8FDC3DC69' ]
 platform:        ios
 install-name:    '/usr/lib/libgmalloc.dylib'
 exports:         

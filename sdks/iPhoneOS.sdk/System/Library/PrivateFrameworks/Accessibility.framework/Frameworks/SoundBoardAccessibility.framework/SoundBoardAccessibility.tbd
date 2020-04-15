@@ -1,0 +1,21 @@
+---
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+install-name:          "/System/Library/PrivateFrameworks/Accessibility.framework/Frameworks/SoundBoardAccessibility.framework/SoundBoardAccessibility"
+current-version:       1
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64, arm64e ]
+    symbols:              [ _accessibilityLocalizedString, _localizedString,
+                            _yForButton ]
+    objc-classes:         [ _AXSBCallStateIvarEncodingDummy, _AXSoundBoard,
+                            _AXSoundBoardManager,
+                            _HPApplicationManagerAccessibility,
+                            _HPClockAppAccessibility, _SBHPIOHIDAccessibility,
+                            ___HPApplicationManagerAccessibility,
+                            ___HPApplicationManagerAccessibility_super,
+                            ___HPClockAppAccessibility_super,
+                            ___SBHPIOHIDAccessibility_super ]
+    objc-ivars:           [ _AXSBCallStateIvarEncodingDummy._callState,
+                            ___HPApplicationManagerAccessibility.__SBCallState__ ]
+...

@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: B382212E-72A5-3DBD-B7BB-797E5AE67FD2', 'arm64e: 354AC951-080F-38AF-9182-21D53918C2DC' ]
+                   'arm64: 0BB7B7B6-78BB-3AB8-8734-5EE24D6EFF43', 'arm64e: D282C289-9694-3A31-88F6-7CDBBBAD3948' ]
 platform:        ios
 install-name:    '/usr/lib/libmecab.dylib'
-current-version: 883
+current-version: 883.10
 exports:         
   - archs:           [ armv7, armv7s, arm64, arm64e ]
     symbols:         [ _mecab_cost_train, _mecab_destroy, _mecab_dict_gen, _mecab_dict_index, 

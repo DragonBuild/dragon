@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 06679423-8432-30F7-B26C-54DC4540D634', 'armv7s: 3E08F7BA-A82B-3C3E-AFEA-07923C33315E', 
-                   'arm64: 55BA665C-36E7-36ED-B8B6-2D52C35E95B0', 'arm64e: 4659186C-0EDF-32AE-80D0-7FEE015A97DE' ]
+                   'arm64: 83379883-D601-3AEC-BD6F-1B2B1D200B62', 'arm64e: 16959FCA-0A48-3E2F-99A3-ECC9D24B68E8' ]
 platform:        ios
 install-name:    '/usr/lib/libFDR.dylib'
 exports:         
@@ -39,16 +39,17 @@ exports:
                        _AMFDRSealingMapCopyInstanceForClass, _AMFDRSealingMapCopyInstanceWithIdentifiers, 
                        _AMFDRSealingMapCopyLocalData, _AMFDRSealingMapCopyLocalDataForClass, 
                        _AMFDRSealingMapCopyManifestProperties, _AMFDRSealingMapCopyManifestPropertiesForDevice, 
+                       _AMFDRSealingMapCopyMultiInstanceForClass, _AMFDRSealingMapCopyMultiInstanceWithIdentifiers, 
                        _AMFDRSealingMapCopyRequiredIdentifiers, _AMFDRSealingMapCreateAndPopulateSealedData, 
                        _AMFDRSealingMapCreateRecoveryPermissions, _AMFDRSealingMapCreateRecoveryPermissionsWithOption, 
                        _AMFDRSealingMapEntryHasAttribute, _AMFDRSealingMapGetEntriesForDevice, 
                        _AMFDRSealingMapGetEntry, _AMFDRSealingMapGetFDRDataVersionForDevice, 
-                       _AMFDRSealingMapPopulateSealingManifest, _AMFDRSealingMapRecoverCurrentDevice, 
-                       _AMFDRSealingMapRecoverCurrentDeviceWithMemoryStore, _AMFDRSealingMapVerifyAndCommitSealedData, 
-                       _AMFDRSealingMapVerifySealing, _AMFDRSealingMapVerifySealingManifestPropertyMatching, 
-                       _AMFDRServicePreflightRecoveryCopyData, _AMFDRSetCopyMGOverrideCallback, 
-                       _AMFDRSetMemoryStore, _AMFDRSetOption, _AMFDRSetRecoveryVerifier, 
-                       _AMFDRSetSealingMap, _AMFDRSetSsoCreateServiceTicketCallback, 
+                       _AMFDRSealingMapGetFDRManifestVersionForDevice, _AMFDRSealingMapPopulateSealingManifest, 
+                       _AMFDRSealingMapRecoverCurrentDevice, _AMFDRSealingMapRecoverCurrentDeviceWithMemoryStore, 
+                       _AMFDRSealingMapVerifyAndCommitSealedData, _AMFDRSealingMapVerifySealing, 
+                       _AMFDRSealingMapVerifySealingManifestPropertyMatching, _AMFDRServicePreflightRecoveryCopyData, 
+                       _AMFDRSetCopyMGOverrideCallback, _AMFDRSetMemoryStore, _AMFDRSetOption, 
+                       _AMFDRSetRecoveryVerifier, _AMFDRSetSealingMap, _AMFDRSetSsoCreateServiceTicketCallback, 
                        _kAMFDRSealingMapAttributeChallengeClaim, _kAMFDRSealingMapAttributeDeviceOnlySigning, 
                        _kAMFDRSealingMapAttributeGeneratedByRestore, _kAMFDRSealingMapAttributePopulateIORegistry, 
                        _kAMFDRSealingMapAttributePopulateSysCfg, _kAMFDRSealingMapAttributeRequiredToPerformManifestCheck, 
@@ -56,5 +57,5 @@ exports:
                        _kAMFDRSealingMapAttributeStoreCombined, _kAMFDRSealingMapAttributeVersion2, 
                        _kAMFDRSealingMapAttributes, _kAMFDRSealingMapDataInstanceIdentifier, 
                        _kAMFDRSealingMapDataInstanceIdentifierList, _kAMFDRSealingMapMaxSize, 
-                       _kAMFDRSealingMapTag ]
+                       _kAMFDRSealingMapMultiDataInstanceIdentifierList, _kAMFDRSealingMapTag ]
 ...

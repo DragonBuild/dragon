@@ -6,6 +6,7 @@
 //
 
 #import <ARKit/ARAnchor.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @class ARReferenceImage;
 

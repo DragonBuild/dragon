@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 1F3E1EF1-C6F3-360E-88E0-CC5C90C64846', 'armv7s: 7029839A-D1F0-33DC-84C2-8A77D951C9E8', 
-                   'arm64: 53ED9775-D85D-3A6F-B65B-C3101EC58643', 'arm64e: 9E6EF781-3ED7-3536-AB5A-2CECA74A129F' ]
+                   'arm64: 091241F8-E94C-39BA-9CA6-7352E998BB41', 'arm64e: FBEED962-693F-3EE7-80CE-9764DEF56B78' ]
 platform:        ios
 install-name:    '/usr/lib/libobjc.A.dylib'
 current-version: 228
@@ -81,8 +81,8 @@ exports:
                        _objc_alloc, _objc_allocWithZone, _objc_alloc_init, _objc_allocateClassPair, 
                        _objc_allocateProtocol, _objc_autorelease, _objc_autoreleasePoolPop, 
                        _objc_autoreleasePoolPush, _objc_autoreleaseReturnValue, _objc_begin_catch, 
-                       _objc_clear_deallocating, _objc_constructInstance, _objc_copyClassList, 
-                       _objc_copyClassNamesForImage, _objc_copyClassNamesForImageHeader, 
+                       _objc_class_abi_version, _objc_clear_deallocating, _objc_constructInstance, 
+                       _objc_copyClassList, _objc_copyClassNamesForImage, _objc_copyClassNamesForImageHeader, 
                        _objc_copyCppObjectAtomic, _objc_copyImageNames, _objc_copyProtocolList, 
                        _objc_copyRealizedClassList, _objc_copyStruct, _objc_copyWeak, 
                        _objc_debug_autoreleasepoolpage_child_offset, _objc_debug_autoreleasepoolpage_depth_offset, 

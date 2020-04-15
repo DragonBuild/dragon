@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 46C7BD3F-49AC-31E1-ACD4-D8CD6E5E45E3', 'armv7s: 6C045574-8624-362C-A3E8-9C028EA9433D', 
-                   'arm64: 4E8A45AC-3126-3AEF-AD96-2DA84FDAA34D', 'arm64e: 97964F0D-9020-3A09-BDA5-73675D91A4DB' ]
+                   'arm64: 0FC2969B-84E7-3704-B291-C6A625F0DC5C', 'arm64e: FE58CE3B-DD60-3519-934F-989342853107' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftsimd.dylib'
 current-version: 0

@@ -7,6 +7,7 @@ gen=0
 clean=0
 exportt=0
 only=0
+playground=0
 export release=0
 
 gen_tbd_from_lib=1
@@ -92,7 +93,7 @@ cwd=$(basename $PWD)
 if [ -f "DragonMake" ]; then  
     true
 else
-    gen=1
+    python3 ${DRAGONBUILD}/DragonGen/assume.py
 fi
 
 if [ -d ".dragon" ]; then  
@@ -121,6 +122,7 @@ if [ $build == 1 ]; then
 
             cd $i
 
+            mkdir -p .dragon/modules
             if [ $clean == 1 ]; then 
                 if [ $i == "." ]; then 
                     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning ${TWEAK_NAME}${NC}"
@@ -141,7 +143,7 @@ if [ $build == 1 ]; then
             else
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j50 || cleanbuildfail
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 || cleanbuildfail
             if [ $exportt == 1 ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
                 ninja -t compdb $(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja) > compile_commands.json
@@ -159,18 +161,20 @@ if [ $build == 1 ]; then
     cp -R layout/* .dragon/_/ 2>/dev/null
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
+    find . -name '.DS_Store' -type f -delete
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
     dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
     GENOUTPUT="$(ls .dragon/packages)"
     mkdir -p packages 2> /dev/null
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
-    echo -e "${PrefixColor}[Dragon]${NC} Cleaning Up"
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
     echo "${GENOUTPUT}" > .dragon/last_package
 fi
 
 
 
 if [ $install == 1 ]; then 
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
     if [ -z "$DRBPORT" ]; then
         DRBPORT=22
     fi

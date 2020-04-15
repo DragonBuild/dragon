@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: DE74EA6C-10A2-34F2-9E43-D4B87742895E', 'armv7s: 530F3993-7F96-30B5-81A3-E5EFAAEE6BE6', 
-                   'arm64: 6BA37BCA-58C2-37B6-BF3E-B46FCA0B6864', 'arm64e: 3AC8F7C0-C949-38DE-A6C8-8710A28BBE3C' ]
+                   'arm64: 8B541F9D-D902-3428-8DFA-EA18559508B2', 'arm64e: AF6284E2-2E0F-3860-A1F1-F7155CE1E4DA' ]
 platform:        ios
 install-name:    '/usr/lib/swift/libswiftFoundation.dylib'
 current-version: 0
@@ -1458,6 +1458,7 @@ exports:
                        '_$s10Foundation21_BridgedStoredNSErrorPAAE8userInfoSDySSypGvpMV', 
                        '_$s10Foundation21_BridgedStoredNSErrorPAAE9errorCodeSivg', 
                        '_$s10Foundation21_BridgedStoredNSErrorPAAE9errorCodeSivpMV', 
+                       '_$s10Foundation21_BridgedStoredNSErrorPAAE9hashValueSivpMV', 
                        '_$s10Foundation21_BridgedStoredNSErrorPAAE_8userInfox4CodeQz_SDySSypGtcfC', 
                        '_$s10Foundation21_BridgedStoredNSErrorPSHTb', '_$s10Foundation21_BridgedStoredNSErrorTL', 
                        '_$s10Foundation21_bridgeNSErrorToError_3outSbSo0C0C_SpyxGtAA021_ObjectiveCBridgeableE0RzlF', 
@@ -2647,6 +2648,10 @@ exports:
                        '_$sSo12NSEnumeratorC10FoundationE12makeIteratorAC017NSFastEnumerationD0VyF', 
                        '_$sSo12NSEnumeratorCST10FoundationMc', '_$sSo12NSExpressionC10FoundationE10forKeyPathABs0dE0Cyxq_G_tcr0_lufC', 
                        '_$sSo12NSExpressionC10FoundationE6format_ABSSh_s7CVarArg_pdtcfC', 
+                       '_$sSo12NSFileHandleC10FoundationE4read9upToCountAC4DataVSgSi_tKF', 
+                       '_$sSo12NSFileHandleC10FoundationE5write10contentsOfyx_tKAC12DataProtocolRzlF', 
+                       '_$sSo12NSFileHandleC10FoundationE6offsets6UInt64VyKF', '_$sSo12NSFileHandleC10FoundationE9readToEndAC4DataVSgyKF', 
+                       '_$sSo12NSFileHandleC10FoundationE9seekToEnds6UInt64VyKF', 
                        '_$sSo12NSOrderedSetC10FoundationE12arrayLiteralABypd_tcfC', 
                        '_$sSo12NSOrderedSetC10FoundationE12makeIteratorAC017NSFastEnumerationE0VyF', 
                        '_$sSo12NSOrderedSetC10FoundationE7objectsABypd_tcfC', '_$sSo12NSOrderedSetCST10FoundationMc', 

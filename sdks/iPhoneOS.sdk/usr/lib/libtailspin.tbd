@@ -1,10 +1,10 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 7CD5D7F2-B852-3DF7-A521-C7442B08E7AC', 'armv7s: 832370D7-3C9A-341C-A99A-A5D8ED408443', 
-                   'arm64: 2609462E-A35A-36ED-B875-976EF6D0A7D1', 'arm64e: 238DB032-C42E-3B0C-9FB8-8D59685A37B0' ]
+                   'arm64: 450B7C0E-CE54-385B-BDAB-05395A050BCD', 'arm64e: FEC094DB-F098-34BF-99FB-8DCD1C1E947C' ]
 platform:        ios
 install-name:    '/usr/lib/libtailspin.dylib'
-current-version: 75.2
+current-version: 75.5
 exports:         
   - archs:           [ armv7, armv7s ]
     symbols:         [ _tailspin_symbol_factory_parse_ktrace_data, _tailspin_symbol_factory_parse_shared_cache_infos, 
@@ -22,14 +22,17 @@ exports:
                        _TSPDumpOptions_FilePath, _TSPDumpOptions_MaxTimestamp, _TSPDumpOptions_MinTimestamp, 
                        _TSPDumpOptions_NoSymbolicate, _TSPDumpOptions_OsLogArchive, 
                        _TSPDumpOptions_ReasonString, _TSPDumpOptions_ScrubOutput, 
-                       _TSPDumpOptions_UseDsymForUUID, _TSPMetadata_AGXVersionKey, 
-                       _TSPMetadata_HWMemSizeKey, _TSPMetadata_HWModelKey, _TSPMetadata_HWPageSizeKey, 
-                       _TSPMetadata_IsKPerfPETMode, _TSPMetadata_NCpusKey, _TSPMetadata_OSProductNameKey, 
-                       _TSPMetadata_OSProductVersionKey, _TSPMetadata_OSVersionKey, 
-                       _TSPMetadata_TailspinConfigurationKey, _TSPMetadata_TailspinDumpReasonKey, 
+                       _TSPDumpOptions_TargetPID, _TSPDumpOptions_UseDsymForUUID, 
+                       _TSPMetadata_AGXVersionKey, _TSPMetadata_HWMemSizeKey, _TSPMetadata_HWModelKey, 
+                       _TSPMetadata_HWPageSizeKey, _TSPMetadata_IsKPerfPETMode, _TSPMetadata_NCpusKey, 
+                       _TSPMetadata_OSProductNameKey, _TSPMetadata_OSProductVersionKey, 
+                       _TSPMetadata_OSVersionKey, _TSPMetadata_TailspinConfigurationKey, 
+                       _TSPMetadata_TailspinDumpReasonKey, _TSPMetadata_TargetPID, 
                        _TSPMetadata_VMPageSizeKey, _TSPProcessInfo_LoadInfosKey, 
                        _TSPProcessInfo_PidKey, _TSPSymbols_BinaryContainsTextExecKey, 
                        _TSPSymbols_BinaryNameKey, _TSPSymbols_BinaryPathKey, _TSPSymbols_BinaryTextSizeKey, 
+                       _TSPSymbols_BinaryVersionKey, _TSPSymbols_BundleIdentifierKey, 
+                       _TSPSymbols_BundleShortVersionKey, _TSPSymbols_BundleVersionKey, 
                        _TSPSymbols_SymbolLengthKey, _TSPSymbols_SymbolNameKey, _TSPSymbols_SymbolOffsetKey, 
                        _TSPSymbols_SymbolSourceColNumberKey, _TSPSymbols_SymbolSourceFileNameKey, 
                        _TSPSymbols_SymbolSourceLengthKey, _TSPSymbols_SymbolSourceLineNumberKey, 
@@ -69,7 +72,9 @@ exports:
                        _tailspin_oncore_sampling_period_is_default, _tailspin_oncore_sampling_period_reset, 
                        _tailspin_oncore_sampling_period_set, _tailspin_parse_stackshot_chunk, 
                        _tailspin_poke, _tailspin_readcurthreadmap, _tailspin_resolve_configs, 
-                       _tailspin_save_trace_with_standard_chunks, _tailspin_symbol_factory_add_thread_and_process, 
+                       _tailspin_save_trace_with_standard_chunks, _tailspin_set_artrace_completion_handler, 
+                       _tailspin_start_artrace, _tailspin_start_artrace_sync, _tailspin_stop_artrace, 
+                       _tailspin_stop_artrace_sync, _tailspin_symbol_factory_add_thread_and_process, 
                        _tailspin_symbol_factory_create, _tailspin_symbol_factory_destroy, 
                        _tailspin_symbol_factory_parse_binary_info, _tailspin_symbol_factory_parse_dscsym_data, 
                        _tailspin_symbol_factory_parse_kcdata_stackshot, _tailspin_symbol_factory_parse_process_info, 

@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 00000000-0000-0000-0000-000000000000', 'armv7s: 00000000-0000-0000-0000-000000000000', 
-                   'arm64: 65689D60-ACAB-31B4-B817-94B72D901881', 'arm64e: A937D6FF-D96F-3A0D-824E-05B4C0A377E4' ]
+                   'arm64: 5DB361AA-D3B9-3A30-8A12-BE27F8DE732F', 'arm64e: 5FB9DEBD-F0BF-3456-8A45-FF7979F695B6' ]
 platform:        ios
 install-name:    '/usr/lib/libBKDM1.dylib'
 exports:         
@@ -26,14 +26,17 @@ exports:
                        _closeConnection, _crc32ansi, _deviceExists, _diffTimeStamps, 
                        _getLocalEEPROMCalibrationData, _kCatacombCurrentDateKey, 
                        _kCatacombEnrollmentCountKey, _kCatacombIdentityListKey, _kCatacombTemplateListKey, 
-                       _kCatacombVersionKey, _kCoreauthdBundleIdentifier, _kPurpleBuddyBundleIdentifier, 
+                       _kCatacombVersionKey, _kCoreauthdBundleIdentifier, _kMesaCAFingerTouchTimeEventName, 
+                       _kMesaCATemplateMatchCountsEventName, _kPurpleBuddyBundleIdentifier, 
                        _kSpringBoardBundleIdentifier, _logQueueLabel, _memdump, _mesaScanningStateNotificationCallback, 
                        _mobileKeyBagLockStatusNotificationCallback, _openConnection, 
                        _powerSourceInterestNotificationCallback, _readData, _serialize, 
                        _writeData ]
     objc-classes:    [ ADEvent, ADStorage, BLHelper, BLTemplateList, BLTimeBox, BioLog, 
                        BioLogBase, BiometricKitDStatistics, BiometricKitXPCServerMesa, 
-                       BiometricMatchOperationMesa, TemplateInfo ]
+                       BiometricMatchOperationMesa, MesaCoreAnalytics, MesaCoreAnalyticsEvent, 
+                       MesaCoreAnalyticsFingerTouchTimeEvent, MesaCoreAnalyticsTemplateMatchCountsEvent, 
+                       TemplateInfo ]
     objc-ivars:      [ BioLogBase._chargerConnected, BioLogBase._compact, BioLogBase._compactOSLogOnly, 
                        BioLogBase._fileAttributes, BioLogBase._fileAttributesProtected, 
                        BioLogBase._fileNameFormatter, BioLogBase._fingerStateCaptureCounter, 
@@ -46,5 +49,6 @@ exports:
                        BioLogBase._mode, BioLogBase._notificationPort, BioLogBase._osLog, 
                        BioLogBase._powerSourceNotification, BioLogBase._radarPromptLock, 
                        BioLogBase._rootPath, BioLogBase._server, BioLogBase._templateList, 
-                       BioLogBase._timeBox, BioLogBase._timeZoneFormatter, BioLogBase._timestampFormatter ]
+                       BioLogBase._timeBox, BioLogBase._timeZoneFormatter, BioLogBase._timestampFormatter, 
+                       MesaCoreAnalyticsEvent._eventName, MesaCoreAnalyticsTemplateMatchCountsEvent._userID ]
 ...

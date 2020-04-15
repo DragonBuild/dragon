@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(ios, macos, macCatalyst)
+FILEPROVIDER_API_AVAILABILITY_V3
 @interface NSFileProviderRequest : NSObject
 /**
  An identifier for the application. The identifier is system-specific and may
@@ -21,7 +21,7 @@ API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(ios, macos, macCatalyst)
 @end
 
 @interface NSFileProviderExtension (Request)
-- (nullable NSFileProviderRequest *)currentRequest API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(ios, macos, macCatalyst);
+- (nullable NSFileProviderRequest *)currentRequest FILEPROVIDER_API_AVAILABILITY_V3;
 @end
 
 

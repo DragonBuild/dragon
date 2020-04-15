@@ -1,37 +1,24 @@
---- !tapi-tbd-v2
-archs:                 [ armv7, armv7s, arm64, arm64e ]
-platform:              ios
-flags:                 [ flat_namespace ]
-install-name:          /System/Library/Frameworks/AssetsLibrary.framework/AssetsLibrary
-current-version:       1
-compatibility-version: 1
-objc-constraint:       retain_release
-exports:
-  - archs:              [ armv7, armv7s, arm64, arm64e ]
-    symbols:            [ _ALAssetLibraryDeletedAssetGroupsKey, _ALAssetLibraryInsertedAssetGroupsKey,
-                          _ALAssetLibraryUpdatedAssetGroupsKey, _ALAssetLibraryUpdatedAssetsKey, _ALAssetPropertyAssetURL,
-                          _ALAssetPropertyDate, _ALAssetPropertyDuration, _ALAssetPropertyEditorBundleID, _ALAssetPropertyLocation,
-                          _ALAssetPropertyOrientation, _ALAssetPropertyRepresentations, _ALAssetPropertyType, _ALAssetPropertyURLs,
-                          _ALAssetTypePhoto, _ALAssetTypeUnknown, _ALAssetTypeVideo, _ALAssetsGroupPropertyName,
-                          _ALAssetsGroupPropertyPersistentID, _ALAssetsGroupPropertyRepresentativeEndDate,
-                          _ALAssetsGroupPropertyRepresentativeLocationNames, _ALAssetsGroupPropertyRepresentativeStartDate,
-                          _ALAssetsGroupPropertyType, _ALAssetsGroupPropertyURL, _ALAssetsLibraryChangedNotification,
-                          _ALAssetsLibraryErrorDomain, _ALErrorInvalidProperty ]
-    objc-classes:       [ _ALAsset, _ALAssetPrivate, _ALAssetRepresentation, _ALAssetRepresentationPrivate, _ALAssetsFilter,
-                          _ALAssetsFilterInternal, _ALAssetsGroup, _ALAssetsGroupList, _ALAssetsGroupPrivate, _ALAssetsLibrary,
-                          _ALAssetsLibraryPrivate ]
-    objc-ivars:         [ _ALAsset._internal, _ALAssetPrivate._isValid, _ALAssetPrivate._library, _ALAssetPrivate._photo,
-                          _ALAssetPrivate._photoLibrary, _ALAssetRepresentation._ignoreRead, _ALAssetRepresentation._internal,
-                          _ALAssetRepresentationPrivate._extension, _ALAssetRepresentationPrivate._isValid,
-                          _ALAssetRepresentationPrivate._library, _ALAssetRepresentationPrivate._photo,
-                          _ALAssetRepresentationPrivate._photoLibrary, _ALAssetRepresentationPrivate._sidecar,
-                          _ALAssetsFilter._internal, _ALAssetsFilterInternal._filter, _ALAssetsGroup._internal,
-                          _ALAssetsGroupList._containerList, _ALAssetsGroupPrivate._album, _ALAssetsGroupPrivate._applyHyperionFilter,
-                          _ALAssetsGroupPrivate._assetsFilter, _ALAssetsGroupPrivate._groupType,
-                          _ALAssetsGroupPrivate._isCloudSharedGroup, _ALAssetsGroupPrivate._isValid, _ALAssetsGroupPrivate._library,
-                          _ALAssetsGroupPrivate._loadedAssets, _ALAssetsGroupPrivate._photoLibrary,
-                          _ALAssetsGroupPrivate._propertyValues, _ALAssetsLibrary._internal,
-                          _ALAssetsLibraryPrivate._assetGroupInternals, _ALAssetsLibraryPrivate._assetsLibrary,
-                          _ALAssetsLibraryPrivate._groupURLSByAlbumOID, _ALAssetsLibraryPrivate._isValid,
-                          _ALAssetsLibraryPrivate._photoLibrary ]
+--- !tapi-tbd-v3
+archs:           [ armv7, armv7s, arm64, arm64e ]
+uuids:           [ 'armv7: A2112573-051A-32CB-93EA-7A29CA21DD22', 'armv7s: 9579696C-A985-33B1-AD9F-56C0CFD680B0', 
+                   'arm64: 48613960-9C8B-3B29-BF75-61F253873E44', 'arm64e: 086F23F1-693C-342C-959D-3D69309AAC50' ]
+platform:        ios
+install-name:    '/System/Library/Frameworks/AssetsLibrary.framework/AssetsLibrary'
+exports:         
+  - archs:           [ armv7, armv7s ]
+    symbols:         [ _ALAssetPropertyExternalUsageIntent ]
+  - archs:           [ armv7, armv7s, arm64, arm64e ]
+    symbols:         [ _ALAssetLibraryDeletedAssetGroupsKey, _ALAssetLibraryInsertedAssetGroupsKey, 
+                       _ALAssetLibraryUpdatedAssetGroupsKey, _ALAssetLibraryUpdatedAssetsKey, 
+                       _ALAssetPropertyAssetURL, _ALAssetPropertyDate, _ALAssetPropertyDuration, 
+                       _ALAssetPropertyEditorBundleID, _ALAssetPropertyLocation, 
+                       _ALAssetPropertyOrientation, _ALAssetPropertyRepresentations, 
+                       _ALAssetPropertyType, _ALAssetPropertyURLs, _ALAssetTypePhoto, 
+                       _ALAssetTypeUnknown, _ALAssetTypeVideo, _ALAssetsGroupPropertyName, 
+                       _ALAssetsGroupPropertyPersistentID, _ALAssetsGroupPropertyRepresentativeEndDate, 
+                       _ALAssetsGroupPropertyRepresentativeLocationNames, _ALAssetsGroupPropertyRepresentativeStartDate, 
+                       _ALAssetsGroupPropertyType, _ALAssetsGroupPropertyURL, _ALAssetsLibraryChangedNotification, 
+                       _ALAssetsLibraryErrorDomain, _ALErrorInvalidProperty ]
+    objc-classes:    [ ALAsset, ALAssetRepresentation, ALAssetsFilter, ALAssetsGroup, 
+                       ALAssetsLibrary ]
 ...

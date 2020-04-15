@@ -1,0 +1,57 @@
+---
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+install-name:          "/System/Library/PrivateFrameworks/InternalPreferences.framework/InternalPreferences"
+current-version:       1
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64, arm64e ]
+    symbols:              [ _ClearLogFileContents, _IPLogForCategory,
+                            _IPPurgeKeyboardCache ]
+    objc-classes:         [ _BandwidthTestController, _BlkTraceController,
+                            _CPUActivityPane, _DeadlockMakerController,
+                            _GeneralLocationController, _HangTracerController,
+                            _LocationDefaults, _LocationInternalListController,
+                            _LoggingDetailController, _LoggingPane,
+                            _PropertyListPane, _SharkTraceController ]
+    objc-ivars:           [ _BandwidthTestController._downloadTestFile,
+                            _BandwidthTestController._resultsSpecifier,
+                            _BandwidthTestController._statusSpecifier,
+                            _BandwidthTestController._testName,
+                            _CPUActivityPane._buf1, _CPUActivityPane._buf2,
+                            _CPUActivityPane._readBuffer,
+                            _CPUActivityPane._textView, _CPUActivityPane._worker,
+                            _CPUActivityPane._writeBuffer,
+                            _DeadlockMakerController._connection,
+                            _DeadlockMakerController._enabled,
+                            _DeadlockMakerController._priority,
+                            _DeadlockMakerController._priorityLabel,
+                            _DeadlockMakerController._prioritySlider,
+                            _DeadlockMakerController._runDuration,
+                            _DeadlockMakerController._runDurationLabel,
+                            _DeadlockMakerController._runDurationSlider,
+                            _DeadlockMakerController._runDurationText,
+                            _DeadlockMakerController._startNowButton,
+                            _DeadlockMakerController._textSpec,
+                            _HangTracerController._emptyGap,
+                            _HangTracerController._enabledHUD,
+                            _HangTracerController._hangtracerExplanation,
+                            _HangTracerController._hudThresholdLabel,
+                            _HangTracerController._hudThresholdMS,
+                            _HangTracerController._hudThresholdSlider,
+                            _HangTracerController._hudThresholdText,
+                            _HangTracerController._hudTitle,
+                            _LoggingPane._dontScroll, _LoggingPane._fileError,
+                            _LoggingPane._lock,
+                            _LoggingPane._mailComposeController,
+                            _LoggingPane._output, _LoggingPane._rootController,
+                            _LoggingPane._sendingEmailCount,
+                            _LoggingPane._textView, _LoggingPane._threadRunning,
+                            _LoggingPane._timeout, _LoggingPane._timer,
+                            _PropertyListPane._emailButton,
+                            _PropertyListPane._mailComposeController,
+                            _PropertyListPane._rootController,
+                            _SharkTraceController._tailspinDefaultEnabled,
+                            _SharkTraceController._tailspinGroupSpecifier,
+                            _SharkTraceController._tailspinMode ]
+...

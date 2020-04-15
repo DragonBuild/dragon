@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: 34426CC0-9903-3282-88B9-9EE5914E703D', 'armv7s: 6D5A78D0-6DEB-3887-BC8F-828B986F940B', 
-                   'arm64: 0F445199-5EF1-3EFC-AF04-22C6C8799277', 'arm64e: 3C9C13A8-79AB-3C0C-BE7A-F9625F5C210A' ]
+                   'arm64: A187F395-12FE-32D9-9A85-829691A49F64', 'arm64e: F56E3231-0FD8-3427-965F-828186D1938D' ]
 platform:        ios
 install-name:    '/usr/lib/libTelephonyUtilDynamic.dylib'
 exports:         
@@ -383,11 +383,11 @@ exports:
                        _TelephonyCapabilitiesRadioTxPowerAudioSpeakerSupported, _TelephonyCapabilitiesRadioTxPowerConfigSupported, 
                        _TelephonyCapabilitiesRadioTxPowerDelayProximityTimeoutResetSupported, 
                        _TelephonyCapabilitiesRadioTxPowerEnhancedDetectionModeSupported, 
-                       _TelephonyCapabilitiesRadioTxPowerHandDetectionSupported, 
-                       _TelephonyCapabilitiesRadioTxPowerLTEBandsV2, _TelephonyCapabilitiesRadioTxPowerMaxPowerConfig, 
-                       _TelephonyCapabilitiesRadioTxPowerMotionAlwaysSupported, _TelephonyCapabilitiesRadioTxPowerMotionSupported, 
-                       _TelephonyCapabilitiesRadioTxPowerPPMSupported, _TelephonyCapabilitiesRadioTxPowerPowerChargerDesense, 
-                       _TelephonyCapabilitiesRadioTxPowerPowerSourceDetectionSupported, 
+                       _TelephonyCapabilitiesRadioTxPowerFaceIDSupported, _TelephonyCapabilitiesRadioTxPowerHandDetectionSupported, 
+                       _TelephonyCapabilitiesRadioTxPowerKeyboardSupported, _TelephonyCapabilitiesRadioTxPowerLTEBandsV2, 
+                       _TelephonyCapabilitiesRadioTxPowerMaxPowerConfig, _TelephonyCapabilitiesRadioTxPowerMotionAlwaysSupported, 
+                       _TelephonyCapabilitiesRadioTxPowerMotionSupported, _TelephonyCapabilitiesRadioTxPowerPPMSupported, 
+                       _TelephonyCapabilitiesRadioTxPowerPowerChargerDesense, _TelephonyCapabilitiesRadioTxPowerPowerSourceDetectionSupported, 
                        _TelephonyCapabilitiesRadioTxPowerProxPowerConfig, _TelephonyCapabilitiesRadioTxPowerProxSensorMultiStepSupported, 
                        _TelephonyCapabilitiesRadioTxPowerProxSensorSupported, _TelephonyCapabilitiesRadioTxPowerRFCalCLTMSupported, 
                        _TelephonyCapabilitiesRadioTxPowerTechConfig, _TelephonyCapabilitiesRadioTxPowerTimeoutConfig, 

@@ -86,7 +86,7 @@ typedef struct {
 typedef struct {
     uint32_t viewportArrayIndexOffset;
     uint32_t renderTargetArrayIndexOffset;
-} MTLVertexAmplificationViewMapping API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst);
+} MTLVertexAmplificationViewMapping API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4));
 
 typedef struct {
     uint32_t patchCount;
@@ -220,7 +220,7 @@ API_AVAILABLE(macos(10.11), ios(8.0))
  @param viewMappings an array of mapping elements.
  @discussion Each mapping element describes how to route the corresponding amplification ID to a specific viewport and render target array index by using offsets from the base array index provided by the [[render_target_array_index]] and/or [[viewport_array_index]] output attributes in the vertex shader. This allows a modicum of programmability for each amplified vertex to be routed to a different [[render_target_array_index]] and [[viewport_array_index]] even though these attribytes cannot be amplified themselves.
  */
-- (void)setVertexAmplificationCount:(NSUInteger)count viewMappings:(nullable const MTLVertexAmplificationViewMapping *)viewMappings API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(macos, macCatalyst);
+- (void)setVertexAmplificationCount:(NSUInteger)count viewMappings:(nullable const MTLVertexAmplificationViewMapping *)viewMappings API_AVAILABLE(macos(10.15.4), ios(13.0), macCatalyst(13.4));
 
 /*!
  @method setCullMode:

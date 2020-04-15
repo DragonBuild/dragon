@@ -1,7 +1,7 @@
 --- !tapi-tbd-v3
 archs:           [ armv7, armv7s, arm64, arm64e ]
 uuids:           [ 'armv7: C42ED90C-BC59-3CD9-A79A-3735C1A2AAE5', 'armv7s: 0D37697D-04D0-3830-93B0-3D089B5BCF80', 
-                   'arm64: E0EBD059-E0A5-32F7-819E-AFA238B378E0', 'arm64e: 1F034F37-81D2-3A17-887F-916C5A34F160' ]
+                   'arm64: 5E2AB286-63A4-349F-AF02-B7D87060E584', 'arm64e: FB3CF543-7BA4-3AB3-9D5B-5D96A4A3BB4B' ]
 platform:        ios
 install-name:    '/usr/lib/libmenu.5.4.dylib'
 current-version: 5.4
