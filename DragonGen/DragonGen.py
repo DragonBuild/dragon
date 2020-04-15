@@ -39,7 +39,7 @@ bvars['all']['ldflags'] = ''
 bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
 bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
 bvars['tweak']['libs'] = ['substrate']
-bvars['tweak']['lopts'] = '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['tweak']['lopts'] = '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
 bvars['tweak']['ldflags'] = '-install_name $location$name'
 bvars['tweak']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
@@ -49,7 +49,7 @@ bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
 bvars['bundle']['target'] = '$pdirname/_$location$name'
 bvars['bundle']['libs'] = []
 bvars['bundle']['ldflags'] = '-install_name $location$name'
-bvars['bundle']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['bundle']['lopts']= '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
 bvars['bundle']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
 bvars['bundle']['stage2'] = ''
 
@@ -57,7 +57,7 @@ bvars['library']['location'] = '/usr/lib/'
 bvars['library']['target'] = '$pdirname/_$location$name.dylib'
 bvars['library']['libs'] = []
 bvars['library']['ldflags'] = '-install_name $location$name.dylib'
-bvars['library']['lopts']= '-dynamiclib -ggdb -lsystem.b -Xlinker -segalign -Xlinker 4000'
+bvars['library']['lopts']= '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
 bvars['library']['frameworks'] = []
 bvars['library']['stage2'] = ''
 
