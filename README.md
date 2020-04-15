@@ -60,10 +60,14 @@ For files specifically:
 
 This should serve as a guideline for how a project should be laid out. You can declare as many projects as you want, it's all going to be crammed into the same deb. 
 
+"Name" represents the name of your tweak. Please change "Name" to the name of the item you are building. 
+
+`$eval` and `$wildcard` commands are executed in the directory specified (`.` if none has been specified).
+
 ```yaml
 ---
 # This represents the overall project name. 
-package_name: Name
+package_name: TweakName
 install_command: killall -9 SpringBoard
 
 # This represents a Tweak .dylib and .plist. 
@@ -89,9 +93,9 @@ NamePrefs:
     type: bundle
     # You can specify files from anywhere in your tweak, or use directory specific wildcards
     files:
-        - nameprefs/BlahRootListController.m
-        - nameprefs/ACellYouUse.m
-        - SomeFileFromYourMainTweak.m
+        - BlahRootListController.m
+        - ACellYouUse.m
+        - ../SomeFileFromYourMainTweak.m
     archs:
         - arm64
         - arm64e
@@ -144,11 +148,11 @@ Please pay attention to how these variables should be laid out
 | `cflags` | str | additional flags to pass to clang and the linker | '' |
 | `ldflags` | str | additional flags to pass to the linker | '' |
 | `ldidflags` | str | custom option for ldid | '-S' |
-| `installLocation` | str | override variable for bundles/libraries to allow specifying install location | '' |
-| `frameworkSearchDirs` | list | Framework Search Dirs. Changing this variable overrides defaults. | ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks'] |
-| `additionalFrameworkSearchDirs` | list | Allows adding framework search dirs without overwriting old ones. | [] |
-| `librarySearchDirs` | list | Library search dirs. Just like the framework search | ['$dragondir/lib', '.'] |
-| `additionalLibarySearchDirs` | list | Add to lib search without overwriting | [] | 
+| `install_location` | str | override variable for bundles/libraries to allow specifying install location | '' |
+| `framework_search_dirs` | list | Framework Search Dirs. Changing this variable overrides defaults. | ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks'] |
+| `additional_framework_search_dirs` | list | Allows adding framework search dirs without overwriting old ones. | [] |
+| `library_search_dirs` | list | Library search dirs. Just like the framework search | ['$dragondir/lib', '.'] |
+| `additional_library_search_dirs` | list | Add to lib search without overwriting | [] | 
 
 Yaml parsing is done via python3, and I'm not strict about arbitrary code execution. Go wild, its your machine. 
 
