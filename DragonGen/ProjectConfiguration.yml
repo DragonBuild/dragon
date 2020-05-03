@@ -1,0 +1,115 @@
+---
+# Special thanks to uroboro for suggesting this
+# Configurations here should provide enough default variables to create the specified module;
+# Please reach out to _kritanta if you need advice on extending these
+Types:
+  comprehensive:
+  app:
+    required_states:
+      - has_build_files
+    production:
+      deb:
+        - 'mkdir -p .dragon/_/DEBIAN'
+        - 'cp control .dragon/_/DEBIAN/control'
+        - "du -d 0 | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control"
+        - 'cp -R layout/* .dragon/_/ 2>/dev/null'
+        - 'chmod -R 0755 .dragon/_/DEBIAN/*'
+        - 'mkdir -p .dragon/packages'
+        - "find . -name '.DS_Store' -type f -delete"
+        - 'dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/'
+    variables:
+      install_location: '/Applications/'
+      target: '$pdirname/$stagedir/$location/$name.app/$name'
+  tweak-jailed:
+    required_states:
+      - has_build_files
+    production:
+      ipa:
+        - 'build-files'
+        - 'copy-to-target'
+        - 'embed-libs'
+        - 'loader-inject'
+    variables:
+      install_location: '/Applications/'
+      target: '$pdirname/$stagedir/$location/$name.app/$name'
+      loader: DragonLoad
+      embed-libs:
+        - CydiaSubstrate
+  tweak:
+    required_states:
+      - has_build_files
+    production:
+      deb:
+        - 'build-files'
+        - 'copy-to-target'
+      ipa:
+        - 'build-files'
+        - 'copy-to-target'
+    variables:
+      install_location: '/Library/MobileSubstrate/DynamicLibraries/'
+      target: '$pdirname/$stagedir/$location$name.dylib'
+      hooker-priority: libhooker
+      lang: logos
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      libs:
+        - substrate
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp $name.plist $pdirname/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+  bundle:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      target: '$pdirname/$stagedir/$location/$name.bundle/$name'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp -r Resources/* $pdirname/$stagedir/$location/$name.bundle/'
+  resource-bundle:
+    required_states:
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'true;'
+  stage:
+    variables:
+      stage2:
+        - 'true;'
+  library:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: 'usr/lib'
+      target: '$pdirname/$stagedir/$location/$name.app/$name'
+      ldflags: '-install_name $location$name.dylib'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+  cli:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: '/usr/bin'
+      target: '$pdirname/$stagedir/$location/$name'
+  raw:

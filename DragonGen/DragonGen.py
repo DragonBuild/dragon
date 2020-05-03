@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
-
+import enum
 import string
+import traceback
 from datetime import datetime
 import subprocess
-import re 
+import re
 import os
 import sys
-import ninja_syntax
+from time import sleep
+from typing import Dict, Any, List, Union, TextIO
+from DragonExceptions import *
+from genbuild.genbuild.generator import *
+import yaml
+import pprint
+
+# from DragonGen.self.builder_syntax import Writer
 import yaml
 
 exports = {}
@@ -19,455 +27,687 @@ make_match = '(.*)=(.*)#?'
 dm_wildcard = '\$wildcard\("(.*)",.*"(.*)"\)'
 dm_eval = '\$eval\("(.*)"\)'
 
-dragonvars = {}
-dragonvars['pdirname'] = '.dragon'
-dragonvars['builddir'] = '$pdirname/build'
-dragonvars['objdir'] = '$pdirname/obj'
-dragonvars['signdir'] = '$pdirname/sign'
 
-# These are variables set as default per project type.
-# They sometimes get modified by uvars, when the relevant uvar is specified
-bvars = {'all':{},'tweak':{}, 'bundle':{}, 'library':{}, 'cli':{}, 'app':{}, 'raw':{}}
+class Project(object):
+    default_variables = {
+        'builddir': '$pdirname/build',
+        'objdir': '$pdirname/obj',
+        'signdir': '$pdirname/sign',
+        'bridging-header': '$name-Bridging-Header.h',
+        'dragondir': '$$DRAGONBUILD',
+        'targetios': '10.0',
+        'archs': ['armv7', 'arm64', 'arm64e'],
+        'sysroot': '$dragondir/sdks/iPhoneOS.sdk',
+        'cc': 'clang',
+        'cxx': 'clang++',
+        'ld': 'clang++',
+        'codesign': 'ldid',
+        'dsym': 'dsymutil',
+        'plutil': 'plutil',
+        'swift': 'swift',
+        'logos': '$dragondir/bin/logos.pl',
+        'optool': '$dragondir/bin/optool',
+        'stage': ['true'],
+        'arc': True,
+        'targ': '-DTARGET_IPHONE=1',
+        'warnings': '-Wall',
+        'optim': '0',
+        'debug': '-fcolor-diagnostics',
+        'idflag': '',
+        'entflag': '-S',
+        'entfile': '',
+        'resource_dir': 'Resources',
+        'framework_search_dirs': ['$sysroot/System/Library/Frameworks',
+                                  '$sysroot/System/Library/PrivateFrameworks',
+                                  '$dragondir/frameworks'],
+        'library_search_dirs': ['$dragondir/lib', '.'],
+        'cinclude': '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback '
+                    '-I$DRAGONBUILD/headers/ -I$pwd',
+        'pdirname': '.dragon/',
+        'stagedir': '_'
+    }
 
-bvars['archfiles'] = {}
+    def __init__(self, project_type: str, variables: dict, out: TextIO):
+        self.variables = variables
+        self.type = project_type
+        self.type_config = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/ProjectConfiguration.yml"))
 
-bvars['all']['libs'] = ['objc', 'c++']
-bvars['all']['lopts'] = ''
-bvars['all']['frameworks'] = []
-bvars['all']['ldflags'] = ''
+        self.builder = Generator(out)
 
-bvars['tweak']['location'] = '/Library/MobileSubstrate/DynamicLibraries/'
-bvars['tweak']['target'] = '$pdirname/_$location$name.dylib'
-bvars['tweak']['libs'] = ['substrate']
-bvars['tweak']['lopts'] = '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-bvars['tweak']['ldflags'] = '-install_name $location$name'
-bvars['tweak']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
-bvars['tweak']['stage2'] = 'cp $name.plist .dragon/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+        if not self.ignores_state('has_build_files'):
+            self.files = get_args(self.variables, 'files')
+            self.swift_files = get_args(self.variables, 'swift_files')
+            self.c_files = get_args(self.variables, 'c_files')
+            self.cxx_files = get_args(self.variables, 'cxx_files')
+            self.objc_files = get_args(self.variables, 'objc_files')
+            self.objcxx_files = get_args(self.variables, 'objcxx_files')
+            self.logos_files = get_args(self.variables, 'logos_files')
+            self.object_files = get_args(self.variables, 'object_files')
+            self.plists = get_args(self.variables, 'plists')
+            self.dlists = get_args(self.variables, 'dlists')
+            if 'files' in self.variables.keys() or '_files' in str(self.variables):
+                self.has_build_files = True
+            elif self.requires_state('has_build_files'):
+                raise MissingBuildFilesException('No files were provided to build.', variables=self.variables)
+            else:
+                self.has_build_files = False
 
-# This is the default location for a pref bundle, which we can assume is what the user wants by default
-bvars['bundle']['location'] = '/Library/PreferenceBundles/$name.bundle/'
-bvars['bundle']['target'] = '$pdirname/_$location$name'
-bvars['bundle']['libs'] = []
-bvars['bundle']['ldflags'] = '-install_name $location$name'
-bvars['bundle']['lopts']= '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-bvars['bundle']['frameworks'] = ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox']
-bvars['bundle']['stage2'] = ''
+    def generate(self):
+        self.create_variable_dict()
+        self.create_ninja_variables()
+        self.create_rules()
+        targets = self.create_targets()
+        if targets:
+            self.builder.default(targets)
 
-bvars['library']['location'] = '/usr/lib/'
-bvars['library']['target'] = '$pdirname/_$location$name.dylib'
-bvars['library']['libs'] = []
-bvars['library']['ldflags'] = '-install_name $location$name.dylib'
-bvars['library']['lopts']= '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-bvars['library']['frameworks'] = []
-bvars['library']['stage2'] = ''
+    def requires_state(self, state: str):
+        try:
+            return state in self.type_config['Types'][self.type]['required_states']
+        except (KeyError, TypeError):
+            return False
 
-bvars['cli']['location'] = '/usr/bin/'
-bvars['cli']['target'] = '$pdirname/_$location$name'
-bvars['cli']['libs'] = []
-bvars['cli']['lopts'] = ''
-bvars['cli']['ldflags'] = ''
-bvars['cli']['frameworks'] = []
-bvars['cli']['stage2'] = ''
+    def ignores_state(self, state: str):
+        try:
+            return state in self.type_config['Types'][self.type]['ignored_states']
+        except (KeyError, TypeError):
+            return False
+
+    def create_targets(self):
+        """
+
+            :param self.builder:
+            :param self.variables:
+            :return:
+            """
+        if self.type == 'resource-bundle':
+            self.builder.build('bundle', 'bundle', 'build.ninja')
+            return ['bundle']
+        if self.type == 'stage':
+            self.builder.build('stage', 'stage', 'build.ninja')
+            return []
+        outputs = []
+        targets = ['$target']
+        files = get_args(self.variables, 'files')
+        swift_files = get_args(self.variables, 'swift_files')
+        c_files = get_args(self.variables, 'c_files')
+        cxx_files = get_args(self.variables, 'cxx_files')
+        objc_files = get_args(self.variables, 'objc_files')
+        objcxx_files = get_args(self.variables, 'objcxx_files')
+        logos_files = get_args(self.variables, 'logos_files')
+        object_files = get_args(self.variables, 'object_files')
+        plists = get_args(self.variables, 'plists')
+        dlists = get_args(self.variables, 'dlists')
+
+        if True:
+
+            swift_modules = ""
+            has_swift = False
+
+            for f in files:
+                if f == "":
+                    continue
+                filename, ext = os.path.splitext(f)
+                if ext in ['x', 'xm']:
+                    logos_files.append(f)
+                elif ext == 'm':
+                    objc_files.append(f)
+                elif ext == 'mm':
+                    objcxx_files.append(f)
+                elif ext == 'c':
+                    c_files.append(f)
+                elif ext == ['cpp', 'cxx']:
+                    cxx_files.append(f)
+                elif ext == 'swift':
+                    swift_files.append(f)
+                elif ext == ['o']:
+                    object_files.append(f)
+                elif ext == ['plist']:
+                    plists.append(f)
+                elif ext == ['dlist']:
+                    dlists.append(f)
+
+            for filename in logos_files:
+                if filename == "":
+                    continue
+                self.builder.build(f'$builddir/logos/{os.path.split(filename)[1]}.mm', 'logos', filename)
+                objcxx_files.append(f'$builddir/logos/{os.path.split(filename)[1]}.mm')
+                self.builder.newline()
+
+            for a in get_args(self.variables, 'archs'):
+                arch_specific_object_files = []
+
+                # Only link objc/c++ if we need to.
+                linker_conditionals: set = set([])
+
+                for filename in c_files:
+                    if filename == "":
+                        continue
+                    self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'c{a}', filename)
+                    arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
+                    self.builder.newline()
+
+                for filename in cxx_files:
+                    if filename == "":
+                        continue
+                    self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'cxx{a}', filename)
+                    arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
+                    linker_conditionals.add('-lc++')
+                    self.builder.newline()
+
+                for filename in objc_files:
+                    if filename == "":
+                        continue
+                    self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objc{a}', filename)
+                    arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
+                    linker_conditionals.add('-lobjc')
+                    self.builder.newline()
+
+                for filename in objcxx_files:
+                    if filename == "":
+                        continue
+                    self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objcxx{a}', filename)
+                    arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
+                    linker_conditionals.add('-lobjc')
+                    linker_conditionals.add('-lc++')
+                    self.builder.newline()
+
+                for filename in swift_files:
+                    if filename == "":
+                        continue
+                    has_swift = True
+                    self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'swift{a}', filename)
+                    arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
+                    swift_modules += f'$builddir/{a}/{os.path.split(filename)[1]}.o.swiftmodules '
+                    self.builder.newline()
+
+                # self.builder.variable_update('libflags', ' '.join(linker_conditionals))
+
+                if has_swift:
+                    self.builder.build(f'$builddir/{a}/$name-Swift.h', 'swiftmoduleheader', swift_modules)
+
+                self.builder.build(f'$builddir/$name.{a}', f'link{a}', arch_specific_object_files)
+                outputs.append(f'$builddir/$name.{a}')
+
+        self.builder.build('$symtarget', 'lipo', outputs)
+        self.builder.newline()
+
+        self.builder.build('$signtarget', 'debug', '$symtarget')
+        self.builder.newline()
+
+        self.builder.build('$target', 'sign', '$signtarget')
+        self.builder.newline()
+
+        self.builder.build('stage', 'stage', 'build.ninja')
+        #targets.append('stage')
+
+        return targets
+
+    def create_ninja_variables(self):
+        """
+
+        :param self.builder:
+        :param variables:
+        """
+        extrapolate_stage = lambda stage: \
+        (lambda slist:
+         ';'.join(slist)) \
+            (stage.split(';') if isinstance(stage, str) else stage)
+        self.builder.variable('name', get_var(self.variables, 'name'))
+        self.builder.variable('lowername', get_var(self.variables, 'name').lower())
+        self.builder.newline()
+        name = self.variables['name']
+        self.builder.comment(f'Build file for {name}')
+        self.builder.comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}')
+        self.builder.newline()
+
+        self.builder.variable('pdirname', get_var(self.variables, 'pdirname'))
+        self.builder.variable('stagedir', get_var(self.variables, 'stagedir'))
+        self.builder.newline()
+
+        self.builder.variable('location', get_var(self.variables, 'install_location'))
+        self.builder.variable('resource_dir', get_var(self.variables, 'resource_dir'))
+        self.builder.variable('target', get_var(self.variables, 'target'))
+        self.builder.newline()
+        #pprint.pprint(self.type_config['Types'][self.type], stream=sys.stderr)
+        self.builder.variable('stage2', self.type_config['Types'][self.type]['variables']['stage2'])
+        self.builder.newline()
+
+        self.builder.variable('stagedir', get_var(self.variables, 'stagedir'))
+        self.builder.variable('builddir', get_var(self.variables, 'builddir'))
+        self.builder.variable('objdir', get_var(self.variables, 'objdir'))
+        self.builder.variable('signdir', get_var(self.variables, 'signdir'))
+        self.builder.variable('signtarget', '$signdir/$target.unsigned')
+        self.builder.variable('symtarget', '$signdir/$target.unsym')
+        self.builder.newline()
+
+        self.builder.variable('dragondir', get_var(self.variables, 'dragondir'))
+        self.builder.variable('pwd', '.')
+        self.builder.variable('sysroot', get_var(self.variables, 'sysroot'))
+        self.builder.newline()
+
+        self.builder.variable('fwSearch',
+                              get_var(self.variables, 'framework_search_dirs') + ' ' + get_var(self.variables,
+                                                                                               'additional_framework_search_dirs'))
+        self.builder.variable('libSearch',
+                              get_var(self.variables, 'library_search_dirs') + ' ' + get_var(self.variables,
+                                                                                             'additional_library_search_dirs'))
+        self.builder.newline()
+
+        self.builder.variable('cc', get_var(self.variables, 'cc'))
+        self.builder.variable('cxx', get_var(self.variables, 'cxx'))
+        self.builder.variable('ld', get_var(self.variables, 'ld'))
+        self.builder.variable('codesign', get_var(self.variables, 'codesign'))
+        self.builder.variable('dsym', get_var(self.variables, 'dsym'))
+        self.builder.variable('logos', get_var(self.variables, 'logos'))
+        self.builder.variable('swift', get_var(self.variables, 'swift'))
+        self.builder.variable('plutil', get_var(self.variables, 'plutil'))
+        self.builder.variable('optool', get_var(self.variables, 'optool'))
+        self.builder.variable('stage', extrapolate_stage(self.variables['stage']))
+        self.builder.newline()
+
+        self.builder.variable('targetios', get_var(self.variables, 'targetios'))
+        self.builder.newline()
+        self.builder.variable('frameworks', get_var(self.variables, 'frameworks'))
+
+        self.builder.newline()
+
+        self.builder.variable('libs', get_var(self.variables, 'libs'))
+        self.builder.newline()
+
+        self.builder.variable('arc', '-fobjc-arc' if get_var(self.variables, 'arc') else '')
+        self.builder.variable('btarg', get_var(self.variables, 'targ'))
+        self.builder.variable('warnings', get_var(self.variables, 'warnings'))
+        self.builder.variable('optim', '-O' + get_var(self.variables, 'optim'))
+        self.builder.variable('debug', get_var(self.variables, 'debug'))
+        self.builder.newline()
+
+        self.builder.variable('header_includes', get_var(self.variables, 'c_header_search_dirs'))
+        self.builder.variable('cinclude', get_var(self.variables, 'cinclude'))
+        self.builder.newline()
+
+        self.builder.variable('usrCflags', get_var(self.variables, 'cflags'))
+        self.builder.variable('usrLDflags', get_var(self.variables, 'ldflags'))
+        self.builder.newline()
+
+        self.builder.variable('lopt', get_var(self.variables, 'lopts'))
+        self.builder.variable('typeldflags', get_var(self.variables, 'ldflags'))
+
+        self.builder.variable('libflags', '-lobjc -lc++')
+
+        cflags = '$cinclude -fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$pdirname/modules/ ' \
+                 '-fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session ' \
+                 '$arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug ' \
+                 '$usrCflags $header_includes '
+        self.builder.variable('cflags', cflags)
+        self.builder.newline()
+
+        lflags = '$cflags $typeldflags $frameworks $libs $libflags $lopt $libSearch $usrLDflags'
+        self.builder.variable('lflags', lflags)
+        self.builder.newline()
+
+        self.builder.variable('ldflags', '$usrLDFlags')
+        self.builder.newline()
+
+        self.builder.variable('swiftflags',
+                              '-color-diagnostics -module-name $name -g -enable-objc-interop -swift-version 5 -sdk '
+                              '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS'
+                              '.sdk -Onone -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain'
+                              '/usr/lib/swift/iphoneos -L/usr/lib/swift')
+
+        try:
+            os.stat(self.variables["bridging-header"])
+            self.builder.variable('bridgeheader', get_var("bridging-header"))
+        except FileNotFoundError:
+            self.builder.variable('bridgeheader', '')
+        self.builder.newline()
+
+        self.builder.variable('swiftfiles', get_var(self.variables, 'swift_files'))
+
+    def create_rules(self):
+        self.builder.pool('solo', '1')
+        self.builder.newline()
+
+        self.builder.rule('logos', description="seg::Logos file-in::$in expected-out::$out utility::$logos",
+                          command="$logos $in > $out")
+        self.builder.newline()
+        self.builder.rule('prefs', description="seg::DragonPrefs file-in::$in expected-out::$out utility::DragonPrefs",
+                          command="python3 $$DRAGONBUILD/DragonGen/preflist.py $in > $out")
+        self.builder.newline()
+
+        self.builder.rule('swiftarmv7', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
+                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
+                                  "$swiftflags "
+                                  "$bridgeheader -target armv7-apple-ios -emit-module-path "
+                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
+        self.builder.newline()
+        self.builder.rule('swiftarm64', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
+                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
+                                  "$swiftflags "
+                                  "$bridgeheader -target arm64-apple-ios -emit-module-path "
+                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
+        self.builder.newline()
+        self.builder.rule('swiftarm64e', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
+                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
+                                  "$swiftflags "
+                                  "$bridgeheader -target arm64e-apple-ios -emit-module-path "
+                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
+        self.builder.newline()
+        self.builder.rule('swiftmoduleheader',
+                          description="seg::SwiftModuleHeader file-in::$in expected-out::$out utility::$swift",
+                          command="$swift -frontend -c $swiftflags $bridgeheader -target arm64-apple-ios7.0 -emit-module "
+                                  "-merge-modules $in -emit-objc-header-path $out -o /dev/null")
+        self.builder.newline()
+
+        self.builder.newline()
+        self.builder.rule('carm64', description="seg::cc~64 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch arm64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('cxxarm64', description="seg::cxx~64 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch arm64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcarm64', description="seg::cc~64 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch arm64 $cflags -lobjc -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcxxarm64', description="seg::cxx~64 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch arm64 $cflags -lobjc -lc++ -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('linkarm64', description="seg::ld~64 file-in::$in expected-out::$out utility::$ld",
+                          command="$ld -arch arm64 $lflags -o $out $in")
+        self.builder.newline()
+
+        self.builder.newline()
+        self.builder.rule('carm64e', description="seg::cc~64e file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch arm64e $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('cxxarm64e', description="seg::cxx~64e file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch arm64e $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcarm64e', description="seg::cc~64e file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch arm64e $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcxxarm64e', description="seg::cxx~64e file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch arm64e $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('linkarm64e', description="seg::ld~64e file-in::$in expected-out::$out utility::$ld",
+                          command="$ld -arch arm64e $lflags -o $out $in")
+        self.builder.newline()
+        self.builder.newline()
+        self.builder.rule('carmv7', description="seg::cc~v7 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch armv7 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('cxxarmv7', description="seg::cxx~v7 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch armv7 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcarmv7', description="seg::cc~v7 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch armv7 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcxxarmv7', description="seg::cxx~v7 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch armv7 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('linkarmv7', description="seg::ld~v7 file-in::$in expected-out::$out utility::$ld",
+                          command="$ld -arch armv7 $lflags -o $out $in")
+        self.builder.newline()
+
+        self.builder.newline()
+        self.builder.rule('cx86_64', description="seg::c~x86_64 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch x86_64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('cxxx86_64', description="seg::cxx~x86_64 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch x86_64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcx86_64', description="seg::c~x86_64 file-in::$in expected-out::$out utility::$cc",
+                          command="$cc -arch x86_64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('objcxxx86_64', description="seg::cxx~x86_64 file-in::$in expected-out::$out utility::$cxx",
+                          command="$cxx -arch x86_64 $cflags -c $in -o $out")
+        self.builder.newline()
+        self.builder.rule('linkx86_64', description="seg::ld~x86_64 file-in::$in expected-out::$out utility::$ld",
+                          command="$ld -arch x86_64 $lflags -o $out $in")
+        self.builder.newline()
+
+        self.builder.newline()
+        self.builder.rule('lipo', description='Merging architectures', command='lipo -create $in -output $out')
+        self.builder.newline()
+        self.builder.rule('bundle', description="Copying Bundle Resources",
+                          command="mkdir -p \"$pdirname/_$location/\" && cp -r \"$resource_dir/\" \"$pdirname/_$location\"",
+                          pool='solo')
+        self.builder.newline()
+        self.builder.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
+        self.builder.newline()
+        self.builder.rule('debug', description="Generating Debug Symbols for $name",
+                          command="$dsym \"$in\" 2&> /dev/null; cp $in $out")
+        self.builder.newline()
+        self.builder.rule('sign', description="Signing $name",
+                          command="$codesign $idflag $entflag$entfile $in && cp $in $out")
+        self.builder.newline()
+        self.builder.rule('otool', description="Injecting $name",
+                          command="true;")
+        self.builder.newline()
+        self.builder.rule('stage', description="Running Stage for $name", command="$stage; $stage2")
+        self.builder.newline()
+
+    def create_variable_dict(self):
+        """
+
+        """
+        variables = Project.default_variables.copy()
+
+        variables.update(self.type_config['Types'][self.type]['variables'])
+
+        variables.update(self.variables)
+
+        self.variables = variables.copy()
+        # import pprint
+        # pprint.pprint(f'\n\n{self.variables["name"]}:\n\n' + str(self.variables), stream=sys.stderr)
 
 
-bvars['app']['location'] = '/Applications/'
-bvars['app']['target'] = '$pdirname/_$location$name.app/$name'
-bvars['app']['libs'] = []
-bvars['app']['lopts'] = ''
-bvars['app']['ldflags'] = ''
-bvars['app']['frameworks'] = []
-bvars['app']['stage2'] = ''
+crucial_variables = ['name', 'type', 'dir', 'cc', 'cxx', 'ld', 'codesign']
 
-# User modifiable variables
+# Variables that contain arguments or lists and thus can be passed as a list or string
+# value is what arguments are joined with.
+argument_variables = {
+    'files': ' ',
+    'logos_files': ' ',
+    'c_files': ' ',
+    'objc_files': ' ',
+    'objcxx_files': ' ',
+    'cxx_files': ' ',
+    'plists': ' ',
+    'swift_files': ' ',
+    'dlists': ' ',
+    'cflags': ' ',
+    'ldflags': ' ',
+    'codesignflags': ' ',
+    'c_header_search_dirs': ' -I',
+    'framework_search_dirs': ' -F',
+    'additional_framework_search_dirs': ' -F',
+    'library_search_dirs': ' -L',
+    'additional_library_search_dirs': ' -L',
+    'libs': ' -l',
+    'frameworks': ' -framework ',
+    'stage': ' ; ',
+    'lopts': ' '
 
-def read_dragon_configuration():
-    f = open("DragonMake", 'r')
+}
+
+supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists', 'c_header_search_dirs']
+
+
+def get_var(full_vars, name, is_empty=None):
+    """
+
+    :type is_empty: List[Bool]
+    :param is_empty:
+    :param full_vars:
+    :param name:
+    :return:
+    """
+    extrapolate_stage = lambda stage: \
+        (lambda slist:
+         ';'.join(slist)) \
+            (stage.split(';') if isinstance(stage, str) else stage)
+
+    if not is_empty:
+        is_empty = [True]
+    try:
+        value = full_vars[name]
+        is_empty[0] = False
+    except KeyError as ex:
+        if name not in crucial_variables:
+            value = ""
+        else:
+            raise ex
+    if name in argument_variables.keys():
+        value = arg_list(value) if name not in ['stage'] else extrapolate_stage(value)
+        if name in supports_expressions:
+            lis = value.split(' ')  # hotfix
+            for i in lis:
+                wc = re.match(dm_wildcard, i)
+                ev = re.match(dm_eval, i)
+
+                if wc:
+                    out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(
+                        sys.stdout.encoding).strip()
+                elif ev:
+                    out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(
+                        sys.stdout.encoding).strip()
+                else:
+                    continue
+
+                lis += str(out).split(' ')
+            value = ' '.join(lis)
+        return arg_list(value, argument_variables[name])
+    return value
+
+
+def get_args(full_vars, name, is_empty=None):
+    """Same as get_var but it returns a list
+
+    :param is_empty:
+    :param full_vars:
+    :param name:
+    :return:
+    """
+    return get_var(full_vars, name, is_empty).split(' ') if name in argument_variables else get_var(full_vars, name,
+                                                                                                    is_empty)
+
+
+def arg_list(items, prefix=''):
+    """Process a list or string of arguments into a string containing them
+
+    Used so users can pass arguments as a string or list in the configuration file.
+
+    :param items:
+    :param prefix:
+    :return:
+    """
+    if not items:
+        return ''
+
+    list_of_items = items.split(' ') if isinstance(items, str) else items
+
+    if list_of_items == ['']:
+        return ''
+
+    list_of_items = [prefix + i for i in list_of_items]
+
+    return ' '.join(filter(None, list_of_items))
+
+
+def main():
+    f = open("DragonMake")
     config = yaml.safe_load(f)
     project_dirs = ''
 
     for i in config:
-        if i == 'package_name':
+        if i == 'name':
             exports['package_name'] = config[i]
-            continue 
-        elif i == 'install_command':
+            continue
+        elif i == 'icmd':
             exports['install_command'] = config[i]
             continue
-        elif i == 'exports': 
+        elif i == 'ip':
+            exports['DRBIP'] = config[i]
+            continue
+        elif i == 'port':
+            exports['DRBPORT'] = config[i]
+            continue
+        elif i == 'exports':
             exports.update(config[i])
+            continue
+        elif i in ['id', 'author', 'version', 'depends', 'packaging', 'desc']:
+            continue
 
-        package_config = {'name':i, 'dir':'.'}
-        package_config.update(config[i])
-        project_config = process_package(package_config)
-
+        project_config = {
+            'name': i,
+            'dir': '.'
+        }
+        project_config.update(config[i])
+        # print("Config:" + str(project_config), file=sys.stderr)
+        project_variables = project_config.copy()
         f = open(f"{project_config['dir']}/build.ninja", 'w+')
-        ninja = ninja_syntax.Writer(f)
-        create_buildfile(ninja, project_config['type'], project_config)
+        proj = Project(project_config['type'], project_variables, f)
+        proj.generate()
         f.close()
         project_dirs = project_dirs + ' ' + project_config['dir']
-    
+
     exports['project_dirs'] = project_dirs
-
-
-def process_package(package_config):
-    uvars = {}
-
-    uvars['name'] = ''
-    uvars['type'] = ''
-
-    uvars['prelogos_files'] = []
-    uvars['logos_files'] = []
-    uvars['files'] = []
-    uvars['plists'] = []
-
-    uvars['dragondir'] = '$$DRAGONBUILD'
-    uvars['targetios'] = '10.0'
-    uvars['archs'] = ['armv7', 'arm64', 'arm64e']
-    uvars['sysroot'] = '$dragondir/sdks/iPhoneOS.sdk'
-    uvars['cc'] = 'clang++'
-    uvars['ccpp'] = 'clang++'
-    uvars['ld'] = 'clang++'
-    uvars['ldid'] = 'ldid'
-    uvars['dsym'] = 'dsymutil'
-    uvars['plutil'] = 'plutil'
-    uvars['logos']= '$dragondir/bin/logos.pl'
-    uvars['stage'] = 'true;'
-    uvars['arc'] = '-fobjc-arc'
-    uvars['targ'] = '-DTARGET_IPHONE=1'
-
-    uvars['warnings'] = '-Wall' #'-W' + this
-    uvars['optim'] = '0'
-    uvars['debug'] = '-fcolor-diagnostics'
-
-    uvars['libs'] = []
-    uvars['frameworks'] = []
-
-    uvars['cflags'] = ''
-    uvars['c_header_search_dirs'] = ['']
-    uvars['ldflags'] = ''
-    uvars['ldidflags'] = '-S'
-
-    uvars['install_location'] = ''
-    uvars['resource_dir'] = 'Resources'
-    uvars['nocomp']  = 0
-
-    uvars['framework_search_dirs'] = ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks']
-    uvars['additional_framework_search_dirs'] = []
-
-    uvars['library_search_dirs'] = ['$dragondir/lib', '.']
-    uvars['additional_library_search_dirs'] = []
-
-    uvars['cinclude'] = '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
-
-    uvars.update(package_config)
-
-    if uvars['type'] == 'lib':
-        uvars['type'] = 'library'
-
-    return uvars
-
-
-def create_buildfile(ninja, type, uvars):
-    ninja.variable('name', uvars['name'])
-    ninja.variable('lowername', uvars['name'].lower())
-    ninja.newline()
-    name = uvars['name']
-    ninja.comment(f'Build file for {name}')
-    ninja.comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}')
-    ninja.newline()
-
-    ninja.variable('pdirname', dragonvars['pdirname'])
-    ninja.newline()
-
-    ninja.variable('location', bvars[type]['location'].replace(' ', '$ ') if uvars['install_location'] == '' else uvars['install_location'].replace(' ', '$ '))
-    ninja.variable('resource_dir', uvars['resource_dir'].replace(' ', '$ '))
-    ninja.variable('target', bvars[type]['target'])
-    ninja.newline()
-    ninja.variable('stage2', bvars[type]['stage2'])
-    ninja.newline()
-
-    ninja.variable('builddir', dragonvars['builddir'])
-    ninja.variable('objdir', dragonvars['objdir'])
-    ninja.variable('signdir', dragonvars['signdir'])
-    ninja.variable('signtarget', '$signdir/$target.unsigned')
-    ninja.variable('symtarget', '$signdir/$target.unsym')
-    ninja.newline()
-
-    ninja.variable('dragondir', uvars['dragondir'])
-    ninja.variable('pwd', '.')
-    ninja.variable('sysroot', uvars['sysroot'])
-    ninja.newline()
-
-    ninja.variable('fwSearch', '-F' + ' -F'.join(uvars['framework_search_dirs'] + uvars['additional_framework_search_dirs']))
-    ninja.variable('libSearch', '-L' + ' -L'.join(uvars['library_search_dirs'] + uvars['additional_library_search_dirs']))
-    ninja.newline()
-
-    ninja.variable('cc', uvars['cc'])
-    ninja.variable('ccpp', uvars['ccpp'])
-    ninja.variable('ld', uvars['ld'])
-    ninja.variable('ldid', uvars['ldid'])
-    ninja.variable('dsym', uvars['dsym'])
-    ninja.variable('logos', uvars['logos'])
-    ninja.variable('plutil', uvars['plutil'])
-    ninja.variable('stage', uvars['stage'] if isinstance(uvars['stage'], str) else ' && '.join(uvars['stage']))
-    ninja.newline()
-
-    ninja.variable('targetios', uvars['targetios'])
-    ninja.newline()
-    fws = uvars['frameworks'] + bvars[type]['frameworks'] + bvars['all']['frameworks']
-    ninja.variable('frameworks',arg_list(fws, '-framework '))
-
-    ninja.newline()
-    libs = uvars['libs'] + bvars[type]['libs'] + bvars['all']['libs']
-    
-    ninja.variable('libs', arg_list(libs, '-l'))
-    ninja.newline()
-
-    ninja.variable('arc', uvars['arc'])
-    ninja.variable('btarg', uvars['targ'])
-    ninja.variable('warnings', uvars['warnings'])
-    ninja.variable('optim', '-O' + uvars['optim'])
-    ninja.variable('debug', uvars['debug'])
-    ninja.newline()
-    
-    ninja.variable('header_includes', arg_list(uvars['c_header_search_dirs'], '-I'))
-    ninja.variable('cinclude', uvars['cinclude'])
-    ninja.newline()
-
-    ninja.variable('usrCflags', arg_list(uvars['cflags']))
-    ninja.variable('usrLDflags', arg_list(uvars['ldflags']))
-    ninja.variable('usrLDIDFlags', arg_list(uvars['ldidflags']))
-    ninja.newline()
-
-    ninja.variable('lopt', bvars['all']['lopts'] + bvars[type]['lopts'])
-    ninja.variable('typeldflags', bvars['all']['ldflags'] + bvars[type]['ldflags'])
-    ninja.newline()
-
-    cflags = '$cinclude -fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=.dragon/modules/ -fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session $arc $fwSearch -miphoneos-version-min=$targetios -isysroot $sysroot $btarg $warnings $optim $debug $usrCflags $header_includes'
-    ninja.variable('cflags', cflags)
-    ninja.newline()
-
-    lflags = '$cflags $typeldflags $frameworks $libs $lopt $libSearch $usrLDflags'
-    ninja.variable('lflags', lflags)
-    ninja.newline()
-
-    ninja.variable('ldflags', '$usrLDFlags')
-    ninja.newline()
-
-    # rules
-
-    ninja.pool('solo', '1')
-    ninja.newline()
-
-    ninja.rule('prelogos', description="Processing $in with Pre/Logos",command="cat $in | python3 $$DRAGONBUILD/bin/prelogos.py > $out")
-    ninja.newline()
-    ninja.rule('logos', description="Processing $in with Logos",command="$logos $in > $out")
-    
-    ninja.newline()
-    ninja.rule('compilearm64', description="Compiling $in for arm64", command="$cc -arch arm64 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('compilexxarm64', description="Compiling $in for arm64", command="$cxx -arch arm64 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('linkarm64', description="Linking $name for arm64", command="$ld -arch arm64 $lflags -o $out $in")
-    
-    ninja.newline()
-    ninja.rule('compilearm64e', description="Compiling $in for arm64e", command="$cc -arch arm64e $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('compilexxarm64e', description="Compiling $in for arm64e", command="$cxx -arch arm64e $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('linkarm64e', description="Linking $name for arm64e", command="$ld -arch arm64e $lflags -o $out $in")
-    
-    ninja.newline()
-    ninja.rule('compilearmv7', description="Compiling $in for armv7", command="$cc -arch armv7 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('compilexxarmv7', description="Compiling $in for armv7", command="$cxx -arch armv7 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('linkarmv7', description="Linking $name for armv7", command="$ld -arch armv7 $lflags -o $out $in")
-    
-    ninja.newline()
-    ninja.rule('compilex86_64', description="Compiling $in for x86_64", command="$cc -arch x86_64 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('compilexxx86_64', description="Compiling $in for x86_64", command="$cxx -arch x86_64 $cflags -c $in -o $out")
-    ninja.newline()
-    ninja.rule('linkx86_64', description="Linking $name for x86_64", command="$ld -arch x86_64 $lflags -o $out $in")
-    
-    ninja.newline()
-    ninja.rule('lipo', description='Merging architectures', command='lipo -create $in -output $out')
-    ninja.newline()
-    ninja.rule('bundle', description="Copying Bundle Resources", command="mkdir -p \".dragon/_$location/\" && cp -r \"$resource_dir/\" \".dragon/_$location\" && cp $in $out", pool='solo')
-    ninja.newline()
-    ninja.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
-    ninja.newline()
-    ninja.rule('debug', description="Generating Debug Symbols for $name", command="$dsym \"$in\" 2&> /dev/null; cp $in $out")
-    ninja.newline()
-    ninja.rule('sign', description="Signing $name", command="$ldid $usrLDIDFlags $in && cp $in $target")
-    ninja.newline()
-    ninja.rule('stage', description="Running Stage for $name", command="$stage $stage2")
-    ninja.newline()
-
-    outputs = []
-    targets = ['$target'] if uvars['nocomp'] == 0 else []
-    prelogos = uvars['prelogos_files']
-    logos = uvars['logos_files']
-    files = uvars['files']
-    plists = uvars['plists']
-    if uvars['nocomp'] == 0:
-        for i in prelogos:
-            wc = re.match(dm_wildcard, i)
-            ev = re.match(dm_eval, i)
-            if wc:
-                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            elif ev:
-                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            else:
-                if uvars['dir'] != '.':
-                    i = '../' + i
-                continue 
-
-            if uvars['dir'] != '.':
-                prelogos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-            else:
-                prelogos += str(out).split(' ')
-            prelogos.remove(i)
-        for i in logos:
-            wc = re.match(dm_wildcard, i)
-            ev = re.match(dm_eval, i)
-            if wc:
-                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            elif ev:
-                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            else:
-                if uvars['dir'] != '.':
-                    i = '../' + i
-                continue 
-
-            if uvars['dir'] != '.':
-                logos += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-            else:
-                logos += str(out).split(' ')
-            logos.remove(i)
-            
-        for i in files:
-            wc = re.match(dm_wildcard, i)
-            ev = re.match(dm_eval, i)
-            if wc:
-                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            elif ev:
-                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            else:
-                if uvars['dir'] != '.':
-                    i = '../' + i
-                continue 
-
-            if uvars['dir'] != '.':
-                files += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-            else:
-                files += str(out).split(' ')
-            files.remove(i)
-
-        for i in plists:
-            wc = re.match(dm_wildcard, i)
-            ev = re.match(dm_eval, i)
-            if wc:
-                out = subprocess.check_output(f'ls {wc.group(1)}{wc.group(2)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            elif ev:
-                out = subprocess.check_output(f'{ev.group(1)} | xargs', shell=True).decode(sys.stdout.encoding).strip()
-            else:
-                if uvars['dir'] != '.':
-                    i = '../' + i
-                continue 
-
-            if uvars['dir'] != '.':
-                plists += ' ../'.join(('../'+str(out)).split(' ')).split(' ')
-            else:
-                plists += str(out).split(' ')
-            plists.remove(i)
-
-        for f in prelogos:
-            ninja.build(f'$builddir/prelogos/{os.path.split(f)[1]}.xm', 'prelogos', f)
-            logos.append(f'$builddir/prelogos/{os.path.split(f)[1]}.xm')
-            ninja.newline()
-
-        for f in logos:
-            ninja.build(f'$builddir/logos/{os.path.split(f)[1]}.mm', 'logos', f)
-            files.append(f'$builddir/logos/{os.path.split(f)[1]}.mm')
-            ninja.newline()
-
-        for a in uvars['archs']:
-
-            archfiles = []
-
-            for f in files:
-                ninja.build(f'$builddir/{a}/{os.path.split(f)[1]}.o', f'compile{a}', f)
-                archfiles.append(f'$builddir/{a}/{os.path.split(f)[1]}.o')
-                ninja.newline()
-
-            ninja.build(f'$builddir/$name.{a}', f'link{a}', archfiles)
-            outputs.append(f'$builddir/$name.{a}')
-
-
-    if type == 'bundle':
-        # Use the build file itself as a way to trick ninja into working without a specific file
-        ninja.build('$builddir/trash/bundles', 'bundle', 'build.ninja') 
-        targets.append('$builddir/trash/bundles')
-        ninja.newline()
-    
-    ninja.build('$builddir/trash/stage', 'stage', ('$target' if uvars['nocomp'] == 0 else 'build.ninja'))
-    targets.append('$builddir/trash/stage')
-    ninja.newline()
-
-    ninja.build('$symtarget', 'lipo', outputs)
-    ninja.newline()
-
-    ninja.build('$signtarget', 'debug', '$symtarget')
-    ninja.newline()
-
-    ninja.build('$target', 'sign', '$signtarget')
-    ninja.newline()
-
-    for f in plists:
-        ninja.build(f'.dragon/_$location./{os.path.split(f)[1]}', 'plist', f)
-        targets.append(f'.dragon/_$location./{os.path.split(f)[1]}')
-        ninja.newline()
-
-    ninja.default(targets)
-    ninja.newline()
-
-def arg_list(items, prefix=''):
-    if not items:
-        return ''
-
-    litems = items.split(' ') if isinstance(items, str) else items 
-
-    if litems == ['']:
-        return ''
-
-    litems = [prefix + i for i in litems]
-
-    return ' '.join(litems)
-    
-        
-
-def main():
-    read_dragon_configuration()
 
     for i in exports:
         print(f'export {i}="{exports[i]}"')
-    
-def getmakevars(filename, filter):
-    variables = {}
-    fp = open(filename)
-    try:
-        while 1:
-            line = fp.readline()
-            match = re.search(make_match, line)
-            if match:
-                one_tuple = match.group(1,2)
-                variables[one_tuple[0]] = one_tuple[1]
-            if not line:
-                break
-    finally:
-        fp.close()
-    return variables
+
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except MissingBuildFilesException as ex:
+        print("We hit an error while generating your package.\n", file=sys.stderr)
+        print("The project type specified requires files, but we cant see any in the config.\n", file=sys.stderr)
+        print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
+
+        import sys, tty, termios
+
+        old_setting = termios.tcgetattr(sys.stdin.fileno())
+        tty.setraw(sys.stdin)
+        x = sys.stdin.read(1)
+        if str(x).lower() == 'v':
+            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+            import pprint
+
+            print("Entire Project Config:", file=sys.stderr)
+            pprint.pprint(ex.variables, stream=sys.stderr)
+        else:
+            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+            print("Exiting...", file=sys.stderr)
+
+        print("exit 5")
+    except KeyError as ex:
+        print("KeyError: Something was not found, but it should have been...", file=sys.stderr)
+        print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
+        print(str(ex), file=sys.stderr)
+        print("exit 2")
+    except Exception as ex:
+        import sys, tty, termios
+
+        print("We hit an error while generating your package.", file=sys.stderr)
+        print("Unfortunately this error is undocumented.", file=sys.stderr)
+        print("This means that either _kritanta broke something, or you've found a new bug!", file=sys.stderr)
+        print("Regardless, please do reach out to @_kritanta with this info!\n", file=sys.stderr)
+
+        print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
+
+        import sys, tty, termios
+
+        old_setting = termios.tcgetattr(sys.stdin.fileno())
+        tty.setraw(sys.stdin)
+        x = sys.stdin.read(1)
+        if str(x).lower() == 'v':
+            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
+            print(repr(ex), file=sys.stderr)
+            print(str(ex), file=sys.stderr)
+        else:
+            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+            print("Exiting...", file=sys.stderr)
+
+        print("exit -1")
