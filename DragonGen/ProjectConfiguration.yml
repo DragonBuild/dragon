@@ -2,33 +2,44 @@
 # Special thanks to uroboro for suggesting this
 # Configurations here should provide enough default variables to create the specified module;
 # Please reach out to _kritanta if you need advice on extending these
+Targets:
+  sim:
+    all:
+      targetos: iphoneos
+      targetvers: 13.0
+      arc: yes
+      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      archs:
+        - i386
+        - x86_64
+  ios:
+    all:
+      targetos: iphoneos
+      targetvers: 10.0
+      arc: yes
+      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      archs:
+        - armv7
+        - arm64
+        - arm64e
+  watchos:
+    all:
+      targetos: watchos
+      targetvers: 5.0
+      arc: yes
+      sysroot: $dragondir/sdks/WatchOS.sdk
+      archs: arm64_32
 Types:
   comprehensive:
   app:
     required_states:
       - has_build_files
-    production:
-      deb:
-        - 'mkdir -p .dragon/_/DEBIAN'
-        - 'cp control .dragon/_/DEBIAN/control'
-        - "du -d 0 | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control"
-        - 'cp -R layout/* .dragon/_/ 2>/dev/null'
-        - 'chmod -R 0755 .dragon/_/DEBIAN/*'
-        - 'mkdir -p .dragon/packages'
-        - "find . -name '.DS_Store' -type f -delete"
-        - 'dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/'
     variables:
       install_location: '/Applications/'
       target: '$pdirname/$stagedir/$location/$name.app/$name'
   tweak-jailed:
     required_states:
       - has_build_files
-    production:
-      ipa:
-        - 'build-files'
-        - 'copy-to-target'
-        - 'embed-libs'
-        - 'loader-inject'
     variables:
       install_location: '/Applications/'
       target: '$pdirname/$stagedir/$location/$name.app/$name'
@@ -42,12 +53,9 @@ Types:
       deb:
         - 'build-files'
         - 'copy-to-target'
-      ipa:
-        - 'build-files'
-        - 'copy-to-target'
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
-      target: '$pdirname/$stagedir/$location$name.dylib'
+      build_target_file: '$pdirname/$stagedir/$location$name.dylib'
       hooker-priority: libhooker
       lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
@@ -58,6 +66,25 @@ Types:
         - Foundation
       stage2:
         - 'cp $name.plist $pdirname/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+  prefs:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/PreferenceBundles/$name.bundle/'
+      build_target_file: '$pdirname/$stagedir/$location/$name.bundle/$name'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - Preferences
+        - UIKit
+        - Foundation
+      stage2:
+        - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
+        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
+        - 'cp -r Resources/* $pdirname/$stagedir/$location/$name.bundle/'
   bundle:
     required_states:
       - has_build_files
@@ -65,9 +92,7 @@ Types:
       - deb
     variables:
       install_location: '/Library/$name/$name.bundle/'
-      target: '$pdirname/$stagedir/$location/$name.bundle/$name'
-      libs:
-        - 'substrate'
+      build_target_file: '$pdirname/$stagedir/$location/$name.bundle/$name'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
       frameworks:
         - UIKit
@@ -100,9 +125,11 @@ Types:
       - raw
     variables:
       install_location: 'usr/lib'
-      target: '$pdirname/$stagedir/$location/$name.app/$name'
+      build_target_file: '$pdirname/$stagedir/$location/$name.dylib'
       ldflags: '-install_name $location$name.dylib'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      stage2:
+        - 'true;'
   cli:
     required_states:
       - has_build_files
@@ -112,4 +139,5 @@ Types:
     variables:
       install_location: '/usr/bin'
       target: '$pdirname/$stagedir/$location/$name'
+
   raw:

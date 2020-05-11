@@ -14,6 +14,9 @@ clean=0
 exportt=0
 only=0
 playground=0
+debug=0
+flutter=0
+DRAGON_DPKG=0
 export release=0
 
 gen_tbd_from_lib=1
@@ -29,8 +32,10 @@ function cleanbuildfail()
     # shellcheck disable=SC2154
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
-    cd $1
-    python3 $DRAGONBUILD/bin/ninjadebug.py
+    cd $1 || exit
+    if [ $debug == 1 ]; then
+      python3 $DRAGONBUILD/bin/ninjadebug.py
+    fi
     exit
 }
 
@@ -91,6 +96,8 @@ while [ "$1" != "" ]; do
                                 ;;
         f | flutter )           flutter=1
                                 ;;
+        d | debug )             debug=1
+                                ;;
         r | release )           export release=1
                                 ;;
         relink )                rm .dragon/sign
@@ -102,7 +109,12 @@ while [ "$1" != "" ]; do
         h | help | -h)          usage
                                 exit
                                 ;;
-        v | -v )                alias ninja="ninja -v"
+        vn )                    NINJA_ARGS="-v"
+                                ;;
+        vd )                    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+                                set -xv
+                                ;;
+        vg )                    export DGEN_DEBUG=1
                                 ;;
         * )                     usage
                                 exit 1
@@ -110,7 +122,15 @@ while [ "$1" != "" ]; do
     shift
 done
 
+if [ $debug == 1 ]; then
+  NINJA_ARGS="-v"
+  export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+  set -xv
+  export DGEN_DEBUG=1
+fi
+
 cwd=$(basename $PWD)
+
 
 if [ -f "DragonMake" ]; then  
     true
@@ -142,7 +162,7 @@ gen=1
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja
-    source $DRAGONBUILD/DragonGen/DragonGen
+    source $DRAGONBUILD/DragonGen/DragonGen $DGEN_DEBUG
 fi
 
 if [ $build == 1 ]; then 
@@ -179,8 +199,8 @@ if [ $build == 1 ]; then
             else
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 || cleanbuildfail $projroot
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage || echo -e "${PrefixColor}[Dragon]${BoldColor} No Stage Commands ${NC}"
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 $NINJA_ARGS || cleanbuildfail $projroot
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || echo -e "${PrefixColor}[Dragon]${BoldColor} No Stage Commands ${NC}"
 
             if [ $exportt == 1 ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
@@ -196,26 +216,30 @@ if [ $build == 1 ]; then
         done
     fi
 
-    echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
-    mkdir -p .dragon/_/DEBIAN 
-    cp control .dragon/_/DEBIAN/control 
-    du -d 0 | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
-    cp -R layout/* .dragon/_/ 2>/dev/null
-    chmod -R 0755 .dragon/_/DEBIAN/*
-    mkdir -p .dragon/packages
-    find . -name '.DS_Store' -type f -delete
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
-    dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
-    GENOUTPUT="$(ls .dragon/packages)"
-    mkdir -p packages 2> /dev/null
-    cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    if [ $DRAGON_DPKG == 1 ]; then
+        echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
+        mkdir -p .dragon/_/DEBIAN
+        cp control .dragon/_/DEBIAN/control
+        du -d 0 | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
+        cp -R layout/* .dragon/_/ 2>/dev/null
+        chmod -R 0755 .dragon/_/DEBIAN/*
+        mkdir -p .dragon/packages
+        find . -name '.DS_Store' -type f -delete
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
+        dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
+        GENOUTPUT="$(ls .dragon/packages)"
+        mkdir -p packages 2> /dev/null
+        cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    fi
+
+
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
     echo "${GENOUTPUT}" > .dragon/last_package
 fi
 
 
 
-if [ $install == 1 ]; then 
+if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
     if [ -z "$DRBPORT" ]; then
         DRBPORT=22
@@ -248,3 +272,4 @@ if [ $install == 1 ]; then
 fi
 
 rm -rf .dragon/packages > /dev/null
+set +xv

@@ -1,10 +1,13 @@
 #!/bin/sh
 
+echo $DGEN_DEBUG
+
 source $DRAGONBUILD/internal/dragoncolors
 
-eval $(python3 $DRAGONBUILD/DragonGen/DragonGen.py)
+eval $(DGEN_DEBUG=${DGEN_DEBUG} python3 $DRAGONBUILD/DragonGen/DragonGen.py)
 
 # echo $?
+# echo "e $DRAGON_DPKG"
 
 export TWEAK_NAME=$package_name
 export INSTALL_CMD=$install_command
