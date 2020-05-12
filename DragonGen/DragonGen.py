@@ -660,7 +660,7 @@ def main():
         elif i == 'exports':
             exports.update(config[i])
             continue
-        elif i in ['id', 'author', 'version', 'depends', 'package', 'desc']:
+        elif i in ['id', 'author', 'version', 'depends', 'package', 'desc', 'all']:
             continue
 
         project_config = {
