@@ -112,6 +112,7 @@ class Project(object):
             :param self.variables:
             :return:
             """
+
         if self.type == 'resource-bundle':
             self.builder.build('bundle', 'bundle', 'build.ninja')
             return ['bundle']
@@ -139,6 +140,7 @@ class Project(object):
             for f in files:
                 if f == "":
                     continue
+
                 filename, ext = os.path.splitext(f)
                 if ext in ['x', 'xm']:
                     logos_files.append(f)
@@ -175,12 +177,22 @@ class Project(object):
                 for filename in c_files:
                     if filename == "":
                         continue
+                    if '*' in filename:
+                        result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
+                        for i in result.stdout.decode('utf-8').split("  "):
+                            c_files.append(i)
+                        continue
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'c{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     self.builder.newline()
 
                 for filename in cxx_files:
                     if filename == "":
+                        continue
+                    if '*' in filename:
+                        result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
+                        for i in result.stdout.decode('utf-8').split("  "):
+                            cxx_files.append(i)
                         continue
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'cxx{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
@@ -190,6 +202,11 @@ class Project(object):
                 for filename in objc_files:
                     if filename == "":
                         continue
+                    if '*' in filename:
+                        result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
+                        for i in result.stdout.decode('utf-8').split("  "):
+                            objc_files.append(i)
+                        continue
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objc{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     linker_conditionals.add('-lobjc')
@@ -197,6 +214,11 @@ class Project(object):
 
                 for filename in objcxx_files:
                     if filename == "":
+                        continue
+                    if '*' in filename:
+                        result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
+                        for i in result.stdout.decode('utf-8').split("  "):
+                            objcxx_files.append(i)
                         continue
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objcxx{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
