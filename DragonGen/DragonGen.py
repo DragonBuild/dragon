@@ -164,6 +164,11 @@ class Project(object):
             for filename in logos_files:
                 if filename == "":
                     continue
+                if '*' in filename:
+                    result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
+                    for i in result.stdout.decode('utf-8').split("  "):
+                        logos_files.append(i)
+                    continue
                 self.builder.build(f'$builddir/logos/{os.path.split(filename)[1]}.mm', 'logos', filename)
                 objcxx_files.append(f'$builddir/logos/{os.path.split(filename)[1]}.mm')
                 self.builder.newline()
@@ -334,7 +339,7 @@ class Project(object):
         self.builder.variable('debug', get_var(self.variables, 'debug'))
         self.builder.newline()
 
-        self.builder.variable('header_includes', get_var(self.variables, 'c_header_search_dirs'))
+        self.builder.variable('header_includes', get_var(self.variables, 'include'))
         self.builder.variable('cinclude', get_var(self.variables, 'cinclude'))
         self.builder.newline()
 
@@ -570,7 +575,7 @@ argument_variables = {
     'cflags': ' ',
     'ldflags': ' ',
     'codesignflags': ' ',
-    'c_header_search_dirs': ' -I',
+    'include': ' -I',
     'framework_search_dirs': ' -F',
     'additional_framework_search_dirs': ' -F',
     'library_search_dirs': ' -L',
@@ -582,7 +587,7 @@ argument_variables = {
 
 }
 
-supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists', 'c_header_search_dirs']
+supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists', 'include']
 
 
 def get_var(full_vars, name, is_empty=None):
