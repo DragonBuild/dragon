@@ -542,6 +542,7 @@ class Project(object):
                 'cc': variables['toolchain'] + '/' + 'clang',
                 'cxx': variables['toolchain'] + '/' + 'clang++',
                 'ld': variables['toolchain'] + '/' + 'clang++',
+                'lipo': variables['toolchain'] + '/' + 'lipo',
                 'codesign': variables['toolchain'] + '/' + 'ldid',
                 'dsym': variables['toolchain'] + '/' + 'dsymutil',
                 'plutil': variables['toolchain'] + '/' + 'plutil',
@@ -587,7 +588,7 @@ argument_variables = {
 
 }
 
-supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists', 'include']
+supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists']
 
 
 def get_var(full_vars, name, is_empty=None):
