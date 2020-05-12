@@ -70,6 +70,13 @@ setupSSHKey()
     echo $? | grep "1" > /dev/null || echo -e "${PrefixColor}[Dragon]${BoldColor} Copying key [Default password is alpine]:${NC}" 2> python3 -c 'exit(0)'
     echo $? | grep "1" > /dev/null || cat ~/.ssh/id_rsa.pub | ssh -p $DRBPORT root@$DRBIP "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys" && echo -e "${PrefixColor}[Dragon]${BoldColor} Done${NC}"
 }
+update()
+{
+  x=$PWD
+  cd $DRAGONBUILD || exit
+  git pull
+  cd $x || exit
+}
 
 mkdir -p .dragon/ninja > /dev/null
 
@@ -79,6 +86,9 @@ mkdir -p .dragon/modules > /dev/null
 
 while [ "$1" != "" ]; do
     case $1 in
+        u | update )            update
+                                exit
+                                ;;
         d | do)                 build=1
                                 install=1
                                 ;;
