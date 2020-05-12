@@ -58,7 +58,8 @@ class Project(object):
         'stagedir': '_'
     }
 
-    def __init__(self, project_type: str, variables: dict, out: TextIO):
+    def __init__(self, project_type: str, variables: dict, out: TextIO, full_config=None):
+        self.config = full_config
         self.variables = variables
         self.type = project_type
         self.base_configurations = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/ProjectConfiguration.yml"))
@@ -490,8 +491,8 @@ class Project(object):
 
         variables.update(self.base_configurations['Types'][self.type]['variables'])
 
-        if 'all' in variables:
-            variables.update(variables['all'])
+        if 'all' in self.config:
+            variables.update(self.config['all'])
 
         if 'targets' in variables:
             if self.target in variables['targets']:
@@ -669,11 +670,12 @@ def main():
             'dir': '.'
         }
         project_config.update(config[i])
+
         if os.environ['DGEN_DEBUG']:
             print("Config:" + str(project_config), file=sys.stderr)
         project_variables = project_config.copy()
         f = open(f"{project_config['dir']}/build.ninja", 'w+')
-        proj = Project(project_config['type'], project_variables, f)
+        proj = Project(project_config['type'], project_variables, f, full_config=config)
         proj.generate()
         f.close()
         project_dirs = project_dirs + ' ' + project_config['dir']
