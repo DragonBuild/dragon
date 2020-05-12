@@ -491,6 +491,9 @@ class Project(object):
 
         variables.update(self.base_configurations['Types'][self.type]['variables'])
 
+        if 'all' in variables:
+            variables.update(variables['all'])
+
         if 'all' in self.config:
             variables.update(self.config['all'])
 
