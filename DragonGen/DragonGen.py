@@ -506,6 +506,7 @@ class Project(object):
         variables.update(self.variables)
 
         if 'toolchain' in variables:
+            print(variables['toolchain'], file=sys.stderr)
             tooldb = {
                 'cc': variables['toolchain'] + '/' + 'clang',
                 'cxx': variables['toolchain'] + '/' + 'clang++',
