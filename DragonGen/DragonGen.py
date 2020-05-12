@@ -503,8 +503,19 @@ class Project(object):
         if self.target in ['ios']:
             print("export DRAGON_DPKG=1")
 
-
         variables.update(self.variables)
+
+        if 'toolchain' in variables:
+            tooldb = {
+                'cc': variables['toolchain'] + '/' + 'clang',
+                'cxx': variables['toolchain'] + '/' + 'clang++',
+                'ld': variables['toolchain'] + '/' + 'clang++',
+                'codesign': variables['toolchain'] + '/' + 'ldid',
+                'dsym': variables['toolchain'] + '/' + 'dsymutil',
+                'plutil': variables['toolchain'] + '/' + 'plutil',
+                'swift': variables['toolchain'] + '/' + 'swift'
+            }
+            variables.update(tooldb)
 
         self.variables = variables.copy()
         global variables_dump
@@ -512,6 +523,7 @@ class Project(object):
         if os.environ['DGEN_DEBUG']:
             import pprint
             pprint.pprint(f'\n\n{self.variables["name"]}:\n\n' + str(self.variables), stream=sys.stderr)
+
 
 
 crucial_variables = ['name', 'type', 'dir', 'cc', 'cxx', 'ld', 'codesign']
