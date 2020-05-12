@@ -67,8 +67,14 @@ This should serve as a guideline for how a project should be laid out. You can d
 ```yaml
 ---
 # This represents the overall project name. 
-package_name: TweakName
-install_command: killall -9 SpringBoard
+name: TweakName
+icmd: sbreload
+
+all:
+  targetvers: 11.0
+  archs:
+    - arm64
+    - arm64e
 
 # This represents a Tweak .dylib and .plist. 
 Name:
@@ -77,37 +83,19 @@ Name:
     logos_files:
         - $wildcard("./", "*.xm")
     # A list, excluding logos files, of files to compile. See variables section for more info. 
-    files:
-        - $eval("ls ./*.m")
     # Min ios
-    targetios: 11.0
     # List of archs we want to build for
-    archs:
-        - arm64
-        - arm64e 
 # Now for prefs!
 NamePrefs:
     # Specify the directory, since it's a subproject
     dir: nameprefs
     # Tell dragon that it's a bundle
-    type: bundle
+    type: prefs
     # You can specify files from anywhere in your tweak, or use directory specific wildcards
     files:
         - BlahRootListController.m
         - ACellYouUse.m
         - ../SomeFileFromYourMainTweak.m
-    archs:
-        - arm64
-        - arm64e
-    # Specify that we need the prefs framework for this bundle
-    frameworks:
-        - Preferences
-    # Required code for preferences
-    # The defaults assume that your bundles are for prefs. 
-    # You can override install location and omit stage to make a regular bundle
-    stage: 
-        - mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/
-        - cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist
 # If you have a tweak subproject that, for example, hooks another process, you can compile it into the same deb
 # This is the minimal amount of info you can provide and have your project compile. 
 SomeOtherTweak:
