@@ -424,13 +424,13 @@ class Project(object):
                           command="$cxx -arch arm64 $cflags -c $in -o $out")
         self.builder.newline()
         self.builder.rule('objcarm64', description="seg::cc~64 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch arm64 $cflags -lobjc -c $in -o $out")
+                          command="$cc -arch arm64 $cflags -c $in -o $out")
         self.builder.newline()
         self.builder.rule('objcxxarm64', description="seg::cxx~64 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch arm64 $cflags -lobjc -lc++ -c $in -o $out")
+                          command="$cxx -arch arm64 $cflags -c $in -o $out")
         self.builder.newline()
         self.builder.rule('linkarm64', description="seg::ld~64 file-in::$in expected-out::$out utility::$ld",
-                          command="$ld -arch arm64 $lflags -o $out $in")
+                          command="$ld -arch arm64 $lflags -lobjc -lc++ -o $out $in")
         self.builder.newline()
 
         self.builder.newline()
@@ -449,6 +449,7 @@ class Project(object):
         self.builder.rule('linkarm64e', description="seg::ld~64e file-in::$in expected-out::$out utility::$ld",
                           command="$ld -arch arm64e $lflags -o $out $in")
         self.builder.newline()
+
         self.builder.newline()
         self.builder.rule('carmv7', description="seg::cc~v7 file-in::$in expected-out::$out utility::$cc",
                           command="$cc -arch armv7 $cflags -c $in -o $out")
@@ -539,14 +540,14 @@ class Project(object):
         if 'toolchain' in variables:
             print(variables['toolchain'], file=sys.stderr)
             tooldb = {
-                'cc': variables['toolchain'] + '/' + 'clang',
-                'cxx': variables['toolchain'] + '/' + 'clang++',
-                'ld': variables['toolchain'] + '/' + 'clang++',
-                'lipo': variables['toolchain'] + '/' + 'lipo',
-                'codesign': variables['toolchain'] + '/' + 'ldid',
-                'dsym': variables['toolchain'] + '/' + 'dsymutil',
-                'plutil': variables['toolchain'] + '/' + 'plutil',
-                'swift': variables['toolchain'] + '/' + 'swift'
+                'cc': variables['toolchain'] + '/' + variables['cc'],
+                'cxx': variables['toolchain'] + '/' + variables['ccx'],
+                'ld': variables['toolchain'] + '/' + variables['ld'],
+                'lipo': variables['toolchain'] + '/' + variables['lipo'],
+                'codesign': variables['toolchain'] + '/' + variables['codesign'],
+                'dsym': variables['toolchain'] + '/' + variables['dsym'],
+                'plutil': variables['toolchain'] + '/' + variables['plutil'],
+                'swift': variables['toolchain'] + '/' + variables['swift']
             }
             variables.update(tooldb)
 
