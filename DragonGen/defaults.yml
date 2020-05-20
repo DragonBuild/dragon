@@ -2,6 +2,42 @@
 # Special thanks to uroboro for suggesting this
 # Configurations here should provide enough default variables to create the specified module;
 # Please reach out to _kritanta if you need advice on extending these
+Defaults:
+  proj_build_dir: .dragon/
+  builddir: $proj_build_dir/build
+  objdir: $proj_build_dir/obj
+  signdir: $proj_build_dir/sign
+  bridging-header: $name-Bridging-Header.h
+  dragondir: $$DRAGONBUILD
+  cc: clang
+  cxx: clang++
+  ld: clang++
+  codesign: ldid
+  dsym: dsymutil
+  plutil: plutil
+  swift: swift
+  lipo: lipo
+  logos: $dragondir/bin/logos.pl
+  optool: $dragondir/bin/optool
+  stage:
+    - 'true'
+  warnings: -Wall
+  optim: "0"
+  debug: -fcolor-diagnostics
+  idflag: ''
+  entflag: '-S'
+  entfile: ''
+  resource_dir: 'Resources'
+  fw_dirs:
+    - $sysroot/System/Library/Frameworks
+    - $sysroot/System/Library/PrivateFrameworks
+    - $dragondir/frameworks
+  lib_dirs:
+    - $dragondir/lib
+    - '.'
+  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
+  stagedir: '_'
+
 Targets:
   sim:
     all:
@@ -36,13 +72,13 @@ Types:
       - has_build_files
     variables:
       install_location: '/Applications/'
-      target: '$pdirname/$stagedir/$location/$name.app/$name'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
   tweak-jailed:
     required_states:
       - has_build_files
     variables:
       install_location: '/Applications/'
-      target: '$pdirname/$stagedir/$location/$name.app/$name'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
       loader: DragonLoad
       embed-libs:
         - CydiaSubstrate
@@ -55,7 +91,7 @@ Types:
         - 'copy-to-target'
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
-      build_target_file: '$pdirname/$stagedir/$location$name.dylib'
+      build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'
       hooker-priority: libhooker
       lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
@@ -65,7 +101,7 @@ Types:
         - UIKit
         - Foundation
       stage2:
-        - 'cp $name.plist $pdirname/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
   prefs:
     required_states:
       - has_build_files
@@ -73,7 +109,7 @@ Types:
       - deb
     variables:
       install_location: '/Library/PreferenceBundles/$name.bundle/'
-      build_target_file: '$pdirname/$stagedir/$location/$name.bundle/$name'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.bundle/$name'
       libs:
         - 'substrate'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
@@ -84,7 +120,7 @@ Types:
       stage2:
         - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
         - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
-        - 'cp -r Resources/* $pdirname/$stagedir/$location/$name.bundle/'
+        - 'cp -r Resources/* $proj_build_dir/$stagedir/$location/$name.bundle/'
   bundle:
     required_states:
       - has_build_files
@@ -92,13 +128,13 @@ Types:
       - deb
     variables:
       install_location: '/Library/$name/$name.bundle/'
-      build_target_file: '$pdirname/$stagedir/$location/$name.bundle/$name'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.bundle/$name'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
       frameworks:
         - UIKit
         - Foundation
       stage2:
-        - 'cp -r Resources/* $pdirname/$stagedir/$location/$name.bundle/'
+        - 'cp -r Resources/* $proj_build_dir/$stagedir/$location/$name.bundle/'
   resource-bundle:
     required_states:
     production_allow:
@@ -125,7 +161,7 @@ Types:
       - raw
     variables:
       install_location: 'usr/lib'
-      build_target_file: '$pdirname/$stagedir/$location/$name.dylib'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.dylib'
       ldflags: '-install_name $location$name.dylib'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
       stage2:
@@ -138,6 +174,6 @@ Types:
       - raw
     variables:
       install_location: '/usr/bin'
-      target: '$pdirname/$stagedir/$location/$name'
+      target: '$proj_build_dir/$stagedir/$location/$name'
 
   raw:

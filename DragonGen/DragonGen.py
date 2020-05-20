@@ -25,44 +25,12 @@ dm_eval = '\$eval\("(.*)"\)'
 
 
 class Project(object):
-    default_variables = {
-        'builddir': '$pdirname/build',
-        'objdir': '$pdirname/obj',
-        'signdir': '$pdirname/sign',
-        'bridging-header': '$name-Bridging-Header.h',
-        'dragondir': '$$DRAGONBUILD',
-        'cc': 'clang',
-        'cxx': 'clang++',
-        'ld': 'clang++',
-        'codesign': 'ldid',
-        'dsym': 'dsymutil',
-        'plutil': 'plutil',
-        'swift': 'swift',
-        'logos': '$dragondir/bin/logos.pl',
-        'optool': '$dragondir/bin/optool',
-        'stage': ['true'],
-        'warnings': '-Wall',
-        'optim': '0',
-        'debug': '-fcolor-diagnostics',
-        'idflag': '',
-        'entflag': '-S',
-        'entfile': '',
-        'resource_dir': 'Resources',
-        'framework_search_dirs': ['$sysroot/System/Library/Frameworks',
-                                  '$sysroot/System/Library/PrivateFrameworks',
-                                  '$dragondir/frameworks'],
-        'library_search_dirs': ['$dragondir/lib', '.'],
-        'cinclude': '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback '
-                    '-I$DRAGONBUILD/headers/ -I$pwd',
-        'pdirname': '.dragon/',
-        'stagedir': '_'
-    }
 
     def __init__(self, project_type: str, variables: dict, out: TextIO, full_config=None):
         self.config = full_config
         self.variables = variables
         self.type = project_type
-        self.base_configurations = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/ProjectConfiguration.yml"))
+        self.base_configurations = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/defaults.yml"))
 
         self.builder = Generator(out)
         self.target = 'ios'
@@ -88,8 +56,8 @@ class Project(object):
     def generate(self):
         self.create_variable_dict()
         self.create_ninja_variables()
-        self.create_rules()
-        targets = self.create_targets()
+        targets, used_rules = self.create_targets()
+        # self.create_rules(used_rules)
         if targets:
             self.builder.default(targets)
 
@@ -112,14 +80,32 @@ class Project(object):
             :param self.variables:
             :return:
             """
+        rules = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/rules.yml"))
 
         if self.type == 'resource-bundle':
+            self.builder.rule(f'bundle', description=rules[f'bundle']['desc'],
+                              command=rules[f'bundle']['cmd'])
+            self.builder.newline()
             self.builder.build('bundle', 'bundle', 'build.ninja')
-            return ['bundle']
+            return ['bundle'], ['bundle']
         if self.type == 'stage':
+            self.builder.rule(f'stage', description=rules[f'stage']['desc'],
+                              command=rules[f'stage']['cmd'])
+            self.builder.newline()
             self.builder.build('stage', 'stage', 'build.ninja')
-            return []
+            return [], ['stage']
         outputs = []
+        used_rules = {'logos': False, 'prefs': False, 'swiftarmv6': False, 'swiftarmv7': False, 'swiftarmv7s': False,
+                      'swiftarm64': False, 'swiftarm64e': False, 'swiftmoduleheader': False, 'carmv6': False,
+                      'carmv7': False, 'carmv7s': False, 'carm64': False, 'carm64e': False, 'cx86_64': False,
+                      'ci386': False, 'cxxarmv6': False, 'cxxarmv7': False, 'cxxarmv7s': False, 'cxxarm64': False,
+                      'cxxarm64e': False, 'cxxx86_64': False, 'cxxi386': False, 'objcarmv6': False, 'objcarmv7': False,
+                      'objcarmv7s': False, 'objcarm64': False, 'objcarm64e': False, 'objcx86_64': False,
+                      'objci386': False, 'objcxxarmv6': False, 'objcxxarmv7': False, 'objcxxarmv7s': False,
+                      'objcxxarm64': False, 'objcxxarm64e': False, 'objcxxx86_64': False, 'objcxxi386': False,
+                      'linkarmv6': False,'linkarmv7': False,'linkarmv7s': False,'linkarm64': False,'linkarm64e': False,
+                      'lipo': False, 'bundle': False, 'plist': False, 'debug': False, 'sign': False, 'stage': False}
+
         targets = ['$build_target_file']
         files = get_args(self.variables, 'files')
         swift_files = get_args(self.variables, 'swift_files')
@@ -169,6 +155,11 @@ class Project(object):
                     for i in result.stdout.decode('utf-8').split("  "):
                         logos_files.append(i)
                     continue
+                if not used_rules['logos']:
+                    self.builder.rule('logos', description=rules['logos']['desc'],
+                                      command=rules['logos']['cmd'])
+                    self.builder.newline()
+                    used_rules['logos'] = True
                 self.builder.build(f'$builddir/logos/{os.path.split(filename)[1]}.mm', 'logos', filename)
                 objcxx_files.append(f'$builddir/logos/{os.path.split(filename)[1]}.mm')
                 self.builder.newline()
@@ -182,11 +173,19 @@ class Project(object):
                 for filename in c_files:
                     if filename == "":
                         continue
+
                     if '*' in filename:
                         result = subprocess.run(['ls', filename], stdout=subprocess.PIPE)
                         for i in result.stdout.decode('utf-8').split("  "):
                             c_files.append(i)
                         continue
+
+                    if not used_rules[f'c{a}']:
+                        self.builder.rule(f'c{a}', description=rules[f'c{a}']['desc'],
+                                          command=rules[f'c{a}']['cmd'])
+                        self.builder.newline()
+                        used_rules[f'c{a}'] = True
+
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'c{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     self.builder.newline()
@@ -199,6 +198,13 @@ class Project(object):
                         for i in result.stdout.decode('utf-8').split("  "):
                             cxx_files.append(i)
                         continue
+
+                    if not used_rules[f'cxx{a}']:
+                        self.builder.rule(f'cxx{a}', description=rules[f'cxx{a}']['desc'],
+                                          command=rules[f'cxx{a}']['cmd'])
+                        self.builder.newline()
+                        used_rules[f'cxx{a}'] = True
+
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'cxx{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     linker_conditionals.add('-lc++')
@@ -212,6 +218,13 @@ class Project(object):
                         for i in result.stdout.decode('utf-8').split("  "):
                             objc_files.append(i)
                         continue
+
+                    if not used_rules[f'objc{a}']:
+                        self.builder.rule(f'objc{a}', description=rules[f'objc{a}']['desc'],
+                                          command=rules[f'objc{a}']['cmd'])
+                        self.builder.newline()
+                        used_rules[f'objc{a}'] = True
+
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objc{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     linker_conditionals.add('-lobjc')
@@ -225,6 +238,13 @@ class Project(object):
                         for i in result.stdout.decode('utf-8').split("  "):
                             objcxx_files.append(i)
                         continue
+
+                    if not used_rules[f'objcxx{a}']:
+                        self.builder.rule(f'objcxx{a}', description=rules[f'objcxx{a}']['desc'],
+                                          command=rules[f'objcxx{a}']['cmd'])
+                        self.builder.newline()
+                        used_rules[f'objcxx{a}'] = True
+
                     self.builder.build(f'$builddir/{a}/{os.path.split(filename)[1]}.o', f'objcxx{a}', filename)
                     arch_specific_object_files.append(f'$builddir/{a}/{os.path.split(filename)[1]}.o')
                     linker_conditionals.add('-lobjc')
@@ -245,21 +265,40 @@ class Project(object):
                 if has_swift:
                     self.builder.build(f'$builddir/{a}/$name-Swift.h', 'swiftmoduleheader', swift_modules)
 
+                self.builder.rule(f'link{a}', description=rules[f'link{a}']['desc'],
+                                  command=rules[f'link{a}']['cmd'] + ' ' + ' '.join(linker_conditionals))
+                self.builder.newline()
                 self.builder.build(f'$builddir/$name.{a}', f'link{a}', arch_specific_object_files)
                 outputs.append(f'$builddir/$name.{a}')
 
+        self.builder.rule(f'lipo', description=rules[f'lipo']['desc'],
+                          command=rules[f'lipo']['cmd'])
+        self.builder.newline()
+
         self.builder.build('$symtarget', 'lipo', outputs)
+        self.builder.newline()
+
+        self.builder.rule(f'debug', description=rules[f'debug']['desc'],
+                          command=rules[f'debug']['cmd'])
         self.builder.newline()
 
         self.builder.build('$signtarget', 'debug', '$symtarget')
         self.builder.newline()
 
+        self.builder.rule(f'sign', description=rules[f'sign']['desc'],
+                          command=rules[f'sign']['cmd'])
+        self.builder.newline()
+
         self.builder.build('$build_target_file', 'sign', '$signtarget')
+        self.builder.newline()
+
+        self.builder.rule(f'stage', description=rules[f'stage']['desc'],
+                          command=rules[f'stage']['cmd'])
         self.builder.newline()
 
         self.builder.build('stage', 'stage', 'build.ninja')
 
-        return targets
+        return targets, [*used_rules]
 
     def create_ninja_variables(self):
         """
@@ -268,9 +307,9 @@ class Project(object):
         :param variables:
         """
         extrapolate_stage = lambda stage: \
-        (lambda slist:
-         ';'.join(slist)) \
-            (stage.split(';') if isinstance(stage, str) else stage)
+            (lambda slist:
+             ';'.join(slist)) \
+                (stage.split(';') if isinstance(stage, str) else stage)
         self.builder.variable('name', get_var(self.variables, 'name'))
         self.builder.variable('lowername', get_var(self.variables, 'name').lower())
         self.builder.newline()
@@ -279,7 +318,7 @@ class Project(object):
         self.builder.comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}')
         self.builder.newline()
 
-        self.builder.variable('pdirname', get_var(self.variables, 'pdirname'))
+        self.builder.variable('proj_build_dir', get_var(self.variables, 'proj_build_dir'))
         self.builder.variable('stagedir', get_var(self.variables, 'stagedir'))
         self.builder.newline()
 
@@ -287,7 +326,8 @@ class Project(object):
         self.builder.variable('resource_dir', get_var(self.variables, 'resource_dir'))
         self.builder.variable('build_target_file', get_var(self.variables, 'build_target_file'))
         self.builder.newline()
-        self.builder.variable('stage2', extrapolate_stage(self.base_configurations['Types'][self.type]['variables']['stage2']))
+        self.builder.variable('stage2',
+                              extrapolate_stage(self.base_configurations['Types'][self.type]['variables']['stage2']))
         self.builder.newline()
 
         self.builder.variable('stagedir', get_var(self.variables, 'stagedir'))
@@ -304,11 +344,11 @@ class Project(object):
         self.builder.newline()
 
         self.builder.variable('fwSearch',
-                              get_var(self.variables, 'framework_search_dirs') + ' ' + get_var(self.variables,
-                                                                                               'additional_framework_search_dirs'))
+                              get_var(self.variables, 'fw_dirs') + ' ' + get_var(self.variables,
+                                                                                 'additional_fw_dirs'))
         self.builder.variable('libSearch',
-                              get_var(self.variables, 'library_search_dirs') + ' ' + get_var(self.variables,
-                                                                                             'additional_library_search_dirs'))
+                              get_var(self.variables, 'lib_dirs') + ' ' + get_var(self.variables,
+                                                                                  'additional_lib_dirs'))
         self.builder.newline()
 
         self.builder.variable('cc', get_var(self.variables, 'cc'))
@@ -316,6 +356,7 @@ class Project(object):
         self.builder.variable('ld', get_var(self.variables, 'ld'))
         self.builder.variable('codesign', get_var(self.variables, 'codesign'))
         self.builder.variable('dsym', get_var(self.variables, 'dsym'))
+        self.builder.variable('lipo', get_var(self.variables, 'lipo'))
         self.builder.variable('logos', get_var(self.variables, 'logos'))
         self.builder.variable('swift', get_var(self.variables, 'swift'))
         self.builder.variable('plutil', get_var(self.variables, 'plutil'))
@@ -352,7 +393,7 @@ class Project(object):
 
         self.builder.variable('libflags', '-lobjc -lc++')
 
-        cflags = '$cinclude -fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$pdirname/modules/ ' \
+        cflags = '$cinclude -fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ ' \
                  '-fmodules-prune-after=345600 -fmodules-prune-interval=86400 -fmodules-validate-once-per-build-session ' \
                  '$arc $fwSearch -miphoneos-version-min=$targetvers -isysroot $sysroot $btarg $warnings $optim $debug ' \
                  '$usrCflags $header_includes'
@@ -381,136 +422,27 @@ class Project(object):
 
         self.builder.variable('swiftfiles', get_var(self.variables, 'swift_files'))
 
-    def create_rules(self):
+    def create_rules(self, used_rules):
         self.builder.pool('solo', '1')
         self.builder.newline()
 
-        self.builder.rule('logos', description="seg::Logos file-in::$in expected-out::$out utility::$logos",
-                          command="$logos $in > $out")
-        self.builder.newline()
-        self.builder.rule('prefs', description="seg::DragonPrefs file-in::$in expected-out::$out utility::DragonPrefs",
-                          command="python3 $$DRAGONBUILD/DragonGen/preflist.py $in > $out")
-        self.builder.newline()
+        rules = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/rules.yml"))
 
-        self.builder.rule('swiftarmv7', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
-                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
-                                  "$swiftflags "
-                                  "$bridgeheader -target armv7-apple-ios -emit-module-path "
-                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
-        self.builder.newline()
-        self.builder.rule('swiftarm64', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
-                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
-                                  "$swiftflags "
-                                  "$bridgeheader -target arm64-apple-ios -emit-module-path "
-                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
-        self.builder.newline()
-        self.builder.rule('swiftarm64e', description="seg::Swift file-in::$in expected-out::$out utility::$swift",
-                          command="SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c "
-                                  "$swiftflags "
-                                  "$bridgeheader -target arm64e-apple-ios -emit-module-path "
-                                  "$out.swiftmodule -primary-file $in $$SwiftFiles -o $out")
-        self.builder.newline()
-        self.builder.rule('swiftmoduleheader',
-                          description="seg::SwiftModuleHeader file-in::$in expected-out::$out utility::$swift",
-                          command="$swift -frontend -c $swiftflags $bridgeheader -target arm64-apple-ios7.0 -emit-module "
-                                  "-merge-modules $in -emit-objc-header-path $out -o /dev/null")
-        self.builder.newline()
-
-        self.builder.newline()
-        self.builder.rule('carm64', description="seg::cc~64 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch arm64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('cxxarm64', description="seg::cxx~64 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch arm64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcarm64', description="seg::cc~64 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch arm64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcxxarm64', description="seg::cxx~64 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch arm64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('linkarm64', description="seg::ld~64 file-in::$in expected-out::$out utility::$ld",
-                          command="$ld -arch arm64 $lflags -lobjc -lc++ -o $out $in")
-        self.builder.newline()
-
-        self.builder.newline()
-        self.builder.rule('carm64e', description="seg::cc~64e file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch arm64e $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('cxxarm64e', description="seg::cxx~64e file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch arm64e $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcarm64e', description="seg::cc~64e file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch arm64e $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcxxarm64e', description="seg::cxx~64e file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch arm64e $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('linkarm64e', description="seg::ld~64e file-in::$in expected-out::$out utility::$ld",
-                          command="$ld -arch arm64e $lflags -o $out $in")
-        self.builder.newline()
-
-        self.builder.newline()
-        self.builder.rule('carmv7', description="seg::cc~v7 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch armv7 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('cxxarmv7', description="seg::cxx~v7 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch armv7 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcarmv7', description="seg::cc~v7 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch armv7 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcxxarmv7', description="seg::cxx~v7 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch armv7 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('linkarmv7', description="seg::ld~v7 file-in::$in expected-out::$out utility::$ld",
-                          command="$ld -arch armv7 $lflags -o $out $in")
-        self.builder.newline()
-
-        self.builder.newline()
-        self.builder.rule('cx86_64', description="seg::c~x86_64 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch x86_64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('cxxx86_64', description="seg::cxx~x86_64 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch x86_64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcx86_64', description="seg::c~x86_64 file-in::$in expected-out::$out utility::$cc",
-                          command="$cc -arch x86_64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('objcxxx86_64', description="seg::cxx~x86_64 file-in::$in expected-out::$out utility::$cxx",
-                          command="$cxx -arch x86_64 $cflags -c $in -o $out")
-        self.builder.newline()
-        self.builder.rule('linkx86_64', description="seg::ld~x86_64 file-in::$in expected-out::$out utility::$ld",
-                          command="$ld -arch x86_64 $lflags -o $out $in")
-        self.builder.newline()
-
-        self.builder.newline()
-        self.builder.rule('lipo', description='Merging architectures', command='lipo -create $in -output $out')
-        self.builder.newline()
-        self.builder.rule('bundle', description="Copying Bundle Resources",
-                          command="mkdir -p \"$pdirname/_$location/\" && cp -r \"$resource_dir/\" \"$pdirname/_$location\"",
-                          pool='solo')
-        self.builder.newline()
-        self.builder.rule('plist', description="Converting $in", command="$plutil -convert binary1 $in -o $out")
-        self.builder.newline()
-        self.builder.rule('debug', description="Generating Debug Symbols for $name",
-                          command="$dsym \"$in\" 2&> /dev/null; cp $in $out")
-        self.builder.newline()
-        self.builder.rule('sign', description="Signing $name",
-                          command="$codesign -S $in && cp $in $out")
-        self.builder.newline()
-        self.builder.rule('otool', description="Injecting $name",
-                          command="true;")
-        self.builder.newline()
-        self.builder.rule('stage', description="Running Stage for $name", command="$stage; $stage2")
-        self.builder.newline()
+        for rule in used_rules:
+            self.builder.rule(rule, description=rules[rule]['desc'],
+                              command=rules[rule]['cmd'])
+            self.builder.newline()
 
     # noinspection PyTypeChecker
     def create_variable_dict(self):
         """
 
         """
-        variables = Project.default_variables.copy()
+
+        # variables = yaml.safe_load(open(os.environ['DRAGONBUILD'] + "/DragonGen/defaults.yml"))
+        # variables = Project.default_variables.copy()
+
+        variables = self.base_configurations['Defaults']
 
         if not self.target:
             self.target = 'ios'
@@ -559,7 +491,6 @@ class Project(object):
             pprint.pprint(f'\n\n{self.variables["name"]}:\n\n' + str(self.variables), stream=sys.stderr)
 
 
-
 crucial_variables = ['name', 'type', 'dir', 'cc', 'cxx', 'ld', 'codesign']
 
 # Variables that contain arguments or lists and thus can be passed as a list or string
@@ -578,10 +509,10 @@ argument_variables = {
     'ldflags': ' ',
     'codesignflags': ' ',
     'include': ' -I',
-    'framework_search_dirs': ' -F',
-    'additional_framework_search_dirs': ' -F',
-    'library_search_dirs': ' -L',
-    'additional_library_search_dirs': ' -L',
+    'fw_dirs': ' -F',
+    'additional_fw_dirs': ' -F',
+    'lib_dirs': ' -L',
+    'additional_lib_dirs': ' -L',
     'libs': ' -l',
     'frameworks': ' -framework ',
     'stage': ' ; ',
@@ -756,6 +687,7 @@ if __name__ == "__main__":
         if str(x).lower() == 'v':
             termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
             import pprint
+
             print("Entire Project Config:", file=sys.stderr)
             pprint.pprint(variables_dump, stream=sys.stderr)
             print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
