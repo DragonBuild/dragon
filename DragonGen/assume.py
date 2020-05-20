@@ -23,7 +23,7 @@ def assume():
     f.close()
     if not os.path.exists(f'{dir_path}.plist'):
         bfilter = open(f'{dir_path}.plist', 'w+')
-        bfilter.write('{"Filter":{"Bundles":["com.apple.springboard"]}}')
+        bfilter.write('{ Filter = { Bundles = ( "com.apple.springboard" ); }; }')
         bfilter.close()
     if not os.path.exists('control'):
         control = open('control', 'w+')
