@@ -183,7 +183,7 @@ debug:
 sign:
   name: $codesign
   desc: Signing $name
-  cmd: $codesign -S $in && cp $in $out
+  cmd: $codesign $entflag$entfile $in && cp $in $out
 stage:
   name: Staging Commands
   desc: Running Stage for $name

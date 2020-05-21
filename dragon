@@ -14,6 +14,7 @@ clean=0
 exportt=0
 only=0
 playground=0
+norm=0
 debug=0
 flutter=0
 DRAGON_DPKG=0
@@ -43,14 +44,15 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
 usage()
 {
-    echo -e "${BoldColor}-=-=-"
-    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean] [export]"
-    echo -e "${BoldColor}-=-=-"
+    echo -e "${BoldColor}DragonBuild v1.0 -=-=-"
+    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean] [debugflags] [export]"
+    echo -e "${BoldColor}Building -=-=-"
     echo "d|do - Build and Install"
-    echo "g|gen|generate - Generate a build.ninja. Typically automatic."
     echo "b|build|make - Compile, link, and package your project"
+    echo -e "${BoldColor}-=-=-"
     echo "i|install - Install to device located at \$DRBIP"
-    echo "r|release - Load DragonRelease variables after DragonMake is loaded"
+    echo "r|release - Load DragonRelease file over the DragonMake one"
+    echo -e "${BoldColor}-=-=-"
     echo "export - Tell ninja to create a compile_commands.json"
     echo -e "${BoldColor}-=-=-"
 }
@@ -100,9 +102,14 @@ while [ "$1" != "" ]; do
         exp | export)           exportt=1
                                 build=1
                                 ;;
+        norm )                  norm=1
+                                ;;
         b | build | make)       build=1
                                 ;;
         i | install )           install=1
+                                ;;
+        rs | respring )         ssh root@$DRBIP "killall -9 SpringBoard"
+                                exit
                                 ;;
         f | flutter )           flutter=1
                                 ;;
@@ -145,7 +152,7 @@ cwd=$(basename $PWD)
 if [ -f "DragonMake" ]; then  
     true
 else
-    python3 ${DRAGONBUILD}/DragonGen/assume.py
+    stat Makefile > /dev/null 2>&1 || python3 ${DRAGONBUILD}/DragonGen/assume.py
 fi
 
 if [ -d ".dragon" ]; then  
@@ -209,14 +216,16 @@ if [ $build == 1 ]; then
             else
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 $NINJA_ARGS || cleanbuildfail $projroot
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || echo -e "${PrefixColor}[Dragon]${BoldColor} No Stage Commands ${NC}"
 
             if [ $exportt == 1 ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
                 ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
             fi
-            mv build.ninja .dragon/ninja/build.ninja
+            if [ $norm == 0 ]; then
+                mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+            fi
             if [ $i == "." ]; then 
                 true;
             else

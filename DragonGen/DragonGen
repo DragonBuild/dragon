@@ -1,13 +1,16 @@
 #!/bin/sh
 
-echo $DGEN_DEBUG
+theos=0
+
+echo $DGEN_DEBUG | grep "1" && echo "DragonGen Debug Enabled"
 
 source $DRAGONBUILD/internal/dragoncolors
 
 eval $(DGEN_DEBUG=${DGEN_DEBUG} python3 $DRAGONBUILD/DragonGen/DragonGen.py)
 
-# echo $?
-# echo "e $DRAGON_DPKG"
+if [ $theos == 1 ]; then
+  echo -e "${GenColor}[DragonGen]${BoldColor} Building from Theos Makefile${NC}"
+fi
 
 export TWEAK_NAME=$package_name
 export INSTALL_CMD=$install_command
