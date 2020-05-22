@@ -44,17 +44,38 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
 usage()
 {
-    echo -e "${BoldColor}DragonBuild v1.0 -=-=-"
-    echo "usage: dragon [d|do] [g|gen|generate] [b|build|make] [i|install] [c|clean] [debugflags] [export]"
-    echo -e "${BoldColor}Building -=-=-"
-    echo "d|do - Build and Install"
-    echo "b|build|make - Compile, link, and package your project"
-    echo -e "${BoldColor}-=-=-"
-    echo "i|install - Install to device located at \$DRBIP"
-    echo "r|release - Load DragonRelease file over the DragonMake one"
-    echo -e "${BoldColor}-=-=-"
-    echo "export - Tell ninja to create a compile_commands.json"
-    echo -e "${BoldColor}-=-=-"
+    echo ""
+    echo -e "${PrefixColor}DragonBuild v1.0 ${BoldColor}-=-=-${NC}"
+    echo "  usage: dragon [commands]"
+    echo ""
+    echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
+    echo "  d|do - Build and Install"
+    echo "  c|clean - recompile, link, and package your project"
+    echo "  b|build|make - compile, link, and package your project"
+    echo "  r|release - Load DragonRelease file over the DragonMake one"
+    echo "  rl|relink - Re-link the package regardless of changes"
+    echo ""
+    echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
+    echo "  i|install - Install to device located at \$DRBIP"
+    echo "  rs|respring - Respring the current build device"
+    echo "  dr|devicerun - Run anything after this flag on device"
+    echo ""
+    echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
+    echo "  exp|export - Tell ninja to create a compile_commands.json"
+    echo "  f|flutter - Build with flutter before doing anything else"
+    echo "  ch|checkra1n - Open Checkra1n GUI"
+    echo "  chc|checkra1ncli - Open Checkra1n CLI"
+    echo ""
+    echo -e "${PrefixColor}Debugging ${BoldColor}-=-=-${NC}"
+    echo "  vn - Print clang/ld/etc. commands and flags"
+    echo "  vd - echo every bash command in the main dragon file"
+    echo "  vg - DragonGen verbositiy."
+    echo "  norm - Doesn't delete build.ninja after building."
+    echo "  debug - Install to device located at \$DRBIP"
+    echo ""
+    echo -e "${PrefixColor}-=-=-${NC}"
+    echo ""
+    echo "DragonBuild v1.0.0 - by kritanta"
 }
 
 printBan()
@@ -111,9 +132,18 @@ while [ "$1" != "" ]; do
         rs | respring )         ssh root@$DRBIP "killall -9 SpringBoard"
                                 exit
                                 ;;
+        dr | devicerun )        ssh root@$DRBIP "'$*'"
+                                exit
+                                ;;
+        ch | checkra1n )        open /Applications/checkra1n.app
+                                exit
+                                ;;
+        chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
+                                exit
+                                ;;
         f | flutter )           flutter=1
                                 ;;
-        d | debug )             debug=1
+        debug )                 debug=1
                                 ;;
         r | release )           export release=1
                                 ;;
@@ -123,7 +153,7 @@ while [ "$1" != "" ]; do
                                 ;;
         c | clean )             clean=1
                                 ;;
-        h | help | -h)          usage
+        h | help | -h )         usage
                                 exit
                                 ;;
         vn )                    NINJA_ARGS="-v"
