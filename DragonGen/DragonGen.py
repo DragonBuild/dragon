@@ -639,6 +639,7 @@ def get_var(full_vars, name, is_empty=None):
     :param name:
     :return:
     """
+    # print("%s" % name, file=sys.stderr)
     extrapolate_stage = lambda stage: \
         (lambda slist:
          ';'.join(slist)) \
