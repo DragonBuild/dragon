@@ -21,7 +21,7 @@ It's aimed at both speed and configurability. Every single factor of it is confi
 
 ## Notes
 
-* This was built for MacOS, although I've done a little bit of testing on Linux. If it does not detect `ldid` in the path, it will look in `$DRAGONBUILD/toolchain/bin/` for a toolchain. I would advise properly installing  to your path, as this is somewhat hacked in at the moment. 
+* This was built for MacOS, although I've done a little bit of testing on Linux. See [DragonMake Variables](#dragonmake-variables) for toolchain usage
 
 # Installing DragonBuild
 
