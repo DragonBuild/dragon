@@ -130,7 +130,7 @@ Module Variables
 | `swift` | str | dsymutil binary to symbolicate with | swift |
 | `logos` | str | logos.pl file to use for preprocessing | `$DRAGONBUILD/bin/logos.pl` | 
 | `stage` | str/list | Console command(s) to run before after build and before packaging | '' |
-| `arc` | BOOL | Should we use -fobjc-arc | `-fobjc-arc` |
+| `arc` | BOOL | Should we use -fobjc-arc | `Yes` |
 | `warnings` | str | Warnings flag | -Wall |
 | `optim` | str | Optimization level. Higher levels can break obfuscators. | 0 |
 | `debug` | str | debug flags | -fcolor-diagnostics |
