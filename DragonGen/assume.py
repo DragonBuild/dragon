@@ -31,7 +31,7 @@ def assume():
         control.close()
 
 def main():
-    prompt = int(input(PrefixColor+u'[Dragon] ' + NC + u'No DragonMake Found.\n1. Assume input\n2. Interactive Setup\n'))
+    prompt = int(input(PrefixColor+u'[Dragon] ' + NC + u'No DragonMake Found.\n1. Assume input\n2. New Project Creator\n3. Exit\n'))
     if prompt == 1:
         assume()
 
