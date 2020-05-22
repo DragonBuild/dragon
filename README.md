@@ -51,9 +51,7 @@ Wildcards:
 
 This should serve as a guideline for how a project should be laid out. You can declare as many projects as you want, it's all going to be crammed into the same deb. 
 
-"Name" represents the name of your tweak. Please change "Name" to the name of the item you are building. 
-
-`$eval` and `$wildcard` commands are executed in the directory specified (`.` if none has been specified).
+"ModuleName" represents a module, here. Typically this is "TweakName" or "TweakNamePrefs", or something along those lines.
 
 ```yaml
 ---
@@ -68,31 +66,31 @@ all:
     - arm64e
 
 # This represents a Tweak .dylib and .plist. 
-Name:
+ModuleName:
     type: tweak
     # A list of logos files. See variables section for more info. 
     logos_files:
-        - $wildcard("./", "*.xm")
+        - "*.xm"
     # A list, excluding logos files, of files to compile. See variables section for more info. 
     # Min ios
     # List of archs we want to build for
 # Now for prefs!
-NamePrefs:
+AnotherModuleName:
     # Specify the directory, since it's a subproject
     dir: nameprefs
     # Tell dragon that it's a bundle
     type: prefs
     # You can specify files from anywhere in your tweak, or use directory specific wildcards
-    files:
+    objc_files:
         - BlahRootListController.m
         - ACellYouUse.m
         - ../SomeFileFromYourMainTweak.m
 # If you have a tweak subproject that, for example, hooks another process, you can compile it into the same deb
 # This is the minimal amount of info you can provide and have your project compile. 
-SomeOtherTweak:
+ASubModuleName:
     dir: othertweak
     type: tweak
-    logos_files:
+    files:
         - othertweak/Tweak.xm    
 ```
 
