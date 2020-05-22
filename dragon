@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# source $DRAGONBUILD/DragonGen/DragonGen
-#python3 $DRAGONBUILD/dragon.py
-#exit
+source $DRAGONBUILD/internal/environment
+
+(bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/vers) &)
 
 DBTIMEOUT=5
 
@@ -13,18 +13,15 @@ gen=0
 clean=0
 exportt=0
 only=0
-playground=0
 norm=0
 debug=0
 flutter=0
 DRAGON_DPKG=0
 export release=0
 
-gen_tbd_from_lib=1
-
 ToolchainPath=""
 ToolchainPrefix=""
-command -v ldid >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
+command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
 
 set -o pipefail
 
@@ -56,7 +53,8 @@ usage()
     echo "  rl|relink - Re-link the package regardless of changes"
     echo ""
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
-    echo "  i|install - Install to device located at \$DRBIP"
+    echo "  s|device - Set build device IP/Port"
+    echo "  i|install - Install to build device"
     echo "  rs|respring - Respring the current build device"
     echo "  dr|devicerun - Run anything after this flag on device"
     echo ""
@@ -93,6 +91,20 @@ setupSSHKey()
     echo $? | grep "1" > /dev/null || echo -e "${PrefixColor}[Dragon]${BoldColor} Copying key [Default password is alpine]:${NC}" 2> python3 -c 'exit(0)'
     echo $? | grep "1" > /dev/null || cat ~/.ssh/id_rsa.pub | ssh -p $DRBPORT root@$DRBIP "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys" && echo -e "${PrefixColor}[Dragon]${BoldColor} Done${NC}"
 }
+
+setupDevice()
+{
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Device IP"
+    read DRBIP
+    echo "export DRBIP=\"$DRBIP\"" > $DRAGONBUILD/state/phoneip
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Port (Leave blank for 22)"
+    read DRBPORT
+    if [ -z "$DRBPORT" ]; then
+        DRBPORT=22
+    fi
+    echo "export DRBPORT=\"$DRBPORT\"" >> $DRAGONBUILD/state/phoneip
+}
+
 update()
 {
   x=$PWD
@@ -111,6 +123,8 @@ while [ "$1" != "" ]; do
     case $1 in
         u | update )            update
                                 exit
+                                ;;
+        s | device)             setupDevice
                                 ;;
         d | do)                 build=1
                                 install=1
@@ -294,20 +308,35 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
         DRBPORT=22
     fi
     if [ -z "$DRBIP" ]; then
-        echo -e "${PrefixColor}[Dragon]${NC} The \$DRBIP variable is not set!"
-        rm -rf .dragon/packages > /dev/null
+        setupDevice
+    fi
+    if [ -z "$DRBIP" ]; then
+        killall iproxy > /dev/null
+        iproxy 4444 22 &
+        DRBIP=localhost
+        DRBPORT=4444
+
+        ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
+        echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
+
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
+
+        scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} || exit && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" || exit && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
+
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
+        ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || exit
         exit
     fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
 
     if [ -z "$OUTPUT" ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
-        exit 
+        exit
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting...${NC}"
     python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check('$DRBIP',$DRBPORT,$DBTIMEOUT)" 2>/dev/null
-    echo $? | grep "0" > /dev/null || echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" 2>exit
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Connected${NC}"
+    echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
     ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
     echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
