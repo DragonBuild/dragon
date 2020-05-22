@@ -69,7 +69,7 @@ usage()
     echo "  vd - echo every bash command in the main dragon file"
     echo "  vg - DragonGen verbositiy."
     echo "  norm - Doesn't delete build.ninja after building."
-    echo "  debug - Install to device located at \$DRBIP"
+    echo "  debug - Enable all debug flags"
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
