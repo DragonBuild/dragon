@@ -171,22 +171,23 @@ Building -=-=-
   rl|relink - Re-link the package regardless of changes
 
 Installation -=-=-
-  i|install - Install to device located at $DRBIP
+  s|device - Set build device IP/Port
+  i|install - Install to build device
   rs|respring - Respring the current build device
   dr|devicerun - Run anything after this flag on device
 
 Tools -=-=-
   exp|export - Tell ninja to create a compile_commands.json
   f|flutter - Build with flutter before doing anything else
-  ch|checkra1n - Open Checkra1n GUI on MacOS.
-  chc|checkra1ncli - Open Checkra1n CLI on MacOS.
+  ch|checkra1n - Open Checkra1n GUI
+  chc|checkra1ncli - Open Checkra1n CLI
 
 Debugging -=-=-
   vn - Print clang/ld/etc. commands and flags
-  vd - echo every bash command in the main dragon file. This is horrifying. Dont do this.
+  vd - echo every bash command in the main dragon file
   vg - DragonGen verbositiy.
   norm - Doesn't delete build.ninja after building.
-  debug - Enable all of these flags (You will want to pipe this to "vi -", it's a ton)
+  debug - Enable all debug flags
 
 -=-=-
 
