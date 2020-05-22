@@ -15,15 +15,15 @@ def assume():
     f = open("DragonMake", 'w+')
     dir_path = os.path.basename(os.getcwd())
     f.write("---\n")
-    f.write(f'package_name: {dir_path}\n')
-    f.write('install_command: sbreload\n\n')
+    f.write(f'name: {dir_path}\n')
+    f.write('icmd: sbreload\n\n')
     f.write(f'{dir_path}:\n')
     f.write( '  type: tweak\n')
     f.write( '  logos_files:\n    - Tweak.xm\n')
     f.close()
     if not os.path.exists(f'{dir_path}.plist'):
         bfilter = open(f'{dir_path}.plist', 'w+')
-        bfilter.write('{"Filter":{"Bundles":["com.apple.springboard"]}}')
+        bfilter.write('{ Filter = { Bundles = ( "com.apple.springboard" ); }; }')
         bfilter.close()
     if not os.path.exists('control'):
         control = open('control', 'w+')
@@ -31,7 +31,7 @@ def assume():
         control.close()
 
 def main():
-    prompt = int(input(PrefixColor+u'[Dragon] ' + NC + u'No DragonMake Found.\n1. Assume input\n2. Interactive Setup\n'))
+    prompt = int(input(PrefixColor+u'[Dragon] ' + NC + u'No DragonMake Found.\n1. Assume input\n2. New Project Creator\n3. Exit\n'))
     if prompt == 1:
         assume()
 

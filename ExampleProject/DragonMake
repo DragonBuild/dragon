@@ -1,9 +1,9 @@
 ---
-package_name: ExampleTweak
-install_command: sbreload
+name: ExampleTweak
+icmd: sbreload
 Example:
     type: tweak
-    targetios: 11.0
+    targetvers: 11.0
     archs:
         - arm64
         - arm64e
@@ -11,13 +11,10 @@ Example:
         - Tweak.xm
 ExamplePrefs:
     dir: ExampleTweakPrefs
-    type: bundle
-    targetios: 11.0
+    type: prefs
+    targetvers: 11.0
     archs:
         - arm64
         - arm64e
-    files:
+    objc_files:
         - Prefs.m
-    stage: # These two are required for PreferenceLoader
-        - mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/
-        - cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist

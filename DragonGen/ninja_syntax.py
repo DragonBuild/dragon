@@ -8,14 +8,22 @@ use Python.
 
 import re
 import textwrap
+from typing import TextIO
+
 
 def escape_path(word):
     return word.replace('$ ', '$$ ').replace(' ', '$ ').replace(':', '$:')
 
+
 class Writer(object):
     def __init__(self, output, width=78):
-        self.output = output
+        """
+
+        :type output: file
+        """
+        self.output: TextIO = output
         self.width = width
+        self.waiting_variables = {}
 
     def newline(self):
         self.output.write('\n')
@@ -24,6 +32,20 @@ class Writer(object):
         for line in textwrap.wrap(text, self.width - 2, break_long_words=False,
                                   break_on_hyphens=False):
             self.output.write('# ' + line + '\n')
+
+    def variable_wait(self, key, buffer=50, indent=0):
+        x=" "
+        x=x*buffer
+        self._line('%s = %s' % (key, x), indent)
+        i = self.output.tell()-2-buffer
+        self.waiting_variables[key] = i
+
+    def variable_update(self, key, value, buffer=50):
+        place = self.output.tell()
+        self.output.seek(self.waiting_variables[key])
+        add = buffer
+        self.output.write(value + "\n\n")
+        self.output.seek(place+add)
 
     def variable(self, key, value, indent=0):
         if value is None:
@@ -125,7 +147,7 @@ class Writer(object):
             while True:
                 space = text.rfind(' ', 0, space)
                 if (space < 0 or
-                    self._count_dollars_before_index(text, space) % 2 == 0):
+                        self._count_dollars_before_index(text, space) % 2 == 0):
                     break
 
             if space < 0:
@@ -134,17 +156,17 @@ class Writer(object):
                 while True:
                     space = text.find(' ', space + 1)
                     if (space < 0 or
-                        self._count_dollars_before_index(text, space) % 2 == 0):
+                            self._count_dollars_before_index(text, space) % 2 == 0):
                         break
             if space < 0:
                 # Give up on breaking.
                 break
 
             self.output.write(leading_space + text[0:space] + ' $\n')
-            text = text[space+1:]
+            text = text[space + 1:]
 
             # Subsequent lines are continuations, so indent them.
-            leading_space = '  ' * (indent+2)
+            leading_space = '  ' * (indent + 2)
 
         self.output.write(leading_space + text + '\n')
 
@@ -173,9 +195,11 @@ def expand(string, vars, local_vars={}):
     Note: doesn't handle the full Ninja variable syntax, but it's enough
     to make configure.py's use of it work.
     """
+
     def exp(m):
         var = m.group(1)
         if var == '$':
             return '$'
         return local_vars.get(var, vars.get(var, ''))
+
     return re.sub(r'\$(\$|\w*)', exp, string)

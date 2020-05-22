@@ -1,0 +1,183 @@
+---
+# Special thanks to uroboro for suggesting this
+# Configurations here should provide enough default variables to create the specified module;
+# Please reach out to _kritanta if you need advice on extending these
+Defaults:
+  proj_build_dir: .dragon
+  builddir: $proj_build_dir/build
+  objdir: $proj_build_dir/obj
+  signdir: $proj_build_dir/sign
+  bridging-header: $name-Bridging-Header.h
+  dragondir: $$DRAGONBUILD
+  cc: clang
+  cxx: clang++
+  ld: clang++
+  nopack: No
+  codesign: ldid
+  dsym: dsymutil
+  plutil: plutil
+  swift: swift
+  lipo: lipo
+  logos: $dragondir/bin/logos.pl
+  optool: $dragondir/bin/optool
+  stage:
+    - 'true'
+  wild_recurse: No
+  warnings: -Wall
+  optim: "0"
+  debug: -fcolor-diagnostics
+  idflag: ''
+  entflag: '-S'
+  entfile: ''
+  resource_dir: 'Resources'
+  fw_dirs:
+    - $sysroot/System/Library/Frameworks
+    - $sysroot/System/Library/PrivateFrameworks
+    - $dragondir/frameworks
+  lib_dirs:
+    - $dragondir/lib
+    - '.'
+  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
+  stagedir: '_'
+
+Targets:
+  sim:
+    all:
+      targetos: iphoneos
+      targetvers: 13.0
+      arc: yes
+      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      archs:
+        - i386
+        - x86_64
+  ios:
+    all:
+      targetos: iphoneos
+      targetvers: 10.0
+      arc: yes
+      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      archs:
+        - armv7
+        - arm64
+        - arm64e
+  watchos:
+    all:
+      targetos: watchos
+      targetvers: 5.0
+      arc: yes
+      sysroot: $dragondir/sdks/WatchOS.sdk
+      archs: arm64_32
+Types:
+  comprehensive:
+  app:
+    required_states:
+      - has_build_files
+    variables:
+      install_location: '/Applications/'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
+  tweak-jailed:
+    required_states:
+      - has_build_files
+    variables:
+      install_location: '/Applications/'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
+      loader: DragonLoad
+      embed-libs:
+        - CydiaSubstrate
+  tweak:
+    required_states:
+      - has_build_files
+    production:
+      deb:
+        - 'build-files'
+        - 'copy-to-target'
+    variables:
+      install_location: '/Library/MobileSubstrate/DynamicLibraries/'
+      build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'
+      hooker-priority: libhooker
+      lang: logos
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      libs:
+        - substrate
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+  prefs:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/PreferenceBundles/$name.bundle'
+      build_target_file: '$proj_build_dir/$stagedir$location/$name'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - Preferences
+        - UIKit
+        - Foundation
+      stage2:
+        - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
+        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
+  bundle:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp -R Resources/* $proj_build_dir/$stagedir/$location/$name.bundle/'
+  resource-bundle:
+    required_states:
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'true;'
+  stage:
+    variables:
+      stage2:
+        - 'true;'
+  library:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: 'usr/lib'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.dylib'
+      ldflags: '-install_name $location$name.dylib'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      stage2:
+        - 'true;'
+  cli:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: '/usr/bin'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      stage2:
+        - 'true;'
+
+  raw:
