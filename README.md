@@ -25,36 +25,25 @@ It's aimed at both speed and configurability. Every single factor of it is confi
 
 # Installing DragonBuild
 
-`git clone https://github.com/DragonBuild/DragonBuild.git`
 
-Add the following to your bash profile / .zshrc:
-
-`export DRAGONBUILD=path/to/dragonbuild`
-`alias dragon=$DRAGONBUILD/dragon`
-
-
-You can set an IP or name to install to via `export DRBIP="iphonename"` or `export DRBIP=192.168.your.ip`
-
-This will allow you to use `dragon i` to install packages to your device. 
 
 # Setting up your project for DragonBuild
 
-Dragon projects are configured via a single DragonMake file, regardless of how many subprojects you have. 
+DragonBuild is capable of building most Theos projects instantly. No DragonMake file needed. 
 
-You can specify subprojects and their information here. This allows for compiling slices in parallel, along with keeping things much more organized. 
+It has an insanely powerful "DragonMake" system of it's own though, and it's fairly easy to work with. 
 
 ## DragonMake Syntax
 
-DragonMake follows fairly standard YAML syntax, with a singular escape character, `$`. 
+DragonMake follows yaml syntax. Strings dont typically need to be wrapped in `""`, although wildcards do.
 
-For single line variables, you can use bash syntax to evaluate a command with `$$(command args)`
+For str variables, you can use bash syntax to evaluate a command with `$$(command args)`
 
-A single `$` denotes a ninja variable. You should not need to worry about these. A `$$` is evaluated to `$` and subsequent information treated in bash. For example, one could use `$$DRAGONBUILD` to get the location of the dragon directory in a variable. 
+You can also refer to environment variables with `$$VARNAME`
 
-For files specifically:
-  `$wildcard("directory", "*.extension")` will find all files in a specific directory
-
-  `$eval("bash command")` is also provided, in the event more complex manipulation is needed. 
+Wildcards:  
+  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here` to get an idea. 
+  `"**/*.m"` for example will find all .m files in the current directory *and subdirectories*
 
 ## DragonMake Format
 
@@ -107,60 +96,101 @@ SomeOtherTweak:
 
 ## DragonMake Variables
 
-Please pay attention to how these variables should be laid out
+Top Level Variables
 
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
-| `project_name` | str | Name of the whole project | N/A |
-| `install_command` | str | Command to run on device after install | `killall -9 SpringBoard` |
-| `name` | str | Name of the item being build. Specified as `name:` with the rest of the item specific variables below | N/A |
-| `type` | str | Type of project being built. One of "tweak"/"bundle"/"library". | N/A |
+| `name` | str | Name of the whole project | N/A |
+| `icmd` | str | Command to run on device after install | `killall -9 SpringBoard` |
+| `all` | dict | Variables here will be applied to all modules and can be overridden individually |  |
+
+Module Variables
+
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| `type` | str | Type of project being built. See [Project_Types](#Project_Types) | N/A |
+| `files` | list | List of files to be compiled. These will be sorted into proper groups by extension. | [] |
 | `logos_files` | list | List of files that require the logos preprocessor | [] |
-| `files` | list | List of files to be compiled, excluding logos files. | [] |
-| `targetios` | str | Minimum iOS Version Required | [] | 
-| `archs` | list | Architechtures to compile for | [] |
+| `c_files` | list | List of files to build as .c source | [] |
+| `cxx_files` | list | List of files to build as .cpp source | [] |
+| `objc_files` | list | List of files to build as .m source | [] |
+| `objcxx_files` | list | List of files to build as .mm source | [] |
+| `target` | str | OS being targeted. By default, iOS. You can define your own, too; See [Targets](#Targets) | [] | 
+| `targetvers` | str | iOS Version being targeted. | [] | 
+| `archs` | list | Architectures to compile for | [] |
 | `sysroot` | str | Root of the Patched SDK to build with | $DRAGONBUILD/sdks/iPhoneOS.sdk |
-| `cc` | str | c/c++ compiler to use | clang+ |
-| `ld` | str | linker to use | clang+ |
-| `ldid` | str | ldid binary to sign with | ldid |
+| `toolchain` | str | Applied as a prefix to the below 8 variables  | $DRAGONBUILD/sdks/iPhoneOS.sdk |
+| `cc` | str | c/c++ compiler to use | clang |
+| `cxx` | str | c/c++ compiler to use | clang++ |
+| `ld` | str | linker to use | clang/clang++ |
+| `lipo` | str | lipo tool to use | lipo |
+| `codesign` | str | ldid binary to sign with | ldid |
 | `dsym` | str | dsymutil binary to symbolicate with | dsymutil |
+| `plutil` | str | dsymutil binary to symbolicate with | plutil |
+| `swift` | str | dsymutil binary to symbolicate with | swift |
 | `logos` | str | logos.pl file to use for preprocessing | `$DRAGONBUILD/bin/logos.pl` | 
 | `stage` | str/list | Console command(s) to run before after build and before packaging | '' |
-| `arc` | str | -fobjc-arc, if enabling so is desired | `-fobjc-arc` |
-| `targ` | str | build target | -DTARGET_IPHONE=1 |
+| `arc` | BOOL | Should we use -fobjc-arc | `-fobjc-arc` |
 | `warnings` | str | Warnings flag | -Wall |
-| `optim` | str | Optimzation level. Higher levels can break obfuscators. | 0 |
+| `optim` | str | Optimization level. Higher levels can break obfuscators. | 0 |
 | `debug` | str | debug flags | -fcolor-diagnostics |
 | `libs` | list | List of libraries to link the binary against | '' |
 | `frameworks` | list | List of Frameworks to compile with | ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox'] |
-| `cflags` | str | additional flags to pass to clang and the linker | '' |
-| `ldflags` | str | additional flags to pass to the linker | '' |
-| `ldidflags` | str | custom option for ldid | '-S' |
+| `cflags` | str | additional flags to pass to clang and the linker. Will be applied after everything else. | '' |
+| `ldflags` | str | additional flags to pass to the linker. Applied after cflags. | '' |
+| `entflag` | str | custom flag for codesign util | '-S' |
+| `entfile` | str | Applied directly after entflag. Typically for ldid, an entitlement plist. | '' |
 | `install_location` | str | override variable for bundles/libraries to allow specifying install location | '' |
-| `framework_search_dirs` | list | Framework Search Dirs. Changing this variable overrides defaults. | ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks'] |
-| `additional_framework_search_dirs` | list | Allows adding framework search dirs without overwriting old ones. | [] |
-| `library_search_dirs` | list | Library search dirs. Just like the framework search | ['$dragondir/lib', '.'] |
-| `additional_library_search_dirs` | list | Add to lib search without overwriting | [] | 
+| `fw_dirs` | list | Framework Search Dirs. Changing this variable overrides defaults. | ['$sysroot/System/Library/Frameworks', '$sysroot/System/Library/PrivateFrameworks', '$dragondir/frameworks'] |
+| `additional_fw_dirs` | list | Allows adding framework search dirs without overwriting old ones. | [] |
+| `lib_dirs` | list | Library search dirs. Just like the framework search | ['$dragondir/lib', '.'] |
+| `additional_lib_dirs` | list | Add to lib search without overwriting | [] | 
 
-Yaml parsing is done via python3, and I'm not strict about arbitrary code execution. Go wild, its your machine. 
+You can reference any of these variables in a variable *below* it (really, avoid doing this please) using `$var`
 
 # DragonBuild Commands
 
-All of these can be combined and ran at the same time, if needed.
+All (most) of these can be combined and ran at the same time, if needed.
 
-### Building and installing your Tweak
+`dragon update` will update your dragonbuild installation to the latest version.
 
-`dragon build` to build (`dragon make` and `dragon b` also work)
+`dragon -h` outputs the following:
 
-`dragon install` to install (`dragon i` also works)
+```yaml
 
-### Forcing a rebuild
+DragonBuild v1.0 -=-=-
+  usage: dragon [commands]
 
-Using the `c` or `clean` command will perform a clean regen and rebuild of your project. 
+Building -=-=-
+  d|do - Build and Install
+  c|clean - recompile, link, and package your project
+  b|build|make - compile, link, and package your project
+  r|release - Load DragonRelease file over the DragonMake one
+  rl|relink - Re-link the package regardless of changes
 
-### Generating compile commands for clangd or other tools
+Installation -=-=-
+  i|install - Install to device located at $DRBIP
+  rs|respring - Respring the current build device
+  dr|devicerun - Run anything after this flag on device
 
-`dragon export`
+Tools -=-=-
+  exp|export - Tell ninja to create a compile_commands.json
+  f|flutter - Build with flutter before doing anything else
+  ch|checkra1n - Open Checkra1n GUI on MacOS.
+  chc|checkra1ncli - Open Checkra1n CLI on MacOS.
+
+Debugging -=-=-
+  vn - Print clang/ld/etc. commands and flags
+  vd - echo every bash command in the main dragon file. This is horrifying. Dont do this.
+  vg - DragonGen verbositiy.
+  norm - Doesn't delete build.ninja after building.
+  debug - Enable all of these flags (You will want to pipe this to "vi -", it's a ton)
+
+-=-=-
+
+DragonBuild v1.0.0 - by kritanta
+```
+
 
 # Helpful links
 
