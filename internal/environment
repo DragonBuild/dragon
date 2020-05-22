@@ -1,8 +1,7 @@
 #!/bin/bash
 
-if [ -z "$DRAGONBUILD" ]; then
-  export DRAGONBUILD=~/.dragonbuild/
-fi
+export DRAGONBUILD=~/.dragonbuild/
+
 source $DRAGONBUILD/state/phoneip
 
 export DRAGONVERS="1.0.0"
