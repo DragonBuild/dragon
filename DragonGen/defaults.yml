@@ -137,6 +137,25 @@ Types:
         - Foundation
       stage2:
         - 'cp -R Resources/* $proj_build_dir/$stagedir/$location/$name.bundle/'
+
+  framework:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/Frameworks/$name.framework'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - Foundation
+      stage2:
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
+        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONBUILD/frameworks/$name.framework'
+        - 'if [ ! -z "$public_headers" ]; then
+           mkdir -p $proj_build_dir/$stagedir/$location/Headers;
+           cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
+           fi'
   resource-bundle:
     required_states:
     production_allow:
