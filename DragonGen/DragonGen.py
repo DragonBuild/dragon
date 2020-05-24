@@ -422,6 +422,8 @@ class Project(object):
         self.builder.newline()
         self.builder.variable('stagedir', get_var(self.variables, 'stagedir'))
 
+        self.builder.variable('public_headers', get_var(self.variables, 'public_headers'))
+
         self.builder.variable('proj_build_dir', get_var(self.variables, 'proj_build_dir'))
         self.builder.newline()
 
@@ -623,8 +625,8 @@ argument_variables = {
     'libs': ' -l',
     'frameworks': ' -framework ',
     'stage': ' ; ',
-    'lopts': ' '
-
+    'lopts': ' ',
+    'public_headers': '',
 }
 
 supports_expressions = ['files', 'logos_files', 'plists', 'swift_files', 'dlists']
