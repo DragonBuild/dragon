@@ -153,9 +153,9 @@ Types:
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
         - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONBUILD/frameworks/$name.framework'
         - 'if [ ! -z "$public_headers" ]; then
-          mkdir -p .dragon/_/Library/FramewOrks/EvilKit.framework/Headers;
-          cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
-          fi'
+           mkdir -p $proj_build_dir/$stagedir/$location/Headers;
+           cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
+           fi'
   resource-bundle:
     required_states:
     production_allow:
