@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 import os
-import re
-import string
-import subprocess
 import sys
 import traceback
 import glob
 from datetime import datetime
-from typing import List, TextIO
+from typing import TextIO
 
 import regex as regex
 import yaml
 
-from DragonExceptions import *
+from DragonExceptions import MissingBuildFilesException
 from buildgen.buildgen.generator import Generator
 
 exports = {}
@@ -22,6 +19,10 @@ variables_dump = {}
 dragon_match = '(.*)="?(.*)""?#?'
 make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'\$\(THEOS_MAKE_PATH\)\/(.*).mk')
+
+
+def extrapolate_stage(stage):
+    return ';'.join((stage.split(';') if isinstance(stage, str) else stage))
 
 
 class Project(object):
@@ -204,7 +205,7 @@ class Project(object):
                 if '*' in filename:
                     logos_files.remove(filename)
                     for i in glob.glob(subdir + filename, recursive=True):
-                        logos_files.append(i.split(subdir)[1])
+                        logos_files.append(i[len(subdir):])
 
                     continue
 
@@ -242,7 +243,7 @@ class Project(object):
                     if '*' in filename:
                         c_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            c_files.append(i.split(subdir)[1])
+                            c_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'c{a}']:
@@ -269,7 +270,7 @@ class Project(object):
                     if '*' in filename:
                         cxx_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            cxx_files.append(i.split(subdir)[1])
+                            cxx_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'cxx{a}']:
@@ -297,7 +298,7 @@ class Project(object):
                     if '*' in filename:
                         objc_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            objc_files.append(i.split(subdir)[1])
+                            objc_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'objc{a}']:
@@ -323,7 +324,7 @@ class Project(object):
                     if '*' in filename:
                         objcxx_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            objcxx_files.append(i.split(subdir)[1])
+                            objcxx_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'objcxx{a}']:
@@ -352,7 +353,7 @@ class Project(object):
                     if '*' in filename:
                         swift_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=self.variables['wild_recurse']):
-                            swift_files.append(i.split(subdir)[1])
+                            swift_files.append(i[len(subdir):])
                         continue
 
                     has_swift = True
@@ -409,10 +410,6 @@ class Project(object):
         :param self.builder:
         :param variables:
         """
-        extrapolate_stage = lambda stage: \
-            (lambda slist:
-             ';'.join(slist)) \
-                (stage.split(';') if isinstance(stage, str) else stage)
         self.builder.variable('name', get_var(self.variables, 'name'))
         self.builder.variable('lowername', get_var(self.variables, 'name').lower())
         self.builder.newline()
@@ -642,11 +639,6 @@ def get_var(full_vars, name, is_empty=None):
     :return:
     """
     # print("%s" % name, file=sys.stderr)
-    extrapolate_stage = lambda stage: \
-        (lambda slist:
-         ';'.join(slist)) \
-            (stage.split(';') if isinstance(stage, str) else stage)
-
     if not is_empty:
         is_empty = [True]
     try:
@@ -1097,6 +1089,27 @@ def main():
         print(f'export {i}="{exports[i]}"')
 
 
+def handle(ex: Exception):
+    import sys
+    import tty
+    import termios
+    import pprint
+
+    print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
+
+    old_setting = termios.tcgetattr(sys.stdin.fileno())
+    tty.setraw(sys.stdin)
+    x = sys.stdin.read(1)
+    termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+    if str(x).lower() == 'v':
+        print("Entire Project Config:", file=sys.stderr)
+        pprint.pprint(ex.variables, stream=sys.stderr)
+        print(str(ex), file=sys.stderr)
+        print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
+    else:
+        print("Exiting...", file=sys.stderr)
+
+
 if __name__ == "__main__":
     try:
         main()
@@ -1105,84 +1118,27 @@ if __name__ == "__main__":
         print("The project type specified requires files, but we cant see any in the config.\n", file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(ex.variables, stream=sys.stderr)
-        else:
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print("Exiting...", file=sys.stderr)
-
-        print("exit 5")
+        handle(ex)
+        exit(5)
     except KeyError as ex:
         print("KeyError: Missing value in variables array. Likely internal issue.", file=sys.stderr)
-        # print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
         print(str(ex), file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(variables_dump, stream=sys.stderr)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
+        handle(ex)
         exit(2)
     except IndexError as ex:
         print("IndexError: List index out of range.", file=sys.stderr)
-        # print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
         print(str(ex), file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(variables_dump, stream=sys.stderr)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
+        handle(ex)
         exit(2)
     except Exception as ex:
-        import sys, tty, termios
-
         print("We hit an error while generating your package.", file=sys.stderr)
         print("Unfortunately this error is undocumented.", file=sys.stderr)
         print("This means that either _kritanta broke something, or you've found a new bug!", file=sys.stderr)
         print("Regardless, please do reach out to @_kritanta with this info!\n", file=sys.stderr)
 
-        print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
-
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(repr(ex), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
-        else:
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print("Exiting...", file=sys.stderr)
-
+        handle(ex)
         exit(-1)
