@@ -205,7 +205,7 @@ class Project(object):
                 if '*' in filename:
                     logos_files.remove(filename)
                     for i in glob.glob(subdir + filename, recursive=True):
-                        logos_files.append(i.split(subdir)[1])
+                        logos_files.append(i[len(subdir):])
 
                     continue
 
@@ -243,7 +243,7 @@ class Project(object):
                     if '*' in filename:
                         c_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            c_files.append(i.split(subdir)[1])
+                            c_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'c{a}']:
@@ -270,7 +270,7 @@ class Project(object):
                     if '*' in filename:
                         cxx_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            cxx_files.append(i.split(subdir)[1])
+                            cxx_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'cxx{a}']:
@@ -298,7 +298,7 @@ class Project(object):
                     if '*' in filename:
                         objc_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            objc_files.append(i.split(subdir)[1])
+                            objc_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'objc{a}']:
@@ -324,7 +324,7 @@ class Project(object):
                     if '*' in filename:
                         objcxx_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=True):
-                            objcxx_files.append(i.split(subdir)[1])
+                            objcxx_files.append(i[len(subdir):])
                         continue
 
                     if not used_rules[f'objcxx{a}']:
@@ -353,7 +353,7 @@ class Project(object):
                     if '*' in filename:
                         swift_files.remove(filename)
                         for i in glob.glob(subdir + filename, recursive=self.variables['wild_recurse']):
-                            swift_files.append(i.split(subdir)[1])
+                            swift_files.append(i[len(subdir):])
                         continue
 
                     has_swift = True
