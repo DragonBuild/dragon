@@ -1097,6 +1097,27 @@ def main():
         print(f'export {i}="{exports[i]}"')
 
 
+def handle(ex: Exception):
+    import sys
+    import tty
+    import termios
+    import pprint
+
+    print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
+
+    old_setting = termios.tcgetattr(sys.stdin.fileno())
+    tty.setraw(sys.stdin)
+    x = sys.stdin.read(1)
+    termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+    if str(x).lower() == 'v':
+        print("Entire Project Config:", file=sys.stderr)
+        pprint.pprint(ex.variables, stream=sys.stderr)
+        print(str(ex), file=sys.stderr)
+        print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
+    else:
+        print("Exiting...", file=sys.stderr)
+
+
 if __name__ == "__main__":
     try:
         main()
@@ -1105,84 +1126,27 @@ if __name__ == "__main__":
         print("The project type specified requires files, but we cant see any in the config.\n", file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(ex.variables, stream=sys.stderr)
-        else:
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print("Exiting...", file=sys.stderr)
-
-        print("exit 5")
+        handle(ex)
+        exit(5)
     except KeyError as ex:
         print("KeyError: Missing value in variables array. Likely internal issue.", file=sys.stderr)
-        # print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
         print(str(ex), file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(variables_dump, stream=sys.stderr)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
+        handle(ex)
         exit(2)
     except IndexError as ex:
         print("IndexError: List index out of range.", file=sys.stderr)
-        # print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
         print(str(ex), file=sys.stderr)
         print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
 
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            import pprint
-
-            print("Entire Project Config:", file=sys.stderr)
-            pprint.pprint(variables_dump, stream=sys.stderr)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
+        handle(ex)
         exit(2)
     except Exception as ex:
-        import sys, tty, termios
-
         print("We hit an error while generating your package.", file=sys.stderr)
         print("Unfortunately this error is undocumented.", file=sys.stderr)
         print("This means that either _kritanta broke something, or you've found a new bug!", file=sys.stderr)
         print("Regardless, please do reach out to @_kritanta with this info!\n", file=sys.stderr)
 
-        print("Press v for detailed debugging output, any other key to exit.", file=sys.stderr)
-
-        import sys, tty, termios
-
-        old_setting = termios.tcgetattr(sys.stdin.fileno())
-        tty.setraw(sys.stdin)
-        x = sys.stdin.read(1)
-        if str(x).lower() == 'v':
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
-            print(repr(ex), file=sys.stderr)
-            print(str(ex), file=sys.stderr)
-        else:
-            termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-            print("Exiting...", file=sys.stderr)
-
+        handle(ex)
         exit(-1)
