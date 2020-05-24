@@ -21,6 +21,10 @@ make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'\$\(THEOS_MAKE_PATH\)\/(.*).mk')
 
 
+def extrapolate_stage(stage):
+    return ';'.join((stage.split(';') if isinstance(stage, str) else stage))
+
+
 class Project(object):
 
     def __init__(self, project_type: str, variables: dict, out: TextIO, full_config=None):
@@ -406,10 +410,6 @@ class Project(object):
         :param self.builder:
         :param variables:
         """
-        extrapolate_stage = lambda stage: \
-            (lambda slist:
-             ';'.join(slist)) \
-                (stage.split(';') if isinstance(stage, str) else stage)
         self.builder.variable('name', get_var(self.variables, 'name'))
         self.builder.variable('lowername', get_var(self.variables, 'name').lower())
         self.builder.newline()
@@ -639,11 +639,6 @@ def get_var(full_vars, name, is_empty=None):
     :return:
     """
     # print("%s" % name, file=sys.stderr)
-    extrapolate_stage = lambda stage: \
-        (lambda slist:
-         ';'.join(slist)) \
-            (stage.split(';') if isinstance(stage, str) else stage)
-
     if not is_empty:
         is_empty = [True]
     try:
