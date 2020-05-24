@@ -25,10 +25,13 @@ It's aimed at both speed and configurability. Every single factor of it is confi
 
 # Installing DragonBuild
 
-Paste the following into your terminal, enter the sudo pass, and follow along with the script. 
-You must have ``wget`` installed. (``brew install wget``)
+**Prerequisites**:
+- wget (``brew install wget``)
+- PyYAML and regex Python Libraries (``pip3 install pyyaml regex``)
 
-`sh <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
+Paste the following into your terminal, enter the sudo pass, and follow along with the script. 
+
+`bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
 # Setting up your project for DragonBuild
 
