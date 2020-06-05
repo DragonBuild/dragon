@@ -6,4 +6,4 @@ export PATH=$PATH+":/usr/local/bin/"
 
 source $DRAGONBUILD/state/phoneip
 
-export DRAGONVERS="1.0.0"
+export DRAGONVERS="1.0.1"
