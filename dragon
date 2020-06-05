@@ -115,10 +115,6 @@ update()
   cd $x || exit
 }
 
-mkdir -p .dragon/ninja > /dev/null
-
-mkdir -p .dragon/modules > /dev/null
-
 # First, get a md5 of the package directory list
 
 while [ "$1" != "" ]; do
@@ -197,9 +193,13 @@ cwd=$(basename $PWD)
 
 
 if [ -f "DragonMake" ]; then  
-    true
+    gen=1
 else
-    stat Makefile > /dev/null 2>&1 || python3 ${DRAGONBUILD}/DragonGen/assume.py
+    if [ -f "Makefile" ]; then
+        gen=1
+    else 
+        python3 ${DRAGONBUILD}/DragonGen/assume.py
+    fi
 fi
 
 if [ -d ".dragon" ]; then  
@@ -210,7 +210,6 @@ fi
 
 
 if [ $flutter == 1 ]; then
-
     if [ $release == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Building with Flutter for iOS (Release)${NC}"
         flutter build ios
@@ -220,12 +219,11 @@ if [ $flutter == 1 ]; then
     fi
 fi
 
-
-gen=1
-
 if [ $gen == 1 ]; then 
     rm -rf .dragon/ninja/build.ninja 
-    mkdir -p .dragon/ninja
+    mkdir -p .dragon/ninja > /dev/null
+    mkdir -p .dragon/modules > /dev/null
+
     source $DRAGONBUILD/DragonGen/DragonGen $DGEN_DEBUG
 fi
 
