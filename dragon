@@ -7,6 +7,7 @@ source $DRAGONBUILD/internal/environment
 DBTIMEOUT=5
 
 source $DRAGONBUILD/internal/dragoncolors
+
 install=0
 build=0
 gen=0
@@ -17,6 +18,7 @@ norm=0
 debug=0
 flutter=0
 DRAGON_DPKG=0
+
 export release=0
 
 ToolchainPath=""
@@ -146,7 +148,8 @@ while [ "$1" != "" ]; do
         rs | respring )         ssh root@$DRBIP "killall -9 SpringBoard"
                                 exit
                                 ;;
-        dr | devicerun )        ssh root@$DRBIP "'$*'"
+        dr | devicerun )        shift
+                                ssh root@$DRBIP "$*"
                                 exit
                                 ;;
         ch | checkra1n )        open /Applications/checkra1n.app
