@@ -1,6 +1,14 @@
 # DragonBuild
 DragonBuild, simply explained, is a fast ninja-based theos alternative. 
 
+## Disclaimer
+
+This project is liable to undergo massive rewrites with no warning. Above all, it's my personal build system. It has been released and published only to hopefully encourage the massive changes needed to make https://github.com/theos/theos a modern and usable build system again. 
+
+If you're using this project, treat it like a "beta". Rewrites happen often. Variable names change. Error messages aren't quite done yet. It has miles of work that need done. Help is appreciated. 
+
+## Summary
+
 Specifically, it's a ninja build file generator and packaging system for substrate extensions and other common packages distributed in the jailbreak community. 
 
 It's aimed at both speed and configurability. Every single factor of it is configurable from a singular file. 
