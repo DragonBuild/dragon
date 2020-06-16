@@ -1,0 +1,23 @@
+---
+archs:                 [ armv7, armv7s, arm64, arm64e ]
+platform:              ios
+install-name:          "/System/Library/PrivateFrameworks/VisualAlert.framework/VisualAlert"
+current-version:       1
+compatibility-version: 1
+exports:
+  - archs:                [ armv7, armv7s, arm64, arm64e ]
+    objc-classes:         [ _AXAutoForwardingLocalNotificationHandler,
+                            _AXDistributedNotificationHandler,
+                            _AXLocalNotificationHandler,
+                            _AXTelephonyNotificationHandler,
+                            _AXVisualAlertManager, _VISAXNotificationHandler ]
+    objc-ivars:           [ _AXAutoForwardingLocalNotificationHandler._possibleHandlers,
+                            _AXAutoForwardingLocalNotificationHandler._possibleHandlersCount,
+                            _AXLocalNotificationHandler._opaqueObserver,
+                            _AXVisualAlertManager.ringerStateNotifyToken,
+                            _VISAXNotificationHandler._dispatcher,
+                            _VISAXNotificationHandler._notificationName,
+                            _VISAXNotificationHandler._observerIdentifier,
+                            _VISAXNotificationHandler._target,
+                            _VISAXNotificationHandler._valid ]
+...

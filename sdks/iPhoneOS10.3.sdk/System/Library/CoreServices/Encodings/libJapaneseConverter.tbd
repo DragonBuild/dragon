@@ -1,0 +1,12 @@
+--- !tapi-tbd-v2
+archs:           [ armv7, armv7s, arm64 ]
+uuids:           [ 'armv7: B71A45E2-532C-36CC-AB13-F6A9FC5E3B83', 'armv7s: 0D94BAC3-DB10-39FE-8ACF-4097F1867169', 
+                   'arm64: 88AF995D-FFA6-34D6-8179-4994B6622E78' ]
+platform:        ios
+install-name:    /System/Library/CoreServices/Encodings/libJapaneseConverter.dylib
+current-version: 69
+objc-constraint: none
+exports:         
+  - archs:           [ armv7, armv7s, arm64 ]
+    symbols:         [ ___CFStringEncodingGetJapaneseConverterDefinition ]
+...

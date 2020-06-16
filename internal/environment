@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export DRAGONBUILD=~/.dragonbuild/
+
+export PATH=$PATH+":/usr/local/bin/"
+
+source $DRAGONBUILD/state/phoneip
+
+export DRAGONVERS="1.0.1"

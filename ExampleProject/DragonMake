@@ -1,0 +1,20 @@
+---
+name: ExampleTweak
+icmd: sbreload
+Example:
+    type: tweak
+    targetvers: 11.0
+    archs:
+        - arm64
+        - arm64e
+    logos_files:
+        - Tweak.xm
+ExamplePrefs:
+    dir: ExampleTweakPrefs
+    type: prefs
+    targetvers: 11.0
+    archs:
+        - arm64
+        - arm64e
+    objc_files:
+        - Prefs.m

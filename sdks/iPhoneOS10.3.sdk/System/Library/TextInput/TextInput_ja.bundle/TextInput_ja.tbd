@@ -1,0 +1,23 @@
+--- !tapi-tbd-v2
+archs:           [ armv7, armv7s, arm64 ]
+uuids:           [ 'armv7: F694EE3A-CF70-334F-B546-DF022FCDF670', 'armv7s: 7D424C9B-F134-3F22-B723-634B890DAAD2', 
+                   'arm64: 7FB86D4F-C0E2-3FAD-A2D1-A6019F6931D1' ]
+platform:        ios
+install-name:    /System/Library/TextInput/TextInput_ja.bundle/TextInput_ja
+objc-constraint: none
+exports:         
+  - archs:           [ armv7, armv7s, arm64 ]
+    symbols:         [ _getNumericStringForTapsOnNumberPlane, _kanaTable, _patTable, 
+                       _romaTable ]
+    objc-classes:    [ _Romakana, _TICandidateSorter, _TIKeyboardFeatureSpecialization_ja, 
+                       _TIKeyboardInputManager_ja, _TIKeyboardInputManager_ja_Kana, 
+                       _TIKeyboardInputManager_ja_Romaji, _TIWordSearch3x3Kana, _TIWordSearch50onKana, 
+                       _TIWordSearchJapaneseOperationGetCandidates, _TIWordSearchKana, 
+                       _TIWordSearchRomajiKana ]
+    objc-ivars:      [ _Romakana._consonantsCharacterSet, _Romakana._kanaMode, _TIKeyboardInputManager_ja._convertStringForCurrentCandidates, 
+                       _TIKeyboardInputManager_ja._kbws, _TIKeyboardInputManager_ja._remainingInputLength, 
+                       _TIKeyboardInputManager_ja._shouldLearnAcceptedCandidate, 
+                       _TIWordSearchKana._contactObserver, _TIWordSearchKana._insertKatakanaAtIndex, 
+                       _TIWordSearchKana._kanaroma, _TIWordSearchKana._kanaromapat, 
+                       _TIWordSearchRomajiKana._romakana ]
+...
