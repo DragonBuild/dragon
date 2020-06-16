@@ -214,24 +214,24 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     '''
 
     ret = ProjectVars({
-        'cflags': '$cinclude -fmodules -fcxx-modules -fmodule-name=$name $arc '
+        'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name=$name $arc '
                   '-fbuild-session-file=$proj_build_dir/modules/ $debug '
-                  '-fmodules-prune-after=345600 $usrCflags $btarg -O$optim '
+                  '-fmodules-prune-after=345600 $cflags $btarg -O$optim '
                   '-fmodules-validate-once-per-build-session $fwSearch '
                   '-miphoneos-version-min=$targetvers -isysroot $sysroot '
                   '$header_includes $warnings -fmodules-prune-interval=86400',
-        'swiftflags': '-color-diagnostics -enable-objc-interop -sdk/'
+        'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk/'
                       'Applications/Xcode.app/Contents/Developer/Platforms/'
                       'iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/'
                       'Applications/Xcode.app/Contents/Developer/Toolchains/'
                       'XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g '
                       '-L/usr/lib/swift -swift-version 5 -module-name $name',
-        'lflags': '$cflags $typeldflags $frameworks $libs $libflags $lopt '
-                  '$libSearch $usrLDflags $libs',
-        'ldflags': '$usrLDFlags',
-        'signtarget': '$signdir/$build_target_file.unsigned',
-        'symtarget': '$signdir/$build_target_file.unsym',
-        'libflags': '-lobjc -lc++',
+        'internallflags': '$internalcflags $typeldflags $frameworks $libs $libflags $lopt '
+                  '$libSearch $ldflags $libs',
+        'internalldflags': '$ldFlags',
+        'internalsigntarget': '$signdir/$build_target_file.unsigned',
+        'internalsymtarget': '$signdir/$build_target_file.unsym',
+        'internallibflags': '-lobjc -lc++',
         'pwd': '.',
     })
 
@@ -343,11 +343,11 @@ def build_statements_and_rules(variables: ProjectVars) -> (list, list):
                                  arch_specific_object_files))
 
     build_state.extend([
-        Build('$symtarget',
+        Build('$internalsymtarget',
               'lipo',
               [f'$builddir/$name.{a}' for a in variables['archs']]),
-        Build('$signtarget', 'debug', '$symtarget'),
-        Build('$build_target_file', 'sign', '$signtarget'),
+        Build('$internalsigntarget', 'debug', '$internalsymtarget'),
+        Build('$build_target_file', 'sign', '$internalsigntarget'),
         Build('stage', 'stage', 'build.ninja'),
     ])
 
@@ -388,8 +388,8 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('stage2'),
         ___,
         ___,
-        Var('signtarget'),
-        Var('symtarget'),
+        Var('internalsigntarget'),
+        Var('internalsymtarget'),
         ___,
         Var('fwSearch'),
         Var('libSearch'),
@@ -434,6 +434,12 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('lflags'),
         Var('lfflags'),
         Var('swiftflags'),
+        ___,
+        Var('internalcflags'),
+        Var('internalldflags'),
+        Var('internallflags'),
+        Var('internallfflags'),
+        Var('internalswiftflags'),
         ___,
     ]
 
