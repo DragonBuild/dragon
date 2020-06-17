@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source $DRAGONBUILD/internal/environment
+source ~/.dragonbuild/internal/environment
 
-(bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/vers) &)
+# (bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/vers) &)
 
 DBTIMEOUT=5
 
