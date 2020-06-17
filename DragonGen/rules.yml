@@ -166,11 +166,11 @@ linkarm64e:
 linkx86_64:
   name: x86_64 Linker
   desc: Linking $in with $ld [x86_64]
-  cmd: $ld -arch arm64e $internallflags -o $out $in
+  cmd: $ld -arch x86_64 $internallflags -o $out $in
 linki386:
   name: i386 Linker
   desc: Linking $in with $ld [i386]
-  cmd: $ld -arch arm64e $internallflags -o $out $in
+  cmd: $ld -arch i386 $internallflags -o $out $in
 
 lipo:
   name: Lipo Utility
