@@ -6,7 +6,7 @@ echo $DGEN_DEBUG | grep "1" && echo "DragonGen Debug Enabled"
 
 source $DRAGONBUILD/internal/dragoncolors
 
-eval $(DGEN_DEBUG=${DGEN_DEBUG} python3 $DRAGONBUILD/DragonGen/DragonGen.py)
+eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 $DRAGONBUILD/DragonGen/DragonGen.py)
 
 if [ $theos == 1 ]; then
   echo -e "${GenColor}[DragonGen]${BoldColor} Building from Theos Makefile${NC}"

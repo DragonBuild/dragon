@@ -570,8 +570,12 @@ def main():
         }
         proj_config.update(config[key])
 
+        default_target = 'ios'
+        if os.environ['TARG_SIM']:
+            default_target = 'sim'
+
         with open(f'{proj_config["dir"]}/build.ninja', 'w+') as out:
-            variables = generate_vars(proj_config, config, 'ios')
+            variables = generate_vars(proj_config, config, default_target)
             outline = generate_ninja_outline(variables)
 
             generate_ninja_file(outline, variables, out)

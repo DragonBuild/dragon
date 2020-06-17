@@ -18,6 +18,7 @@ norm=0
 debug=0
 flutter=0
 DRAGON_DPKG=0
+export simtarg=0
 
 export release=0
 
@@ -139,6 +140,8 @@ while [ "$1" != "" ]; do
         norm )                  norm=1
                                 ;;
         b | build | make)       build=1
+                                ;;
+        sim | simulator )       simtarg=1
                                 ;;
         i | install )           install=1
                                 ;;
@@ -302,9 +305,27 @@ if [ $build == 1 ]; then
     echo "${GENOUTPUT}" > .dragon/last_package
 fi
 
+simfail()
+{
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Installing to /opt/simject failed!"
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Ensure you've followed simject's instructions properly."
+  echo -e "${PrefixColor}[Dragon]${BoldColor} https://github.com/angelXwind/simject/blob/master/README.md"
+  exit 1
+}
 
+simstall()
+{
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
+  cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* /opt/simject/ || cleanbuildfail
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
+  resim
+}
 
 if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
+    if [ $simtarg == 1 ]; then
+      simstall
+      exit 0
+    fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
     if [ -z "$DRBPORT" ]; then
         DRBPORT=22

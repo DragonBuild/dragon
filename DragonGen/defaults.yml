@@ -43,12 +43,11 @@ Defaults:
 Targets:
   sim:
     all:
-      targetos: iphoneos
+      targetos: iphonesimulator
       targetvers: 13.0
       arc: yes
-      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
       archs:
-        - i386
         - x86_64
   ios:
     all:
