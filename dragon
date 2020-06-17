@@ -17,7 +17,7 @@ only=0
 norm=0
 debug=0
 flutter=0
-DRAGON_DPKG=0
+DRAGON_DPKG=1
 export simtarg=0
 
 export release=0
@@ -141,7 +141,7 @@ while [ "$1" != "" ]; do
                                 ;;
         b | build | make)       build=1
                                 ;;
-        sim | simulator )       simtarg=1
+        sim | simulator )       export simtarg=1
                                 ;;
         i | install )           install=1
                                 ;;
@@ -304,6 +304,8 @@ if [ $build == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
     echo "${GENOUTPUT}" > .dragon/last_package
 fi
+
+# /*zip $foldername; ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""; ssh-copy-id root@$phoneip; scp $foldername.zip root@$phoneip:/tmp/mydeb.zip; ssh root@$phoneip "cd /tmp; unzip mydeb.zip; mkdir /private/var/mobile/Documents/crap; dpkg-deb --build -Zgzip -z9 mydeb /private/var/mobile/Documents/crap; zip /private/var/mobile/Documents/crap"; scp root@$phoneip:/private/var/mobile/Documents/crap.zip ~/crap.zip; unzip crap.zip*/
 
 simfail()
 {
