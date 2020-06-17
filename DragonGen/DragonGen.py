@@ -571,7 +571,7 @@ def main():
         proj_config.update(config[key])
 
         default_target = 'ios'
-        if os.environ['TARG_SIM'] == 1:
+        if os.environ['TARG_SIM'] == '1':
             default_target = 'sim'
 
         with open(f'{proj_config["dir"]}/build.ninja', 'w+') as out:
