@@ -18,7 +18,7 @@ Defaults:
   plutil: plutil
   swift: swift
   lipo: lipo
-  logos: $dragondir/bin/logos.pl
+  logos: $dragondir/modules/logos/bin/logos.pl
   optool: $dragondir/bin/optool
   stage:
     - 'true'
