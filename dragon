@@ -112,6 +112,7 @@ update()
   x=$PWD
   cd $DRAGONBUILD || exit
   git pull
+  git submodule update --init --recursive
   cd $x || exit
 }
 
