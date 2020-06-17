@@ -146,31 +146,31 @@ objcxxi386:
 linkarmv6:
   name: armv6 Linker
   desc: Linking $in with $ld [armv6]
-  cmd: $ld -arch armv6 $internallflags -o $out $in
+  cmd: $ld -arch armv6 $internallflags $internalldflags -o $out $in
 linkarmv7:
   name: armv7 Linker
   desc: Linking $in with $ld [armv7]
-  cmd: $ld -arch armv7 $internallflags -o $out $in
+  cmd: $ld -arch armv7 $internallflags $internalldflags -o $out $in
 linkarmv7s:
   name: armv7s Linker
   desc: Linking $in with $ld [armv7s]
-  cmd: $ld -arch armv7s $internallflags -o $out $in
+  cmd: $ld -arch armv7s $internallflags $internalldflags -o $out $in
 linkarm64:
   name: arm64 Linker
   desc: Linking $in with $ld [arm64]
-  cmd: $ld -arch arm64 $internallflags -o $out $in
+  cmd: $ld -arch arm64 $internallflags $internalldflags -o $out $in
 linkarm64e:
   name: arm64e Linker
   desc: Linking $in with $ld [arm64e]
-  cmd: $ld -arch arm64e $internallflags -o $out $in
+  cmd: $ld -arch arm64e $internallflags $internalldflags -o $out $in
 linkx86_64:
   name: x86_64 Linker
   desc: Linking $in with $ld [x86_64]
-  cmd: $ld -arch x86_64 $internallflags -o $out $in
+  cmd: $ld -arch x86_64 $internallflags $internalldflags -o $out $in
 linki386:
   name: i386 Linker
   desc: Linking $in with $ld [i386]
-  cmd: $ld -arch i386 $internallflags -o $out $in
+  cmd: $ld -arch i386 $internallflags $internalldflags -o $out $in
 
 lipo:
   name: Lipo Utility

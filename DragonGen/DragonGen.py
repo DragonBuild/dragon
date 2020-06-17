@@ -228,7 +228,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
                       '-L/usr/lib/swift -swift-version 5 -module-name $name',
         'internallflags': '$internalcflags $typeldflags $frameworks $libs $libflags $lopt '
                   '$libSearch $ldflags $libs',
-        'internalldflags': '$ldFlags',
+        'internalldflags': '',
         'internalsigntarget': '$signdir/$build_target_file.unsigned',
         'internalsymtarget': '$signdir/$build_target_file.unsym',
         'internallibflags': '-lobjc -lc++',

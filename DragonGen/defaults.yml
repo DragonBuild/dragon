@@ -96,8 +96,7 @@ Types:
       hooker-priority: libhooker
       lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      libs:
-        - substrate
+      internalldflags: -framework CydiaSubstrate
       frameworks:
         - UIKit
         - Foundation
