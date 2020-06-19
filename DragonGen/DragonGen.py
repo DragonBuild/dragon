@@ -667,6 +667,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             '$(BUNDLE_NAME)_INSTALL_PATH') or ''
         module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
             '$(BUNDLE_NAME)_FRAMEWORKS') or ''
+        module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
+            '$(BUNDLE_NAME)_LIBRARIES') or ''
         module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
             '$(BUNDLE_NAME)_PRIVATE_FRAMEWORKS') or ''
         module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
@@ -722,6 +724,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
 
         if module_archs != '':
             module['archs'] = module_cflags
+        if module_libraries != '':
+            module['libs'] = module_libraries
         if module_cflags != '':
             module['cflags'] = module_cflags
         if module_ldflags:
@@ -798,6 +802,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
         module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get('$(TWEAK_NAME)_LDFLAGS') or ''
         module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
             '$(TWEAK_NAME)_FRAMEWORKS') or ''
+        module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
+            '$(BUNDLE_NAME)_LIBRARIES') or ''
         module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
             '$(TWEAK_NAME)_PRIVATE_FRAMEWORKS') or ''
         module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
@@ -832,6 +838,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             module['archs'] = module_archs.split(' ')
         if module_cflags:
             module['cflags'] = module_cflags
+        if module_libraries != '':
+            module['libs'] = module_libraries
         if module_ldflags:
             module['ldflags'] = module_ldflags
         if stage != []:
