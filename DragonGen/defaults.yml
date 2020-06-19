@@ -29,6 +29,7 @@ Defaults:
   idflag: ''
   entflag: '-S'
   entfile: ''
+  triple: ''
   resource_dir: 'Resources'
   fw_dirs:
     - $sysroot/System/Library/Frameworks
@@ -47,6 +48,7 @@ Targets:
       targetvers: 13.0
       arc: yes
       sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
+      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
       archs:
         - x86_64
   ios:
@@ -55,6 +57,7 @@ Targets:
       targetvers: 10.0
       arc: yes
       sysroot: $dragondir/sdks/iPhoneOS.sdk
+      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
       archs:
         - armv7
         - arm64
@@ -65,7 +68,13 @@ Targets:
       targetvers: 5.0
       arc: yes
       sysroot: $dragondir/sdks/WatchOS.sdk
+      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
       archs: arm64_32
+  host:
+    all:
+      triple: MACHINE
+      archs:
+        - MACHINE
 Types:
   comprehensive:
   app:
@@ -90,6 +99,8 @@ Types:
       deb:
         - 'build-files'
         - 'copy-to-target'
+    production_allow:
+      - deb
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'

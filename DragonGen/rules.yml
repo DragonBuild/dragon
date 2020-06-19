@@ -172,6 +172,11 @@ linki386:
   desc: Linking $in with $ld [i386]
   cmd: $ld -arch i386 $internallflags $internalldflags -o $out $in
 
+dummy:
+  name: Copying Files
+  desc: Copying Files
+  cmd: cp $in $out
+
 lipo:
   name: Lipo Utility
   desc: Merging architechtures
