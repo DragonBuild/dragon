@@ -702,7 +702,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
                 module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
                     ' ') + module_frameworks.split(' ')
 
-            if module_archs != '':
+            if module_archs != '' and module_archs:
                 module['archs'] = module_archs.split(' ')
             if module_cflags != '':
                 module['cflags'] = module_cflags
@@ -725,7 +725,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
         if module_archs != '':
             module['archs'] = module_cflags
         if module_libraries != '':
-            module['libs'] = module_libraries
+            module['libs'] = module_libraries.split(' ')
         if module_cflags != '':
             module['cflags'] = module_cflags
         if module_ldflags:
@@ -781,7 +781,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
                 ' ') + module_frameworks.split(' ')
         if module_libraries != '':
-            module['libs'] = module_libraries
+            module['libs'] = module_libraries.split(' ')
         if module_archs != '':
             module['archs'] = module_archs
         if module_cflags != '':
@@ -839,7 +839,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
         if module_cflags:
             module['cflags'] = module_cflags
         if module_libraries != '':
-            module['libs'] = module_libraries
+            module['libs'] = module_libraries.split(' ')
         if module_ldflags:
             module['ldflags'] = module_ldflags
         if stage != []:
