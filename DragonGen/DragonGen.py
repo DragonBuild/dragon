@@ -7,7 +7,7 @@ import sys
 import termios
 import traceback
 import tty
-
+import platform
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
@@ -246,16 +246,19 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         if 'Targets' in source and target in source['Targets']:
             ret.update(source['Targets'][target]['all'])
 
-    if 'toolchain' in var_d:
-        ret.update({k: var_d['toolchain'] + '/' + var_d[k] for k in [
+    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
+        ret['ld'] = 'ld64'
+        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/arm64-apple-darwin14-' + var_d[k] for k in [
             'cc',
             'cxx',
-            'ld',
             'lipo',
-            'codesign',
             'dsym',
             'plutil',
             'swift',
+        ]})
+        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/' + var_d[k] for k in [
+            'ld',
+            'codesign',
         ]})
 
     NINJA_KEYS = {
@@ -344,12 +347,16 @@ def build_statements_and_rules(variables: ProjectVars) -> (list, list):
 
     build_state.extend([
         Build('$internalsymtarget',
-              'lipo',
+              'lipo' if len(variables['archs']) > 1 else 'dummy',
               [f'$builddir/$name.{a}' for a in variables['archs']]),
         Build('$internalsigntarget', 'debug', '$internalsymtarget'),
         Build('$build_target_file', 'sign', '$internalsigntarget'),
         Build('stage', 'stage', 'build.ninja'),
     ])
+    if len(variables['archs']) <= 1:
+        used_rules.remove("lipo")
+        used_rules.add("dummy")
+
 
     rule_list.extend(QuickRule(r) for r in used_rules)
 
@@ -440,6 +447,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('internallflags'),
         Var('internallfflags'),
         Var('internalswiftflags'),
+        Var('triple'),
         ___,
     ]
 
@@ -558,6 +566,9 @@ def main():
     for key in config:
         if key in META_KEYS:
             if META_KEYS[key] is not None:
+                if key == 'pack' or key == 'package':
+                    if not META_KEYS[key]:
+                        exports["DRAGON_DPKG"] = "0"
                 exports[META_KEYS[key]] = config[key]
             continue
         if key == 'exports':
