@@ -11,6 +11,7 @@ import platform
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
+import regex
 
 import yaml
 
@@ -213,21 +214,24 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     Raises: KeyError
     '''
 
+    if 'for' in var_d:
+        target = var_d['for']
+
     ret = ProjectVars({
         'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name=$name $arc '
-                  '-fbuild-session-file=$proj_build_dir/modules/ $debug '
-                  '-fmodules-prune-after=345600 $cflags $btarg -O$optim '
-                  '-fmodules-validate-once-per-build-session $fwSearch '
-                  '-miphoneos-version-min=$targetvers -isysroot $sysroot '
-                  '$header_includes $warnings -fmodules-prune-interval=86400',
+                          '-fbuild-session-file=$proj_build_dir/modules/ $debug '
+                          '-fmodules-prune-after=345600 $cflags $btarg -O$optim '
+                          '-fmodules-validate-once-per-build-session $fwSearch '
+                          '$triple $theosshim '
+                          '$header_includes $warnings -fmodules-prune-interval=86400',
         'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk/'
-                      'Applications/Xcode.app/Contents/Developer/Platforms/'
-                      'iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/'
-                      'Applications/Xcode.app/Contents/Developer/Toolchains/'
-                      'XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g '
-                      '-L/usr/lib/swift -swift-version 5 -module-name $name',
+                              'Applications/Xcode.app/Contents/Developer/Platforms/'
+                              'iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/'
+                              'Applications/Xcode.app/Contents/Developer/Toolchains/'
+                              'XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g '
+                              '-L/usr/lib/swift -swift-version 5 -module-name $name',
         'internallflags': '$internalcflags $typeldflags $frameworks $libs $libflags $lopt '
-                  '$libSearch $ldflags $libs',
+                          '$libSearch $ldflags $libs',
         'internalldflags': '',
         'internalsigntarget': '$signdir/$build_target_file.unsigned',
         'internalsymtarget': '$signdir/$build_target_file.unsym',
@@ -268,11 +272,24 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         'typeldflags': 'ldflags',
         'lopt': 'lopts'
     }
+    d = 0
+    for i in ret['archs']:
+        if 'MACHINE' in i:
+            ret['archs'][d] = platform.machine()
+        d += 1
+
+    if ret['triple'] != '':
+        ret['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() if 'MACHINE' in ret[
+            'triple'] else ret['triple']
+
     ret.update({key: ret[NINJA_KEYS[key]] for key in NINJA_KEYS})
 
     ret['lowername'] = str(ret['name']).lower()
     ret['fwSearch'] = ret['fw_dirs'] + ret['additional_fw_dirs']
     ret['libSearch'] = ret['lib_dirs'] + ret['additional_lib_dirs']
+
+    if os.environ['DGEN_DEBUG']:
+        print("project dictionary:" + str(ret), file=sys.stderr)
 
     return ProjectVars(ret)
 
@@ -356,7 +373,6 @@ def build_statements_and_rules(variables: ProjectVars) -> (list, list):
     if len(variables['archs']) <= 1:
         used_rules.remove("lipo")
         used_rules.add("dummy")
-
 
     rule_list.extend(QuickRule(r) for r in used_rules)
 
@@ -442,6 +458,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('lfflags'),
         Var('swiftflags'),
         ___,
+        Var('theosshim'),
         Var('internalcflags'),
         Var('internalldflags'),
         Var('internallflags'),
@@ -514,6 +531,350 @@ def generate_ninja_file(outline: list, variables: ProjectVars, stream: TextIO):
             gen.default(['$build_target_file'])
 
 
+make_match = regex.compile('(.*)=(.*)#?')
+make_type = regex.compile(r'include.*\/(.*)\.mk')
+nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
+
+
+# this was supposed to be a really small function, i dont know what happened ;-;
+def load_theos_makefile(file: object, root: object = True) -> dict:
+    project = {}
+    variables = {}
+    stage = []
+    stageactive = False
+    module_type = ''
+    arc = False
+    hassubproj = False
+    noprefix = False
+    try:
+        while 1:
+            line = file.readline()
+            if not line:
+                break
+            if not arc and '-fobjc-arc' in line:
+                arc = True
+            if not noprefix and '-DTHEOS_LEAN_AND_MEAN' in line:
+                noprefix = True
+            if line == 'internal-stage::':
+                stageactive = True
+                continue
+            if stageactive:
+                if line.startswith((' ', '\t')):
+                    x = line
+                    x = x.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+                    x = x.replace('$(ECHO_NOTHING)', '')
+                    x = x.replace('$(ECHO_END)', '')
+                    stage.append(x)
+                else:
+                    stageactive = False
+
+            if not make_match.match(line):
+                if not make_type.match(line):
+                    continue
+                if 'aggregate' in make_type.match(line).group(1):
+                    hassubproj = True
+                else:
+                    module_type = make_type.match(line).group(1)
+                continue
+
+            if not nepmatch.match(line):
+                name, value = make_match.match(line).group(1, 2)
+            else:
+                name, value = nepmatch.match(line).group(1, 2)
+            if name.strip() in variables:
+                variables[name.strip()] = variables[name.strip()] + ' ' + value.strip()
+            variables[name.strip()] = value.strip()
+    finally:
+        file.close()
+
+    if root:
+        project['name'] = os.path.basename(os.getcwd())
+        if 'INSTALL_TARGET_PROCESS' in variables:
+            project['icmd'] = 'killall -9 ' + variables['INSTALL_TARGET_PROCESS']
+        else:
+            project['icmd'] = 'sbreload'
+
+    modules = []
+    mod_dicts = []
+    # if module_type == 'aggregate':
+    if module_type == 'application':
+        module_name = variables.get('APPLICATION_NAME')
+        module_archs = variables.get('ARCHS')
+        module_files = variables.get(module_name + '_FILES') or variables.get('$(APPLICATION_NAME)_FILES') or ''
+        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$(APPLICATION_NAME)_CFLAGS') or ''
+        module_cflags = variables.get('ADDITIONAL_CFLAGS') or ''
+        module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get('$(APPLICATION_NAME)_LDFLAGS') or ''
+        module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get(
+            '$(APPLICATION_NAME)_CODESIGN_FLAGS') or ''
+        module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
+            '$(APPLICATION_NAME)_INSTALL_PATH') or ''
+        module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
+            '$(APPLICATION_NAME)_FRAMEWORKS') or ''
+        module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
+            '$(APPLICATION_NAME)_PRIVATE_FRAMEWORKS') or ''
+        module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
+            '$(APPLICATION_NAME)_EXTRA_FRAMEWORKS') or ''
+        module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
+            '$(APPLICATION_NAME)_LIBRARIES') or ''
+
+        files = []
+        if module_files:
+            tokens = module_files.split(' ')
+            nextisawildcard = False
+            for i in tokens:
+                if '$(wildcard' in i:
+                    nextisawildcard = 1
+                    continue
+                if nextisawildcard:
+                    # We dont want to stop with these till we hit a ')'
+                    # thanks cr4shed ._.
+                    nextisawildcard = 0 if ')' in i else 1
+                    grab = i.split(')')[0]
+                    files.append(grab)
+                    continue
+                files.append(i)
+
+        module = {
+            'type': 'app',
+            'files': files
+        }
+        if module_name != '':
+            module['name'] = module_name
+        if module_frameworks != '':
+            module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
+                ' ') + module_frameworks.split(' ')
+        if module_libraries != '':
+            module['libs'] = module_libraries
+        if module_archs != '':
+            module['archs'] = module_archs
+        if module_cflags != '':
+            module['cflags'] = module_cflags
+        if module_ldflags:
+            module['ldflags'] = module_ldflags
+        if stage != []:
+            module['stage'] = stage
+        module['arc'] = arc
+        if not root:
+            return module
+
+    if module_type == 'bundle':
+        module_name = variables.get('BUNDLE_NAME')
+        module_archs = variables.get('ARCHS')
+        module_files = variables.get(module_name + '_FILES') or variables.get('$(BUNDLE_NAME)_FILES') or ''
+        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$(BUNDLE_NAME)_CFLAGS') or ''
+        module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get('$(BUNDLE_NAME)_LDFLAGS') or ''
+        module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
+            '$(BUNDLE_NAME)_INSTALL_PATH') or ''
+        module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
+            '$(BUNDLE_NAME)_FRAMEWORKS') or ''
+        module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
+            '$(BUNDLE_NAME)_PRIVATE_FRAMEWORKS') or ''
+        module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
+            '$(BUNDLE_NAME)_EXTRA_FRAMEWORKS') or ''
+
+        files = []
+        if module_files:
+            tokens = module_files.split(' ')
+            nextisawildcard = False
+            for i in tokens:
+                if '$(wildcard' in i:
+                    nextisawildcard = 1
+                    continue
+                if nextisawildcard:
+                    # We dont want to stop with these till we hit a ')'
+                    # thanks cr4shed ._.
+                    nextisawildcard = 0 if ')' in i else 1
+                    grab = i.split(')')[0]
+                    files.append(grab)
+                    continue
+                files.append(i)
+
+        if module_ipath == '/Library/PreferenceBundles':
+            module = {
+                'type': 'prefs',
+                'files': files
+            }
+            if module_name != '':
+                module['name'] = module_name
+            if module_frameworks != '':
+                module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
+                    ' ') + module_frameworks.split(' ')
+
+            if module_archs != '':
+                module['archs'] = module_archs.split(' ')
+            if module_cflags != '':
+                module['cflags'] = module_cflags
+            if module_ldflags:
+                module['ldflags'] = module_ldflags
+            module['arc'] = arc
+            if not root:
+                return module
+
+        module = {
+            'type': 'bundle',
+            'files': files
+        }
+        if module_name != '':
+            module['name'] = module_name
+        if module_frameworks != '':
+            module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
+                ' ') + module_frameworks.split(' ')
+
+        if module_archs != '':
+            module['archs'] = module_cflags
+        if module_cflags != '':
+            module['cflags'] = module_cflags
+        if module_ldflags:
+            module['ldflags'] = module_ldflags
+        if stage != []:
+            module['stage'] = stage
+        module['arc'] = arc
+        if not root:
+            return module
+
+    if module_type == 'tool':
+        module_name = variables.get('TOOL_NAME')
+        module_archs = variables.get('ARCHS')
+        module_files = variables.get(module_name + '_FILES') or variables.get('$(TOOL_NAME)_FILES') or ''
+        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$(TOOL_NAME)_CFLAGS') or ''
+        module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get('$(TOOL_NAME)_LDFLAGS') or ''
+        module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get(
+            '$(TOOL_NAME)_CODESIGN_FLAGS') or ''
+        module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
+            '$(TOOL_NAME)_INSTALL_PATH') or ''
+        module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
+            '$(TOOL_NAME)_FRAMEWORKS') or ''
+        module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
+            '$(TOOL_NAME)_PRIVATE_FRAMEWORKS') or ''
+        module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
+            '$(TOOL_NAME)_EXTRA_FRAMEWORKS') or ''
+        module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
+            '$(TOOL_NAME)_LIBRARIES') or ''
+
+        files = []
+        if module_files:
+            tokens = module_files.split(' ')
+            nextisawildcard = False
+            for i in tokens:
+                if '$(wildcard' in i:
+                    nextisawildcard = 1
+                    continue
+                if nextisawildcard:
+                    # We dont want to stop with these till we hit a ')'
+                    # thanks cr4shed ._.
+                    nextisawildcard = 0 if ')' in i else 1
+                    grab = i.split(')')[0]
+                    files.append(grab)
+                    continue
+                files.append(i)
+        module = {
+            'type': 'cli',
+            'files': files
+        }
+        if module_name != '':
+            module['name'] = module_name
+        if module_frameworks != '':
+            module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
+                ' ') + module_frameworks.split(' ')
+        if module_libraries != '':
+            module['libs'] = module_libraries
+        if module_archs != '':
+            module['archs'] = module_archs
+        if module_cflags != '':
+            module['cflags'] = module_cflags
+        if module_ldflags:
+            module['ldflags'] = module_ldflags
+        if stage != []:
+            module['stage'] = stage
+        module['arc'] = arc
+        if not root:
+            return module
+
+    if module_type == 'tweak' and 'TWEAK_NAME' in variables:
+        module_name = variables.get('TWEAK_NAME') or ''
+        module_archs = variables.get('ARCHS') or ''
+        module_files = variables.get(module_name + '_FILES') or variables.get('$(TWEAK_NAME)_FILES') or ''
+        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$(TWEAK_NAME)_CFLAGS') or ''
+        module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get('$(TWEAK_NAME)_LDFLAGS') or ''
+        module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
+            '$(TWEAK_NAME)_FRAMEWORKS') or ''
+        module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
+            '$(TWEAK_NAME)_PRIVATE_FRAMEWORKS') or ''
+        module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
+            '$(TWEAK_NAME)_EXTRA_FRAMEWORKS') or ''
+
+        files = []
+        if module_files:
+            tokens = module_files.split(' ')
+            nextisawildcard = False
+            for i in tokens:
+                if '$(wildcard' in i:
+                    nextisawildcard = 1
+                    continue
+                if nextisawildcard:
+                    nextisawildcard = 0
+                    grab = i.split(')')[0]
+                    files.append(grab)
+                    continue
+                files.append(i)
+
+        module = {
+            'type': 'tweak',
+            'files': files
+        }
+
+        if module_name != '':
+            module['name'] = module_name
+        if module_frameworks != '':
+            module['frameworks'] = module_eframeworks.split(' ') + module_pframeworks.split(
+                ' ') + module_frameworks.split(' ')
+        if module_archs != '':
+            module['archs'] = module_archs.split(' ')
+        if module_cflags:
+            module['cflags'] = module_cflags
+        if module_ldflags:
+            module['ldflags'] = module_ldflags
+        if stage != []:
+            module['stage'] = stage
+        module['arc'] = arc
+        if not root:
+            return module
+        else:
+            mod_dicts.append(module)
+            project['name'] = module['name']
+            modules.append('.')
+
+    if hassubproj and 'SUBPROJECTS' in variables:
+        modules = modules + variables['SUBPROJECTS'].split(' ')
+
+    for module in modules:
+        if os.environ['DGEN_DEBUG']:
+            print("modules:" + str(modules), file=sys.stderr)
+        if module != '.' and os.path.exists(module + '/Makefile'):
+            mod_dicts.append(load_theos_makefile(open(module + '/Makefile'), root=False))
+
+    i = 0
+    for mod in mod_dicts:
+        if mod:
+            project[mod['name']] = mod
+            project[mod['name']]['dir'] = modules[i]
+            i += 1
+
+    # the magic of theos
+    project['all'] = {
+        'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w'
+        }
+
+    if 'export ARCHS' in variables:
+        project['all'] = {
+            'archs': variables['export ARCHS'].split(' ')
+            }
+
+    if os.environ['DGEN_DEBUG']:
+        print("dict:" + str(project), file=sys.stderr)
+    return project
+
+
 def handle(ex: Exception):
     ''' Optionally print debug information '''
 
@@ -544,6 +905,7 @@ def main():
         'author': None,
         'version': None,
         'depends': None,
+        'pack': None,
         'package': None,
         'desc': None,
         'all': None,
@@ -557,9 +919,9 @@ def main():
     if os.path.exists('DragonMake'):
         with open('DragonMake') as f:
             config = yaml.safe_load(f)
-    # elif os.path.exists('Makefile'):
-    #    3 config = load_theos_makefile('Makefile')
-    #    exports['theos'] = 1
+    elif os.path.exists('Makefile'):
+        config = load_theos_makefile(open('Makefile'))
+        exports['theos'] = 1
     else:
         raise FileNotFoundError
 
