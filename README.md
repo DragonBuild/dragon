@@ -3,9 +3,11 @@ DragonBuild, simply explained, is a fast ninja-based theos alternative.
 
 ## Summary
 
-Specifically, it's a ninja build file generator and packaging system for substrate extensions and other common packages distributed in the jailbreak community. 
+DragonBuild is a python and bash based theos alternative.
 
-It's aimed at both speed and configurability. Every single factor of it is configurable from a singular file. 
+It uses configuration files instead of a confusing maze of Makefiles, and an entire project is configured from a single `DragonMake` file.
+
+**It can also compile a majority of theos projects without *any* extra work needed.**
 
 ## Table of Contents
 
@@ -27,15 +29,16 @@ Paste the following into your terminal, enter the sudo pass, and follow along wi
 
 `bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
+## Linux/WSL
+
+Place a toolchain in the `toolchains/` folder and, assuming it's the sbingner toolchain, it will automatically be used. 
+
 # Setting up your project for DragonBuild
 
 DragonBuild is capable of building most Theos projects instantly. No DragonMake file needed. 
 
 It has an insanely powerful "DragonMake" system of it's own though, and it's fairly easy to work with. 
 
-# Linux/WSL
-
-Place a toolchain in the `toolchains/` folder and, assuming it's the sbingner toolchain, it will automatically be used. 
 
 ## DragonMake Syntax
 
@@ -192,7 +195,6 @@ Debugging -=-=-
 
 DragonBuild v1.0.0 - by kritanta
 ```
-
 
 # Endgame for this project
 
