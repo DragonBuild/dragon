@@ -217,21 +217,24 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     if 'for' in var_d:
         target = var_d['for']
 
+    # Universal project vars
     ret = ProjectVars({
-        'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name=$name $arc '
-                          '-fbuild-session-file=$proj_build_dir/modules/ $debug '
-                          '-fmodules-prune-after=345600 $cflags $btarg -O$optim '
-                          '-fmodules-validate-once-per-build-session $fwSearch '
-                          '$triple $theosshim '
-                          '$header_includes $warnings -fmodules-prune-interval=86400',
-        'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk/'
-                              'Applications/Xcode.app/Contents/Developer/Platforms/'
-                              'iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/'
-                              'Applications/Xcode.app/Contents/Developer/Toolchains/'
-                              'XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g '
-                              '-L/usr/lib/swift -swift-version 5 -module-name $name',
-        'internallflags': '$internalcflags $typeldflags $frameworks $libs $libflags $lopt '
-                          '$libSearch $ldflags $libs',
+        'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name='
+                          '$name $arc -fbuild-session-file=$proj_build_dir/'
+                          'modules/ $debug -fmodules-prune-after=345600 '
+                          '$cflags $btarg -O$optim -fmodules-validate-once-per'
+                          '-build-session $fwSearch -miphoneos-version-min='
+                          '$targetvers -isysroot $sysroot $header_includes '
+                          '$warnings -fmodules-prune-interval=86400',
+        'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk'
+                              '/Applications/Xcode.app/Contents/Developer/'
+                              'Platforms/iPhoneOS.platform/Developer/SDKs/'
+                              'iPhoneOS.sdk -L/Applications/Xcode.app/Contents'
+                              '/Developer/Toolchains/XcodeDefault.xctoolchain/'
+                              'usr/lib/swift/iphoneos -g -L/usr/lib/swift '
+                              '-swift-version 5 -module-name $name',
+        'internallflags': '$internalcflags $typeldflags $frameworks $libs '
+                          '$libflags $lopt $libSearch $ldflags $libs',
         'internalldflags': '',
         'internalsigntarget': '$signdir/$build_target_file.unsigned',
         'internalsymtarget': '$signdir/$build_target_file.unsym',
@@ -239,17 +242,20 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         'pwd': '.',
     })
 
-    ret.update(base_config('Defaults'))
-    ret.update(base_config('Types', var_d['type'], 'variables'))
+    # Update with default vars
+    ret.update(base_config('Defaults'))  # Universal
+    ret.update(base_config('Types', var_d['type'], 'variables'))  # Type-based
 
     ret.update(var_d)
 
+    # 'all` variables
     for source in base_config(), var_d, config:
         if 'all' in source:
             ret.update(source['all'])
         if 'Targets' in source and target in source['Targets']:
             ret.update(source['Targets'][target]['all'])
 
+    # Specify toolchain paths
     if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
         ret['ld'] = 'ld64'
         ret.update({k: '$dragondir/toolchain/linux/iphone/bin/arm64-apple-darwin14-' + var_d[k] for k in [
@@ -265,6 +271,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
             'codesign',
         ]})
 
+    # A few variables that need to be renamed
     NINJA_KEYS = {
         'location': 'install_location',
         'btarg': 'targ',
@@ -284,6 +291,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
 
     ret.update({key: ret[NINJA_KEYS[key]] for key in NINJA_KEYS})
 
+    # Computed variables
     ret['lowername'] = str(ret['name']).lower()
     ret['fwSearch'] = ret['fw_dirs'] + ret['additional_fw_dirs']
     ret['libSearch'] = ret['lib_dirs'] + ret['additional_lib_dirs']
@@ -294,20 +302,30 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     return ProjectVars(ret)
 
 
-def build_statements_and_rules(variables: ProjectVars) -> (list, list):
+def rules_and_build_statements(variables: ProjectVars) -> (list, list):
     '''
     Generate build statements and rules for a given variable set.
 
-    Returns build_state, rule_list as extensions for an outline
+    Returns rule_list, build_state as extensions for an outline
     '''
 
-    LINKER_FLAGS = {
-        'cxx': ['-lc++'],
-        'objc': ['-lobjc'],
-        'objcxx': ['-lobjc', '-lc++'],
-    }
+    # Trivial project types
+    if variables['type'] == 'resource-bundle':
+        return [
+            QuickRule('bundle'),
+            QuickRule('stage'),
+        ], [
+            Build('bundle', 'bundle', 'build.ninja'),
+            Build('stage', 'stage', 'build.ninja'),
+        ]
+    if variables['type'] == 'stage':
+        return [
+            QuickRule('stage'),
+        ], [
+            Build('stage', 'stage', 'build.ninja'),
+        ]
 
-    FILE_RULES = {
+    FILE_RULES = {  # Required rules based on filetype
         'c_files': 'c',
         'cxx_files': 'cxx',
         'dlists': None,
@@ -351,6 +369,12 @@ def build_statements_and_rules(variables: ProjectVars) -> (list, list):
                 used_rules.add(ruleid)
                 arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
                 build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid, f))
+
+                LINKER_FLAGS = {  # Don't link objc/cpp if not needed
+                    'cxx': ['-lc++'],
+                    'objc': ['-lobjc'],
+                    'objcxx': ['-lobjc', '-lc++'],
+                }
                 if ftype in LINKER_FLAGS:
                     for flag in LINKER_FLAGS[ftype]:
                         linker_conds.add(flag)
@@ -376,7 +400,7 @@ def build_statements_and_rules(variables: ProjectVars) -> (list, list):
 
     rule_list.extend(QuickRule(r) for r in used_rules)
 
-    return build_state, rule_list
+    return rule_list, build_state
 
 
 def generate_ninja_outline(variables: ProjectVars) -> list:
@@ -385,7 +409,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
     Keyword arguments:
     variables -- ProjectVars object of all generated variables
 
-    Seealso: build_statements_and_rules
+    Seealso: rules_and_build_statements
     '''
 
     outline = [
@@ -468,26 +492,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         ___,
     ]
 
-    type_outline = {
-        'resource-bundle': [
-            QuickRule('bundle'),
-            QuickRule('stage'),
-            ___,
-            Build('bundle', 'bundle', 'build.ninja'),
-            Build('stage', 'stage', 'build.ninja'),
-        ],
-        'stage': [
-            QuickRule('stage'),
-            ___,
-            Build('stage', 'stage', 'build.ninja'),
-        ],
-    }.get(variables['type'])
-
-    if type_outline is not None:
-        outline.extend(type_outline)
-        return outline
-
-    build_state, rule_list = build_statements_and_rules(variables)
+    rule_list, build_state = rules_and_build_statements(variables)
 
     outline.extend(rule_list)
     outline.append(___)
@@ -903,8 +908,15 @@ def handle(ex: Exception):
 
 
 def main():
-    '''Generates and writes build.ninja file from DragonMake or Makefile'''
-    META_KEYS = {
+    '''
+    Generate and write build.ninja file from DragonMake or Makefile
+
+    - Load DragonMake or Makefile to `config` dict
+    - Generate `variables` from `config` and global default with `generate_vars`
+    - Create an `outline` for the build.ninja file in `generate_ninja_outline`
+    - Evaluate outline with `variables` and write to build.ninja in `generate_ninja_file`
+    '''
+    META_KEYS = {  # Keys that may be at the root of the DragonMake dict
         'name': 'package_name',
         'icmd': 'install_command',
         'ip': 'DRBIP',
@@ -922,11 +934,10 @@ def main():
     exports = {}
     dirs = ''
 
-    config: dict = None
-
     if os.path.exists('DragonMake'):
         with open('DragonMake') as f:
             config = yaml.safe_load(f)
+
     elif os.path.exists('Makefile'):
         config = load_theos_makefile(open('Makefile'))
         exports['theos'] = 1
