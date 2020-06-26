@@ -1,5 +1,9 @@
 # DragonBuild
-DragonBuild, simply explained, is a fast ninja-based theos alternative. 
+DragonBuild, simply explained, is a fast ninja-based theos alternative.  
+
+## Endgame for this project
+
+The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
 
 ## Disclaimer
 
