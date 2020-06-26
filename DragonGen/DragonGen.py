@@ -225,6 +225,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
                           '$cflags $btarg -O$optim -fmodules-validate-once-per'
                           '-build-session $fwSearch -miphoneos-version-min='
                           '$targetvers -isysroot $sysroot $header_includes '
+                          ' $triple $theosshim '
                           '$warnings -fmodules-prune-interval=86400',
         'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk'
                               '/Applications/Xcode.app/Contents/Developer/'
