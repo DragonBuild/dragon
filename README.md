@@ -1,5 +1,4 @@
 # DragonBuild
-DragonBuild, simply explained, is a fast ninja-based theos alternative.  
 
 ## Summary
 
