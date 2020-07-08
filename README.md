@@ -1,21 +1,12 @@
 # DragonBuild
-DragonBuild, simply explained, is a fast ninja-based theos alternative.  
-
-## Endgame for this project
-
-The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
-
-## Disclaimer
-
-This project is liable to undergo massive rewrites with no warning. Above all, it's my personal build system. It has been released and published only to hopefully encourage the massive changes needed to make https://github.com/theos/theos a modern and usable build system again. 
-
-If you're using this project, treat it like a "beta". Rewrites happen often. Variable names change. Error messages aren't quite done yet. It has miles of work that need done. Help is appreciated. 
 
 ## Summary
 
-Specifically, it's a ninja build file generator and packaging system for substrate extensions and other common packages distributed in the jailbreak community. 
+DragonBuild is a python and bash based theos alternative.
 
-It's aimed at both speed and configurability. Every single factor of it is configurable from a singular file. 
+It uses configuration files instead of a confusing maze of Makefiles, and an entire project is configured from a single `DragonMake` file.
+
+**It can also compile a majority of theos projects without *any* extra work needed.**
 
 ## Table of Contents
 
@@ -31,21 +22,22 @@ It's aimed at both speed and configurability. Every single factor of it is confi
     + [clangd Helper](#generating-compile-commands-for-clangd-or-other-tools)
   * [Helpful Links](#helpful-links)
 
-## Notes
-
-* This was built for MacOS, although I've done a little bit of testing on Linux. See [DragonMake Variables](#dragonmake-variables) for toolchain usage
-
 # Installing DragonBuild
 
 Paste the following into your terminal, enter the sudo pass, and follow along with the script. 
 
 `bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
+## Linux/WSL
+
+Place a toolchain in the `toolchains/` folder and, assuming it's the sbingner toolchain, it will automatically be used. 
+
 # Setting up your project for DragonBuild
 
 DragonBuild is capable of building most Theos projects instantly. No DragonMake file needed. 
 
 It has an insanely powerful "DragonMake" system of it's own though, and it's fairly easy to work with. 
+
 
 ## DragonMake Syntax
 
@@ -131,7 +123,6 @@ Module Variables
 | `targetvers` | str | iOS Version being targeted. | [] | 
 | `archs` | list | Architectures to compile for | [] |
 | `sysroot` | str | Root of the Patched SDK to build with | $DRAGONBUILD/sdks/iPhoneOS.sdk |
-| `toolchain` | str | Applied as a prefix to the below 8 variables  | $DRAGONBUILD/sdks/iPhoneOS.sdk |
 | `cc` | str | c/c++ compiler to use | clang |
 | `cxx` | str | c/c++ compiler to use | clang++ |
 | `ld` | str | linker to use | clang/clang++ |
@@ -203,6 +194,10 @@ Debugging -=-=-
 
 DragonBuild v1.0.0 - by kritanta
 ```
+
+# Endgame for this project
+
+The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
 
 
 # Helpful links
