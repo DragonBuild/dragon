@@ -241,6 +241,10 @@ if [ $gen == 1 ]; then
     mkdir -p .dragon/modules > /dev/null
 
     source $DRAGONBUILD/DragonGen/DragonGen $DGEN_DEBUG
+
+    if [ $DRAGONGEN_FAILURE = 1 ]; then
+      cleanbuildfail
+    fi
 fi
 
 if [ $build == 1 ]; then 

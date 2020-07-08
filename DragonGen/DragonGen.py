@@ -745,6 +745,8 @@ def handle(ex: Exception):
     else:
         print("Exiting...", file=sys.stderr)
 
+    print(f'export DRAGONGEN_FAILURE=1')
+
 
 def main():
     '''
