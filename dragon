@@ -160,7 +160,7 @@ while [ "$1" != "" ]; do
                                 ssh root@$DRBIP "$*"
                                 exit
                                 ;;
-        ch | checkra1n )        open /Applications/checkra1n.app
+        ch | checkra1n )        /Applications/checkra1n.app/Contents/MacOS/checkra1n -g
                                 exit
                                 ;;
         chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
