@@ -16,6 +16,8 @@ exportt=0
 only=0
 norm=0
 debug=0
+debugproc=""
+ddebug=0
 flutter=0
 DRAGON_DPKG=1
 export simtarg=0
@@ -49,7 +51,7 @@ usage()
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
-    echo "  d|do - Build and Install"
+    echo "  do - Build and Install"
     echo "  c|clean - recompile, link, and package your project"
     echo "  b|build|make - compile, link, and package your project"
     echo "  r|release - Load DragonRelease file over the DragonMake one"
@@ -62,6 +64,7 @@ usage()
     echo "  dr|devicerun - Run anything after this flag on device"
     echo ""
     echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
+    echo "  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)"
     echo "  exp|export - Tell ninja to create a compile_commands.json"
     echo "  f|flutter - Build with flutter before doing anything else"
     echo "  ch|checkra1n - Open Checkra1n GUI"
@@ -72,7 +75,7 @@ usage()
     echo "  vd - echo every bash command in the main dragon file"
     echo "  vg - DragonGen verbositiy."
     echo "  norm - Doesn't delete build.ninja after building."
-    echo "  debug - Enable all debug flags"
+    echo "  ddebug - Enable all debug flags"
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
@@ -119,6 +122,11 @@ update()
 
 # First, get a md5 of the package directory list
 
+if [ "$1" == "" ]; then
+  usage
+  exit
+fi
+
 while [ "$1" != "" ]; do
     case $1 in
         u | update )            update
@@ -126,7 +134,7 @@ while [ "$1" != "" ]; do
                                 ;;
         s | device)             setupDevice
                                 ;;
-        d | do)                 build=1
+        do )                    build=1
                                 install=1
                                 ;;
         g | gen | generate)     gen=1
@@ -161,6 +169,10 @@ while [ "$1" != "" ]; do
         f | flutter )           flutter=1
                                 ;;
         debug )                 debug=1
+                                shift
+                                debugproc="$1"
+                                ;;
+        ddebug )                ddebug=1
                                 ;;
         r | release )           export release=1
                                 ;;
@@ -186,7 +198,7 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ $debug == 1 ]; then
+if [ $ddebug == 1 ]; then
   NINJA_ARGS="-v"
   export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
   set -xv
@@ -372,6 +384,12 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
     ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || exit
+fi
+
+if [ $debug == 1 ] ; then
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
+  ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || exit
+  ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
 fi
 
 rm -rf .dragon/packages > /dev/null
