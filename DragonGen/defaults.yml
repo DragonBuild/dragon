@@ -10,7 +10,7 @@ Defaults:
   bridging-header: $name-Bridging-Header.h
   dragondir: $$DRAGONBUILD
   toolchain-prefix: arm64-apple-darwin14-
-
+  tool-prefix: ''
   cc: clang
   cxx: clang++
   ld: clang++
