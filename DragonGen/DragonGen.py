@@ -175,7 +175,7 @@ class ProjectVars(dict):
 
             return ret
         except KeyError as ex:
-            if key in ['name', 'type', 'dir', 'cc', 'cxx', 'ld', 'codesign']:
+            if key in ['test']:
                 raise ex
             return ArgList([]) if key in ArgList.LIST_KEYS else ''
 
@@ -287,8 +287,22 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     if os.environ['DGEN_DEBUG']:
         print("project dictionary:" + str(ret), file=sys.stderr)
 
+
+    if ret['tool-prefix'] != '':
+        ret['ld'] = 'ld64'
+        ret.update({k: ret['tool-prefix'] + var_d[k] for k in [
+            'cc',
+            'cxx',
+            'lipo',
+            'dsym',
+            'plutil',
+            'swift',
+            'ld',
+            'codesign',
+        ]})
+
     # Specify toolchain paths
-    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) >= 1:
+    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
         ret['ld'] = 'ld64'
         ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + var_d[k] for k in [
             'cc',
