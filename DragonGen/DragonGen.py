@@ -256,21 +256,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         if 'Targets' in source and target in source['Targets']:
             ret.update(source['Targets'][target]['all'])
 
-    # Specify toolchain paths
-    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
-        ret['ld'] = 'ld64'
-        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + var_d[k] for k in [
-            'cc',
-            'cxx',
-            'lipo',
-            'dsym',
-            'plutil',
-            'swift',
-        ]})
-        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/' + var_d[k] for k in [
-            'ld',
-            'codesign',
-        ]})
+
 
     # A few variables that need to be renamed
     NINJA_KEYS = {
@@ -300,6 +286,22 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
 
     if os.environ['DGEN_DEBUG']:
         print("project dictionary:" + str(ret), file=sys.stderr)
+
+    # Specify toolchain paths
+    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) >= 1:
+        ret['ld'] = 'ld64'
+        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + var_d[k] for k in [
+            'cc',
+            'cxx',
+            'lipo',
+            'dsym',
+            'plutil',
+            'swift',
+        ]})
+        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/' + var_d[k] for k in [
+            'ld',
+            'codesign',
+        ]})
 
     return ProjectVars(ret)
 
