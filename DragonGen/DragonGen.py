@@ -223,7 +223,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
                           '$name $arc -fbuild-session-file=$proj_build_dir/'
                           'modules/ $debug -fmodules-prune-after=345600 '
                           '$cflags $btarg -O$optim -fmodules-validate-once-per'
-                          '-build-session $fwSearch $targetprfx$targetvers '
+                          '-build-session $fwSearch -miphoneos-version-min=$targetvers'
                           ' -isysroot $sysroot $header_includes '
                           ' $triple $theosshim '
                           '$warnings -fmodules-prune-interval=86400',
@@ -259,7 +259,8 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     # Specify toolchain paths
     if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
         ret['ld'] = 'ld64'
-        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/arm64-apple-darwin14-' + var_d[k] for k in [
+        toolchain_prefix = 'arm64-apple-darwin14-'
+        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/{toolchain_prefix}' + var_d[k] for k in [
             'cc',
             'cxx',
             'lipo',
@@ -455,7 +456,9 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('swift'),
         ___,
         Var('targetvers'),
-        Var('targetprfx'),
+        Var('targetprefix'),
+        Var('targetos'),
+        Var('triple'),
         ___,
         Var('frameworks'),
         Var('libs'),
@@ -491,7 +494,6 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('internallflags'),
         Var('internallfflags'),
         Var('internalswiftflags'),
-        Var('triple'),
         ___,
     ]
 
