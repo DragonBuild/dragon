@@ -10,6 +10,8 @@ echo $simtarg | grep "1" > /dev/null && echo -e "${GenColor}[DragonGen]${BoldCol
 
 eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 $DRAGONBUILD/DragonGen/DragonGen.py)
 
+echo $?
+
 if [ $theos == 1 ]; then
   echo -e "${GenColor}[DragonGen]${BoldColor} Building from Theos Makefile${NC}"
 fi
