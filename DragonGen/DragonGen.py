@@ -432,6 +432,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('build_target_file'),
         Var('pwd'),
         Var('resource_dir'),
+        Var('toolchain-prefix'),
         ___,
         Var('stage'),
         Var('stage2'),
