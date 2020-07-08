@@ -259,8 +259,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     # Specify toolchain paths
     if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
         ret['ld'] = 'ld64'
-        toolchain_prefix = 'arm64-apple-darwin14-'
-        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/{toolchain_prefix}' + var_d[k] for k in [
+        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + var_d[k] for k in [
             'cc',
             'cxx',
             'lipo',
