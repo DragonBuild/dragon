@@ -26,6 +26,36 @@ swiftmoduleheader:
   name: Swift Module Header
   cmd: $swift -frontend -c $internalswiftflags $bridgeheader -target arm64-apple-ios7.0 -emit-module -merge-modules $in -emit-objc-header-path $out -o /dev/null
 
+
+cargoarmv6:
+  name: cargo armv6
+  desc: Compiling $in with $cc [armv6]
+  cmd: $cargo-nightly --target=i386-apple-darwin10 $internalcflags -c $in -o $out
+cargoarmv7:
+  name: cargo armv7
+  desc: Compiling $in with $cc [armv7]
+  cmd: $cc -arch armv7 $internalcflags -c $in -o $out
+cargoarmv7s:
+  name: cargo armv7s
+  desc: Compiling $in with $cc [armv7s]
+  cmd: $cc -arch armv7s $internalcflags -c $in -o $out
+cargoarm64:
+  name: cargo arm64
+  desc: Compiling $in with $cc [arm64]
+  cmd: $cc -arch arm64 $internalcflags -c $in -o $out
+cargoarm64e:
+  name: cargo arm64e
+  desc: Compiling $in with $cc [arm64e]
+  cmd: $cc -arch arm64e $internalcflags -c $in -o $out
+cargox86_64:
+  name: cargo x86_64
+  desc: Compiling $in with $cc [x86_64]
+  cmd: $cc -arch x86_64 $internalcflags -c $in -o $out
+cargoi386:
+  name: cargo i386
+  desc: Compiling $in with $cc [i386]
+  cmd: $cc -arch i386 $internalcflags -c $in -o $out
+
 carmv6:
   name: clang armv6
   desc: Compiling $in with $cc [armv6]

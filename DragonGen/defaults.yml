@@ -9,6 +9,8 @@ Defaults:
   signdir: $proj_build_dir/sign
   bridging-header: $name-Bridging-Header.h
   dragondir: $$DRAGONBUILD
+  toolchain-prefix: arm64-apple-darwin14-
+
   cc: clang
   cxx: clang++
   ld: clang++
@@ -19,6 +21,8 @@ Defaults:
   swift: swift
   lipo: lipo
   logos: $dragondir/modules/logos/bin/logos.pl
+  cargo: cargo
+  cargo-nightly: 'cargo +nightly'
   optool: $dragondir/bin/optool
   stage:
     - 'true'
@@ -29,7 +33,6 @@ Defaults:
   idflag: ''
   entflag: '-S'
   entfile: ''
-  triple: ''
   resource_dir: 'Resources'
   fw_dirs:
     - $sysroot/System/Library/Frameworks
@@ -46,6 +49,7 @@ Targets:
     all:
       targetos: iphonesimulator
       targetvers: 13.0
+      triple: x86_64-apple-darwin10
       arc: yes
       sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
       cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
@@ -55,6 +59,7 @@ Targets:
     all:
       targetos: iphoneos
       targetvers: 10.0
+      targetprefix: -miphoneos-version-min=
       arc: yes
       sysroot: $dragondir/sdks/iPhoneOS.sdk
       cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
@@ -78,6 +83,12 @@ Targets:
 Types:
   comprehensive:
   app:
+    required_states:
+      - has_build_files
+    variables:
+      install_location: '/Applications/'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
+  application:
     required_states:
       - has_build_files
     variables:
@@ -171,6 +182,7 @@ Types:
       - deb
     variables:
       install_location: '/Library/$name/$name.bundle/'
+      build_target_file: 'build.ninja'
       libs:
         - 'substrate'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
@@ -181,6 +193,7 @@ Types:
         - 'true;'
   stage:
     variables:
+      build_target_file: 'build.ninja'
       stage2:
         - 'true;'
   library:
@@ -207,5 +220,15 @@ Types:
       build_target_file: '$proj_build_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
-
+  tool:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: '/usr/bin'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      stage2:
+        - 'true;'
   raw:
