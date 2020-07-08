@@ -288,18 +288,6 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         print("project dictionary:" + str(ret), file=sys.stderr)
 
 
-    if ret['tool-prefix'] != '':
-        ret['ld'] = 'ld64'
-        ret.update({k: ret['tool-prefix'] + var_d[k] for k in [
-            'cc',
-            'cxx',
-            'lipo',
-            'dsym',
-            'plutil',
-            'swift',
-            'ld',
-            'codesign',
-        ]})
 
     # Specify toolchain paths
     if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
