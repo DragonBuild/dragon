@@ -2,11 +2,17 @@
 
 ## Summary
 
-DragonBuild is a python and bash based theos alternative.
+DragonBuild is a python and bash based theos alternative. 
 
 It uses configuration files instead of a confusing maze of Makefiles, and an entire project is configured from a single `DragonMake` file.
 
 **It can also compile a majority of theos projects without *any* extra work needed.**
+
+## Current State
+
+DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
+
+DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
 
 ## Table of Contents
 
@@ -210,4 +216,4 @@ The ultimate hope for this project is that the major alternative, theos, sees th
 
 @sbinger, for patiently helping me add arm64e support to tbdump (turns out its easy when you know what you're doing :))
 
-@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. 
+@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. This wouldn't exist without theos, and without the great people behind it.
