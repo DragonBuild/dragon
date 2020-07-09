@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 
+'''
+
+DragonGen.py
+
+This is a complete rewrite of DragonGen.py
+
+A majority of the work here is credited to @lorenzo
+
+'''
+
 import glob
 import os
 import pprint
@@ -221,12 +231,12 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     ret = ProjectVars({
         'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name='
                           '$name $arc -fbuild-session-file=$proj_build_dir/'
-                          'modules/ $debug -fmodules-prune-after=345600 '
+                          'modules/ $debug $fwSearch -fmodules-prune-after=345600 '
                           '$cflags $btarg -O$optim -fmodules-validate-once-per'
-                          '-build-session $fwSearch -miphoneos-version-min=$targetvers'
+                          '-build-session -miphoneos-version-min=$targetvers'
                           ' -isysroot $sysroot $header_includes '
                           ' $triple $theosshim '
-                          '$warnings -fmodules-prune-interval=86400',
+                          '$warnings -fmodules-prune-interval=86400 ',
         'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk'
                               '/Applications/Xcode.app/Contents/Developer/'
                               'Platforms/iPhoneOS.platform/Developer/SDKs/'
