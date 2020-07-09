@@ -1,45 +1,51 @@
 # DragonBuild
 
-## Summary
+## Quick Start
 
-DragonBuild is a python and bash based theos alternative.
+```
+dragon [commands]
 
-It uses configuration files instead of a confusing maze of Makefiles, and an entire project is configured from a single `DragonMake` file.
+Building -=-=-
+  d|do - Build and Install
+  c|clean - recompile, link, and package your project
+  b|build|make - compile, link, and package your project
+  r|release - Load DragonRelease file over the DragonMake one
+  rl|relink - Re-link the package regardless of changes
 
-**It can also compile a majority of theos projects without *any* extra work needed.**
+Installation -=-=-
+  s|device - Set build device IP/Port
+  i|install - Install to build device
+  rs|respring - Respring the current build device
+  dr|devicerun - Run anything after this flag on device
+  
+```
 
-## Table of Contents
-
-- [DragonBuild](#dragonbuild)
-  * [Installing DragonBuild](#installing-dragonbuild)
-  * [Setting up your Project](#setting-up-your-project-for-dragonbuild)
-    + [DragonMake Syntax](#dragonmake-syntax)
-    + [DragonMake Format](#dragonmake-format)
-    + [DragonMake Variables](#dragonmake-variables)
-  * [DragonBuild Commands](#dragonbuild-commands)
-    + [Building and Installing](#building-and-installing-your-tweak)
-    + [Clean Rebuilds](#forcing-a-rebuild)
-    + [clangd Helper](#generating-compile-commands-for-clangd-or-other-tools)
-  * [Helpful Links](#helpful-links)
+[Full List Of Commands](#dragonbuild-commands)
 
 # Installing DragonBuild
 
-Paste the following into your terminal, enter the sudo pass, and follow along with the script. 
+Paste the following into terminal:
 
 `bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
-## Linux/WSL
-
-Place a toolchain in the `toolchains/` folder and, assuming it's the sbingner toolchain, it will automatically be used. 
-
 # Setting up your project for DragonBuild
 
-DragonBuild is capable of building most Theos projects instantly. No DragonMake file needed. 
+## DragonMake
 
-It has an insanely powerful "DragonMake" system of it's own though, and it's fairly easy to work with. 
+A single-file tweak can be built with the following 'DragonMake' file.
 
+```
+---
+name: MyTweak
+icmd: sbreload
 
-## DragonMake Syntax
+MyTweak:
+  type: tweak
+  files:
+    - Tweak.xm
+```
+
+### DragonMake Syntax
 
 DragonMake follows yaml syntax. Strings dont typically need to be wrapped in `""`, although wildcards do.
 
@@ -48,10 +54,10 @@ For str variables, you can use bash syntax to evaluate a command with `$$(comman
 You can also refer to environment variables with `$$VARNAME`
 
 Wildcards:  
-  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here` to get an idea. 
+  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here>` to get an idea. 
   `"**/*.m"` for example will find all .m files in the current directory *and subdirectories*
 
-## DragonMake Format
+### DragonMake Format
 
 This should serve as a guideline for how a project should be laid out. You can declare as many projects as you want, it's all going to be crammed into the same deb. 
 
@@ -199,6 +205,11 @@ DragonBuild v1.0.0 - by kritanta
 
 The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
 
+# Current State
+
+DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
+
+DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
 
 # Helpful links
 
@@ -210,4 +221,4 @@ The ultimate hope for this project is that the major alternative, theos, sees th
 
 @sbinger, for patiently helping me add arm64e support to tbdump (turns out its easy when you know what you're doing :))
 
-@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. 
+@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. This wouldn't exist without theos, and without the great people behind it.
