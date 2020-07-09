@@ -1,6 +1,0 @@
-framework module SceneKit {
-  umbrella header "SceneKit.h"
-  export *
-  module * { export * }
-}
-

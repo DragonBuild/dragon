@@ -4,3 +4,6 @@
 [submodule "modules/logos"]
 	path = modules/logos
 	url = https://github.com/theos/logos.git
+[submodule "sdks"]
+	path = sdks
+	url = https://github.com/DragonBuild/sdks.git

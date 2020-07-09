@@ -1,0 +1,12 @@
+---
+name: resim
+pack: no
+
+resim:
+  type: cli
+  for: host
+  cflags: -Wno-deprecated-declarations
+  objc_files:
+    - resim.mm
+  stage:
+    - 'cp resim $DRAGONBUILD/bin/resim'
