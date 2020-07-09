@@ -12,7 +12,7 @@ A majority of the work here is credited to @lorenzo
 
 import glob
 import os
-import pprint
+from pprint import pprint
 import sys
 import termios
 import traceback
@@ -31,6 +31,7 @@ from buildgen.buildgen.generator import Generator
 _LAZY_RULES_DOT_YML: dict = None
 _LAZY_DEFAULTS_DOT_YML: dict = None
 
+_IS_THEOS_MAKEFILE_ = False
 
 def rules(*key_path: str) -> dict:
     '''
@@ -178,11 +179,12 @@ class ProjectVars(dict):
     def __getitem__(self, key):
         try:
             ret = dict.__getitem__(self, key)
-            if isinstance(ret, list) and key in ArgList.LIST_KEYS:
+            if isinstance(ret, list) and key in ArgList.LIST_KEYS and ArgList(ret, *(ArgList.LIST_KEYS[key])) != []:
                 return ArgList(ret, *(ArgList.LIST_KEYS[key]))
             if isinstance(ret, bool) and key in BoolFlag.BOOL_KEYS:
                 return BoolFlag(ret, BoolFlag.BOOL_KEYS[key])
-
+            if isinstance(ret, list) and len(ret) == 0:
+                return ''
             return ret
         except KeyError as ex:
             if key in ['test']:
@@ -233,7 +235,7 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
                           '$name $arc -fbuild-session-file=$proj_build_dir/'
                           'modules/ $debug $fwSearch -fmodules-prune-after=345600 '
                           '$cflags $btarg -O$optim -fmodules-validate-once-per'
-                          '-build-session -miphoneos-version-min=$targetvers'
+                          '-build-session $targetprefix$targetvers'
                           ' -isysroot $sysroot $header_includes '
                           ' $triple $theosshim '
                           '$warnings -fmodules-prune-interval=86400 ',
@@ -252,6 +254,9 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         'internallibflags': '-lobjc -lc++',
         'pwd': '.',
     })
+
+    if _IS_THEOS_MAKEFILE_:
+        ret.update( { 'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w' } )
 
     # Update with default vars
     ret.update(base_config('Defaults'))  # Universal
@@ -295,7 +300,8 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     ret['libSearch'] = ret['lib_dirs'] + ret['additional_lib_dirs']
 
     if os.environ['DGEN_DEBUG']:
-        print("project dictionary:" + str(ret), file=sys.stderr)
+        pprint("project dictionary:" + str(ret), stream=sys.stderr)
+        print("\n\n", file=sys.stderr)
 
 
 
@@ -619,7 +625,9 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             project['icmd'] = 'sbreload'
 
     if os.environ['DGEN_DEBUG']:
+        print("\n\n", file=sys.stderr)
         print("module type:" + str(module_type), file=sys.stderr)
+        print("\n\n", file=sys.stderr)
 
     modules = []
     mod_dicts = []
@@ -701,7 +709,9 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
 
     for module in modules:
         if os.environ['DGEN_DEBUG']:
-            print("modules:" + str(modules), file=sys.stderr)
+            print("\n\n", file=sys.stderr)
+            pprint("modules:" + str(modules), stream=sys.stderr)
+            print("\n\n", file=sys.stderr)
         if module != '.' and os.path.exists(module + '/Makefile'):
             mod_dicts.append(load_theos_makefile(open(module + '/Makefile'), root=False))
 
@@ -713,9 +723,6 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             i += 1
 
     # the magic of theos
-    project['all'] = {
-        'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w' # TODO: remove -w
-        }
 
     if 'export ARCHS' in variables:
         project['all'] = {
@@ -723,7 +730,9 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
             }
 
     if os.environ['DGEN_DEBUG']:
+        print("\n\n", file=sys.stderr)
         print("dict:" + str(project), file=sys.stderr)
+        print("\n\n", file=sys.stderr)
     return project
 
 
@@ -783,14 +792,17 @@ def main():
     elif os.path.exists('Makefile'):
         config = load_theos_makefile(open('Makefile'))
         exports['theos'] = 1
+        global _IS_THEOS_MAKEFILE_
+        _IS_THEOS_MAKEFILE_ = True
+
     else:
         raise FileNotFoundError
 
     for key in config:
         if key in META_KEYS:
-            if META_KEYS[key] is not None:
+            if config[key] is not None:
                 if key == 'pack' or key == 'package':
-                    if not META_KEYS[key]:
+                    if not config[key]:
                         exports["DRAGON_DPKG"] = "0"
                 exports[META_KEYS[key]] = config[key]
             continue
@@ -809,7 +821,12 @@ def main():
             default_target = 'sim'
 
         with open(f'{proj_config["dir"]}/build.ninja', 'w+') as out:
+
             variables = generate_vars(proj_config, config, default_target)
+
+            if os.environ['TARG_SIM'] == '1':
+                variables['archs'] = ['x86_64']
+
             outline = generate_ninja_outline(variables)
 
             generate_ninja_file(outline, variables, out)
