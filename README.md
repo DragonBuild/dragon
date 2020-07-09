@@ -19,6 +19,8 @@ Installation -=-=-
   dr|devicerun - Run anything after this flag on device
 ```
 
+Scroll down for a full list of commands.
+
 ## Table of Contents
 
 - [DragonBuild](#dragonbuild)
