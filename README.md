@@ -1,18 +1,23 @@
 # DragonBuild
 
-## Summary
+## Quick Start
 
-DragonBuild is a python and bash based theos alternative. 
+```
+dragon [commands]
 
-It uses configuration files instead of a confusing maze of Makefiles, and an entire project is configured from a single `DragonMake` file.
+Building -=-=-
+  d|do - Build and Install
+  c|clean - recompile, link, and package your project
+  b|build|make - compile, link, and package your project
+  r|release - Load DragonRelease file over the DragonMake one
+  rl|relink - Re-link the package regardless of changes
 
-**It can also compile a majority of theos projects without *any* extra work needed.**
-
-## Current State
-
-DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
-
-DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
+Installation -=-=-
+  s|device - Set build device IP/Port
+  i|install - Install to build device
+  rs|respring - Respring the current build device
+  dr|devicerun - Run anything after this flag on device
+```
 
 ## Table of Contents
 
@@ -205,6 +210,11 @@ DragonBuild v1.0.0 - by kritanta
 
 The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
 
+# Current State
+
+DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
+
+DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
 
 # Helpful links
 
