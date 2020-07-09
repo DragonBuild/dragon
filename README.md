@@ -17,42 +17,35 @@ Installation -=-=-
   i|install - Install to build device
   rs|respring - Respring the current build device
   dr|devicerun - Run anything after this flag on device
+  
 ```
 
-Scroll down for a full list of commands.
-
-## Table of Contents
-
-- [DragonBuild](#dragonbuild)
-  * [Installing DragonBuild](#installing-dragonbuild)
-  * [Setting up your Project](#setting-up-your-project-for-dragonbuild)
-    + [DragonMake Syntax](#dragonmake-syntax)
-    + [DragonMake Format](#dragonmake-format)
-    + [DragonMake Variables](#dragonmake-variables)
-  * [DragonBuild Commands](#dragonbuild-commands)
-    + [Building and Installing](#building-and-installing-your-tweak)
-    + [Clean Rebuilds](#forcing-a-rebuild)
-    + [clangd Helper](#generating-compile-commands-for-clangd-or-other-tools)
-  * [Helpful Links](#helpful-links)
+[Full List Of Commands](#dragonbuild-commands)
 
 # Installing DragonBuild
 
-Paste the following into your terminal, enter the sudo pass, and follow along with the script. 
+Paste the following into terminal:
 
 `bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
-## Linux/WSL
-
-Place a toolchain in the `toolchains/` folder and, assuming it's the sbingner toolchain, it will automatically be used. 
-
 # Setting up your project for DragonBuild
 
-DragonBuild is capable of building most Theos projects instantly. No DragonMake file needed. 
+## DragonMake
 
-It has an insanely powerful "DragonMake" system of it's own though, and it's fairly easy to work with. 
+A single-file tweak can be built with the following 'DragonMake' file.
 
+```
+---
+name: MyTweak
+icmd: sbreload
 
-## DragonMake Syntax
+MyTweak:
+  type: tweak
+  files:
+    - Tweak.xm
+```
+
+### DragonMake Syntax
 
 DragonMake follows yaml syntax. Strings dont typically need to be wrapped in `""`, although wildcards do.
 
@@ -61,10 +54,10 @@ For str variables, you can use bash syntax to evaluate a command with `$$(comman
 You can also refer to environment variables with `$$VARNAME`
 
 Wildcards:  
-  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here` to get an idea. 
+  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here>` to get an idea. 
   `"**/*.m"` for example will find all .m files in the current directory *and subdirectories*
 
-## DragonMake Format
+### DragonMake Format
 
 This should serve as a guideline for how a project should be laid out. You can declare as many projects as you want, it's all going to be crammed into the same deb. 
 
