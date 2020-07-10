@@ -2,7 +2,7 @@
 
 export DRAGONBUILD=~/.dragonbuild/
 
-export PATH=$PATH+":/usr/local/bin/"
+export PATH="$PATH:/usr/local/bin/:$DRAGONBUILD/bin/"
 
 source $DRAGONBUILD/state/phoneip
 

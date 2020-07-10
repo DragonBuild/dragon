@@ -48,13 +48,12 @@ Targets:
   sim:
     all:
       targetos: iphonesimulator
-      targetvers: 13.0
-      triple: x86_64-apple-darwin10
+      triple: MACHINE
       arc: yes
       sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
-      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
+      cflags: -isysroot $sysroot
       archs:
-        - x86_64
+        - MACHINE
   ios:
     all:
       targetos: iphoneos

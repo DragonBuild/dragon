@@ -35,9 +35,15 @@ function cleanbuildfail()
     # shellcheck disable=SC2154
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
+    if [ $norm == 0 ]; then
+        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+    fi
     cd $1 || exit
-    if [ $debug == 1 ]; then
+    if [ $ddebug == 1 ]; then
       python3 $DRAGONBUILD/bin/ninjadebug.py
+    fi
+    if [ $norm == 0 ]; then
+        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
     fi
     exit
 }

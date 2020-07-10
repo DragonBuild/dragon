@@ -5,8 +5,9 @@ pack: no
 resim:
   type: cli
   for: host
+  sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
   cflags: -Wno-deprecated-declarations
   objc_files:
     - resim.mm
   stage:
-    - 'cp resim $DRAGONBUILD/bin/resim'
+    - 'cp $build_target_file $dragondir/bin/resim'
