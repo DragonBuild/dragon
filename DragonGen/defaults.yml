@@ -35,14 +35,13 @@ Defaults:
   entfile: ''
   resource_dir: 'Resources'
   fw_dirs:
-    - $sysroot/System/Library/Frameworks
-    - $sysroot/System/Library/PrivateFrameworks
     - $dragondir/frameworks
   lib_dirs:
     - $dragondir/lib
     - '.'
   cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
   stagedir: '_'
+  modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
 Targets:
   sim:
@@ -51,7 +50,6 @@ Targets:
       triple: MACHINE
       arc: yes
       sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
-      cflags: -isysroot $sysroot
       archs:
         - MACHINE
   ios:
@@ -61,7 +59,6 @@ Targets:
       targetprefix: -miphoneos-version-min=
       arc: yes
       sysroot: $dragondir/sdks/iPhoneOS.sdk
-      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
       archs:
         - armv7
         - arm64
@@ -72,7 +69,6 @@ Targets:
       targetvers: 5.0
       arc: yes
       sysroot: $dragondir/sdks/WatchOS.sdk
-      cflags: -miphoneos-version-min=$targetvers -isysroot $sysroot
       archs: arm64_32
   host:
     all:
