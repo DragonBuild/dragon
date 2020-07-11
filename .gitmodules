@@ -7,3 +7,7 @@
 [submodule "sdks"]
 	path = sdks
 	url = https://github.com/DragonBuild/sdks.git
+[submodule "src/simject"]
+	path = src/simject
+	url = https://github.com/KritantaDev/simject.git
+	branch = dragon
