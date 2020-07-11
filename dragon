@@ -295,7 +295,7 @@ if [ $build == 1 ]; then
                 ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
             fi
             if [ $norm == 0 ]; then
-                mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+                mkdir -p .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
             fi
             if [ $i == "." ]; then 
                 true;
@@ -331,16 +331,24 @@ fi
 
 simfail()
 {
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Installing to /opt/simject failed!"
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Ensure you've followed simject's instructions properly."
-  echo -e "${PrefixColor}[Dragon]${BoldColor} https://github.com/angelXwind/simject/blob/master/README.md"
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
+  echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
   exit 1
+}
+
+simsetup()
+{
+  hold=$PWD
+  cd $DRAGONBUILD/src/simject || simfail
+  dragon c b
+  cd $hold || simfail
 }
 
 simstall()
 {
+  test -f $DRAGONBUILD/simulator/resim || simsetup
   echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-  cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* /opt/simject/ || cleanbuildfail
+  cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONBUILD/simulator/load || cleanbuildfail
   echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
   resim
 }
