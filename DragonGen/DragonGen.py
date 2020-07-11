@@ -127,6 +127,7 @@ class ArgList(list):
         'ldflags': ('', ' '),
         'codesignflags': ('', ' '),
         'include': ('-I', ' -I'),
+        'macros': ('-D', ' -D'),
         'prefix': ('-include', ' -include'),
         'fw_dirs': ('-F', ' -F'),
         'additional_fw_dirs': ('-F', ' -F'),
@@ -231,14 +232,11 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
 
     # Universal project vars
     ret = ProjectVars({
-        'internalcflags': '$cinclude -fmodules -fcxx-modules -fmodule-name='
-                          '$name $arc -fbuild-session-file=$proj_build_dir/'
-                          'modules/ $debug $fwSearch -fmodules-prune-after=345600 '
-                          '$cflags $btarg -O$optim -fmodules-validate-once-per'
-                          '-build-session $targetprefix$targetvers'
-                          ' -isysroot $sysroot $header_includes '
-                          ' $triple $theosshim '
-                          '$warnings -fmodules-prune-interval=86400 ',
+        'internalcflags': '$cinclude $debug $fwSearch '
+                          ' $cflags $btarg -O$optim  $targetprefix$targetvers'
+                          ' $sysroot $header_includes $arc '
+                          ' $triple $theosshim $macros '
+                          '$warnings $modulesinternal ',
         'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk'
                               '/Applications/Xcode.app/Contents/Developer/'
                               'Platforms/iPhoneOS.platform/Developer/SDKs/'
@@ -320,6 +318,9 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
             'ld',
             'codesign',
         ]})
+
+    if ret['sysroot']:
+        ret['sysroot'] = '-isysroot ' + ret['sysroot']
 
     return ProjectVars(ret)
 
@@ -463,6 +464,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         ___,
         Var('fwSearch'),
         Var('libSearch'),
+        Var('modulesinternal'),
         ___,
         Var('cc'),
         Var('codesign'),
@@ -483,6 +485,7 @@ def generate_ninja_outline(variables: ProjectVars) -> list:
         Var('frameworks'),
         Var('libs'),
         ___,
+        Var('macros'),
         Var('arc'),
         Var('btarg'),
         Var('debug'),
