@@ -35,6 +35,7 @@ Defaults:
   entfile: ''
   resource_dir: 'Resources'
   fw_dirs:
+    - $dragondir/sdks/iPhoneOS.sdk/System/Library/PrivateFrameworks/
     - $dragondir/frameworks
   lib_dirs:
     - $dragondir/lib
