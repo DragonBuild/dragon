@@ -310,7 +310,7 @@ if [ $build == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
         mkdir -p .dragon/_/DEBIAN
         cp control .dragon/_/DEBIAN/control
-        du -d 0 | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
+        du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
         cp -R layout/* .dragon/_/ 2>/dev/null
         chmod -R 0755 .dragon/_/DEBIAN/*
         mkdir -p .dragon/packages
