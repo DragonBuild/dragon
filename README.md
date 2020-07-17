@@ -1,5 +1,9 @@
 # DragonBuild
 
+## Disclaimer
+
+The DragonBuild build system is fairly young, and you should not rely on it for your projects, yet.
+
 ## Quick Start
 
 ```
