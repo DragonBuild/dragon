@@ -238,12 +238,6 @@ else
     fi
 fi
 
-if [ -d ".dragon" ]; then  
-    true
-else
-    gen=1
-fi
-
 
 if [ $flutter == 1 ]; then
     if [ $release == 1 ]; then
