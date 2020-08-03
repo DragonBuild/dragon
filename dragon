@@ -75,6 +75,7 @@ usage()
     echo "  f|flutter - Build with flutter before doing anything else"
     echo "  ch|checkra1n - Open Checkra1n GUI"
     echo "  chc|checkra1ncli - Open Checkra1n CLI"
+    echo "  n|nic|new - Open New Instance Creator"
     echo ""
     echo -e "${PrefixColor}Debugging ${BoldColor}-=-=-${NC}"
     echo "  vn - Print clang/ld/etc. commands and flags"
@@ -145,7 +146,7 @@ while [ "$1" != "" ]; do
                                 ;;
         g | gen | generate)     gen=1
                                 ;;
-        n | nic | new)          python3 $DRAGONBUILD/bin/nic.py  
+        n | nic | new)          bash ${DRAGONBUILD}nic/nic.sh
                                 exit
                                 ;;
         exp | export)           exportt=1
@@ -220,7 +221,20 @@ else
     if [ -f "Makefile" ]; then
         gen=1
     else 
-        python3 ${DRAGONBUILD}/DragonGen/assume.py
+        printf "${PrefixColor}[Dragon]${BoldColor} No DragonMake/Makefile found.\n"
+        printf "1.) Assume input\n"
+        printf "2.) New Instance Creator\n"
+        printf "3.) Exit\n"
+        read -p "> " notfound
+        if [ "$notfound" == 1 ]; then
+        python3 "${DRAGONBUILD}"/DragonGen/assume.py
+        exit
+        elif [ "$notfound" == "2" ]; then
+        bash "${DRAGONBUILD}"/nic/nic.sh
+        exit
+        else
+        exit
+        fi
     fi
 fi
 

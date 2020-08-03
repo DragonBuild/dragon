@@ -1,0 +1,8 @@
+---
+name: nic
+icmd: sbreload
+
+nic:
+  type: tweak
+  logos_files:
+    - Tweak.xm

@@ -1,0 +1,9 @@
+Package: com.yourcompany.nic
+Name: nic
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: liam
+Author: liam
+Section: TweaksInstalled-Size: 8
