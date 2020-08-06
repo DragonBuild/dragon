@@ -2,7 +2,8 @@
 
 ## Disclaimer
 
-The DragonBuild build system is fairly young, and you should not rely on it for your projects, yet.
+The DragonBuild build system is fairly young, and you should not rely on it for your projects, yet.  
+[Known Issues](#known-issues)
 
 ## Quick Start
 
@@ -214,6 +215,11 @@ The ultimate hope for this project is that the major alternative, theos, sees th
 DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
 
 DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
+
+# Known Issues
+
+- Preferences won't work on arm64e devices if using an Xcode 12 beta [#27](https://github.com/DragonBuild/DragonBuild/issues/27)
+- SSH Passwordless Auth won't disappear until you say no [#28](https://github.com/DragonBuild/DragonBuild/issues/28)
 
 # Helpful links
 
