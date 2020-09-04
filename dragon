@@ -288,7 +288,7 @@ if [ $build == 1 ]; then
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || echo -e "${PrefixColor}[Dragon]${BoldColor} No Stage Commands ${NC}"
+            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || cleanbuildfail $projroot
 
             if [ $exportt == 1 ]; then 
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
