@@ -206,7 +206,10 @@ dummy:
   name: Copying Files
   desc: Copying Files
   cmd: cp $in $out
-
+copy:
+  name: Copying Files
+  desc: Copying Files
+  cmd: cp $in $out
 lipo:
   name: Lipo Utility
   desc: Merging architechtures
@@ -230,4 +233,4 @@ sign:
 stage:
   name: Staging Commands
   desc: Running Stage for $name
-  cmd: $stage; $stage2
+  cmd: $stage && $stage2
