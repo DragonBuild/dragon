@@ -1,5 +1,9 @@
 # DragonBuild
 
+## Disclaimer
+
+The DragonBuild build system is fairly young, and you should not rely on it for your projects, yet.
+
 ## Quick Start
 
 ```
@@ -69,6 +73,7 @@ This should serve as a guideline for how a project should be laid out. You can d
 name: TweakName
 icmd: sbreload
 
+# Variables declared here apply to all modules.
 all:
   targetvers: 11.0
   archs:
@@ -81,10 +86,8 @@ ModuleName:
     # A list of logos files. See variables section for more info. 
     logos_files:
         - "*.xm"
-    # A list, excluding logos files, of files to compile. See variables section for more info. 
-    # Min ios
-    # List of archs we want to build for
-# Now for prefs!
+        
+# Now for preferences!
 AnotherModuleName:
     # Specify the directory, since it's a subproject
     dir: nameprefs
@@ -95,6 +98,7 @@ AnotherModuleName:
         - BlahRootListController.m
         - ACellYouUse.m
         - ../SomeFileFromYourMainTweak.m
+        
 # If you have a tweak subproject that, for example, hooks another process, you can compile it into the same deb
 # This is the minimal amount of info you can provide and have your project compile. 
 ASubModuleName:
