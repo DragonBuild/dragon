@@ -227,4 +227,15 @@ Types:
       build_target_file: '$proj_build_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
+  static:
+    required_states:
+      - has_build_files
+    production_allow:
+      - deb
+      - raw
+    variables:
+      install_location: '/usr/lib'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.a'
+      stage2:
+        - 'true;'
   raw:

@@ -6,7 +6,7 @@ def main():
 def write_bundle_filter(name, bundle):
     if not os.path.exists(f'{name}.plist'):
         bfilter = open(f'{name}.plist', 'w+')
-        bfilter.write('{ Filter = { Bundles = ( '+ bundle + ' ); }; }')
+        bfilter.write('{ Filter = { Bundles = ( ' + bundle + ' ); }; }')
         bfilter.close()
 
 def geticmd(targ: str):

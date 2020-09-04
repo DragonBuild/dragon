@@ -201,7 +201,10 @@ linki386:
   name: i386 Linker
   desc: Linking $in with $ld [i386]
   cmd: $ld -arch i386 $internallflags $internalldflags -o $out $in
-
+archive:
+  name: Creating Archive
+  desc: Creating Static Archive with $ar from $in
+  cmd: ar cr $out $in
 dummy:
   name: Copying Files
   desc: Copying Files

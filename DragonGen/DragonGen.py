@@ -301,8 +301,6 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         pprint("project dictionary:" + str(ret), stream=sys.stderr)
         print("\n\n", file=sys.stderr)
 
-
-
     # Specify toolchain paths
     if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
         ret['ld'] = 'ld64'
@@ -362,7 +360,7 @@ def rules_and_build_statements(variables: ProjectVars) -> (list, list):
 
     build_state = []
     rule_list = []
-    used_rules = set(['debug', 'sign', 'stage', 'lipo'])
+    used_rules = {'debug', 'sign', 'stage', 'lipo'}
     subdir: str = variables['dir'] + '/'
     filedict = classify({key: variables[key] for key in FILE_RULES})
     linker_conds = set()
@@ -401,13 +399,20 @@ def rules_and_build_statements(variables: ProjectVars) -> (list, list):
                 if ftype in LINKER_FLAGS:
                     for flag in LINKER_FLAGS[ftype]:
                         linker_conds.add(flag)
-
-        # Linker rules and build statements
-        cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
-        rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
-        build_state.append(Build(f'$builddir/$name.{a}',
-                                 f'link{a}',
-                                 arch_specific_object_files))
+        if variables['type'] == 'static':
+            # Linker rules and build statements
+            cmd = rules(f'archive{a}', 'cmd') + ' ' + ' '.join(linker_conds)
+            rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+            build_state.append(Build(f'$builddir/$name.{a}',
+                                     f'link{a}',
+                                     arch_specific_object_files))
+        else:
+            # Linker rules and build statements
+            cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
+            rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+            build_state.append(Build(f'$builddir/$name.{a}',
+                                     f'link{a}',
+                                     arch_specific_object_files))
 
     build_state.extend([
         Build('$internalsymtarget',
@@ -771,6 +776,7 @@ def main():
         'name': 'package_name',
         'icmd': 'install_command',
         'ip': 'DRBIP',
+        'postinst': None,
         'port': 'DRBPORT',
         'id': None,
         'author': None,
