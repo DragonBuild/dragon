@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This needs to be done in python, ASAP.
+# Working in bash only invites bugs, issues, and hurts progress
+
 source ~/.dragonbuild/internal/environment
 
 source /System/Library/Frameworks/DragonSupport.framework/DragonSupport 2>/dev/null
@@ -75,6 +78,7 @@ usage()
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
     echo "  s|device - Set build device IP/Port"
     echo "  i|install - Install to build device"
+    echo "  sim - Add this to install to the simulator instead of a device"
     echo "  rs|respring - Respring the current build device"
     echo "  dr|devicerun - Run anything after this flag on device"
     echo ""
@@ -375,7 +379,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     fi
     if [ "${USER}" == "mobile" ]; then
         sudo dpkg -i ./packages/${GENOUTPUT}
-        sbreload &
+        ${INSTALL_CMD} &
         drexit 0
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
