@@ -49,11 +49,12 @@ def perform_benchmark():
 
 
 def benchmark_projects():
-    os.chdir(os.environ['DRAGONBUILD'] + '/testing/' + projects['Common'][0])
-    result = timeit.timeit('test.system("dragon c b")', setup='import test, sys', number=10)
-    print(result / 10)
+    #os.chdir(os.environ['DRAGONBUILD'] + '/testing/' + projects['Common'][0])
+    #result = timeit.timeit('test.system("dragon c b")', setup='import test, sys', number=10)
+    #print(result / 10)
     # result = list(sorted(result))
     # print(*result[:3])
+    pass
 
 
 def system(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
@@ -74,7 +75,7 @@ def main():
     times = {
 
     }
-
+    system('mkdir -p ' + os.environ['DRAGONBUILD'] + '/testing/')
     os.chdir(os.environ['DRAGONBUILD'] + '/testing/')
 
     print('Doing Benchmarks')
@@ -89,7 +90,7 @@ def main():
             system('''
             echo $PWD
             git clone https://github.com/KritantaDev/%s.git
-            ''' % i)
+            ''' % i, sys.stdout, sys.stderr)
             os.chdir(i)
             print(os.getcwd())
             print(f"---\n Testing {i} \n---")
@@ -126,9 +127,7 @@ def main():
         'Theos': {
             'StopCrashingPls': 0.631509568000002/1.3837896153333336
             },
-        'Large': {
-            'HomePlusPro': 5.218632450999998/1.3837896153333336
-            }
+
         }
     for category in tests:
         print(f'\n{category} Project Build Tests')
