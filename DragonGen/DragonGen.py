@@ -289,11 +289,12 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
         'lopt': 'lopts'
     }
 
-    d = 0
-    for i in ret['archs']:
+    for d,i in enumerate(ret['archs']):
         if 'MACHINE' in i:
             ret['archs'][d] = platform.machine()
-        d += 1
+        if 'arm64e' in i:
+            if 'invalid arch name' in os.popen('clang -arch arm64e 2>&1').read():
+                ret['archs'].remove('arm64e')
 
     if ret['triple'] != '':
         ret['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() if 'MACHINE' in ret[
