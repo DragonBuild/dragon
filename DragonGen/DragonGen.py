@@ -21,7 +21,7 @@ import platform
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
-import regex
+import re as regex
 import subprocess
 import yaml
 
