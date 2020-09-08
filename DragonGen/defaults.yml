@@ -152,7 +152,7 @@ Types:
         - UIKit
         - Foundation
       stage2:
-        - 'cp -R Resources/* $proj_build_dir/$stagedir/$location/$name.bundle/'
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location/$name.bundle/'
 
   framework:
     required_states:
