@@ -22,7 +22,7 @@ from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
 import regex
-
+import subprocess
 import yaml
 
 from buildgen.buildgen.generator import Generator
@@ -32,6 +32,7 @@ _LAZY_RULES_DOT_YML: dict = None
 _LAZY_DEFAULTS_DOT_YML: dict = None
 
 _IS_THEOS_MAKEFILE_ = False
+
 
 def rules(*key_path: str) -> dict:
     '''
@@ -116,6 +117,8 @@ class ArgList(list):
     LIST_KEYS = {
         'files': ('', ' '),
         'logos_files': ('', ' '),
+        'tweak_files': ('', ' '),  # used for legacy compatibility, isn't actually used.
+        'archs': ('', '-arch '),  # Also only for legacy, this is handled in a much more complex manner
         'c_files': ('', ' '),
         'objc_files': ('', ' '),
         'objcxx_files': ('', ' '),
@@ -254,11 +257,19 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
     })
 
     if _IS_THEOS_MAKEFILE_:
-        ret.update( { 'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w' } )
+        ret.update({
+                       'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w'
+                       })
 
     # Update with default vars
     ret.update(base_config('Defaults'))  # Universal
-    ret.update(base_config('Types', var_d['type'], 'variables'))  # Type-based
+    try:
+        ret.update(base_config('Types', var_d['type'], 'variables'))  # Type-based
+    except KeyError as ex:
+        try:
+            ret.update(base_config('Types', var_d['type'].lower(), 'variables'))
+        except KeyError:
+            raise ex
 
     ret.update(var_d)
 
@@ -268,8 +279,6 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
             ret.update(source['all'])
         if 'Targets' in source and target in source['Targets']:
             ret.update(source['Targets'][target]['all'])
-
-
 
     # A few variables that need to be renamed
     NINJA_KEYS = {
@@ -333,18 +342,18 @@ def rules_and_build_statements(variables: ProjectVars) -> (list, list):
     # Trivial project types
     if variables['type'] == 'resource-bundle':
         return [
-            QuickRule('bundle'),
-            QuickRule('stage'),
-        ], [
-            Build('bundle', 'bundle', 'build.ninja'),
-            Build('stage', 'stage', 'build.ninja'),
-        ]
+                   QuickRule('bundle'),
+                   QuickRule('stage'),
+               ], [
+                   Build('bundle', 'bundle', 'build.ninja'),
+                   Build('stage', 'stage', 'build.ninja'),
+               ]
     if variables['type'] == 'stage':
         return [
-            QuickRule('stage'),
-        ], [
-            Build('stage', 'stage', 'build.ninja'),
-        ]
+                   QuickRule('stage'),
+               ], [
+                   Build('stage', 'stage', 'build.ninja'),
+               ]
 
     FILE_RULES = {  # Required rules based on filetype
         'c_files': 'c',
@@ -574,6 +583,12 @@ make_type = regex.compile(r'include.*\/(.*)\.mk')
 nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
 
 
+def get_var(varname):
+    CMD = 'echo $(source myscript.sh; echo $%s)' % varname
+    p = subprocess.Popen(CMD, stdout=subprocess.PIPE, shell=True, executable='/bin/bash')
+    return p.stdout.readlines()[0].strip()
+
+
 # this was supposed to be a really small function, i dont know what happened ;-;
 def load_theos_makefile(file: object, root: object = True) -> dict:
     project = {}
@@ -648,7 +663,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
     module_files = variables.get(module_name + '_FILES') or variables.get(f'$({module_type_naming}_NAME)_FILES') or ''
     module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$({module_type_naming}_NAME)_CFLAGS') or ''
     module_cflags = variables.get(f'ADDITIONAL_CFLAGS') or ''
-    module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(f'$({module_type_naming}_NAME)_LDFLAGS') or ''
+    module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(
+        f'$({module_type_naming}_NAME)_LDFLAGS') or ''
     module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get(
         f'$({module_type_naming}_NAME)_CODESIGN_FLAGS') or ''
     module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
@@ -711,7 +727,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
         mod_dicts.append(module)
         project['name'] = module['name']
         modules.append('.')
-        
+
     if hassubproj and 'SUBPROJECTS' in variables:
         modules = modules + variables['SUBPROJECTS'].split(' ')
 
@@ -735,13 +751,48 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
     if 'export ARCHS' in variables:
         project['all'] = {
             'archs': variables['export ARCHS'].split(' ')
-            }
+        }
 
     if os.environ['DGEN_DEBUG']:
         print("\n\n", file=sys.stderr)
         print("dict:" + str(project), file=sys.stderr)
         print("\n\n", file=sys.stderr)
     return project
+
+
+def load_old_format(file: object, root: object = True) -> dict:
+    variables = {i.split('=')[0].strip('"').strip("'"): i.split('=')[1].strip('"').strip("'") for i in
+                 file.read().split('\n') if (not i.startswith('#') and len(i) > 0)}
+    # print(variables, file=sys.stderr)
+
+    moddict = {}
+
+    for i in [x for x in variables if len(x) > 0 and x!='SUBPROJECTS' ]:
+        translation = i.lower().replace('tweak_', '').replace('logos_file', 'logos_files').replace('install_cmd','icmd')
+        variables[i] = os.popen(f'echo {variables[i]}').read().strip()
+        if i in ['ARCHS', 'LIBS', 'FRAMEWORKS', 'LOGOS_FILES', 'TWEAK_FILES']:
+
+            start, delim = ArgList.LIST_KEYS[i.lower()]
+            if delim in variables[i]:
+                moddict[translation] = variables[i][len(start):].split(delim)
+            else:
+                moddict[translation] = variables[i].strip().split()
+        else:
+            moddict[translation] = variables[i]
+
+    if not root:
+        return moddict
+    else:
+        mainproj = {k: v for (k, v) in moddict.items() if k not in ['name', 'icmd']}
+        moddict = {k: v for (k, v) in moddict.items() if k in ['name', 'icmd']}
+        moddict[moddict['name']] = mainproj
+        for i in variables['SUBPROJECTS'].split():
+            os.chdir(i)
+            subproject = load_old_format(open('DragonMake'), False)
+            subproject['dir'] = subproject['name']
+            os.chdir('..')
+            moddict[subproject['name']] = {i: v for (i, v) in subproject.items() if i not in ['name', 'icmd']}
+        return moddict
 
 
 def handle(ex: Exception):
@@ -793,10 +844,20 @@ def main():
 
     exports = {}
     dirs = ''
+    projs = ''
 
     if os.path.exists('DragonMake'):
         with open('DragonMake') as f:
-            config = yaml.safe_load(f)
+            try:
+                config = yaml.safe_load(f)
+            except Exception as ex:
+                if os.system("sh DragonMake 2>/dev/null") == 0:
+                    config = load_old_format(open('DragonMake'))
+
+                else:
+                    # bad format
+                    raise ex
+
 
     elif os.path.exists('Makefile'):
         config = load_theos_makefile(open('Makefile'))
@@ -823,13 +884,22 @@ def main():
             'name': key,
             'dir': '.'
         }
-        proj_config.update(config[key])
+        try:
+            proj_config.update(config[key])
+        except ValueError:
+            # if i add a key to control.py and don't add it to meta tags here, this happens
+            # so maybe find a better way to do that, dpkg is complex and has many fields
+            print("! Warning: Key %s is not a valid module (a dictionary), nor is it a known configuration key" % key,
+                  file=sys.stderr)
+            print("! If DragonBuild is missing a configuration key you expected, file an issue.", file=sys.stderr)
+            print("! This value will be ignored.", file=sys.stderr)
+            continue
 
         default_target = 'ios'
         if os.environ['TARG_SIM'] == '1':
             default_target = 'sim'
 
-        with open(f'{proj_config["dir"]}/build.ninja', 'w+') as out:
+        with open(f'{proj_config["dir"]}/{proj_config["name"]}.ninja', 'w+') as out:
 
             variables = generate_vars(proj_config, config, default_target)
 
@@ -845,7 +915,11 @@ def main():
         if dirs.endswith('.'):
             dirs = '. ' + dirs[:-2]
 
+        projs = projs + ' ' + proj_config['name']
+        projs = projs.strip()
+
     exports['project_dirs'] = dirs
+    exports['project_names'] = projs
 
     for x in exports:
         print(f'export {x}="{exports[x]}"')

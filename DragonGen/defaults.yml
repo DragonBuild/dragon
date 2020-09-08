@@ -131,8 +131,8 @@ Types:
       libs:
         - 'substrate'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      internalldflags: -framework Preferences
       frameworks:
-        - Preferences
         - UIKit
         - Foundation
       stage2:

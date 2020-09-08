@@ -57,7 +57,7 @@ function cleanbuildfail()
     if [ $norm == 0 ]; then
         mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
     fi
-    drexit
+    drexit 1
 }
 
 export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
@@ -272,20 +272,28 @@ if [ $gen == 1 ]; then
     fi
 fi
 
+
 if [ $build == 1 ]; then 
     # shellcheck disable=SC2154
     if [ -z "$project_dirs" ]; then
         echo "yeet" > /dev/null 
-    else 
+    else
         projroot=$PWD
+
         set -f
-        subsb=(${project_dirs})
-        set +f 
+        # If there's more than one project in the root directory we need to iterate by name.
+        # shellcheck disable=SC2207
+        subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
+        set +f
+
         for i in ${subsb[@]}; do
 
-            cd "$i" || drexit
+            # shellcheck disable=SC2046
+            cd $(python3 -c "print('.' if '$i.ninja' in '$(ls | xargs)' else '$i')") || drexit
+            python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
+            [[ -d .dragon/_/.dragonbuilding ]] || rm -rf .dragon/_
+            mkdir -p .dragon/_/.dragonbuilding
 
-            rm -rf .dragon/_
             mkdir -p .dragon/modules
             if [ $clean == 1 ]; then 
                 if [ $i == "." ]; then 
@@ -306,6 +314,7 @@ if [ $build == 1 ]; then
             else
                 echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
             fi
+            [[ -e build.ninja ]] || mv "${i}.ninja" build.ninja
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
             env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || cleanbuildfail $projroot
 
@@ -314,7 +323,7 @@ if [ $build == 1 ]; then
                 ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
             fi
             if [ $norm == 0 ]; then
-                mkdir -p .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+                mkdir -p .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/${i}.ninja
             fi
             if [ $i == "." ]; then 
                 true;
@@ -327,7 +336,7 @@ if [ $build == 1 ]; then
 
     if [ $DRAGON_DPKG == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
-        mkdir -p .dragon/_/DEBIAN
+        mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
         cp control .dragon/_/DEBIAN/control || ctry
         du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
         cp -R layout/* .dragon/_/ 2>/dev/null
