@@ -217,6 +217,9 @@ while [ "$1" != "" ]; do
                                 ;;
         vg )                    export DGEN_DEBUG=1
                                 ;;
+        test )                  python3 $DRAGONBUILD/internal/test.py
+                                drexit
+                                ;;
         * )                     usage
                                 drexit 1
     esac # who comes up with this syntax lol
