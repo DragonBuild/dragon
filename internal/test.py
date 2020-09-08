@@ -92,7 +92,7 @@ def main():
             print(f"---\n Testing {i} \n---")
             # time.sleep(5)
             s = timeit.default_timer()
-            passed = system('stty sane; dragon c b | cat', sys.stdout, sys.stderr) == 0
+            passed = system('dragon c b', sys.stdout, sys.stderr) == 0
             s = timeit.default_timer() - s
             print(s)
             print('-+- Passed -+-' if passed else '-!- Failed -!-')
