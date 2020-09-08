@@ -20,10 +20,6 @@ projects = \
         'Theos':
             [
                 'StopCrashingPls'
-            ],
-        'Large':
-            [
-                'HomePlusPro',
             ]
     }
 
