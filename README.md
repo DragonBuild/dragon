@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-The DragonBuild build system is fairly young, and you should not rely on it for your projects, yet.
+The DragonBuild build system is fairly young, so if you're switching over, don't delete your theos directory just yet.
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ The DragonBuild build system is fairly young, and you should not rely on it for 
 dragon [commands]
 
 Building -=-=-
-  d|do - Build and Install
+  do - Build and Install
   c|clean - recompile, link, and package your project
   b|build|make - compile, link, and package your project
   r|release - Load DragonRelease file over the DragonMake one
@@ -19,8 +19,16 @@ Building -=-=-
 Installation -=-=-
   s|device - Set build device IP/Port
   i|install - Install to build device
+  sim - Add this to install to the simulator instead of a device
   rs|respring - Respring the current build device
   dr|devicerun - Run anything after this flag on device
+
+Tools -=-=-
+  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
+  exp|export - Tell ninja to create a compile_commands.json
+  f|flutter - Build with flutter before doing anything else
+  ch|checkra1n - Open Checkra1n GUI
+  chc|checkra1ncli - Open Checkra1n CLI
   
 ```
 
@@ -175,7 +183,7 @@ DragonBuild v1.0 -=-=-
   usage: dragon [commands]
 
 Building -=-=-
-  d|do - Build and Install
+  do - Build and Install
   c|clean - recompile, link, and package your project
   b|build|make - compile, link, and package your project
   r|release - Load DragonRelease file over the DragonMake one
@@ -184,25 +192,129 @@ Building -=-=-
 Installation -=-=-
   s|device - Set build device IP/Port
   i|install - Install to build device
+  sim - Add this to install to the simulator instead of a device
   rs|respring - Respring the current build device
   dr|devicerun - Run anything after this flag on device
 
 Tools -=-=-
+  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
   exp|export - Tell ninja to create a compile_commands.json
   f|flutter - Build with flutter before doing anything else
   ch|checkra1n - Open Checkra1n GUI
   chc|checkra1ncli - Open Checkra1n CLI
 
-Debugging -=-=-
-  vn - Print clang/ld/etc. commands and flags
-  vd - echo every bash command in the main dragon file
-  vg - DragonGen verbositiy.
-  norm - Doesn't delete build.ninja after building.
-  debug - Enable all debug flags
-
 -=-=-
 
 DragonBuild v1.0.0 - by kritanta
+```
+
+# Project Types
+
+```yml
+  app:
+    variables:
+      install_location: '/Applications/'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
+  application:
+    variables:
+      install_location: '/Applications/'
+      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
+  tweak:
+    production_allow:
+      - deb
+    variables:
+      install_location: '/Library/MobileSubstrate/DynamicLibraries/'
+      build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      internalldflags: -framework CydiaSubstrate
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+  prefs:
+    variables:
+      install_location: '/Library/PreferenceBundles/$name.bundle'
+      build_target_file: '$proj_build_dir/$stagedir$location/$name'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      internalldflags: -framework Preferences
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
+        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
+  bundle:
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location/$name.bundle/'
+
+  framework:
+    variables:
+      install_location: '/Library/Frameworks/$name.framework'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - Foundation
+      stage2:
+        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
+        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONBUILD/frameworks/$name.framework'
+        - 'if [ ! -z "$public_headers" ]; then
+           mkdir -p $proj_build_dir/$stagedir/$location/Headers;
+           cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
+           fi'
+  resource-bundle:
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      build_target_file: 'build.ninja'
+      libs:
+        - 'substrate'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      frameworks:
+        - UIKit
+        - Foundation
+      stage2:
+        - 'true;'
+  stage:
+    variables:
+      build_target_file: 'build.ninja'
+      stage2:
+        - 'true;'
+  library:
+    variables:
+      install_location: 'usr/lib'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.dylib'
+      ldflags: '-install_name $location$name.dylib'
+      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      stage2:
+        - 'true;'
+  cli:
+    variables:
+      install_location: '/usr/bin'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      stage2:
+        - 'true;'
+  tool:
+    variables:
+      install_location: '/usr/bin'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      stage2:
+        - 'true;'
+  static:
+    variables:
+      install_location: '/usr/lib'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.a'
+      stage2:
+        - 'true;'
 ```
 
 # Endgame for this project
