@@ -4,6 +4,16 @@
 
 The DragonBuild build system is fairly young, so if you're switching over, don't delete your theos directory just yet.
 
+## Installing DragonBuild
+
+Paste the following into terminal:
+
+`bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
+
+## Updating
+
+`dragon update`
+
 ## Quick Start
 
 ```
@@ -34,11 +44,6 @@ Tools -=-=-
 
 [Full List Of Commands](#dragonbuild-commands)
 
-# Installing DragonBuild
-
-Paste the following into terminal:
-
-`bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
 # Setting up your project for DragonBuild
 
@@ -169,7 +174,7 @@ Module Variables
 
 You can reference any of these variables in a variable *below* it (really, avoid doing this please) using `$var`
 
-# DragonBuild Commands
+## DragonBuild Commands
 
 All (most) of these can be combined and ran at the same time, if needed.
 
@@ -208,7 +213,7 @@ Tools -=-=-
 DragonBuild v1.0.0 - by kritanta
 ```
 
-# Project Types
+## Project Types
 
 ```yml
   app:
