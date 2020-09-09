@@ -24,7 +24,7 @@ Installation -=-=-
   dr|devicerun - Run anything after this flag on device
 
 Tools -=-=-
-  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
+  d|debug [Process Name] - Start a debugging server on device and connect to it 
   exp|export - Tell ninja to create a compile_commands.json
   f|flutter - Build with flutter before doing anything else
   ch|checkra1n - Open Checkra1n GUI
