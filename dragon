@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This needs to be done in python, ASAP.
 # Working in bash only invites bugs, issues, and hurts progress
@@ -81,6 +81,7 @@ usage()
     echo "  sim - Add this to install to the simulator instead of a device"
     echo "  rs|respring - Respring the current build device"
     echo "  dr|devicerun - Run anything after this flag on device"
+    echo "  sn|send <file> - Install a .deb to the device"
     echo ""
     echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
     echo "  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)"
@@ -145,6 +146,30 @@ ctry()
   python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control || cleanbuildfail
 }
 
+
+snd()
+{
+    OUTPUT=$1
+    if [ -z "$OUTPUT" ]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
+        drexit
+    fi
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting...${NC}"
+    python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check('$DRBIP',$DRBPORT,$DBTIMEOUT)" 2>/dev/null
+    echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
+
+    ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
+    echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
+
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
+
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} || drexit && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" || drexit && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
+
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
+    ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || drexit
+}
+
 # First, get a md5 of the package directory list
 
 if [ "$1" == "" ]; then
@@ -185,6 +210,9 @@ while [ "$1" != "" ]; do
                                 ssh root@$DRBIP "$*"
                                 drexit
                                 ;;
+        sn | send )             snd $2
+                                drexit
+                                ;;
         ch | checkra1n )        /Applications/checkra1n.app/Contents/MacOS/checkra1n -g
                                 drexit
                                 ;;
@@ -219,6 +247,9 @@ while [ "$1" != "" ]; do
                                 ;;
         test )                  python3 $DRAGONBUILD/internal/test.py
                                 drexit
+                                ;;
+        time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
+                                set -x
                                 ;;
         * )                     usage
                                 drexit 1
@@ -357,6 +388,7 @@ if [ $build == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
     echo "${GENOUTPUT}" > .dragon/last_package
 fi
+
 
 # /*zip $foldername; ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""; ssh-copy-id root@$phoneip; scp $foldername.zip root@$phoneip:/tmp/mydeb.zip; ssh root@$phoneip "cd /tmp; unzip mydeb.zip; mkdir /private/var/mobile/Documents/crap; dpkg-deb --build -Zgzip -z9 mydeb /private/var/mobile/Documents/crap; zip /private/var/mobile/Documents/crap"; scp root@$phoneip:/private/var/mobile/Documents/crap.zip ~/crap.zip; unzip crap.zip*/
 
