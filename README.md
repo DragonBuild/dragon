@@ -1,10 +1,10 @@
-# DragonBuild
+# dragon
 
 ## Disclaimer
 
-The DragonBuild build system is fairly young, so if you're switching over, don't delete your theos directory just yet.
+dragon's build system is fairly young, so if you're switching over, don't delete your theos directory just yet.
 
-## Installing DragonBuild
+## Installing dragon
 
 Paste the following into terminal:
 
@@ -174,7 +174,7 @@ Module Variables
 
 You can reference any of these variables in a variable *below* it (really, avoid doing this please) using `$var`
 
-## DragonBuild Commands
+## dragon Commands
 
 All (most) of these can be combined and ran at the same time, if needed.
 
@@ -184,7 +184,7 @@ All (most) of these can be combined and ran at the same time, if needed.
 
 ```yaml
 
-DragonBuild v1.0 -=-=-
+dragon -=-=-
   usage: dragon [commands]
 
 Building -=-=-
@@ -210,7 +210,6 @@ Tools -=-=-
 
 -=-=-
 
-DragonBuild v1.0.0 - by kritanta
 ```
 
 ## Project Types
@@ -328,9 +327,9 @@ The ultimate hope for this project is that the major alternative, theos, sees th
 
 # Current State
 
-DragonBuild is currently "mildly stable." It'll have some bumps, especially on linux.
+dragon is currently "mildly stable." It'll have some bumps, especially on linux.
 
-DragonBuild also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
+dragon also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
 
 # Helpful links
 
