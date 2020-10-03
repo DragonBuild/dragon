@@ -457,7 +457,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
         drexit
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting...${NC}"
-    python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check('$DRBIP',$DRBPORT,$DBTIMEOUT)" 2>/dev/null
+    python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check(__import__(\"socket\").gethostbyname('$DRBIP'),$DRBPORT,$DBTIMEOUT)" 2>/dev/null 
     echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
