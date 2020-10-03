@@ -1,8 +1,8 @@
 # dragon
 
-## Disclaimer
+dragon is a general purpose build system and development toolkit mainly targeting iOS development.
 
-dragon's build system is fairly young, so if you're switching over, don't delete your theos directory just yet.
+The build system's expandable nature allows you to use it for projects of any nature.
 
 ## Installing dragon
 
@@ -10,73 +10,94 @@ Paste the following into terminal:
 
 `bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
 
-## Updating
-
-`dragon update`
+`dragon update` to update to the latest release.
 
 ## Quick Start
 
-```
-dragon [commands]
+The command line syntax for dragon was designed to be similar to [theos'](https://github.com/theos/) existing structure.
 
-Building -=-=-
-  do - Build and Install
-  c|clean - recompile, link, and package your project
-  b|build|make - compile, link, and package your project
-  r|release - Load DragonRelease file over the DragonMake one
-  rl|relink - Re-link the package regardless of changes
+Commands are referred to here in their shorthand syntax. Alternate names for commands are listed to the right of them.
 
-Installation -=-=-
-  s|device - Set build device IP/Port
-  i|install - Install to build device
-  sim - Add this to install to the simulator instead of a device
-  rs|respring - Respring the current build device
-  dr|devicerun - Run anything after this flag on device
+You can combine most commands.
 
-Tools -=-=-
-  d|debug [Process Name] - Start a debugging server on device and connect to it 
-  exp|export - Tell ninja to create a compile_commands.json
-  f|flutter - Build with flutter before doing anything else
-  ch|checkra1n - Open Checkra1n GUI
-  chc|checkra1ncli - Open Checkra1n CLI
-  
-```
+### Start a new project
+
+`dragon n` (`new`, `nic`)
+
+#### Build a project
+
+`dragon b` (`build`, `make`)
+
+#### Install to device
+
+`dragon i` (`install`)
+
+`dragon do` is shorthand for `dragon b i`
+
+add `sim` (e.g. `dragon i sim`, `dragon b i sim`) to install it to the simulator. Simject not required.
+
+---
+
+### Configure connected device
+
+`dragon s` (`setup`). This is ran automatically if one isn't yet configured.
+
+When installing to a phone, if passwordless-authentication hasn't been configured, dragon will optionally configure it for you.
+
+#### Installing over USB
+
+Run `dragon s` but leave the "IP" field empty. It will then use iproxy to install the package over usb.
+
+#### Respring connected device
+
+`dragon rs`
+
+#### Run a command on connected device
+
+`dragon dr <command here>` - Anything after `dr` is ran on device.
+
+`dragon dr` with no further arguments will open an ssh session.
+
+### Building on-device
+
+A "dragon support" package for jailbroken iOS is being developed. 
+
+dragon will autodetect if it's running on a phone. 
+
+If so, the `install` flag will install it to the current device and respring it.
 
 [Full List Of Commands](#dragonbuild-commands)
 
 
 # Setting up your project for DragonBuild
 
-## DragonMake
+Despite the advantages of DragonMake, if you insist on using theos-style Makefiles, dragon can work with that too.
 
-A single-file tweak can be built with the following 'DragonMake' file.
+## Using Makefiles
 
-```
----
-name: MyTweak
-icmd: sbreload
+Change is rough, I know, I know. dragon has a built in Makefile interpreter that will do its best to read the info it needs from a theos Makefile.
 
-MyTweak:
-  type: tweak
-  files:
-    - Tweak.xm
-```
+A good majority of projects built with Theos will build out of the box with dragon.
 
-### DragonMake Syntax
+**If your Theos project fails to build, file an issue with a link to it.** This is insanely helpful when it comes to improving the interpreter. 
 
-DragonMake follows yaml syntax. Strings dont typically need to be wrapped in `""`, although wildcards do.
+## Using DragonMake
 
-For str variables, you can use bash syntax to evaluate a command with `$$(command args)`
+DragonMake is a YAML-based format that represents an entire project and all subprojects within a single file.
 
-You can also refer to environment variables with `$$VARNAME`
+It was created with the goal of being writable by hand, without the help of a "New Instance Creator". (Although dragon still has one, dont worry <3)
 
-Wildcards:  
-  `"*.[extension]"` is the syntax. `**` and other globbing rules are applied. Type `ls <your wildcard here>` to get an idea. 
-  `"**/*.m"` for example will find all .m files in the current directory *and subdirectories*
+### "Modules" and the "Project"
 
-### DragonMake Format
+Regardless of folder layout, there are no "subprojects" in dragon. Instead, you have a single "Project", which then has "Modules" (your tweak, your prefs, etc).
 
-This should serve as a guideline for how a project should be laid out. You can declare as many projects as you want, it's all going to be crammed into the same deb. 
+This format makes working with complex projects much easier, and keeps things incredibly organized without limiting your freedom.
+
+See the example below to get an idea
+
+### DragonMake Sample
+
+This should serve as a guideline for how a project should be laid out. You can declare as many modules as you want within your project.
 
 "ModuleName" represents a module, here. Typically this is "TweakName" or "TweakNamePrefs", or something along those lines.
 
@@ -120,6 +141,20 @@ ASubModuleName:
     files:
         - othertweak/Tweak.xm    
 ```
+
+
+### DragonMake Syntax
+
+Variables within the dragonmake can be referenced via `$varname`
+
+Environment Variables can be referenced with `$$varname`
+
+You can evaluate a command in a subshell via `$$(command args)`
+
+Wildcards:  
+  `"*.<x>"` is the syntax. `**` and other globbing rules are applied. 
+  Type `ls <your wildcard here>` to get an idea. 
+
 
 ## DragonMake Variables
 
@@ -174,9 +209,9 @@ Module Variables
 
 You can reference any of these variables in a variable *below* it (really, avoid doing this please) using `$var`
 
-## dragon Commands
+## dragon commands
 
-All (most) of these can be combined and ran at the same time, if needed.
+Most of these can be combined, if needed.
 
 `dragon update` will update your dragonbuild installation to the latest version.
 
@@ -215,130 +250,20 @@ Tools -=-=-
 ## Project Types
 
 ```yml
-  app:
-    variables:
-      install_location: '/Applications/'
-      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
-  application:
-    variables:
-      install_location: '/Applications/'
-      target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
-  tweak:
-    production_allow:
-      - deb
-    variables:
-      install_location: '/Library/MobileSubstrate/DynamicLibraries/'
-      build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      internalldflags: -framework CydiaSubstrate
-      frameworks:
-        - UIKit
-        - Foundation
-      stage2:
-        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
-  prefs:
-    variables:
-      install_location: '/Library/PreferenceBundles/$name.bundle'
-      build_target_file: '$proj_build_dir/$stagedir$location/$name'
-      libs:
-        - 'substrate'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      internalldflags: -framework Preferences
-      frameworks:
-        - UIKit
-        - Foundation
-      stage2:
-        - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
-        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
-        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
-  bundle:
-    variables:
-      install_location: '/Library/$name/$name.bundle/'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      frameworks:
-        - UIKit
-        - Foundation
-      stage2:
-        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location/$name.bundle/'
-
-  framework:
-    variables:
-      install_location: '/Library/Frameworks/$name.framework'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      frameworks:
-        - Foundation
-      stage2:
-        - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
-        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONBUILD/frameworks/$name.framework'
-        - 'if [ ! -z "$public_headers" ]; then
-           mkdir -p $proj_build_dir/$stagedir/$location/Headers;
-           cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
-           fi'
-  resource-bundle:
-    variables:
-      install_location: '/Library/$name/$name.bundle/'
-      build_target_file: 'build.ninja'
-      libs:
-        - 'substrate'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      frameworks:
-        - UIKit
-        - Foundation
-      stage2:
-        - 'true;'
-  stage:
-    variables:
-      build_target_file: 'build.ninja'
-      stage2:
-        - 'true;'
-  library:
-    variables:
-      install_location: 'usr/lib'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name.dylib'
-      ldflags: '-install_name $location$name.dylib'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
-      stage2:
-        - 'true;'
-  cli:
-    variables:
-      install_location: '/usr/bin'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
-      stage2:
-        - 'true;'
-  tool:
-    variables:
-      install_location: '/usr/bin'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
-      stage2:
-        - 'true;'
-  static:
-    variables:
-      install_location: '/usr/lib'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name.a'
-      stage2:
-        - 'true;'
+  app: iOS Application
+  application: same as `app`
+  tweak: iOS Runtime Extension
+  prefs: PreferenceLoader bundle
+  bundle: Standard executable bundle
+  framework: Obj-C Framework
+  resource-bundle: Bundle with no executable compiled.
+  stage: Runs the command or list of commands in the `stage:` variable and does nothing else.
+  library: Simple dynamic library
+  cli: Command line tool
+  tool: same as `cli`
+  static: Static library
 ```
-
-# Endgame for this project
-
-The ultimate hope for this project is that the major alternative, theos, sees the same improvements this project has. It's unlikely it'll ever become as popular as theos, but the hope is that it can instead inspire the maintainers there into "catching up."
-
-# Current State
-
-dragon is currently "mildly stable." It'll have some bumps, especially on linux.
-
-dragon also recently went through a major rewrite of the generator. As I only have one PC to test on, what works for me may not work on your machine. I'm always willing to get in touch and debug your issues.
 
 # Helpful links
 
 [sbinger's arm64e toolchain](https://github.com/sbingner/llvm-project/releases/tag/v10.0.0-1)
-
-# Credits
-
-@Siguza, for writing ./bin/tbdump, the tool used to symbolicate libraries that can be compiled for this.
-
-@sbinger, for patiently helping me add arm64e support to tbdump (turns out its easy when you know what you're doing :))
-
-@theos, and the badass team there, who created a good amount of the resources this project depends on, and who have all been a major help in guiding the way for this project. This wouldn't exist without theos, and without the great people behind it.
