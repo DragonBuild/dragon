@@ -69,7 +69,7 @@ If so, the `install` flag will install it to the current device and respring it.
 [Full List Of Commands](#dragonbuild-commands)
 
 
-# Setting up your project for DragonBuild
+# Setting up your project for dragon
 
 Despite the advantages of DragonMake, if you insist on using theos-style Makefiles, dragon can work with that too.
 
