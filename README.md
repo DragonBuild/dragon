@@ -8,9 +8,9 @@ The build system's expandable nature allows you to use it for projects of any na
 
 ## Installing dragon
 
-Paste the following into terminal:
+Run the following to install:
 
-`bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
+`bash <(curl -sL dr.krit.me)`
 
 `dragon update` to update to the latest release.
 
