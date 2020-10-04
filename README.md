@@ -1,4 +1,6 @@
-# dragon
+<p align="center" >
+<img src="internal/dragon.svg" alt="Logo" width=200px> 
+</p>
 
 dragon is a general purpose build system and development toolkit mainly targeting iOS development.
 
