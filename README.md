@@ -2,7 +2,9 @@
 <img src="internal/dragon.svg" alt="Logo" width=200px> 
 </p>
 <p align="center">
-dragon is a powerful toolkit targeting Apple development, research, and packaging.
+  <strong>
+  dragon is a powerful toolkit targeting Apple development, research, and packaging.
+  </strong>
 </p>
 
 # Installing dragon
