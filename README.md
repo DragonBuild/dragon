@@ -5,7 +5,7 @@
 dragon is a powerful toolkit targeting iOS development, research, and packaging.
 </p>
 <p align="center">
-It aims to be easy for beginners to use, while being powerful enough to handle any project.
+It aims to be easy for beginners to use, while being flexible enough to handle any project.
 </p>
 
 # Installing dragon
