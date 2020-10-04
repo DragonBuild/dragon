@@ -12,8 +12,6 @@ Run the following to install:
 
 `bash <(curl -sL dr.krit.me)`
 
-`dragon update` to update to the latest release.
-
 ## Quick Start
 
 The command line syntax for dragon was designed to be similar to [theos'](https://github.com/theos/) existing structure.
