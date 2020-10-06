@@ -21,7 +21,7 @@ You can combine most commands.
 
 ## Start a new project
 
-`dragon n` (or `dragon new`, or `dragon nic`)
+**(Temporarily Disabled)** `dragon n` (or `dragon new`, or `dragon nic`)
 
 ## Build a project
 
