@@ -159,7 +159,7 @@ snd()
     echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
-    ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
+    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
     echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
@@ -461,7 +461,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
-    ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
+    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
     echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
