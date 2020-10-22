@@ -159,7 +159,7 @@ snd()
     echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
-    ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
+    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
     echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
@@ -203,11 +203,11 @@ while [ "$1" != "" ]; do
                                 ;;
         i | install )           install=1
                                 ;;
-        rs | respring )         ssh root@$DRBIP "killall -9 SpringBoard"
+        rs | respring )         ssh -p $DRBPORT root@$DRBIP "killall -9 SpringBoard"
                                 drexit
                                 ;;
         dr | devicerun )        shift
-                                ssh root@$DRBIP "$*"
+                                ssh -p $DRBPORT root@$DRBIP "$*"
                                 drexit
                                 ;;
         sn | send )             snd $2
@@ -390,7 +390,7 @@ if [ $build == 1 ]; then
 fi
 
 
-# /*zip $foldername; ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""; ssh-copy-id root@$phoneip; scp $foldername.zip root@$phoneip:/tmp/mydeb.zip; ssh root@$phoneip "cd /tmp; unzip mydeb.zip; mkdir /private/var/mobile/Documents/crap; dpkg-deb --build -Zgzip -z9 mydeb /private/var/mobile/Documents/crap; zip /private/var/mobile/Documents/crap"; scp root@$phoneip:/private/var/mobile/Documents/crap.zip ~/crap.zip; unzip crap.zip*/
+# /*zip $foldername; ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""; ssh-copy-id root@$phoneip; scp $foldername.zip root@$phoneip:/tmp/mydeb.zip; ssh -p $DRBPORT root@$phoneip "cd /tmp; unzip mydeb.zip; mkdir /private/var/mobile/Documents/crap; dpkg-deb --build -Zgzip -z9 mydeb /private/var/mobile/Documents/crap; zip /private/var/mobile/Documents/crap"; scp root@$phoneip:/private/var/mobile/Documents/crap.zip ~/crap.zip; unzip crap.zip*/
 
 simfail()
 {
@@ -461,7 +461,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
 
-    ssh -o PasswordAuthentication=no root@$DRBIP 2>/dev/null "true"
+    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
     echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
