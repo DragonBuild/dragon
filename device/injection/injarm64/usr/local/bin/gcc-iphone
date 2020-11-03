@@ -1,0 +1,15 @@
+# Do yourselves a favor and create a symlink to the mile long path of the SDK. Mine is:
+#
+# ls -l /iOSDeveloper
+# lrwxr-xr-x  1 root  wheel  80 Mar 30 16:15 /iOSDeveloper -> /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer
+
+SDK=iPhoneOS8.3.sdk
+gcc -arch arm64 \
+ -framework IOKit \
+ -framework CoreFoundation \
+ -F /iOSDeveloper/SDKs/$SDK/System/Library/Frameworks \
+ -F /iOSDeveloper/SDKs/$SDK/System/Library/PrivateFrameworks \
+ -L /iOSDeveloper/SDKs/$SDK/usr/lib \
+ -L /iOSDeveloper/SDKs/$SDK/usr/lib/system \
+ -I /iOSDeveloper/SDKs/$SDK/usr/include \
+  $*

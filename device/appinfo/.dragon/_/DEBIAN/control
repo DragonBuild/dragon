@@ -1,0 +1,10 @@
+Architecture: iphoneos-arm
+Author: krit
+Depends: mobilesubstrate
+Description: Command line app info interface
+Maintainer: krit
+Name: appinfo
+Package: me.krit.dragon.appinfo
+Section: Tweaks
+Version: 0.1.0
+Installed-Size: 432

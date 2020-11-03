@@ -1,0 +1,14 @@
+---
+name: appinfo
+icmd: appinfo -e com.apple.mobilenotes
+id: me.krit.dragon.appinfo
+depends: mobilesubstrate
+version: 0.1.0
+desc: Command line app info interface
+author: krit
+
+appinfo:
+  type: cli
+  entfile: ent.xml
+  files:
+    - appinfo.mm
