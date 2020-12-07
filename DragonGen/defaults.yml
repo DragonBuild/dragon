@@ -145,8 +145,8 @@ Types:
     production_allow:
       - deb
     variables:
-      install_location: '/Library/$name/$name.bundle/'
-      build_target_file: '$proj_build_dir/$stagedir/$location/$name'
+      install_location: '/Library/$name/'
+      build_target_file: '$proj_build_dir/$stagedir/$location/$name.bundle/$name'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
       frameworks:
         - UIKit
