@@ -1,81 +1,47 @@
-# dragon
+<p align="center" >
+<img src="internal/dragon.svg" alt="Logo" width=200px> 
+</p>
+<p align="center">
+  <strong>
+  dragon is a powerful toolkit targeting Apple development, research, and packaging.
+  </strong>
+</p>
 
-dragon is a general purpose build system and development toolkit mainly targeting iOS development.
+# Installing dragon
 
-The build system's expandable nature allows you to use it for projects of any nature.
+In your terminal:
 
-## Installing dragon
+`bash <(curl -sL dr.krit.me)`
 
-Paste the following into terminal:
+# Quick Start
 
-`bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/install.sh)`
-
-`dragon update` to update to the latest release.
-
-## Quick Start
-
-The command line syntax for dragon was designed to be similar to [theos'](https://github.com/theos/) existing structure.
-
-Commands are referred to here in their shorthand syntax. Alternate names for commands are listed to the right of them.
+Most commands have several aliases. You can use what you prefer.
 
 You can combine most commands.
 
-### Start a new project
+## Start a new project
 
-`dragon n` (`new`, `nic`)
+**(Temporarily Disabled)** `dragon n` (or `dragon new`, or `dragon nic`)
 
-#### Build a project
+## Build a project
 
 `dragon b` (`build`, `make`)
 
-#### Install to device
+## Install to device
 
 `dragon i` (`install`)
 
-`dragon do` is shorthand for `dragon b i`
+## Install to the simulator
 
-add `sim` (e.g. `dragon i sim`, `dragon b i sim`) to install it to the simulator. Simject not required.
+`dragon i sim`
 
 ---
 
-### Configure connected device
-
-`dragon s` (`setup`). This is ran automatically if one isn't yet configured.
-
-When installing to a phone, if passwordless-authentication hasn't been configured, dragon will optionally configure it for you.
-
-#### Installing over USB
-
-Run `dragon s` but leave the "IP" field empty. It will then use iproxy to install the package over usb.
-
-#### Respring connected device
-
-`dragon rs`
-
-#### Run a command on connected device
-
-`dragon dr <command here>` - Anything after `dr` is ran on device.
-
-`dragon dr` with no further arguments will open an ssh session.
-
-### Building on-device
-
-A "dragon support" package for jailbroken iOS is being developed. 
-
-dragon will autodetect if it's running on a phone. 
-
-If so, the `install` flag will install it to the current device and respring it.
-
-[Full List Of Commands](#dragonbuild-commands)
-
-
 # Setting up your project for dragon
 
-Despite the advantages of DragonMake, if you insist on using theos-style Makefiles, dragon can work with that too.
+dragon supports theos projects alongside it's own, powerful, expandable format.
 
 ## Using Makefiles
-
-Change is rough, I know, I know. dragon has a built in Makefile interpreter that will do its best to read the info it needs from a theos Makefile.
 
 A good majority of projects built with Theos will build out of the box with dragon.
 
@@ -233,19 +199,60 @@ Installation -=-=-
   s|device - Set build device IP/Port
   i|install - Install to build device
   sim - Add this to install to the simulator instead of a device
-  rs|respring - Respring the current build device
-  dr|devicerun - Run anything after this flag on device
 
 Tools -=-=-
   d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
+  rs|respring - Respring the current build device
+  dr|devicerun - Run anything after this flag on device
+  sn|send <file> - Install a .deb to the device
+  
   exp|export - Tell ninja to create a compile_commands.json
   f|flutter - Build with flutter before doing anything else
   ch|checkra1n - Open Checkra1n GUI
   chc|checkra1ncli - Open Checkra1n CLI
 
--=-=-
+Debugging -=-=-
+  vn - Print clang/ld/etc. commands and flags
+  vd - echo every bash command in the main dragon file
+  vg - DragonGen verbositiy.
+  norm - Doesn't delete build.ninja after building.
+  ddebug - Enable all debug flags
 
+-=-=-
 ```
+
+
+### Configure connected device
+
+`dragon s` (`setup`). This is ran automatically if one isn't yet configured.
+
+When installing to a phone, if passwordless-authentication hasn't been configured, dragon will optionally configure it for you.
+
+#### Installing over USB
+
+Run `dragon s` but leave the "IP" field empty. It will then use iproxy to install the package over usb.
+
+#### Respring connected device
+
+`dragon rs`
+
+#### Run a command on connected device
+
+`dragon dr <command here>` - Anything after `dr` is ran on device.
+
+`dragon dr` with no further arguments will open an ssh session.
+
+### Building on-device
+
+A "dragon support" package for jailbroken iOS is being developed. 
+
+dragon will autodetect if it's running on a phone. 
+
+If so, the `install` flag will install it to the current device and respring it.
+
+[Full List Of Commands](#dragonbuild-commands)
+
+
 
 ## Project Types
 

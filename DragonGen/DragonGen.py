@@ -327,6 +327,9 @@ def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
             'codesign',
         ]})
 
+    if ret['cxxflags']:
+        ret['cxx'] = ret['cxx'] + ' ' + ret['cxxflags']
+
     if ret['sysroot']:
         ret['sysroot'] = '-isysroot ' + ret['sysroot']
 
@@ -663,6 +666,7 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
     module_archs = variables.get(f'ARCHS')
     module_files = variables.get(module_name + '_FILES') or variables.get(f'$({module_type_naming}_NAME)_FILES') or ''
     module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$({module_type_naming}_NAME)_CFLAGS') or ''
+    module_cxxflags = variables.get(module_name + '_CXXFLAGS') or variables.get('$({module_type_naming}_NAME)_CXXFLAGS') or ''
     module_cflags = variables.get(f'ADDITIONAL_CFLAGS') or ''
     module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(
         f'$({module_type_naming}_NAME)_LDFLAGS') or ''
@@ -717,6 +721,8 @@ def load_theos_makefile(file: object, root: object = True) -> dict:
         module['archs'] = ['arm64', 'arm64e']
     if module_cflags != '':
         module['cflags'] = module_cflags
+    if module_cxxflags:
+        module['cxxflags'] = module_cxxflags
     if module_ldflags:
         module['ldflags'] = module_ldflags
     if stage != []:
