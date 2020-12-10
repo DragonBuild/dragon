@@ -227,7 +227,9 @@ while [ "$1" != "" ]; do
                                 ;;
         ddebug )                ddebug=1
                                 ;;
-        r | release )           export release=1
+        r | remote )            shift
+                                bash $DRAGONBUILD/internal/remote $*
+                                drexit
                                 ;;
         relink )                rm .dragon/sign
                                 ;;

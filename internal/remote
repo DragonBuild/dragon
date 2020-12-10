@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source $DRAGONBUILD/internal/dragoncolors
+
+set -e
+source $DRAGONBUILD/state/remoteip
+LDIR=$PWD
+RDIR=$(python3 -c 'import os;print(os.getenv("PWD").replace(os.getenv("HOME"), "/Users/" + os.getenv("USERN")))')
+RPAR="$(dirname "$RDIR")"
+echo -e "${PrefixColor}[Dragon]${BoldColor} Syncing... ${NC}"
+/usr/local/bin/rsync -aL --exclude '.dragon' --exclude 'packages' --exclude '.idea' ${PWD} ${USERN}@${IPA}:$RPAR
+echo -e "${PrefixColor}[Dragon]${BoldColor} Starting Build ${NC}"
+ssh ${USERN}@${IPA} -t "cd $RDIR; ~/.dragonbuild/dragon $*"
