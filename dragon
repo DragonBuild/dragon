@@ -130,7 +130,18 @@ setupDevice()
     fi
     echo "export DRBPORT=\"$DRBPORT\"" >> $DRAGONBUILD/state/phoneip
 }
-
+setupRemote()
+{
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
+    read IPA
+    echo "export IPA=\"$IPA\"" > $DRAGONBUILD/state/remoteip
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
+    read USERN
+    if [ -z "$USERN" ]; then
+        USERN="root"
+    fi
+    echo "export USERN=\"$USERN\"" >> $DRAGONBUILD/state/remoteip
+}
 update()
 {
   x=$PWD
@@ -184,7 +195,10 @@ while [ "$1" != "" ]; do
                                 ;;
         s | device)             setupDevice
                                 ;;
-        do )                    build=1
+        sr | rconf )            setupRemote
+                                ;;
+        do )                    gen=1
+                                build=1
                                 install=1
                                 ;;
         g | gen | generate)     gen=1
@@ -192,12 +206,14 @@ while [ "$1" != "" ]; do
         n | nic | new)          python3 $DRAGONBUILD/bin/nic.py  
                                 drexit
                                 ;;
-        exp | export)           exportt=1
+        exp | export)           gen=1
+                                exportt=1
                                 build=1
                                 ;;
         norm )                  norm=1
                                 ;;
-        b | build | make)       build=1
+        b | build | make)       gen=1
+                                build=1
                                 ;;
         sim | simulator )       export simtarg=1
                                 ;;
@@ -267,24 +283,6 @@ if [ $ddebug == 1 ]; then
 fi
 
 cwd=$(basename $PWD)
-
-
-if [ -f "DragonMake" ]; then  
-    gen=1
-else
-    if [ -f "Makefile" ]; then
-        gen=1
-    else 
-        python3 ${DRAGONBUILD}/DragonGen/assume.py
-    fi
-fi
-
-if [ -d ".dragon" ]; then  
-    true
-else
-    gen=1
-fi
-
 
 if [ $flutter == 1 ]; then
     if [ $release == 1 ]; then
