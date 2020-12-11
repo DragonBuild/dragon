@@ -3,7 +3,7 @@
 </p>
 <p align="center">
   <strong>
-  dragon is a powerful toolkit targeting Apple development, research, and packaging.
+  dragon aims to be a full environment for development and research on Apple devices.
   </strong>
 </p>
 
@@ -13,31 +13,17 @@ In your terminal:
 
 `bash <(curl -sL dr.krit.me)`
 
-# Quick Start
+---
 
-Most commands have several aliases. You can use what you prefer.
+This readme needs work and doesn't come close to covering the scope of the project.
 
-You can combine most commands.
+`dragon -h` includes a list of available supported stable features on the current build.
 
-## Start a new project
-
-**(Temporarily Disabled)** `dragon n` (or `dragon new`, or `dragon nic`)
-
-## Build a project
-
-`dragon b` (`build`, `make`)
-
-## Install to device
-
-`dragon i` (`install`)
-
-## Install to the simulator
-
-`dragon i sim`
+Reaching out to me on #development on the r/jb discord server is reccomended if you're having issues with anything.
 
 ---
 
-# Setting up your project for dragon
+# The Build System
 
 dragon supports theos projects alongside it's own, powerful, expandable format.
 
