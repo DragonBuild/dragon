@@ -78,7 +78,7 @@ usage()
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
     echo "  s|device - Set build device IP/Port"
     echo "  i|install - Install to build device"
-    echo "  sim - Add this to install to the simulator instead of a device"
+    echo "  sim - Install to the simulator instead of a device"
     echo "  rs|respring - Respring the current build device"
     echo "  dr|devicerun - Run anything after this flag on device"
     echo "  sn|send <file> - Install a .deb to the device"
@@ -268,6 +268,9 @@ while [ "$1" != "" ]; do
                                 ;;
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
+                                ;;
+        v | -v )                printBan
+                                drexit
                                 ;;
         * )                     usage
                                 drexit 1
