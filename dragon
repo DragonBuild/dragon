@@ -153,7 +153,6 @@ update()
 
 ctry()
 {
-  echo -e "${PrefixColor}[Dragon]${NC} Pulling Control Values from DragonMake ${NC}"
   python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control || cleanbuildfail
 }
 
@@ -217,7 +216,8 @@ while [ "$1" != "" ]; do
                                 ;;
         sim | simulator )       export simtarg=1
                                 ;;
-        i | install )           install=1
+        i | install )           gen=1
+                                install=1
                                 ;;
         rs | respring )         ssh -p $DRBPORT root@$DRBIP "killall -9 SpringBoard"
                                 drexit
