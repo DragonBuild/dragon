@@ -37,7 +37,7 @@ A good majority of projects built with Theos will build out of the box with drag
 
 DragonMake is a YAML-based format that represents an entire project and all subprojects within a single file.
 
-It was created with the goal of being writable by hand, without the help of a "New Instance Creator". (Although dragon still has one, dont worry <3)
+It was created with the goal of being writable by hand, without the help of a "New Instance Creator". Dragon's NIC is being worked on; It is however, lightly on hold, so as not to encourage new users to leap into this project just yet.
 
 ### "Modules" and the "Project"
 
