@@ -3,16 +3,24 @@
 # This needs to be done in python, ASAP.
 # Working in bash only invites bugs, issues, and hurts progress
 
+# We used to use theos' style of the user needing to declear envars
+# It's been shimmed out with this file, which we load in each time
+#    that contains the dragon dir and other small things
 source ~/.dragonbuild/internal/environment
 
+# Cant distinctly remember, but IIRC this framework is actually 
+#    just a bash script we load in
 source /System/Library/Frameworks/DragonSupport.framework/DragonSupport 2>/dev/null
 
-# (bash <(curl -s https://raw.githubusercontent.com/DragonBuild/installer/master/vers) &)
-
+# Connection timeout for SSH stuff
 DBTIMEOUT=5
 
+# Colors we load in
 source $DRAGONBUILD/internal/dragoncolors
 
+# These are the flags for the "state" of the program
+# Consider it a "checklist". Anything that gets set to 1 is something we need to get done,
+#     in the proper order.
 install=0
 build=0
 gen=0
@@ -26,6 +34,7 @@ ddebug=0
 flutter=0
 DRAGON_DPKG=1
 DRAGON_POSTINST=0
+
 export simtarg=0
 
 export release=0
@@ -38,12 +47,19 @@ set -o pipefail
 
 function drexit()
 {
+    # This function resets terminal colors, fixes stty (just in case), and then exits with arg0's value
+    # It should be called on *EVERY* exit, no matter what. 
     echo -e "${NC}"
     stty sane
     exit $1
 }
+
 function cleanbuildfail()
 {
+    # Run this when we hit an error building, so we can clean things up.
+    # This needs to eventually be updated for the new {name}.ninja format
+    # Currently it'll just leave everything sitting out
+
     # shellcheck disable=SC2154
     echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
@@ -60,6 +76,7 @@ function cleanbuildfail()
     drexit 1
 }
 
+# This controls ninja colors.
 export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
 usage()
@@ -109,6 +126,8 @@ printBan()
 
 setupSSHKey()
 {
+    # keyauth.py
+
     echo -e "${PrefixColor}[Dragon]${NC} SSH Passwordless Authentication (RSA Authentication) not configured."
     echo -e "${PrefixColor}[Dragon]${NC} Would you like to do so now? (Y/N)"
     python3 -c "exit(int('y' in input('> ').lower())^ 1)"
@@ -120,6 +139,7 @@ setupSSHKey()
 
 setupDevice()
 {
+    # device.py
     echo -e "${PrefixColor}[Dragon]${NC} Enter Device IP"
     read DRBIP
     echo "export DRBIP=\"$DRBIP\"" > $DRAGONBUILD/state/phoneip
@@ -132,6 +152,7 @@ setupDevice()
 }
 setupRemote()
 {
+    # remote.py | remote.sh
     echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
     read IPA
     echo "export IPA=\"$IPA\"" > $DRAGONBUILD/state/remoteip
@@ -144,16 +165,17 @@ setupRemote()
 }
 update()
 {
-  x=$PWD
-  cd $DRAGONBUILD || drexit
-  git pull
-  git submodule update --init --recursive
-  cd $x || drexit
+    # update.sh
+    x=$PWD
+    cd $DRAGONBUILD || drexit
+    git pull
+    git submodule update --init --recursive
+    cd $x || drexit
 }
 
 ctry()
 {
-  python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control || cleanbuildfail
+    python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control || cleanbuildfail
 }
 
 
@@ -183,8 +205,8 @@ snd()
 # First, get a md5 of the package directory list
 
 if [ "$1" == "" ]; then
-  usage
-  drexit
+    usage
+    drexit
 fi
 
 while [ "$1" != "" ]; do
@@ -279,10 +301,10 @@ while [ "$1" != "" ]; do
 done
 
 if [ $ddebug == 1 ]; then
-  NINJA_ARGS="-v"
-  export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-  set -xv
-  export DGEN_DEBUG=1
+    NINJA_ARGS="-v"
+    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+    set -xv
+    export DGEN_DEBUG=1
 fi
 
 cwd=$(basename $PWD)
@@ -298,6 +320,7 @@ if [ $flutter == 1 ]; then
 fi
 
 if [ $gen == 1 ]; then 
+    # DragonGen.py
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja > /dev/null
     mkdir -p .dragon/modules > /dev/null
@@ -305,12 +328,13 @@ if [ $gen == 1 ]; then
     source $DRAGONBUILD/DragonGen/DragonGen $DGEN_DEBUG
 
     if [ "$DRAGONGEN_FAILURE" == 1 ]; then
-      cleanbuildfail
+        cleanbuildfail
     fi
 fi
 
 
 if [ $build == 1 ]; then 
+    # build.py
     # shellcheck disable=SC2154
     if [ -z "$project_dirs" ]; then
         echo "yeet" > /dev/null 
@@ -372,9 +396,10 @@ if [ $build == 1 ]; then
     fi
 
     if [ $DRAGON_DPKG == 1 ]; then
+        # packager.py
         echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
         mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-        cp control .dragon/_/DEBIAN/control || ctry
+        cp control .dragon/_/DEBIAN/control 2>/dev/null || ctry
         du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
         cp -R layout/* .dragon/_/ 2>/dev/null
         chmod -R 0755 .dragon/_/DEBIAN/*
@@ -397,32 +422,33 @@ fi
 
 simfail()
 {
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
-  drexit 1
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
+    drexit 1
 }
 
 simsetup()
 {
-  hold=$PWD
-  cd $DRAGONBUILD/src/simject || simfail
-  dragon c b
-  cd $hold || simfail
+    hold=$PWD
+    cd $DRAGONBUILD/src/simject || simfail
+    dragon c b
+    cd $hold || simfail
 }
 
 simstall()
 {
-  test -f $DRAGONBUILD/simulator/resim || simsetup
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-  cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONBUILD/simulator/load || cleanbuildfail
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
-  resim
+    test -f $DRAGONBUILD/simulator/resim || simsetup
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
+    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONBUILD/simulator/load || cleanbuildfail
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
+    resim
 }
 
 if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
+    # device.py should handle this
     if [ $simtarg == 1 ]; then
-      simstall
-      drexit 0
+        simstall
+        drexit 0
     fi
     if [ "${USER}" == "mobile" ]; then
         sudo dpkg -i ./packages/${GENOUTPUT}
@@ -474,11 +500,11 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
     ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || drexit
 fi
-
+ 
 if [ $debug == 1 ] ; then
-  echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
-  ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
-  ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
+    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
+    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
 fi
 
 rm -rf .dragon/packages > /dev/null
