@@ -27,6 +27,27 @@ make_type = regex.compile(r'include.*\/(.*)\.mk')
 nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
 
 
+def classify(filedict: dict) -> dict:
+    '''
+    Find loving homes for unclassified files
+    '''
+
+    for f in filedict['files']:
+        _, ext = os.path.splitext(f)
+        filedict[{
+            '.c': 'c_files',
+            '.cpp': 'cxx_files',
+            '.cxx': 'cxx_files',
+            '.dlist': 'dlists',
+            '.m': 'objc_files',
+            '.mm': 'objcxx_files',
+            '.plist': 'plists',
+            '.swift': 'swift_files',
+            '.x': 'logos_files',
+            '.xm': 'logos_files',
+        }[ext]].append(f)
+    return filedict
+
 
 
 # this was supposed to be a really small function, i dont know what happened ;-;

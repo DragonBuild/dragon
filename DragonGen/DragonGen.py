@@ -44,7 +44,6 @@ from DragonGen.util import *
 from DragonGen.buildgen.buildgen.generator import BuildFileGenerator
 
 
-
 # Rules and defaults
 _LAZY_RULES_DOT_YML: dict = None
 _LAZY_DEFAULTS_DOT_YML: dict = None
@@ -77,7 +76,8 @@ class Generator(object):
     def __init__(self, config: dict, module_name: str, target_platform: str):
         self.config: dict = config
         self.module_name: str = module_name
-        self.project_variables: ProjectVars = ProjectVars(self.generate_vars(config[module_name], target_platform))
+        self.project_variables: ProjectVars = ProjectVars(
+                                self.generate_vars(config[module_name], target_platform))
 
 
     def write_output_file(self, stream: TextIO):
@@ -104,34 +104,12 @@ class Generator(object):
                         description=item.description,
                         command=item.command)
                 continue
-            if isinstance(item, Build):
+            if isinstance(item, Build): 
                 gen.build(item.outputs, item.rule, item.inputs)
                 continue
             if isinstance(item, Default):
                 gen.default(['$build_target_file'])
 
-
-    @staticmethod
-    def classify(filedict: dict) -> dict:
-        '''
-        Find loving homes for unclassified files
-        '''
-
-        for f in filedict['files']:
-            _, ext = os.path.splitext(f)
-            filedict[{
-                '.c': 'c_files',
-                '.cpp': 'cxx_files',
-                '.cxx': 'cxx_files',
-                '.dlist': 'dlists',
-                '.m': 'objc_files',
-                '.mm': 'objcxx_files',
-                '.plist': 'plists',
-                '.swift': 'swift_files',
-                '.x': 'logos_files',
-                '.xm': 'logos_files',
-            }[ext]].append(f)
-        return filedict
 
 
     def generate_vars(self, module_variables: dict, target: str) -> dict:
@@ -158,21 +136,30 @@ class Generator(object):
                         'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w'
                         })
 
-        # Update with default vars
+        # Setup with default vars
         project_dict.update(get_default_section_dict('Defaults'))  # Universal
         try:
-            project_dict.update(get_default_section_dict('Types', module_variables['type'], 'variables'))  # Type-based
+            # Apply Type Variables
+            project_dict.update(get_default_section_dict('Types', 
+                                module_variables['type'], 'variables'))  # Type-based
         except KeyError as ex:
             try:
-                project_dict.update(get_default_section_dict('Types', module_variables['type'].lower(), 'variables'))
+                # Cast type to lowercase and try again
+                project_dict.update(get_default_section_dict('Types',
+                                    module_variables['type'].lower(), 'variables'))
             except KeyError:
+                # They either didn't include a type variable, or they misspelled the 
+                #     type they used.
                 raise ex
 
-
+        # Apply the set of variables the user included on this module
         project_dict.update(module_variables)
+        # Apply the module name
         project_dict['name'] = self.module_name
 
-        # 'all` variables
+        # We allow the user to create their own Target and all sections
+        # Iterate through defaults.yml, the module's specific variables, and the root of
+        #       the DragonMake
         for source in get_default_section_dict(), module_variables, self.config:
             if 'all' in source:
                 project_dict.update(source['all'])
@@ -188,9 +175,6 @@ class Generator(object):
             'lopt': 'lopts'
         }
 
-        # TODO: BAD HOTFIX
-        if 'include' in project_dict:
-            project_dict['header_includes'] = project_dict['include']
 
         for d,i in enumerate(project_dict['archs']):
             if 'MACHINE' in i:
@@ -200,15 +184,23 @@ class Generator(object):
                     project_dict['archs'].remove('arm64e')
 
         if 'triple' in project_dict and project_dict['triple'] != '':
-            project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() if 'MACHINE' in project_dict[
-                'triple'] else project_dict['triple']
+            project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() \
+                if 'MACHINE' in project_dict['triple'] else project_dict['triple']
 
-        project_dict.update({key: project_dict[NINJA_KEYS[key]] for key in NINJA_KEYS if NINJA_KEYS[key] in project_dict})
+        project_dict.update({key: project_dict[NINJA_KEYS[key]] 
+                            for key in NINJA_KEYS 
+                                if NINJA_KEYS[key] in project_dict})
 
         # Computed variables
         project_dict['lowername'] = str(project_dict['name']).lower()
-        project_dict['fwSearch'] = project_dict['fw_dirs'] + (project_dict['additional_fw_dirs'] if project_dict['additional_fw_dirs'] else [])
-        project_dict['libSearch'] = project_dict['lib_dirs'] + (project_dict['additional_lib_dirs'] if project_dict['additional_lib_dirs'] else [] )
+        project_dict['fwSearch'] = project_dict['fw_dirs'] \
+                                    + (project_dict['additional_fw_dirs'] 
+                                        if project_dict['additional_fw_dirs'] 
+                                        else [])
+        project_dict['libSearch'] = project_dict['lib_dirs'] \
+                                    + (project_dict['additional_lib_dirs'] 
+                                        if project_dict['additional_lib_dirs'] 
+                                        else [] )
 
         if os.environ['DGEN_DEBUG']:
             pprint("project dictionary:" + str(project_dict), stream=sys.stderr)
@@ -217,7 +209,8 @@ class Generator(object):
         # Specify toolchain paths
         if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
             project_dict['ld'] = 'ld64'
-            project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + module_variables[k] for k in [
+            project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' 
+                + module_variables[k] for k in [
                 'cc',
                 'cxx',
                 'lipo',
@@ -225,7 +218,8 @@ class Generator(object):
                 'plutil',
                 'swift',
             ]})
-            project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/' + module_variables[k] for k in [
+            project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/' 
+                + module_variables[k] for k in [
                 'ld',
                 'codesign',
             ]})
@@ -278,7 +272,7 @@ class Generator(object):
         rule_list = []
         used_rules = {'debug', 'sign', 'stage', 'lipo'}
         subdir: str = self.project_variables['dir'] + '/'
-        filedict = self.classify({key: self.project_variables[key] for key in FILE_RULES})
+        filedict = classify({key: self.project_variables[key] for key in FILE_RULES})
         linker_conds = set()
 
         # Deal with logos preprocessing
@@ -495,18 +489,17 @@ def get_default_section_dict(*key_path: str) -> dict:
 def handle(ex: Exception):
     ''' Optionally print debug information '''
 
-    print("Press v for detailed debugging output, any other key to exit.",
-          file=sys.stderr)
+    dberror("Press v for detailed debugging output, any other key to exit.")
 
     old_setting = termios.tcgetattr(sys.stdin.fileno())
     tty.setraw(sys.stdin)
     x = sys.stdin.read(1)
     termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
     if str(x).lower() == 'v':
-        print(str(ex), file=sys.stderr)
-        print(''.join(traceback.format_tb(ex.__traceback__)), file=sys.stderr)
+        dberror(str(ex))
+        dberror(''.join(traceback.format_tb(ex.__traceback__)))
     else:
-        print("Exiting...", file=sys.stderr)
+        dberror("Exiting...")
 
     print(f'export DRAGONGEN_FAILURE=1')
 
@@ -556,7 +549,7 @@ def main():
                     # If that worked, it's the old (OLD) legacy DragonMake format,
                     #   which we can easily support via a couple lines of regex 
                     config = load_old_format(open('DragonMake'))
-
+                    dbstate("Loading Legacy format DragonMake")
                 else:
                     # bad format
                     dberror("Formatting Error in the DragonMake file")
@@ -567,12 +560,14 @@ def main():
     elif os.path.exists('Makefile'):
         config = interpret_theos_makefile(open('Makefile'))
         exports['theos'] = 1
+        dbstate("Generating build scripts from Theos Makefile")
         global _IS_THEOS_MAKEFILE_
         _IS_THEOS_MAKEFILE_ = True
 
     else:
         raise FileNotFoundError
-
+    
+    dbstate("Generating build scripts")
     for key in config:
         if key in META_KEYS:
             continue
@@ -592,7 +587,8 @@ def main():
         except ValueError:
             # if i add a key to control.py and don't add it to meta tags here, this happens
             # so maybe find a better way to do that, dpkg is complex and has many fields
-            dbwarn("! Warning: Key %s is not a valid module (a dictionary), nor is it a known configuration key" % key)
+            dbwarn("! Warning: Key %s is not a valid module (a dictionary),"
+                " nor is it a known configuration key" % key)
             dbwarn("! This key will be ignored.")
             continue
 
@@ -603,6 +599,7 @@ def main():
         with open(f'{submodule_config["dir"]}/{submodule_config["name"]}.ninja', 'w+') as out:
             try:
                 generator = Generator(config, key, default_target)
+                dbstate(f"Creating build script for {key}")
                 generator.write_output_file(out)
             except Exception as ex:
                 dberror(f'Exception in module "{key}":')
