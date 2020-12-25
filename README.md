@@ -41,6 +41,8 @@ DragonMake is a YAML-based format that represents an entire project and all subp
 
 It was created with the goal of being writable by hand, without the help of a "New Instance Creator". Dragon's NIC is being worked on; It is however, lightly on hold, so as not to encourage new users to leap into this project just yet.
 
+DragonMake can also optionally hold the `control`, `preinst`, `postinst`, etc. file values inside itself instead of requiring manually creating them
+
 ### "Modules" and the "Project"
 
 Regardless of folder layout, there are no "subprojects" in dragon. Instead, you have a single "Project", which then has "Modules" (your tweak, your prefs, etc).
@@ -58,52 +60,47 @@ This should serve as a guideline for how a project should be laid out. You can d
 ```yaml
 ---
 # This represents the overall project name. 
+# Everything in here will be built into a .deb package for installation
+# Replace TweakName with the name of your project, of course
 name: TweakName
-icmd: sbreload
+icmd: killall -9 SpringBoard
+id: com.mycompany.tweakname
+version: 1.0.0
+author: kritanta
+depends: mobilesubstrate, preferenceloader
 
-# Variables declared here apply to all modules.
-all:
-  targetvers: 11.0
-  archs:
-    - arm64
-    - arm64e
-
-# This represents a Tweak .dylib and .plist. 
-ModuleName:
+TweakName:
     type: tweak
-    # A list of logos files. See variables section for more info. 
-    logos_files:
+    files:
         - "*.xm"
         
 # Now for preferences!
-AnotherModuleName:
-    # Specify the directory, since it's a subproject
+TweakNamePrefs:
     dir: nameprefs
-    # Tell dragon that it's a bundle
     type: prefs
-    # You can specify files from anywhere in your tweak, or use directory specific wildcards
-    objc_files:
+    files:
         - BlahRootListController.m
         - ACellYouUse.m
         - ../SomeFileFromYourMainTweak.m
         
-# If you have a tweak subproject that, for example, hooks another process, you can compile it into the same deb
-# This is the minimal amount of info you can provide and have your project compile. 
-ASubModuleName:
+# Subproject example
+ASubTweakName:
     dir: othertweak
     type: tweak
     files:
-        - othertweak/Tweak.xm    
+        - Tweak.xm    
 ```
 
 
 ### DragonMake Syntax
 
-Variables within the dragonmake can be referenced via `$varname`
+Variables within the DragonMake can be referenced via `$varname`
 
 Environment Variables can be referenced with `$$varname`
 
 You can evaluate a command in a subshell via `$$(command args)`
+
+While these are all great for weird hacks, they're heavily not-reccomended. Run bash logic in the `stage:` section.
 
 Wildcards:  
   `"*.<x>"` is the syntax. `**` and other globbing rules are applied. 
@@ -111,6 +108,8 @@ Wildcards:
 
 
 ## DragonMake Variables
+
+_This section may be partially outdated. See `DragonGen/defaults.yml` for a complete list of current variables (under `Defaults:`)_
 
 Top Level Variables
 
