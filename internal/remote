@@ -12,3 +12,4 @@ echo -e "${PrefixColor}[Dragon]${BoldColor} Syncing... ${NC}"
 rsync -aL --exclude '.dragon' --exclude 'packages' --exclude '.idea' ${PWD} ${USERN}@${IPA}:$RPAR
 echo -e "${PrefixColor}[Dragon]${BoldColor} Starting Build ${NC}"
 ssh ${USERN}@${IPA} -t "cd $RDIR; ~/.dragonbuild/dragon $*"
+set +e

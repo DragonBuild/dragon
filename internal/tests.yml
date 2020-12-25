@@ -3,6 +3,9 @@ ProjectTests:
     - https://github.com/KritantaDev/Chapters
     - https://github.com/KritantaDev/Docky
     - https://github.com/KritantaDev/Shakelight
+    - https://github.com/KritantaDev/Gravitation
+  Globbing:
+    - https://github.com/KritantaDev/Signe
   Legacy:
     - https://github.com/KritantaDev/StatusViz
   Theos:

@@ -4,9 +4,22 @@
 
 DragonGen.py
 
-This is a complete rewrite of DragonGen.py
+(c) 2020 kritanta
+Please refer to the LICENSE file included with this project regarding the usage of code herein.
 
-A majority of the work here is credited to @lorenzo
+Authors:
+  - @kritanta
+  - @lorenz0
+
+Some guidelines for work on this file moving forward:
+  - Avoid re-typing variables and use type hints where possible
+  - No lines longer than 80-90 chars
+  - Code should make a 'good attempt' to stick to PEP-8 guidelines
+  - Avoid anything in the global namespace
+  - Use descriptive variable names. Code should be extremely self-documenting
+  - Comment any lines of code that are confusing
+  - Don't code-golf
+
 
 '''
 
@@ -25,7 +38,11 @@ import re as regex
 import subprocess
 import yaml
 
-from buildgen.buildgen.generator import Generator
+from DragonGen.DragonGenTypes import *
+from DragonGen.util import *
+from DragonGen.buildgen.buildgen.generator import BuildFileGenerator
+
+
 
 # Rules and defaults
 _LAZY_RULES_DOT_YML: dict = None
@@ -34,9 +51,411 @@ _LAZY_DEFAULTS_DOT_YML: dict = None
 _IS_THEOS_MAKEFILE_ = False
 
 
+# Ninja Statements
+
+# These are used like so:
+# a_build_object = Build("output files here", "rule name here", "input files here")
+# outputs = a_build_object.outputs
+
+Build = namedtuple('Build', ['outputs', 'rule', 'inputs'])
+Comment = namedtuple('Comment', ['fstring'])
+Rule = namedtuple('Rule', ['name', 'description', 'command'])
+Var = namedtuple('Var', ['key'])
+Default = namedtuple('Default', ['targets'])
+___ = object()  # Newline
+
+
+# Get rule by name from rules.yml
+def get_rule(name: str) -> Rule:
+    return Rule(name, rules(name, 'desc'), rules(name, 'cmd'))
+
+
+class Generator(object):
+
+    def __init__(self, config: dict, module_name: str, target_platform: str):
+        self.config: dict = config
+        self.module_name: str = module_name
+        self.project_variables: ProjectVars = ProjectVars(self.generate_vars(config[module_name], target_platform))
+        
+
+    def write_output_file(self, out: TextIO):
+        self.generate_build_file(out)
+
+
+    @staticmethod
+    def classify(filedict: dict) -> dict:
+        '''
+        Find loving homes for unclassified files
+        '''
+
+        for f in filedict['files']:
+            _, ext = os.path.splitext(f)
+            filedict[{
+                '.c': 'c_files',
+                '.cpp': 'cxx_files',
+                '.cxx': 'cxx_files',
+                '.dlist': 'dlists',
+                '.m': 'objc_files',
+                '.mm': 'objcxx_files',
+                '.plist': 'plists',
+                '.swift': 'swift_files',
+                '.x': 'logos_files',
+                '.xm': 'logos_files',
+            }[ext]].append(f)
+        return filedict
+
+
+    def generate_vars(self, module_variables: dict, target: str) -> dict:
+        '''
+        Generate ProjectVars object for a project
+
+        Keyword arguments:
+        module_variables -- dict of explicitly set variables for this project
+        target -- target platform
+
+        Raises: KeyError
+        '''
+
+        if 'for' in module_variables:
+            target = module_variables['for']
+
+        # Load in internal defaults
+        # These are ones that really probably shouldn't be touched often as they
+        #       serve to slap together all the variables we *do* touch
+        project_dict: dict = get_default_section_dict('InternalDefaults')
+
+        if _IS_THEOS_MAKEFILE_:
+            project_dict.update({
+                        'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w'
+                        })
+
+        # Update with default vars
+        project_dict.update(get_default_section_dict('Defaults'))  # Universal
+        try:
+            project_dict.update(get_default_section_dict('Types', module_variables['type'], 'variables'))  # Type-based
+        except KeyError as ex:
+            try:
+                project_dict.update(get_default_section_dict('Types', module_variables['type'].lower(), 'variables'))
+            except KeyError:
+                raise ex
+
+
+        project_dict.update(module_variables)
+        project_dict['name'] = self.module_name
+
+        # 'all` variables
+        for source in get_default_section_dict(), module_variables, self.config:
+            if 'all' in source:
+                project_dict.update(source['all'])
+            if 'Targets' in source and target in source['Targets']:
+                project_dict.update(source['Targets'][target]['all'])
+
+        # A few variables that need to be renamed
+        NINJA_KEYS = {
+            'location': 'install_location',
+            'btarg': 'targ',
+            'header_includes': 'include',
+            'typeldflags': 'ldflags',
+            'lopt': 'lopts'
+        }
+
+        # TODO: BAD HOTFIX
+        if 'include' in project_dict:
+            project_dict['header_includes'] = project_dict['include']
+
+        for d,i in enumerate(project_dict['archs']):
+            if 'MACHINE' in i:
+                project_dict['archs'][d] = platform.machine()
+            if 'arm64e' in i:
+                if 'invalid arch name' in os.popen('clang -arch arm64e 2>&1').read():
+                    project_dict['archs'].remove('arm64e')
+
+        if 'triple' in project_dict and project_dict['triple'] != '':
+            project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() if 'MACHINE' in project_dict[
+                'triple'] else project_dict['triple']
+
+        project_dict.update({key: project_dict[NINJA_KEYS[key]] for key in NINJA_KEYS if NINJA_KEYS[key] in project_dict})
+
+        # Computed variables
+        project_dict['lowername'] = str(project_dict['name']).lower()
+        project_dict['fwSearch'] = project_dict['fw_dirs'] + (project_dict['additional_fw_dirs'] if project_dict['additional_fw_dirs'] else [])
+        project_dict['libSearch'] = project_dict['lib_dirs'] + (project_dict['additional_lib_dirs'] if project_dict['additional_lib_dirs'] else [] )
+
+        if os.environ['DGEN_DEBUG']:
+            pprint("project dictionary:" + str(project_dict), stream=sys.stderr)
+            print("\n\n", file=sys.stderr)
+
+        # Specify toolchain paths
+        if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
+            project_dict['ld'] = 'ld64'
+            project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + module_variables[k] for k in [
+                'cc',
+                'cxx',
+                'lipo',
+                'dsym',
+                'plutil',
+                'swift',
+            ]})
+            project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/' + module_variables[k] for k in [
+                'ld',
+                'codesign',
+            ]})
+
+        if 'cxxflags' in project_dict:
+            project_dict['cxx'] = project_dict['cxx'] + ' ' + project_dict['cxxflags']
+
+        if project_dict['sysroot']:
+            project_dict['sysroot'] = '-isysroot ' + project_dict['sysroot']
+
+        return project_dict
+
+
+    def rules_and_build_statements(self) -> (list, list):
+        '''
+        Generate build statements and rules for a given variable set.
+
+        Returns rule_list, build_state as extensions for an outline
+        '''
+
+        # Trivial project types
+        if self.project_variables['type'] == 'resource-bundle':
+            return [
+                    get_rule('bundle'),
+                    get_rule('stage'),
+                ], [
+                    Build('bundle', 'bundle', 'build.ninja'),
+                    Build('stage', 'stage', 'build.ninja'),
+                ]
+        if self.project_variables['type'] == 'stage':
+            return [
+                    get_rule('stage'),
+                ], [
+                    Build('stage', 'stage', 'build.ninja'),
+                ]
+
+        FILE_RULES = {  # Required rules based on filetype
+            'c_files': 'c',
+            'cxx_files': 'cxx',
+            'dlists': None,
+            'files': None,
+            'logos_files': None,
+            'objc_files': 'objc',
+            'objcxx_files': 'objcxx',
+            'plists': None,
+            'swift_files': 'swift',
+        }
+
+        build_state = []
+        rule_list = []
+        used_rules = {'debug', 'sign', 'stage', 'lipo'}
+        subdir: str = self.project_variables['dir'] + '/'
+        filedict = self.classify({key: self.project_variables[key] for key in FILE_RULES})
+        linker_conds = set()
+
+        # Deal with logos preprocessing
+        for f in standardize_file_list(subdir, filedict['logos_files']):
+            used_rules.add('logos')
+            linker_conds.add('-lobjc')
+
+            name, ext = os.path.split(f)[1], os.path.splitext(f)[1]
+            if ext == '.x':
+                build_state.append(Build(f'$builddir/logos/{name}.m', 'logos', f))
+                filedict['objc_files'].append(f'$builddir/logos/{name}.m')
+            elif ext == '.xm':
+                build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
+                filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
+                linker_conds.add('-lc++')
+
+        # Deal with compilation
+        for a in self.project_variables['archs']:
+            arch_specific_object_files = []
+
+            for ftype in (f for f in FILE_RULES if FILE_RULES[f] is not None):
+                ruleid = f'{FILE_RULES[ftype]}{a}'
+                for f in standardize_file_list(subdir, filedict[ftype]):
+                    name = os.path.split(f)[1]
+                    used_rules.add(ruleid)
+                    arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
+                    build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid, f))
+
+                    LINKER_FLAGS = {  # Don't link objc/cpp if not needed
+                        'cxx': ['-lc++'],
+                        'objc': ['-lobjc'],
+                        'objcxx': ['-lobjc', '-lc++'],
+                    }
+                    if ftype in LINKER_FLAGS:
+                        for flag in LINKER_FLAGS[ftype]:
+                            linker_conds.add(flag)
+            if self.project_variables['type'] == 'static':
+                # Linker rules and build statements
+                cmd = rules(f'archive{a}', 'cmd') + ' ' + ' '.join(linker_conds)
+                rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+                build_state.append(Build(f'$builddir/$name.{a}',
+                                        f'link{a}',
+                                        arch_specific_object_files))
+            else:
+                # Linker rules and build statements
+                cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
+                rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+                build_state.append(Build(f'$builddir/$name.{a}',
+                                        f'link{a}',
+                                        arch_specific_object_files))
+
+        build_state.extend([
+            Build('$internalsymtarget',
+                'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
+                [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
+            Build('$internalsigntarget', 'debug', '$internalsymtarget'),
+            Build('$build_target_file', 'sign', '$internalsigntarget'),
+            Build('stage', 'stage', 'build.ninja'),
+        ])
+        if len(self.project_variables['archs']) <= 1:
+            used_rules.remove("lipo")
+            used_rules.add("dummy")
+
+        rule_list.extend(get_rule(r) for r in used_rules)
+
+        return rule_list, build_state
+
+
+    def generate_ninja_outline(self) -> list:
+        '''
+        Generate list of unevaluated build.ninja statements
+
+        Seealso: rules_and_build_statements
+        '''
+
+        outline = [
+            Var('name'),
+            Var('lowername'),
+            ___,
+            Comment(f'Build file for {self.project_variables["name"]}'),
+            Comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}'),
+            ___,
+            Var('stagedir'),
+            Var('location'),
+            Var('dragondir'),
+            Var('sysroot'),
+            Var('proj_build_dir'),
+            Var('objdir'),
+            Var('signdir'),
+            Var('builddir'),
+            Var('build_target_file'),
+            Var('pwd'),
+            Var('resource_dir'),
+            Var('toolchain-prefix'),
+            ___,
+            Var('stage'),
+            Var('stage2'),
+            ___,
+            ___,
+            Var('internalsigntarget'),
+            Var('internalsymtarget'),
+            ___,
+            Var('fwSearch'),
+            Var('libSearch'),
+            Var('modulesinternal'),
+            ___,
+            Var('cc'),
+            Var('codesign'),
+            Var('cxx'),
+            Var('dsym'),
+            Var('ld'),
+            Var('lipo'),
+            Var('logos'),
+            Var('optool'),
+            Var('plutil'),
+            Var('swift'),
+            ___,
+            Var('targetvers'),
+            Var('targetprefix'),
+            Var('targetos'),
+            Var('triple'),
+            ___,
+            Var('frameworks'),
+            Var('libs'),
+            ___,
+            Var('macros'),
+            Var('arc'),
+            Var('btarg'),
+            Var('debug'),
+            Var('entfile'),
+            Var('entflag'),
+            Var('optim'),
+            Var('warnings'),
+            ___,
+            Var('cinclude'),
+            Var('header_includes'), 
+            Var('public_headers'),
+            ___,
+            Var('usrCflags'),
+            Var('usrLDflags'),
+            ___,
+            Var('libflags'),
+            Var('lopts'),
+            Var('typeldflags'),
+            ___,
+            Var('cflags'),
+            Var('ldflags'),
+            Var('lflags'),
+            Var('lfflags'),
+            Var('swiftflags'),
+            ___,
+            Var('theosshim'),
+            Var('internalcflags'),
+            Var('internalldflags'),
+            Var('internallflags'),
+            Var('internallfflags'),
+            Var('internalswiftflags'),
+            ___,
+        ]
+
+        rule_list, build_state = self.rules_and_build_statements()
+
+        outline.extend(rule_list)
+        outline.append(___)
+        outline.extend(build_state)
+        outline.append(___)
+        outline.append(Default(['$build_target_file']))
+
+        return outline
+
+
+    def generate_build_file(self, stream: TextIO):
+        '''
+        Evaluate outline with variables and write ninja file to given IO stream
+
+        Keyword arguments:
+        stream -- IO stream to which the ninja data should be writen
+        '''
+        outline = self.generate_ninja_outline()
+        gen = BuildFileGenerator(stream)
+        for item in outline:
+            if item == ___:
+                gen.newline()
+                continue
+            if isinstance(item, Comment):
+                gen.comment(item.fstring)
+                continue
+            if isinstance(item, Var):
+                gen.variable(item.key, str(self.project_variables[item.key]))
+                continue
+            if isinstance(item, Rule):
+                gen.rule(item.name,
+                        description=item.description,
+                        command=item.command)
+                continue
+            if isinstance(item, Build):
+                gen.build(item.outputs, item.rule, item.inputs)
+                continue
+            if isinstance(item, Default):
+                gen.default(['$build_target_file'])
+
+
+
 def rules(*key_path: str) -> dict:
     '''
-    Lazy load default rules and return vaule specified path.
+    Lazy load default rules and return value specified path.
 
     Raises: FileNotFoundError, KeyError
     '''
@@ -54,9 +473,9 @@ def rules(*key_path: str) -> dict:
     return ret
 
 
-def base_config(*key_path: str) -> dict:
+def get_default_section_dict(*key_path: str) -> dict:
     '''
-    Lazy load default config and return value at specified path.
+    Lazy load defaults.yml and return the requested dictionary from it
 
     Raises: FileNotFoundError, KeyError
     '''
@@ -71,735 +490,6 @@ def base_config(*key_path: str) -> dict:
     while key_path:
         ret = ret[key_path.pop(0)]
     return ret
-
-
-# Ninja Statements
-Build = namedtuple('Build', ['outputs', 'rule', 'inputs'])
-Comment = namedtuple('Comment', ['fstring'])
-Rule = namedtuple('Rule', ['name', 'description', 'command'])
-Var = namedtuple('Var', ['key'])
-Default = namedtuple('Default', ['targets'])
-___ = object()  # Newline
-
-
-def QuickRule(name: str) -> Rule:
-    '''
-    Find rule for given name in rules.yml.
-
-    Seealso: rules
-    '''
-
-    return Rule(name, rules(name, 'desc'), rules(name, 'cmd'))
-
-
-def standardize_file_list(subdir: str, files: list) -> list:
-    '''Strip list of empty strings and evaluate globbed paths.'''
-
-    ret = []
-    for filename in files:
-        if not filename:
-            continue
-
-        if '*' in filename:
-            ret.extend(f[len(subdir):] for f in glob.glob(subdir + filename,
-                                                          recursive=True))
-            continue
-
-        ret.append(filename)
-    return ret
-
-
-class ArgList(list):
-    '''
-    Variables with values of type list: their corresponding delims and prefixes
-    '''
-
-    LIST_KEYS = {
-        'files': ('', ' '),
-        'logos_files': ('', ' '),
-        'tweak_files': ('', ' '),  # used for legacy compatibility, isn't actually used.
-        'archs': ('', '-arch '),  # Also only for legacy, this is handled in a much more complex manner
-        'c_files': ('', ' '),
-        'objc_files': ('', ' '),
-        'objcxx_files': ('', ' '),
-        'cxx_files': ('', ' '),
-        'plists': ('', ' '),
-        'swift_files': ('', ' '),
-        'dlists': ('', ' '),
-        'cflags': ('', ' '),
-        'ldflags': ('', ' '),
-        'codesignflags': ('', ' '),
-        'include': ('-I', ' -I'),
-        'macros': ('-D', ' -D'),
-        'prefix': ('-include', ' -include'),
-        'fw_dirs': ('-F', ' -F'),
-        'additional_fw_dirs': ('-F', ' -F'),
-        'fwSearch': ('-F', ' -F'),
-        'libSearch': ('-L', ' -L'),
-        'lib_dirs': ('-L', ' -L'),
-        'additional_lib_dirs': ('-L', ' -L'),
-        'libs': ('-l', ' -l'),
-        'frameworks': ('-framework ', ' -framework '),
-        'stage': ('', '; '),
-        'stage2': ('', '; '),
-        'lopts': ('', ' '),
-        'public_headers': ('', ''),
-    }
-
-    def __init__(self, values: list, prefix: str = '', delim: str = ' '):
-        super().__init__(values)
-        self.delim = delim
-        self.prefix = prefix
-
-    def __str__(self):
-        return self.prefix + self.delim.join(str(s) for s in self)
-
-
-class BoolFlag:
-    '''
-    Variables with values of type bool, and their corresponding flag pairs.
-    '''
-
-    BOOL_KEYS = {
-        'arc': ('-fobjc-arc', ''),
-    }
-
-    def __init__(self, value: bool, flagpair: (str, str)):
-        self.value = value
-        self.true_flag, self.false_flag = flagpair
-
-    def __bool__(self):
-        return self.value
-
-    def __str__(self):
-        return self.true_flag if self.value else self.false_flag
-
-
-class ProjectVars(dict):
-    '''
-    Safe dictionary with default values based on keys
-    '''
-
-    def __getitem__(self, key):
-        try:
-            ret = dict.__getitem__(self, key)
-            if isinstance(ret, list) and key in ArgList.LIST_KEYS and ArgList(ret, *(ArgList.LIST_KEYS[key])) != []:
-                return ArgList(ret, *(ArgList.LIST_KEYS[key]))
-            if isinstance(ret, bool) and key in BoolFlag.BOOL_KEYS:
-                return BoolFlag(ret, BoolFlag.BOOL_KEYS[key])
-            if isinstance(ret, list) and len(ret) == 0:
-                return ''
-            return ret
-        except KeyError as ex:
-            if key in ['test']:
-                raise ex
-            return ArgList([]) if key in ArgList.LIST_KEYS else ''
-
-
-def classify(filedict: dict) -> dict:
-    '''
-    Find loving homes for unclassified files
-    '''
-
-    for f in filedict['files']:
-        _, ext = os.path.splitext(f)
-        filedict[{
-            '.c': 'c_files',
-            '.cpp': 'cxx_files',
-            '.cxx': 'cxx_files',
-            '.dlist': 'dlists',
-            '.m': 'objc_files',
-            '.mm': 'objcxx_files',
-            '.plist': 'plists',
-            '.swift': 'swift_files',
-            '.x': 'logos_files',
-            '.xm': 'logos_files',
-        }[ext]].append(f)
-    return filedict
-
-
-def generate_vars(var_d: dict, config: dict, target: str) -> ProjectVars:
-    '''
-    Generate ProjectVars object for a project
-
-    Keyword arguments:
-    var_d -- dict of explicitly set variables for this project
-    config -- dict of /all/ explicitly set variables
-    target -- target platform
-
-    Raises: KeyError
-    '''
-
-    if 'for' in var_d:
-        target = var_d['for']
-
-    # Universal project vars
-    ret = ProjectVars({
-        'internalcflags': '$cinclude $debug $fwSearch '
-                          ' $cflags $btarg -O$optim  $targetprefix$targetvers'
-                          ' $sysroot $header_includes $arc '
-                          ' $triple $theosshim $macros '
-                          '$warnings $modulesinternal ',
-        'internalswiftflags': '-color-diagnostics -enable-objc-interop -sdk'
-                              '/Applications/Xcode.app/Contents/Developer/'
-                              'Platforms/iPhoneOS.platform/Developer/SDKs/'
-                              'iPhoneOS.sdk -L/Applications/Xcode.app/Contents'
-                              '/Developer/Toolchains/XcodeDefault.xctoolchain/'
-                              'usr/lib/swift/iphoneos -g -L/usr/lib/swift '
-                              '-swift-version 5 -module-name $name',
-        'internallflags': '$internalcflags $typeldflags $frameworks $libs '
-                          '$libflags $lopts $libSearch $ldflags $libs',
-        'internalldflags': '',
-        'internalsigntarget': '$signdir/$build_target_file.unsigned',
-        'internalsymtarget': '$signdir/$build_target_file.unsym',
-        'internallibflags': '-lobjc -lc++',
-        'pwd': '.',
-    })
-
-    if _IS_THEOS_MAKEFILE_:
-        ret.update({
-                       'theosshim': '-include$$DRAGONBUILD/include/PrefixShim.h -w'
-                       })
-
-    # Update with default vars
-    ret.update(base_config('Defaults'))  # Universal
-    try:
-        ret.update(base_config('Types', var_d['type'], 'variables'))  # Type-based
-    except KeyError as ex:
-        try:
-            ret.update(base_config('Types', var_d['type'].lower(), 'variables'))
-        except KeyError:
-            raise ex
-
-    ret.update(var_d)
-
-    # 'all` variables
-    for source in base_config(), var_d, config:
-        if 'all' in source:
-            ret.update(source['all'])
-        if 'Targets' in source and target in source['Targets']:
-            ret.update(source['Targets'][target]['all'])
-
-    # A few variables that need to be renamed
-    NINJA_KEYS = {
-        'location': 'install_location',
-        'btarg': 'targ',
-        'header_includes': 'include',
-        'typeldflags': 'ldflags',
-        'lopt': 'lopts'
-    }
-
-    for d,i in enumerate(ret['archs']):
-        if 'MACHINE' in i:
-            ret['archs'][d] = platform.machine()
-        if 'arm64e' in i:
-            if 'invalid arch name' in os.popen('clang -arch arm64e 2>&1').read():
-                ret['archs'].remove('arm64e')
-
-    if ret['triple'] != '':
-        ret['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() if 'MACHINE' in ret[
-            'triple'] else ret['triple']
-
-    ret.update({key: ret[NINJA_KEYS[key]] for key in NINJA_KEYS})
-
-    # Computed variables
-    ret['lowername'] = str(ret['name']).lower()
-    ret['fwSearch'] = ret['fw_dirs'] + ret['additional_fw_dirs']
-    ret['libSearch'] = ret['lib_dirs'] + ret['additional_lib_dirs']
-
-    if os.environ['DGEN_DEBUG']:
-        pprint("project dictionary:" + str(ret), stream=sys.stderr)
-        print("\n\n", file=sys.stderr)
-
-    # Specify toolchain paths
-    if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
-        ret['ld'] = 'ld64'
-        ret.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' + var_d[k] for k in [
-            'cc',
-            'cxx',
-            'lipo',
-            'dsym',
-            'plutil',
-            'swift',
-        ]})
-        ret.update({k: '$dragondir/toolchain/linux/iphone/bin/' + var_d[k] for k in [
-            'ld',
-            'codesign',
-        ]})
-
-    if ret['cxxflags']:
-        ret['cxx'] = ret['cxx'] + ' ' + ret['cxxflags']
-
-    if ret['sysroot']:
-        ret['sysroot'] = '-isysroot ' + ret['sysroot']
-
-    return ProjectVars(ret)
-
-
-def rules_and_build_statements(variables: ProjectVars) -> (list, list):
-    '''
-    Generate build statements and rules for a given variable set.
-
-    Returns rule_list, build_state as extensions for an outline
-    '''
-
-    # Trivial project types
-    if variables['type'] == 'resource-bundle':
-        return [
-                   QuickRule('bundle'),
-                   QuickRule('stage'),
-               ], [
-                   Build('bundle', 'bundle', 'build.ninja'),
-                   Build('stage', 'stage', 'build.ninja'),
-               ]
-    if variables['type'] == 'stage':
-        return [
-                   QuickRule('stage'),
-               ], [
-                   Build('stage', 'stage', 'build.ninja'),
-               ]
-
-    FILE_RULES = {  # Required rules based on filetype
-        'c_files': 'c',
-        'cxx_files': 'cxx',
-        'dlists': None,
-        'files': None,
-        'logos_files': None,
-        'objc_files': 'objc',
-        'objcxx_files': 'objcxx',
-        'plists': None,
-        'swift_files': 'swift',
-    }
-
-    build_state = []
-    rule_list = []
-    used_rules = {'debug', 'sign', 'stage', 'lipo'}
-    subdir: str = variables['dir'] + '/'
-    filedict = classify({key: variables[key] for key in FILE_RULES})
-    linker_conds = set()
-
-    # Deal with logos preprocessing
-    for f in standardize_file_list(subdir, filedict['logos_files']):
-        used_rules.add('logos')
-        linker_conds.add('-lobjc')
-
-        name, ext = os.path.split(f)[1], os.path.splitext(f)[1]
-        if ext == '.x':
-            build_state.append(Build(f'$builddir/logos/{name}.m', 'logos', f))
-            filedict['objc_files'].append(f'$builddir/logos/{name}.m')
-        elif ext == '.xm':
-            build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
-            filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
-            linker_conds.add('-lc++')
-
-    # Deal with compilation
-    for a in variables['archs']:
-        arch_specific_object_files = []
-
-        for ftype in (f for f in FILE_RULES if FILE_RULES[f] is not None):
-            ruleid = f'{FILE_RULES[ftype]}{a}'
-            for f in standardize_file_list(subdir, filedict[ftype]):
-                name = os.path.split(f)[1]
-                used_rules.add(ruleid)
-                arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
-                build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid, f))
-
-                LINKER_FLAGS = {  # Don't link objc/cpp if not needed
-                    'cxx': ['-lc++'],
-                    'objc': ['-lobjc'],
-                    'objcxx': ['-lobjc', '-lc++'],
-                }
-                if ftype in LINKER_FLAGS:
-                    for flag in LINKER_FLAGS[ftype]:
-                        linker_conds.add(flag)
-        if variables['type'] == 'static':
-            # Linker rules and build statements
-            cmd = rules(f'archive{a}', 'cmd') + ' ' + ' '.join(linker_conds)
-            rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
-            build_state.append(Build(f'$builddir/$name.{a}',
-                                     f'link{a}',
-                                     arch_specific_object_files))
-        else:
-            # Linker rules and build statements
-            cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
-            rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
-            build_state.append(Build(f'$builddir/$name.{a}',
-                                     f'link{a}',
-                                     arch_specific_object_files))
-
-    build_state.extend([
-        Build('$internalsymtarget',
-              'lipo' if len(variables['archs']) > 1 else 'dummy',
-              [f'$builddir/$name.{a}' for a in variables['archs']]),
-        Build('$internalsigntarget', 'debug', '$internalsymtarget'),
-        Build('$build_target_file', 'sign', '$internalsigntarget'),
-        Build('stage', 'stage', 'build.ninja'),
-    ])
-    if len(variables['archs']) <= 1:
-        used_rules.remove("lipo")
-        used_rules.add("dummy")
-
-    rule_list.extend(QuickRule(r) for r in used_rules)
-
-    return rule_list, build_state
-
-
-def generate_ninja_outline(variables: ProjectVars) -> list:
-    '''
-    Generate list of unevaluated build.ninja statements
-    Keyword arguments:
-    variables -- ProjectVars object of all generated variables
-
-    Seealso: rules_and_build_statements
-    '''
-
-    outline = [
-        Var('name'),
-        Var('lowername'),
-        ___,
-        Comment(f'Build file for {variables["name"]}'),
-        Comment(f'Generated at {datetime.now().strftime("%D %H:%M:%S")}'),
-        ___,
-        Var('stagedir'),
-        Var('location'),
-        Var('dragondir'),
-        Var('sysroot'),
-        Var('proj_build_dir'),
-        Var('objdir'),
-        Var('signdir'),
-        Var('builddir'),
-        Var('build_target_file'),
-        Var('pwd'),
-        Var('resource_dir'),
-        Var('toolchain-prefix'),
-        ___,
-        Var('stage'),
-        Var('stage2'),
-        ___,
-        ___,
-        Var('internalsigntarget'),
-        Var('internalsymtarget'),
-        ___,
-        Var('fwSearch'),
-        Var('libSearch'),
-        Var('modulesinternal'),
-        ___,
-        Var('cc'),
-        Var('codesign'),
-        Var('cxx'),
-        Var('dsym'),
-        Var('ld'),
-        Var('lipo'),
-        Var('logos'),
-        Var('optool'),
-        Var('plutil'),
-        Var('swift'),
-        ___,
-        Var('targetvers'),
-        Var('targetprefix'),
-        Var('targetos'),
-        Var('triple'),
-        ___,
-        Var('frameworks'),
-        Var('libs'),
-        ___,
-        Var('macros'),
-        Var('arc'),
-        Var('btarg'),
-        Var('debug'),
-        Var('entfile'),
-        Var('entflag'),
-        Var('optim'),
-        Var('warnings'),
-        ___,
-        Var('cinclude'),
-        Var('header_includes'),
-        Var('public_headers'),
-        ___,
-        Var('usrCflags'),
-        Var('usrLDflags'),
-        ___,
-        Var('libflags'),
-        Var('lopts'),
-        Var('typeldflags'),
-        ___,
-        Var('cflags'),
-        Var('ldflags'),
-        Var('lflags'),
-        Var('lfflags'),
-        Var('swiftflags'),
-        ___,
-        Var('theosshim'),
-        Var('internalcflags'),
-        Var('internalldflags'),
-        Var('internallflags'),
-        Var('internallfflags'),
-        Var('internalswiftflags'),
-        ___,
-    ]
-
-    rule_list, build_state = rules_and_build_statements(variables)
-
-    outline.extend(rule_list)
-    outline.append(___)
-    outline.extend(build_state)
-    outline.append(___)
-    outline.append(Default(['$build_target_file']))
-
-    return outline
-
-
-def generate_ninja_file(outline: list, variables: ProjectVars, stream: TextIO):
-    '''
-    Evaluate outline with variables and write ninja file to given IO stream
-
-    Keyword arguments:
-    outline -- one-dimensional list of unevaluated ninja statements
-    variables -- ProjectVars object of all generated variables
-    stream -- IO stream to which the ninja data should be writen
-    '''
-
-    gen = Generator(stream)
-    for item in outline:
-        if item == ___:
-            gen.newline()
-            continue
-        if isinstance(item, Comment):
-            gen.comment(item.fstring)
-            continue
-        if isinstance(item, Var):
-            gen.variable(item.key, str(variables[item.key]))
-            continue
-        if isinstance(item, Rule):
-            gen.rule(item.name,
-                     description=item.description,
-                     command=item.command)
-            continue
-        if isinstance(item, Build):
-            gen.build(item.outputs, item.rule, item.inputs)
-            continue
-        if isinstance(item, Default):
-            gen.default(['$build_target_file'])
-
-
-make_match = regex.compile('(.*)=(.*)#?')
-make_type = regex.compile(r'include.*\/(.*)\.mk')
-nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
-
-
-def get_var(varname):
-    CMD = 'echo $(source myscript.sh; echo $%s)' % varname
-    p = subprocess.Popen(CMD, stdout=subprocess.PIPE, shell=True, executable='/bin/bash')
-    return p.stdout.readlines()[0].strip()
-
-
-# this was supposed to be a really small function, i dont know what happened ;-;
-def load_theos_makefile(file: object, root: object = True) -> dict:
-    project = {}
-    variables = {}
-    stage = []
-    stageactive = False
-    module_type = ''
-    arc = False
-    hassubproj = False
-    noprefix = False
-    try:
-        while 1:
-            line = file.readline()
-            if not line:
-                break
-            if not arc and '-fobjc-arc' in line:
-                arc = True
-            if not noprefix and '-DTHEOS_LEAN_AND_MEAN' in line:
-                noprefix = True
-            if line == 'internal-stage::':
-                stageactive = True
-                continue
-            if stageactive:
-                if line.startswith((' ', '\t')):
-                    x = line
-                    x = x.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
-                    x = x.replace('$(ECHO_NOTHING)', '')
-                    x = x.replace('$(ECHO_END)', '')
-                    stage.append(x)
-                else:
-                    stageactive = False
-
-            if not make_match.match(line):
-                if not make_type.match(line):
-                    continue
-                if 'aggregate' in make_type.match(line).group(1):
-                    hassubproj = True
-                else:
-                    module_type = make_type.match(line).group(1)
-                continue
-
-            if not nepmatch.match(line):
-                name, value = make_match.match(line).group(1, 2)
-            else:
-                name, value = nepmatch.match(line).group(1, 2)
-            if name.strip() in variables:
-                variables[name.strip()] = variables[name.strip()] + ' ' + value.strip()
-            variables[name.strip()] = value.strip()
-    finally:
-        file.close()
-
-    if root:
-        project['name'] = os.path.basename(os.getcwd())
-        if 'INSTALL_TARGET_PROCESS' in variables:
-            project['icmd'] = 'killall -9 ' + variables['INSTALL_TARGET_PROCESS']
-        else:
-            project['icmd'] = 'sbreload'
-
-    if os.environ['DGEN_DEBUG']:
-        print("\n\n", file=sys.stderr)
-        print("module type:" + str(module_type), file=sys.stderr)
-        print("\n\n", file=sys.stderr)
-
-    modules = []
-    mod_dicts = []
-    # if module_type == 'aggregate':
-
-    module_type_naming = module_type.upper()
-
-    module_name = variables.get(f'{module_type_naming}_NAME')
-    module_archs = variables.get(f'ARCHS')
-    module_files = variables.get(module_name + '_FILES') or variables.get(f'$({module_type_naming}_NAME)_FILES') or ''
-    module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$({module_type_naming}_NAME)_CFLAGS') or ''
-    module_cxxflags = variables.get(module_name + '_CXXFLAGS') or variables.get('$({module_type_naming}_NAME)_CXXFLAGS') or ''
-    module_cflags = variables.get(f'ADDITIONAL_CFLAGS') or ''
-    module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(
-        f'$({module_type_naming}_NAME)_LDFLAGS') or ''
-    module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get(
-        f'$({module_type_naming}_NAME)_CODESIGN_FLAGS') or ''
-    module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
-        f'$({module_type_naming}_NAME)_INSTALL_PATH') or ''
-    module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
-        f'$({module_type_naming}_NAME)_FRAMEWORKS') or ''
-    module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
-        f'$({module_type_naming}_NAME)_PRIVATE_FRAMEWORKS') or ''
-    module_eframeworks = variables.get(module_name + '_EXTRA_FRAMEWORKS') or variables.get(
-        f'$({module_type_naming}_NAME)_EXTRA_FRAMEWORKS') or ''
-    module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
-        f'$({module_type_naming}_NAME)_LIBRARIES') or ''
-
-    files = []
-    if module_files:
-        tokens = module_files.split(' ')
-        nextisawildcard = False
-        for i in tokens:
-            if '$(wildcard' in i:
-                nextisawildcard = 1
-                continue
-            if nextisawildcard:
-                # We dont want to stop with these till we hit a ')'
-                # thanks cr4shed ._.
-                nextisawildcard = 0 if ')' in i else 1
-                grab = i.split(')')[0]
-                files.append(grab.replace(')', ''))
-                continue
-            files.append(i)
-
-    module = {
-        'type': module_type,
-        'files': files
-    }
-    if module_name != '':
-        module['name'] = module_name
-    module['frameworks'] = []
-    if module_frameworks != '':
-        module['frameworks'] += module_frameworks.split(' ')
-    if module_pframeworks != '':
-        module['frameworks'] += module_pframeworks.split(' ')
-    if module_eframeworks != '':
-        module['frameworks'] += module_eframeworks.split(' ')
-    if module_libraries != '':
-        module['libs'] = module_libraries
-    if module_archs != '':
-        module['archs'] = module_archs
-    else:
-        module['archs'] = ['arm64', 'arm64e']
-    if module_cflags != '':
-        module['cflags'] = module_cflags
-    if module_cxxflags:
-        module['cxxflags'] = module_cxxflags
-    if module_ldflags:
-        module['ldflags'] = module_ldflags
-    if stage != []:
-        module['stage'] = stage
-    module['arc'] = arc
-    if not root:
-        return module
-    else:
-        mod_dicts.append(module)
-        project['name'] = module['name']
-        modules.append('.')
-
-    if hassubproj and 'SUBPROJECTS' in variables:
-        modules = modules + variables['SUBPROJECTS'].split(' ')
-
-    for module in modules:
-        if os.environ['DGEN_DEBUG']:
-            print("\n\n", file=sys.stderr)
-            pprint("modules:" + str(modules), stream=sys.stderr)
-            print("\n\n", file=sys.stderr)
-        if module != '.' and os.path.exists(module + '/Makefile'):
-            mod_dicts.append(load_theos_makefile(open(module + '/Makefile'), root=False))
-
-    i = 0
-    for mod in mod_dicts:
-        if mod:
-            project[mod['name']] = mod
-            project[mod['name']]['dir'] = modules[i]
-            i += 1
-
-    # the magic of theos
-
-    if 'export ARCHS' in variables:
-        project['all'] = {
-            'archs': variables['export ARCHS'].split(' ')
-        }
-
-    if os.environ['DGEN_DEBUG']:
-        print("\n\n", file=sys.stderr)
-        print("dict:" + str(project), file=sys.stderr)
-        print("\n\n", file=sys.stderr)
-    return project
-
-
-def load_old_format(file: object, root: object = True) -> dict:
-    variables = {i.split('=')[0].strip('"').strip("'"): i.split('=')[1].strip('"').strip("'") for i in
-                 file.read().split('\n') if (not i.startswith('#') and len(i) > 0)}
-    # print(variables, file=sys.stderr)
-
-    moddict = {}
-
-    for i in [x for x in variables if len(x) > 0 and x!='SUBPROJECTS' ]:
-        translation = i.lower().replace('tweak_', '').replace('logos_file', 'logos_files').replace('install_cmd','icmd')
-        variables[i] = os.popen(f'echo {variables[i]}').read().strip()
-        if i in ['ARCHS', 'LIBS', 'FRAMEWORKS', 'LOGOS_FILES', 'TWEAK_FILES']:
-
-            start, delim = ArgList.LIST_KEYS[i.lower()]
-            if delim in variables[i]:
-                moddict[translation] = variables[i][len(start):].split(delim)
-            else:
-                moddict[translation] = variables[i].strip().split()
-        else:
-            moddict[translation] = variables[i]
-
-    if not root:
-        return moddict
-    else:
-        mainproj = {k: v for (k, v) in moddict.items() if k not in ['name', 'icmd']}
-        moddict = {k: v for (k, v) in moddict.items() if k in ['name', 'icmd']}
-        moddict[moddict['name']] = mainproj
-        for i in variables['SUBPROJECTS'].split():
-            os.chdir(i)
-            subproject = load_old_format(open('DragonMake'), False)
-            subproject['dir'] = subproject['name']
-            os.chdir('..')
-            moddict[subproject['name']] = {i: v for (i, v) in subproject.items() if i not in ['name', 'icmd']}
-        return moddict
 
 
 def handle(ex: Exception):
@@ -837,6 +527,7 @@ def main():
         'postinst': None,
         'port': 'DRBPORT',
         'id': None,
+        'mtn': None,
         'author': None,
         'version': None,
         'depends': None,
@@ -853,6 +544,7 @@ def main():
     dirs = ''
     projs = ''
 
+
     if os.path.exists('DragonMake'):
         with open('DragonMake') as f:
             try:
@@ -867,7 +559,7 @@ def main():
 
 
     elif os.path.exists('Makefile'):
-        config = load_theos_makefile(open('Makefile'))
+        config = interpret_theos_makefile(open('Makefile'))
         exports['theos'] = 1
         global _IS_THEOS_MAKEFILE_
         _IS_THEOS_MAKEFILE_ = True
@@ -877,52 +569,42 @@ def main():
 
     for key in config:
         if key in META_KEYS:
-            if config[key] is not None:
-                if key == 'pack' or key == 'package':
-                    if not config[key]:
-                        exports["DRAGON_DPKG"] = "0"
-                exports[META_KEYS[key]] = config[key]
             continue
+        
+        # Hack to run a bash command in the context of DragonGen
+        # TODO: remove this when the main dragon script is pythonized
         if key == 'exports':
             exports.update(config[key])
             continue
 
-        proj_config = {
+        submodule_config = {
             'name': key,
             'dir': '.'
         }
         try:
-            proj_config.update(config[key])
+            submodule_config.update(config[key])
         except ValueError:
             # if i add a key to control.py and don't add it to meta tags here, this happens
             # so maybe find a better way to do that, dpkg is complex and has many fields
-            print("! Warning: Key %s is not a valid module (a dictionary), nor is it a known configuration key" % key,
-                  file=sys.stderr)
-            print("! If DragonBuild is missing a configuration key you expected, file an issue.", file=sys.stderr)
-            print("! This value will be ignored.", file=sys.stderr)
+            dbwarn("! Warning: Key %s is not a valid module (a dictionary), nor is it a known configuration key" % key)
+            dbwarn("! This (probably) isn't a problem.")
+            dbwarn("! This value will be ignored.")
             continue
 
         default_target = 'ios'
         if os.environ['TARG_SIM'] == '1':
             default_target = 'sim'
 
-        with open(f'{proj_config["dir"]}/{proj_config["name"]}.ninja', 'w+') as out:
+        with open(f'{submodule_config["dir"]}/{submodule_config["name"]}.ninja', 'w+') as out:
+            generator = Generator(config, key, default_target)
+            generator.write_output_file(out)
 
-            variables = generate_vars(proj_config, config, default_target)
-
-            if os.environ['TARG_SIM'] == '1':
-                variables['archs'] = ['x86_64']
-
-            outline = generate_ninja_outline(variables)
-
-            generate_ninja_file(outline, variables, out)
-
-        dirs = dirs + ' ' + proj_config['dir']
+        dirs = dirs + ' ' + submodule_config['dir']
         dirs = dirs.strip()
         if dirs.endswith('.'):
             dirs = '. ' + dirs[:-2]
 
-        projs = projs + ' ' + proj_config['name']
+        projs = projs + ' ' + submodule_config['name']
         projs = projs.strip()
 
     exports['project_dirs'] = dirs
