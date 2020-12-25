@@ -7,6 +7,8 @@
   </strong>
 </p>
 
+_An alternative to theos, a massive convinience tool, and more_
+
 # Installing dragon
 
 In your terminal:
