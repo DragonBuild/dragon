@@ -397,7 +397,7 @@ if [ $build == 1 ]; then
 
     if [ $DRAGON_DPKG == 1 ]; then
         # packager.py
-        echo -e "${PrefixColor}[Dragon]${NC} Generating Package Structure"
+        echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
         mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
         cp control .dragon/_/DEBIAN/control 2>/dev/null || ctry
         du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
@@ -405,7 +405,7 @@ if [ $build == 1 ]; then
         chmod -R 0755 .dragon/_/DEBIAN/*
         mkdir -p .dragon/packages
         find . -name '.DS_Store' -type f -delete
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Building Package${NC}"
+        echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
         dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
         GENOUTPUT="$(ls .dragon/packages)"
         mkdir -p packages 2> /dev/null
