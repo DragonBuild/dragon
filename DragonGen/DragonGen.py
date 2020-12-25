@@ -9,7 +9,7 @@ Please refer to the LICENSE file included with this project regarding the usage 
 
 Authors:
   - @kritanta
-  - @lorenz0
+  - @l0renzo
 
 Some guidelines for work on this file moving forward:
   - Avoid re-typing variables and use type hints where possible
