@@ -1,27 +1,28 @@
 from DragonGen import DragonGen 
+from DragonGen.util import *
 import os, sys
 try:
     DragonGen.main()
 except FileNotFoundError as exception:
-    print('Error: No project files found', file=sys.stderr)
+    dberror('Error: No project files found')
 
     DragonGen.handle(exception)
     sys.exit(2)
 except KeyError as exception:
-    print('KeyError: Missing value in variables array.', file=sys.stderr)
-    print(str(exception), file=sys.stderr)
+    dberror('KeyError: Missing value in variables array.')
+    dberror(str(exception))
 
     DragonGen.handle(exception)
     sys.exit(2)
 except IndexError as exception:
-    print("IndexError: List index out of range.", file=sys.stderr)
-    print(str(exception), file=sys.stderr)
+    dberror("IndexError: List index out of range.")
+    dberror(str(exception))
 
     DragonGen.handle(exception)
     sys.exit(2)
 except Exception as exception:
-    print('Error: An undocumented error has been hit', file=sys.stderr)
-    print('Please contact a maintainer', file=sys.stderr)
+    dberror('Error: An undocumented error has been hit')
+    dberror('Please contact a maintainer')
 
     DragonGen.handle(exception)
     sys.exit(-1)

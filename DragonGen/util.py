@@ -18,9 +18,9 @@ def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: s
         colors[1][col], tool, colors[bold][textcol], ">>> " if pusher 
             else "", msg, colors[0][6]), file=sys.stderr)
 
-dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
-dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
-dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
+dbstate = lambda msg: dprintline(1, "DragonGen", 5, 1, 0, msg)
+dbwarn = lambda msg: dprintline(2, "DragonGen", 5, 0, 0, msg)
+dberror = lambda msg: dprintline(0, "DragonGen", 5, 1, 0, msg)
 
 make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'include.*\/(.*)\.mk')

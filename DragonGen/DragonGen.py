@@ -515,10 +515,12 @@ def main():
     '''
     Generate and write build.ninja file from DragonMake or Makefile
 
-    - Load DragonMake or Makefile to `config` dict
-    - Generate `variables` from `config` and global default with `generate_vars`
-    - Create an `outline` for the build.ninja file in `generate_ninja_outline`
-    - Evaluate outline with `variables` and write to build.ninja in `generate_ninja_file`
+    Outline of this method:
+        - Pull in the actual raw dict from the DragonMake or Makefile
+        - Process raw data if needed via the Makefile or Legacy (bash) interpreters
+        - Iterate through the top-level keys in the dictionary
+        - Call the Generator class to write to {top-level-key-name}.ninja for each
+        - Pass some export commands to the parent bash script via stdout 
     '''
     META_KEYS = {  # Keys that may be at the root of the DragonMake dict
         'name': 'package_name',
@@ -544,17 +546,21 @@ def main():
     dirs = ''
     projs = ''
 
-
     if os.path.exists('DragonMake'):
         with open('DragonMake') as f:
             try:
                 config = yaml.safe_load(f)
             except Exception as ex:
+                # If the file we tried to load isn't YAML, try running it as a bash script
                 if os.system("sh DragonMake 2>/dev/null") == 0:
+                    # If that worked, it's the old (OLD) legacy DragonMake format,
+                    #   which we can easily support via a couple lines of regex 
                     config = load_old_format(open('DragonMake'))
 
                 else:
                     # bad format
+                    dberror("Formatting Error in the DragonMake file")
+                    dberror("Check YAML syntax or file an issue")
                     raise ex
 
 
@@ -571,7 +577,7 @@ def main():
         if key in META_KEYS:
             continue
         
-        # Hack to run a bash command in the context of DragonGen
+        # Hack to run a bash command in the context of DragonGen from a DragonMake file
         # TODO: remove this when the main dragon script is pythonized
         if key == 'exports':
             exports.update(config[key])
@@ -587,8 +593,7 @@ def main():
             # if i add a key to control.py and don't add it to meta tags here, this happens
             # so maybe find a better way to do that, dpkg is complex and has many fields
             dbwarn("! Warning: Key %s is not a valid module (a dictionary), nor is it a known configuration key" % key)
-            dbwarn("! This (probably) isn't a problem.")
-            dbwarn("! This value will be ignored.")
+            dbwarn("! This key will be ignored.")
             continue
 
         default_target = 'ios'
@@ -596,8 +601,12 @@ def main():
             default_target = 'sim'
 
         with open(f'{submodule_config["dir"]}/{submodule_config["name"]}.ninja', 'w+') as out:
-            generator = Generator(config, key, default_target)
-            generator.write_output_file(out)
+            try:
+                generator = Generator(config, key, default_target)
+                generator.write_output_file(out)
+            except Exception as ex:
+                dberror(f'Exception in module "{key}":')
+                raise ex
 
         dirs = dirs + ' ' + submodule_config['dir']
         dirs = dirs.strip()
@@ -615,6 +624,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # This code isn't used anymore but is being left here in case i'm wrong about that
     try:
         main()
     except FileNotFoundError as exception:
