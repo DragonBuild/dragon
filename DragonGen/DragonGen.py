@@ -7,7 +7,7 @@ DragonGen.py
 (c) 2020 kritanta
 Please refer to the LICENSE file included with this project regarding the usage of code herein.
 
-Authors:
+Author credits:
   - @kritanta
   - @l0renzo
 
