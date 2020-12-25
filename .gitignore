@@ -6,3 +6,6 @@
 bin/lib/Logos/Generator/Base/Generator.pm
 bin/tbdump
 DragonGen/__pycache__
+state/nosshkey
+state/phoneip
+state/remoteip
