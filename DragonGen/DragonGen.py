@@ -12,6 +12,7 @@ Author credits:
   - @l0renzo
 
 Some guidelines for work on this file moving forward:
+  - `dragon test` before pushing, always
   - Avoid re-typing variables and use type hints where possible
   - No lines longer than 80-90 chars
   - Code should make a 'good attempt' to stick to PEP-8 guidelines
@@ -52,6 +53,7 @@ _IS_THEOS_MAKEFILE_ = False
 
 
 # Ninja Statements
+# TODO: move to types file
 
 # These are used like so:
 # a_build_object = Build("output files here", "rule name here", "input files here")
@@ -76,10 +78,37 @@ class Generator(object):
         self.config: dict = config
         self.module_name: str = module_name
         self.project_variables: ProjectVars = ProjectVars(self.generate_vars(config[module_name], target_platform))
-        
 
-    def write_output_file(self, out: TextIO):
-        self.generate_build_file(out)
+
+    def write_output_file(self, stream: TextIO):
+        '''
+        Evaluate outline with variables and write ninja file to given IO stream
+
+        Keyword arguments:
+        stream -- IO stream to which the ninja data should be writen
+        '''
+        outline = self.generate_ninja_outline()
+        gen = BuildFileGenerator(stream)
+        for item in outline:
+            if item == ___:
+                gen.newline()
+                continue
+            if isinstance(item, Comment):
+                gen.comment(item.fstring)
+                continue
+            if isinstance(item, Var):
+                gen.variable(item.key, str(self.project_variables[item.key]))
+                continue
+            if isinstance(item, Rule):
+                gen.rule(item.name,
+                        description=item.description,
+                        command=item.command)
+                continue
+            if isinstance(item, Build):
+                gen.build(item.outputs, item.rule, item.inputs)
+                continue
+            if isinstance(item, Default):
+                gen.default(['$build_target_file'])
 
 
     @staticmethod
@@ -421,35 +450,6 @@ class Generator(object):
         return outline
 
 
-    def generate_build_file(self, stream: TextIO):
-        '''
-        Evaluate outline with variables and write ninja file to given IO stream
-
-        Keyword arguments:
-        stream -- IO stream to which the ninja data should be writen
-        '''
-        outline = self.generate_ninja_outline()
-        gen = BuildFileGenerator(stream)
-        for item in outline:
-            if item == ___:
-                gen.newline()
-                continue
-            if isinstance(item, Comment):
-                gen.comment(item.fstring)
-                continue
-            if isinstance(item, Var):
-                gen.variable(item.key, str(self.project_variables[item.key]))
-                continue
-            if isinstance(item, Rule):
-                gen.rule(item.name,
-                        description=item.description,
-                        command=item.command)
-                continue
-            if isinstance(item, Build):
-                gen.build(item.outputs, item.rule, item.inputs)
-                continue
-            if isinstance(item, Default):
-                gen.default(['$build_target_file'])
 
 
 
