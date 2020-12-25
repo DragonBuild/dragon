@@ -7,7 +7,7 @@
   </strong>
 </p>
 
-_An alternative to theos, a massive convinience tool, and more_
+_An alternative to theos, a convenient development environment, and more..._
 
 # Installing dragon
 
