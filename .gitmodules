@@ -11,3 +11,6 @@
 [submodule "src/logos"]
 	path = src/logos
 	url = https://github.com/theos/logos.git
+[submodule "frameworks"]
+	path = frameworks
+	url = https://github.com/DragonBuild/frameworks
