@@ -1,3 +1,0 @@
-@interface NCShortLookView : UIView
-
-@end

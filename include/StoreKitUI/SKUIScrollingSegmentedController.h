@@ -1,3 +1,0 @@
-@interface SKUIScrollingSegmentedController : UIViewController
-
-@end

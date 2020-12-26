@@ -1,3 +1,0 @@
-@interface SBWidgetApplicationIcon : NSObject
-
-@end

@@ -1,3 +1,0 @@
-@interface CKNavigationController : UINavigationController
-
-@end

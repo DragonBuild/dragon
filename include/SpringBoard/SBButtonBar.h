@@ -1,3 +1,0 @@
-@interface SBButtonBar : NSObject
-
-@end

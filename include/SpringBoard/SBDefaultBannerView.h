@@ -1,3 +1,0 @@
-@interface SBDefaultBannerView : UIView
-
-@end

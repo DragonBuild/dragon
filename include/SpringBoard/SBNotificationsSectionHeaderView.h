@@ -1,3 +1,0 @@
-@interface SBNotificationsSectionHeaderView : UITableViewHeaderFooterView
-
-@end

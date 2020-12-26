@@ -1,3 +1,0 @@
-@interface IMDServiceSession : NSObject
-
-@end

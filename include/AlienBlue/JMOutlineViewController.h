@@ -1,3 +1,0 @@
-@interface JMOutlineViewController : UIViewController
-
-@end

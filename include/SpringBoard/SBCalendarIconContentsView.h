@@ -1,3 +1,0 @@
-@interface SBCalendarIconContentsView : NSObject
-
-@end

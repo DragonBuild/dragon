@@ -1,3 +1,0 @@
-@interface SBAwayListItem : NSObject
-
-@end

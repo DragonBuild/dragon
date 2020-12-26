@@ -1,3 +1,0 @@
-@interface SBBBItemInfo : NSObject
-
-@end
