@@ -9,3 +9,4 @@ DragonGen/__pycache__
 state/nosshkey
 state/phoneip
 state/remoteip
+testing/*
