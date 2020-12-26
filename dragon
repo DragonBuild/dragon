@@ -43,8 +43,6 @@ ToolchainPath=""
 ToolchainPrefix=""
 command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
 
-# TODO: optimize this?
-mkdir -p $DRAGONBUILD/state
 
 set -o pipefail
 

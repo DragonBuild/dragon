@@ -4,6 +4,9 @@ export DRAGONBUILD=~/.dragonbuild/
 
 export PATH="$PATH:/usr/local/bin/:$DRAGONBUILD/bin/"
 
+# TODO: optimize this?
+mkdir -p $DRAGONBUILD/state
+touch $DRAGONBUILD/state/phoneip
 source $DRAGONBUILD/state/phoneip
 
 export DRAGONVERS="1.0.1"
