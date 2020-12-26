@@ -1,3 +1,0 @@
-@interface mSMSMessageTranscriptController : NSObject
-
-@end

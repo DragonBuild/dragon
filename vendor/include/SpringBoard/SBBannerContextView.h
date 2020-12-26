@@ -1,3 +1,0 @@
-@interface SBBannerContextView : UIView
-
-@end

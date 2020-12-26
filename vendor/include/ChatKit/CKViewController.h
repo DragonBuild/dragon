@@ -1,3 +1,0 @@
-@interface CKViewController : UIViewController
-
-@end

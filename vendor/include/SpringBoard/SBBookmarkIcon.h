@@ -1,3 +1,0 @@
-@interface SBBookmarkIcon : NSObject
-
-@end

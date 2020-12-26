@@ -1,3 +1,0 @@
-@interface SBSApplicationShortcutIcon : NSObject
-
-@end

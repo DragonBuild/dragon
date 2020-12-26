@@ -1,3 +1,0 @@
-@interface SBSearchTableViewCell : UITableViewCell
-
-@end

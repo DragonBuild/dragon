@@ -1,3 +1,0 @@
-@interface SBAwayView : UIView
-
-@end

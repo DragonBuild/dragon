@@ -1,3 +1,0 @@
-@interface MPUMediaRemoteViewController : UIViewController
-
-@end

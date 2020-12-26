@@ -1,3 +1,0 @@
-@interface SBDeckSwitcherViewController : UIViewController
-
-@end

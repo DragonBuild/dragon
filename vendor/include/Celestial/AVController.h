@@ -1,3 +1,0 @@
-@interface AVController : NSObject
-
-@end

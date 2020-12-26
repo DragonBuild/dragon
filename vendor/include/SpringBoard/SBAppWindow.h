@@ -1,3 +1,0 @@
-@interface SBAppWindow : NSObject
-
-@end

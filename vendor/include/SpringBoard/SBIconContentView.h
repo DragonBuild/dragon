@@ -1,3 +1,0 @@
-@interface SBIconContentView : UIView
-
-@end

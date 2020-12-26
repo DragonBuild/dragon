@@ -1,3 +1,0 @@
-@interface SBImageCache : NSObject
-
-@end

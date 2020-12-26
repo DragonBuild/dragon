@@ -1,3 +1,0 @@
-@interface SBNotificationsModeViewController : UIViewController
-
-@end

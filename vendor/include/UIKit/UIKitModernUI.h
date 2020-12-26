@@ -1,1 +1,0 @@
-extern BOOL _UIApplicationUsesLegacyUI();
