@@ -432,6 +432,7 @@ simfail()
 
 simsetup()
 {
+    mkdir -p $DRAGONBUILD/simulator/load
     hold=$PWD
     cd $DRAGONBUILD/src/simject || simfail
     dragon c b
