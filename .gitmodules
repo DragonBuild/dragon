@@ -14,3 +14,6 @@
 [submodule "frameworks"]
 	path = frameworks
 	url = https://github.com/DragonBuild/frameworks
+[submodule "lib"]
+	path = lib
+	url = https://github.com/DragonBuild/lib
