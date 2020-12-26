@@ -29,3 +29,6 @@
 [submodule "device/injection"]
 	path = src/device/injection
 	url = https://github.com/DragonBuild/injection
+[submodule "DragonGen"]
+	path = DragonGen
+	url = https://github.com/dragonbuild/DragonGen
