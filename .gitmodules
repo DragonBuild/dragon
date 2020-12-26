@@ -1,6 +1,3 @@
-[submodule "DragonGen/buildgen"]
-	path = DragonGen/buildgen
-	url = https://github.com/DragonBuild/buildgen.git
 [submodule "sdks"]
 	path = sdks
 	url = https://github.com/DragonBuild/sdks.git
