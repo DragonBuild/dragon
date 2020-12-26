@@ -17,9 +17,6 @@
 [submodule "include"]
 	path = include
 	url = https://github.com/DragonBuild/include
-[submodule "DragonGen"]
-	path = DragonGen
-	url = https://github.com/DragonBuild/DragonGen
 [submodule "vendor"]
 	path = vendor
 	url = https://github.com/DragonBuild/vendor
