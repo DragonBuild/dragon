@@ -15,6 +15,8 @@ In your terminal:
 
 `bash <(curl -sL dr.krit.me)`
 
+`dragon update` will update dragon to the latest commit. Run this before filing an issue.
+
 ---
 
 This readme needs work and doesn't come close to covering the scope of the project.
