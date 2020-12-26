@@ -26,3 +26,6 @@
 [submodule "device/appinfo"]
 	path = device/appinfo
 	url = https://github.com/DragonBuild/appinfo
+[submodule "device/decryptor"]
+	path = device/decryptor
+	url = https://github.com/DragonBuild/decryptor
