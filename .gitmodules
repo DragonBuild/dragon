@@ -23,3 +23,6 @@
 [submodule "vendor"]
 	path = vendor
 	url = https://github.com/DragonBuild/vendor
+[submodule "device/appinfo"]
+	path = device/appinfo
+	url = https://github.com/DragonBuild/appinfo
