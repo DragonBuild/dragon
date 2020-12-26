@@ -76,8 +76,7 @@ class Generator(object):
     def __init__(self, config: dict, module_name: str, target_platform: str):
         self.config: dict = config
         self.module_name: str = module_name
-        self.project_variables: ProjectVars = ProjectVars(
-                                self.generate_vars(config[module_name], target_platform))
+        self.target_platform: str = target_platform
 
 
     def write_output_file(self, stream: TextIO):
@@ -87,8 +86,18 @@ class Generator(object):
         Keyword arguments:
         stream -- IO stream to which the ninja data should be writen
         '''
+        
+        # Compute project variables
+        self.project_variables: ProjectVars = ProjectVars(
+                                self.generate_vars(self.config[self.module_name], self.target_platform))
+        
+        # Generate the outline
         outline = self.generate_ninja_outline()
+
+        # Set up the output file generator (buildgen)
         gen = BuildFileGenerator(stream)
+
+        # Iterate through the outline and write it with buildgen to the ninja/makefile
         for item in outline:
             if item == ___:
                 gen.newline()
@@ -109,7 +118,6 @@ class Generator(object):
                 continue
             if isinstance(item, Default):
                 gen.default(['$build_target_file'])
-
 
 
     def generate_vars(self, module_variables: dict, target: str) -> dict:
@@ -166,6 +174,17 @@ class Generator(object):
             if 'Targets' in source and target in source['Targets']:
                 project_dict.update(source['Targets'][target]['all'])
 
+
+        # MACHINE checks
+        for d,i in enumerate(project_dict['archs']):
+            if 'MACHINE' in i:
+                project_dict['archs'][d] = platform.machine()
+
+        if 'triple' in project_dict and project_dict['triple'] != '':
+            project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() \
+                if 'MACHINE' in project_dict['triple'] else project_dict['triple']
+
+        
         # A few variables that need to be renamed
         NINJA_KEYS = {
             'location': 'install_location',
@@ -174,25 +193,15 @@ class Generator(object):
             'typeldflags': 'ldflags',
             'lopt': 'lopts'
         }
-
-
-        for d,i in enumerate(project_dict['archs']):
-            if 'MACHINE' in i:
-                project_dict['archs'][d] = platform.machine()
-            if 'arm64e' in i:
-                if 'invalid arch name' in os.popen('clang -arch arm64e 2>&1').read():
-                    project_dict['archs'].remove('arm64e')
-
-        if 'triple' in project_dict and project_dict['triple'] != '':
-            project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() \
-                if 'MACHINE' in project_dict['triple'] else project_dict['triple']
-
+        # Rename them
         project_dict.update({key: project_dict[NINJA_KEYS[key]] 
                             for key in NINJA_KEYS 
                                 if NINJA_KEYS[key] in project_dict})
 
-        # Computed variables
+
         project_dict['lowername'] = str(project_dict['name']).lower()
+
+        # Apply framework/lib search and additional search dirs
         project_dict['fwSearch'] = project_dict['fw_dirs'] \
                                     + (project_dict['additional_fw_dirs'] 
                                         if project_dict['additional_fw_dirs'] 
@@ -202,11 +211,9 @@ class Generator(object):
                                         if project_dict['additional_lib_dirs'] 
                                         else [] )
 
-        if os.environ['DGEN_DEBUG']:
-            pprint("project dictionary:" + str(project_dict), stream=sys.stderr)
-            print("\n\n", file=sys.stderr)
 
         # Specify toolchain paths
+        # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
         if len(os.listdir(os.environ['DRAGONBUILD'] + '/toolchain')) > 1:
             project_dict['ld'] = 'ld64'
             project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/$toolchain-prefix' 
@@ -224,11 +231,18 @@ class Generator(object):
                 'codesign',
             ]})
 
+        # TODO: lazy hack
         if 'cxxflags' in project_dict:
             project_dict['cxx'] = project_dict['cxx'] + ' ' + project_dict['cxxflags']
 
+        # TODO: move this to arglist maybe
         if project_dict['sysroot']:
             project_dict['sysroot'] = '-isysroot ' + project_dict['sysroot']
+
+        
+        if os.environ['DGEN_DEBUG']:
+            pprint("project_dict after processing through generate_vars:" + str(project_dict), stream=sys.stderr)
+            print("\n\n", file=sys.stderr)
 
         return project_dict
 
@@ -256,7 +270,9 @@ class Generator(object):
                     Build('stage', 'stage', 'build.ninja'),
                 ]
 
-        FILE_RULES = {  # Required rules based on filetype
+
+        # Only load rules we need
+        FILE_RULES = {  
             'c_files': 'c',
             'cxx_files': 'cxx',
             'dlists': None,
@@ -325,13 +341,21 @@ class Generator(object):
                                         arch_specific_object_files))
 
         build_state.extend([
+            # lipo if needed, else use a dummy rule to rename it to what the next rule expects
+            # the dummy rule could be optimized out, but its probably more developmentally clear
+            #       to have it there anyways /shrug
             Build('$internalsymtarget',
                 'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
                 [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
+            # Debug symbols
             Build('$internalsigntarget', 'debug', '$internalsymtarget'),
+            # Codesign
             Build('$build_target_file', 'sign', '$internalsigntarget'),
+            # Stage commands (these are actually ran at a different point in the 'runner')
             Build('stage', 'stage', 'build.ninja'),
         ])
+
+        # Fix used_rules, TODO: maybe this could be optimized elsewhere?
         if len(self.project_variables['archs']) <= 1:
             used_rules.remove("lipo")
             used_rules.add("dummy")
@@ -442,9 +466,6 @@ class Generator(object):
         outline.append(Default(['$build_target_file']))
 
         return outline
-
-
-
 
 
 def rules(*key_path: str) -> dict:
