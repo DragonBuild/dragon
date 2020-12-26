@@ -1,9 +1,6 @@
 [submodule "DragonGen/buildgen"]
 	path = DragonGen/buildgen
 	url = https://github.com/DragonBuild/buildgen.git
-[submodule "modules/logos"]
-	path = modules/logos
-	url = https://github.com/theos/logos.git
 [submodule "sdks"]
 	path = sdks
 	url = https://github.com/DragonBuild/sdks.git
@@ -11,3 +8,6 @@
 	path = src/simject
 	url = https://github.com/KritantaDev/simject.git
 	branch = dragon
+[submodule "src/logos"]
+	path = src/logos
+	url = https://github.com/theos/logos.git

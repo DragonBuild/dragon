@@ -14,7 +14,7 @@ Author credits:
 Some guidelines for work on this file moving forward:
   - `dragon test` before pushing, always
   - Avoid re-typing variables and use type hints where possible
-  - No lines longer than 80-90 chars
+  - Avoid lines longer than 80-90 chars
   - Code should make a 'good attempt' to stick to PEP-8 guidelines
   - Avoid anything in the global namespace
   - Use descriptive variable names. Code should be extremely self-documenting
