@@ -24,11 +24,11 @@
 	path = vendor
 	url = https://github.com/DragonBuild/vendor
 [submodule "device/appinfo"]
-	path = device/appinfo
+	path = src/device/appinfo
 	url = https://github.com/DragonBuild/appinfo
 [submodule "device/decryptor"]
-	path = device/decryptor
+	path = src/device/decryptor
 	url = https://github.com/DragonBuild/decryptor
 [submodule "device/injection"]
-	path = device/injection
+	path = src/device/injection
 	url = https://github.com/DragonBuild/injection
