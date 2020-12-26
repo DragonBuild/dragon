@@ -117,7 +117,7 @@ usage()
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "DragonBuild v1.1 - by kritanta"
+    echo "DragonBuild v1.2 - by kritanta"
 }
 
 printBan()
