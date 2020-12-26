@@ -17,3 +17,6 @@
 [submodule "lib"]
 	path = lib
 	url = https://github.com/DragonBuild/lib
+[submodule "include"]
+	path = include
+	url = https://github.com/DragonBuild/include
