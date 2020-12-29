@@ -9,4 +9,4 @@ mkdir -p $DRAGONBUILD/state
 touch $DRAGONBUILD/state/phoneip
 source $DRAGONBUILD/state/phoneip
 
-export DRAGONVERS="1.0.1"
+export DRAGONVERS="1.2.1"

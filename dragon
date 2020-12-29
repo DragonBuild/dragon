@@ -83,7 +83,7 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v1.2 ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
@@ -117,7 +117,7 @@ usage()
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "dragon v1.2 - by kritanta"
+    echo "dragon v${DRAGONVERS} - by kritanta"
 }
 
 printBan()
