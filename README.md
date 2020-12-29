@@ -7,8 +7,6 @@
   </strong>
 </p>
 
-_An alternative to theos, a convenient development environment, and more..._
-
 # Installing dragon
 
 In your terminal:
@@ -151,7 +149,7 @@ Module Variables
 | `optim` | str | Optimization level. Higher levels can break obfuscators. | 0 |
 | `debug` | str | debug flags | -fcolor-diagnostics |
 | `libs` | list | List of libraries to link the binary against | '' |
-| `frameworks` | list | List of Frameworks to compile with | ['CoreFoundation', 'Foundation', 'UIKit', 'CoreGraphics', 'QuartzCore', 'CoreImage', 'AudioToolbox'] |
+| `frameworks` | list | List of Frameworks to compile with | _Default frameworks are `type` specific. Defining any will override the defaults._ |
 | `cflags` | str | additional flags to pass to clang and the linker. Will be applied after everything else. | '' |
 | `ldflags` | str | additional flags to pass to the linker. Applied after cflags. | '' |
 | `entflag` | str | custom flag for codesign util | '-S' |
@@ -170,31 +168,30 @@ Most of these can be combined, if needed.
 
 `dragon update` will update your dragonbuild installation to the latest version.
 
-`dragon -h` outputs the following:
+`dragon` with no args outputs the following:
 
 ```yaml
 
-dragon -=-=-
+dragon v1.2 -=-=-
   usage: dragon [commands]
 
 Building -=-=-
   do - Build and Install
-  c|clean - recompile, link, and package your project
-  b|build|make - compile, link, and package your project
-  r|release - Load DragonRelease file over the DragonMake one
-  rl|relink - Re-link the package regardless of changes
+  c|clean - clean old build files.
+  b|build|make - build and package your project
+  r|remote - Build using remote server
+  sr|rconf - Setup remote server
 
 Installation -=-=-
   s|device - Set build device IP/Port
   i|install - Install to build device
-  sim - Add this to install to the simulator instead of a device
-
-Tools -=-=-
-  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
+  sim - Install to the simulator instead of a device
   rs|respring - Respring the current build device
   dr|devicerun - Run anything after this flag on device
   sn|send <file> - Install a .deb to the device
-  
+
+Tools -=-=-
+  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)
   exp|export - Tell ninja to create a compile_commands.json
   f|flutter - Build with flutter before doing anything else
   ch|checkra1n - Open Checkra1n GUI
@@ -208,6 +205,7 @@ Debugging -=-=-
   ddebug - Enable all debug flags
 
 -=-=-
+
 ```
 
 
@@ -233,13 +231,13 @@ Run `dragon s` but leave the "IP" field empty. It will then use iproxy to instal
 
 ### Building on-device
 
-A "dragon support" package for jailbroken iOS is being developed. 
+Dragon is available for iOS on https://repo.krit.me/. It can also be installed via CLI like a normal package.
 
 dragon will autodetect if it's running on a phone. 
 
 If so, the `install` flag will install it to the current device and respring it.
 
-[Full List Of Commands](#dragonbuild-commands)
+[Full List Of Commands](#dragon-commands)
 
 
 

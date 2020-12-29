@@ -83,15 +83,15 @@ export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}DragonBuild v1.0 ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v1.2 ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
     echo "  do - Build and Install"
     echo "  c|clean - recompile, link, and package your project"
     echo "  b|build|make - compile, link, and package your project"
-    echo "  r|release - Load DragonRelease file over the DragonMake one"
-    echo "  rl|relink - Re-link the package regardless of changes"
+    echo "  r|remote - Build using remote server"
+    echo "  sr|rconf - Setup remote server"
     echo ""
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
     echo "  s|device - Set build device IP/Port"
@@ -117,7 +117,7 @@ usage()
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "DragonBuild v1.2 - by kritanta"
+    echo "dragon v1.2 - by kritanta"
 }
 
 printBan()
