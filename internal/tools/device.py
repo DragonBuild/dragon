@@ -157,7 +157,11 @@ class DeviceManager(object):
 def main():
     device_manager = DeviceManager()
     if 'setup' in sys.argv[1]:
-        device_manager.setup()
+        try:
+            device_manager.setup()
+        except KeyboardInterrupt:
+            print()
+            dbstate('Cancelled')
     if 'run' in sys.argv[1]:
         device_manager.current.run_cmd(' '.join(sys.argv[2:]))
     if 'qr' in sys.argv[1]:
