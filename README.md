@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="internal/dragon.svg" alt="Logo" width=200px> 
+<img src="internal/branding/dragon.svg" alt="Logo" width=200px> 
 </p>
 <p align="center">
   <strong>
@@ -65,7 +65,7 @@ This should serve as a guideline for how a project should be laid out. You can d
 name: TweakName
 icmd: killall -9 SpringBoard
 id: com.mycompany.tweakname
-version: 1.0.0
+version: 1.3
 author: kritanta
 depends: mobilesubstrate, preferenceloader
 
@@ -172,7 +172,7 @@ Most of these can be combined, if needed.
 
 ```yaml
 
-dragon v1.2 -=-=-
+dragon v1.3 -=-=-
   usage: dragon [commands]
 
 Building -=-=-

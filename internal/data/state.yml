@@ -1,0 +1,5 @@
+device:
+  current: 0
+  devices:
+  - ip: localhost
+    port: 4444

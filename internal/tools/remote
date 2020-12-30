@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $DRAGONBUILD/internal/dragoncolors
+source $DRAGONBUILD/internal/data/dragoncolors
 
 set -e
 source $DRAGONBUILD/state/remoteip

@@ -3,7 +3,7 @@ from pprint import pprint
 from math import sin, cos, radians
 import timeit, time, yaml
 
-TestDict = yaml.safe_load(open(os.environ['DRAGONBUILD'] + '/internal/tests.yml'))
+TestDict = yaml.safe_load(open(os.environ['DRAGONBUILD'] + '/internal/data/tests.yml'))
 projects = TestDict['ProjectTests']
 
 

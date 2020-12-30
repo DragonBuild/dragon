@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
-# This needs to be done in python, ASAP.
-# Working in bash only invites bugs, issues, and hurts progress
+# Load in the bare minimum
 
-# We used to use theos' style of the user needing to declear envars
-# It's been shimmed out with this file, which we load in each time
-#    that contains the dragon dir and other small things
-source ~/.dragonbuild/internal/environment
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
+source $DIR/internal/data/environment
 
 # Cant distinctly remember, but IIRC this framework is actually 
 #    just a bash script we load in
@@ -15,8 +20,13 @@ source /System/Library/Frameworks/DragonSupport.framework/DragonSupport 2>/dev/n
 # Connection timeout for SSH stuff
 DBTIMEOUT=5
 
-# Colors we load in
-source $DRAGONBUILD/internal/dragoncolors
+# Load in colors and basic functions
+source $DRAGONBUILD/internal/tools/util
+
+# Tool imports
+source $DRAGONBUILD/internal/tools/simulator 
+source $DRAGONBUILD/internal/tools/packaging 
+source $DRAGONBUILD/internal/tools/building 
 
 # These are the flags for the "state" of the program
 # Consider it a "checklist". Anything that gets set to 1 is something we need to get done,
@@ -43,182 +53,25 @@ ToolchainPath=""
 ToolchainPrefix=""
 command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
 
-
 set -o pipefail
-
-function drexit()
-{
-    # This function resets terminal colors, fixes stty (just in case), and then exits with arg0's value
-    # It should be called on *EVERY* exit, no matter what. 
-    echo -e "${NC}"
-    stty sane
-    exit $1
-}
-
-function cleanbuildfail()
-{
-    # Run this when we hit an error building, so we can clean things up.
-    # This needs to eventually be updated for the new {name}.ninja format
-    # Currently it'll just leave everything sitting out
-
-    # shellcheck disable=SC2154
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
-    if [ $norm == 0 ]; then
-        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
-    fi
-    cd $1 || drexit
-    if [ $ddebug == 1 ]; then
-      python3 $DRAGONBUILD/bin/ninjadebug.py
-    fi
-    if [ $norm == 0 ]; then
-        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
-    fi
-    drexit 1
-}
 
 # This controls ninja colors.
 export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
 
-usage()
-{
-    echo ""
-    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
-    echo "  usage: dragon [commands]"
-    echo ""
-    echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
-    echo "  do - Build and Install"
-    echo "  c|clean - recompile, link, and package your project"
-    echo "  b|build|make - compile, link, and package your project"
-    echo "  r|remote - Build using remote server"
-    echo "  sr|rconf - Setup remote server"
-    echo ""
-    echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
-    echo "  s|device - Set build device IP/Port"
-    echo "  i|install - Install to build device"
-    echo "  sim - Install to the simulator instead of a device"
-    echo "  rs|respring - Respring the current build device"
-    echo "  dr|devicerun - Run anything after this flag on device"
-    echo "  sn|send <file> - Install a .deb to the device"
-    echo ""
-    echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
-    echo "  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)"
-    echo "  exp|export - Tell ninja to create a compile_commands.json"
-    echo "  f|flutter - Build with flutter before doing anything else"
-    echo "  ch|checkra1n - Open Checkra1n GUI"
-    echo "  chc|checkra1ncli - Open Checkra1n CLI"
-    echo ""
-    echo -e "${PrefixColor}Debugging ${BoldColor}-=-=-${NC}"
-    echo "  vn - Print clang/ld/etc. commands and flags"
-    echo "  vd - echo every bash command in the main dragon file"
-    echo "  vg - DragonGen verbositiy."
-    echo "  norm - Doesn't delete build.ninja after building."
-    echo "  ddebug - Enable all debug flags"
-    echo ""
-    echo -e "${PrefixColor}-=-=-${NC}"
-    echo ""
-    echo "dragon v${DRAGONVERS} - by kritanta"
-}
-
-printBan()
-{
-    cat $DRAGONBUILD/internal/banner.txt                                             
-}
-
-setupSSHKey()
-{
-    # keyauth.py
-
-    echo -e "${PrefixColor}[Dragon]${NC} SSH Passwordless Authentication (RSA Authentication) not configured."
-    echo -e "${PrefixColor}[Dragon]${NC} Would you like to do so now? (Y/N)"
-    python3 -c "exit(int('y' in input('> ').lower())^ 1)"
-    # shellcheck disable=SC2216
-    echo $? | grep "0" > /dev/null || mkdir $DRAGONBUILD/state 2>/dev/null | touch $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c 'exit(1)'
-    echo $? | grep "1" > /dev/null || echo -e "${PrefixColor}[Dragon]${BoldColor} Copying key [Default password is alpine]:${NC}" 2> python3 -c 'exit(0)'
-    echo $? | grep "1" > /dev/null || cat ~/.ssh/id_rsa.pub | ssh -p $DRBPORT root@$DRBIP "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys" && echo -e "${PrefixColor}[Dragon]${BoldColor} Done${NC}"
-}
-
-setupDevice()
-{
-    # device.py
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Device IP"
-    read DRBIP
-    echo "export DRBIP=\"$DRBIP\"" > $DRAGONBUILD/state/phoneip
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Port (Leave blank for 22)"
-    read DRBPORT
-    if [ -z "$DRBPORT" ]; then
-        DRBPORT=22
-    fi
-    echo "export DRBPORT=\"$DRBPORT\"" >> $DRAGONBUILD/state/phoneip
-}
-setupRemote()
-{
-    # remote.py | remote.sh
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
-    read IPA
-    echo "export IPA=\"$IPA\"" > $DRAGONBUILD/state/remoteip
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
-    read USERN
-    if [ -z "$USERN" ]; then
-        USERN="root"
-    fi
-    echo "export USERN=\"$USERN\"" >> $DRAGONBUILD/state/remoteip
-}
-update()
-{
-    # update.sh
-    x=$PWD
-    cd $DRAGONBUILD || drexit
-    git pull
-    git submodule update --init --recursive
-    cd $x || drexit
-}
-
-ctry()
-{
-    python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control || cleanbuildfail
-}
-
-
-snd()
-{
-    OUTPUT=$1
-    if [ -z "$OUTPUT" ]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
-        drexit
-    fi
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting...${NC}"
-    python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check('$DRBIP',$DRBPORT,$DBTIMEOUT)" 2>/dev/null
-    echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
-
-    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
-    echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
-
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} || drexit && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" || drexit && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
-
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
-    ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || drexit
-}
-
-# First, get a md5 of the package directory list
 
 if [ "$1" == "" ]; then
     usage
     drexit
 fi
 
+# Argument Parsing
+# Set a variable here or call a bash function if it's atool
+
 while [ "$1" != "" ]; do
     case $1 in
-        u | update )            update
-                                drexit
-                                ;;
-        s | device)             setupDevice
-                                ;;
-        sr | rconf )            setupRemote
-                                ;;
+
+        # Set Variables
+
         do )                    gen=1
                                 build=1
                                 install=1
@@ -242,12 +95,44 @@ while [ "$1" != "" ]; do
         i | install )           gen=1
                                 install=1
                                 ;;
-        rs | respring )         ssh -p $DRBPORT root@$DRBIP "killall -9 SpringBoard"
+        f | flutter )           flutter=1
+                                ;;
+        debug )                 debug=1
+                                shift
+                                debugproc="$1"
+                                ;;
+        ddebug )                NINJA_ARGS="-v"
+                                export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+                                set -xv
+                                export DGEN_DEBUG=1
+                                ;;
+        only )                  only=1
+                                ;;
+        c | clean )             clean=1
+                                ;;
+        vn )                    NINJA_ARGS="-v"
+                                ;;
+        vd )                    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+                                set -xv
+                                ;;
+        vg )                    export DGEN_DEBUG=1
+                                ;;
+
+        # Commands
+
+        u | update )            update
+                                drexit
+                                ;;
+        rs | respring )         python3 $DRAGONBUILD/internal/tools/device.py run killall -9 SpringBoard
                                 drexit
                                 ;;
         dr | devicerun )        shift
-                                ssh -p $DRBPORT root@$DRBIP "$*"
+                                python3 $DRAGONBUILD/internal/tools/device.py run $*
                                 drexit
+                                ;;
+        s | device)             python3 $DRAGONBUILD/internal/tools/device.py setup
+                                ;;
+        sr | rconf )            setupRemote
                                 ;;
         sn | send )             snd $2
                                 drexit
@@ -258,67 +143,31 @@ while [ "$1" != "" ]; do
         chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
                                 drexit
                                 ;;
-        f | flutter )           flutter=1
-                                ;;
-        debug )                 debug=1
-                                shift
-                                debugproc="$1"
-                                ;;
-        ddebug )                ddebug=1
-                                ;;
         r | remote )            shift
-                                bash $DRAGONBUILD/internal/remote $*
+                                bash $DRAGONBUILD/internal/tools/remote $*
                                 drexit
                                 ;;
         relink )                rm .dragon/sign
                                 ;;
-        only )                  only=1
-                                ;;
-        c | clean )             clean=1
-                                ;;
         h | help | -h )         usage
                                 drexit
                                 ;;
-        vn )                    NINJA_ARGS="-v"
-                                ;;
-        vd )                    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-                                set -xv
-                                ;;
-        vg )                    export DGEN_DEBUG=1
-                                ;;
-        test )                  python3 $DRAGONBUILD/internal/test.py
+        test )                  python3 $DRAGONBUILD/internal/tools/test.py
                                 drexit
                                 ;;
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                printBan
-                                drexit
+        v | -v )                cat $DRAGONBUILD/internal/branding/banner.txt 
                                 ;;
         * )                     usage
                                 drexit 1
+
     esac # who comes up with this syntax lol
     shift
 done
 
-if [ $ddebug == 1 ]; then
-    NINJA_ARGS="-v"
-    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-    set -xv
-    export DGEN_DEBUG=1
-fi
-
 cwd=$(basename $PWD)
-
-if [ $flutter == 1 ]; then
-    if [ $release == 1 ]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Building with Flutter for iOS (Release)${NC}"
-        flutter build ios
-    else
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Running Flutter${NC}"
-        flutter run
-    fi
-fi
 
 if [ $gen == 1 ]; then 
     # DragonGen.py
@@ -333,177 +182,45 @@ if [ $gen == 1 ]; then
     fi
 fi
 
-
 if [ $build == 1 ]; then 
     # build.py
     # shellcheck disable=SC2154
-    if [ -z "$project_dirs" ]; then
-        echo "yeet" > /dev/null 
-    else
-        projroot=$PWD
+    
+    projroot=$PWD
 
-        set -f
-        # If there's more than one project in the root directory we need to iterate by name.
-        # shellcheck disable=SC2207
-        subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
-        set +f
+    set -f
+    # If there's more than one project in the root directory we need to iterate by name.
+    # shellcheck disable=SC2207
+    subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
+    set +f
 
-        for i in ${subsb[@]}; do
-
-            # shellcheck disable=SC2046
-            cd $(python3 -c "print('.' if '$i.ninja' in '$(ls | xargs)' else '$i')") || drexit
-            python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
-            [[ -d .dragon/_/.dragonbuilding ]] || rm -rf .dragon/_
-            mkdir -p .dragon/_/.dragonbuilding
-
-            mkdir -p .dragon/modules
-            if [ $clean == 1 ]; then 
-                if [ $i == "." ]; then 
-                    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning ${TWEAK_NAME}${NC}"
-                else
-                    if [ $only == 1 ]; then 
-                        true;
-                    fi
-                    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning ${i}${NC}"
-                fi
-                rm -rf .dragon/build 
-                rm -rf .dragon/obj
-                rm -rf .dragon/hash
-                rm -rf .dragon/sign
-            fi
-            if [ $i == "." ]; then 
-                echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${TWEAK_NAME}${NC}"
-            else
-                echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${i}${NC}"
-            fi
-            [[ -e build.ninja ]] || mv "${i}.ninja" build.ninja
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
-            env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || cleanbuildfail $projroot
-
-            if [ $exportt == 1 ]; then 
-                echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
-                ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
-            fi
-            if [ $norm == 0 ]; then
-                mkdir -p .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/${i}.ninja
-            fi
-            if [ $i == "." ]; then 
-                true;
-            else
-                cp -R .dragon/_ "$projroot"/.dragon
-            fi
-            cd "$projroot" || drexit
-        done
-    fi
+    for i in ${subsb[@]}; do
+        build $i            
+    done
 
     if [ $DRAGON_DPKG == 1 ]; then
-        # packager.py
-        echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
-        mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-        cp control .dragon/_/DEBIAN/control 2>/dev/null || ctry
-        du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
-        cp -R layout/* .dragon/_/ 2>/dev/null
-        chmod -R 0755 .dragon/_/DEBIAN/*
-        mkdir -p .dragon/packages
-        find . -name '.DS_Store' -type f -delete
-        echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
-        dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
-        GENOUTPUT="$(ls .dragon/packages)"
-        mkdir -p packages 2> /dev/null
-        cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
+        create_package
     fi
-
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
-    echo "${GENOUTPUT}" > .dragon/last_package
 fi
 
-
-# /*zip $foldername; ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""; ssh-copy-id root@$phoneip; scp $foldername.zip root@$phoneip:/tmp/mydeb.zip; ssh -p $DRBPORT root@$phoneip "cd /tmp; unzip mydeb.zip; mkdir /private/var/mobile/Documents/crap; dpkg-deb --build -Zgzip -z9 mydeb /private/var/mobile/Documents/crap; zip /private/var/mobile/Documents/crap"; scp root@$phoneip:/private/var/mobile/Documents/crap.zip ~/crap.zip; unzip crap.zip*/
-
-simfail()
-{
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
-    drexit 1
-}
-
-simsetup()
-{
-    mkdir -p $DRAGONBUILD/simulator/load
-    hold=$PWD
-    cd $DRAGONBUILD/src/simject || simfail
-    dragon c b
-    cd $hold || simfail
-}
-
-simstall()
-{
-    test -f $DRAGONBUILD/simulator/resim || simsetup
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONBUILD/simulator/load || cleanbuildfail
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
-    resim
-}
-
 if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
-    # device.py should handle this
-    if [ $simtarg == 1 ]; then
-        simstall
-        drexit 0
-    fi
-    if [ "${USER}" == "mobile" ]; then
-        sudo dpkg -i ./packages/${GENOUTPUT}
-        ${INSTALL_CMD} &
-        drexit 0
-    fi
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
-    if [ -z "$DRBPORT" ]; then
-        DRBPORT=22
-    fi
-    if [ -z "$DRBIP" ]; then
-        setupDevice
-    fi
-    if [ -z "$DRBIP" ]; then
-        killall iproxy > /dev/null
-        iproxy 4444 22 &
-        DRBIP=localhost
-        DRBPORT=4444
-
-        ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
-        echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
-
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-
-        scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} || drexit && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" || drexit && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
-
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
-        ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || drexit
-        drexit
-    fi
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
 
     if [ -z "$OUTPUT" ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
         drexit
     fi
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting...${NC}"
-    python3 -c "check = lambda x,y,z: (lambda s: (s.settimeout(z), s.connect((x, int(y))), s.close(), True))(__import__(\"socket\").socket(__import__(\"socket\").AF_INET,__import__(\"socket\").SOCK_STREAM));check(__import__(\"socket\").gethostbyname('$DRBIP'),$DRBPORT,$DBTIMEOUT)" 2>/dev/null 
-    echo $? | grep "0" > /dev/null || (echo -e "${PrefixColor}[Dragon]${BoldColor} Connecting to Device $DRBIP:$DRBPORT failed. ${NC}" && kill -13 $$ > /dev/null)
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Connected (${DRBIP})${NC}"
-
-    ssh -o PasswordAuthentication=no -p $DRBPORT root@$DRBIP 2>/dev/null "true"
-    echo $? | grep "0" > /dev/null || stat $DRAGONBUILD/state/nosshkey 2>/dev/null | python3 -c "exit($?)" || setupSSHKey
-
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-
-    scp -P $DRBPORT packages/${OUTPUT} root@$DRBIP:/var/mobile/${OUTPUT} || drexit && ssh -p $DRBPORT root@$DRBIP "dpkg -i /var/mobile/${OUTPUT}" || drexit && ssh -p $DRBPORT root@$DRBIP "rm -rf /var/mobile/${OUTPUT}"
     
+    send_package packages/$OUTPUT
+
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
-    ssh -p $DRBPORT root@$DRBIP "${INSTALL_CMD}" || drexit
+    python3 $DRAGONBUILD/internal/tools/device.py run ${INSTALL_CMD} || drexit
 fi
  
 if [ $debug == 1 ] ; then
+    eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
     ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"

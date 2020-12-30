@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export DRAGONBUILD=~/.dragonbuild/
+
+export PATH="$PATH:/usr/local/bin/:$DRAGONBUILD/bin/"
+
+export DRAGONVERS="1.3"
