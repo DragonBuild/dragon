@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# Load in the bare minimum
-
-
+# Find where this specific script is located
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
@@ -11,14 +9,9 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
+# $DIR is going to be $DRAGONBUILD
 source $DIR/internal/data/environment
-
-# Cant distinctly remember, but IIRC this framework is actually 
-#    just a bash script we load in
-source /System/Library/Frameworks/DragonSupport.framework/DragonSupport 2>/dev/null
-
-# Connection timeout for SSH stuff
-DBTIMEOUT=5
+export DRAGONBUILD=$DIR
 
 # Load in colors and basic functions
 source $DRAGONBUILD/internal/tools/util
@@ -27,50 +20,30 @@ source $DRAGONBUILD/internal/tools/util
 source $DRAGONBUILD/internal/tools/simulator 
 source $DRAGONBUILD/internal/tools/packaging 
 source $DRAGONBUILD/internal/tools/building 
+source $DRAGONBUILD/internal/tools/generator
 
-# These are the flags for the "state" of the program
-# Consider it a "checklist". Anything that gets set to 1 is something we need to get done,
-#     in the proper order.
-install=0
-build=0
-gen=0
-clean=0
-exportt=0
-only=0
-norm=0
-debug=0
-debugproc=""
-ddebug=0
-flutter=0
-DRAGON_DPKG=1
-DRAGON_POSTINST=0
-
-export simtarg=0
-
-export release=0
-
-ToolchainPath=""
-ToolchainPrefix=""
-command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
+# All "state" variables we set and then act upon.
+source $DRAGONBUILD/internal/data/variables
 
 set -o pipefail
 
-# This controls ninja colors.
-export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"
+# --------
+# Argument Parsing
+# Set a variable here or call a bash function if it's atool
+# --------
 
-
+# If we have no args, print usage and exit
 if [ "$1" == "" ]; then
     usage
     drexit
 fi
 
-# Argument Parsing
-# Set a variable here or call a bash function if it's atool
-
 while [ "$1" != "" ]; do
     case $1 in
 
+        # --------
         # Set Variables
+        # --------
 
         do )                    gen=1
                                 build=1
@@ -118,7 +91,9 @@ while [ "$1" != "" ]; do
         vg )                    export DGEN_DEBUG=1
                                 ;;
 
+        # --------
         # Commands
+        # --------
 
         u | update )            update
                                 drexit
@@ -169,21 +144,29 @@ done
 
 cwd=$(basename $PWD)
 
+
+# --------
+# Invoke the generator
+# --------
+
 if [ $gen == 1 ]; then 
-    # DragonGen.py
     rm -rf .dragon/ninja/build.ninja 
     mkdir -p .dragon/ninja > /dev/null
     mkdir -p .dragon/modules > /dev/null
 
-    source $DRAGONBUILD/DragonGen/DragonGen $DGEN_DEBUG
+    generate
 
     if [ "$DRAGONGEN_FAILURE" == 1 ]; then
         cleanbuildfail
     fi
 fi
 
+
+# --------
+# Build, then package (if needed)
+# --------
+
 if [ $build == 1 ]; then 
-    # build.py
     # shellcheck disable=SC2154
     
     projroot=$PWD
@@ -205,6 +188,11 @@ if [ $build == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
 fi
 
+
+# --------
+# Install a package after building (doesn't need to be same session)
+# DRAGON_DPKG is 1 by default, modified by the generator
+# --------
 if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
 
@@ -218,7 +206,10 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
     python3 $DRAGONBUILD/internal/tools/device.py run ${INSTALL_CMD} || drexit
 fi
- 
+
+# --------
+# On-device debugging
+# --------
 if [ $debug == 1 ] ; then
     eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"

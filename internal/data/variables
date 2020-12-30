@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# These are the flags for the "state" of the program
+# Consider it a "checklist". Anything that gets set to 1 is something we need to get done,
+#     in the proper order.
+export install=0
+export build=0
+export gen=0
+export clean=0
+export exportt=0
+export only=0
+export norm=0
+export debug=0
+export debugproc=""
+export ddebug=0
+export flutter=0
+export DRAGON_DPKG=1
+export DRAGON_POSTINST=0
+
+export simtarg=0
+
+export release=0
+
+export ToolchainPath=""
+export ToolchainPrefix=""
+command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONBUILD}/toolchain/bin/"; export ToolchainPrefix="";
+
+
+# This controls ninja colors.
+export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"

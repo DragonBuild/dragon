@@ -1,6 +1,16 @@
+#!/usr/bin/env python3
+
+'''
+This just exists to call DragonGen, it functions mainly on its own.
+
+All non-recoverable exceptions are handled here
+'''
+
 from DragonGen import DragonGen 
 from DragonGen.util import *
 import os, sys
+
+
 try:
     DragonGen.main()
 except FileNotFoundError as exception:
