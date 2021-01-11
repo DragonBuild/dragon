@@ -3,7 +3,7 @@
 clean_dir()
 {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
- 
+    # TODO: find . -name '*.ninja' -delete
     rm -rf .dragon/build 
     rm -rf .dragon/obj
     rm -rf .dragon/hash
@@ -40,7 +40,7 @@ build()
         echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
         ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
     fi
-
+    mv build.ninja .dragon/ninja
     if [ $1 == "." ]; then 
         true;
     else
