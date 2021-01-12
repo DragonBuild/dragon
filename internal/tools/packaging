@@ -36,7 +36,6 @@ create_package()
     mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
     cp control .dragon/_/DEBIAN/control 2>/dev/null || python3 $DRAGONBUILD/internal/tools/control.py DragonMake ./.dragon/_/DEBIAN/control 
     du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
-    cp -R layout/* .dragon/_/ 2>/dev/null
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
     find . -name '.DS_Store' -type f -delete

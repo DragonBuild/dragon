@@ -40,6 +40,9 @@ build()
         echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
         ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
     fi
+
+    cp -R layout/* .dragon/_/ 2>/dev/null
+
     mv build.ninja .dragon/ninja
     if [ $1 == "." ]; then 
         true;
