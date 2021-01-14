@@ -3,11 +3,8 @@
 clean_dir()
 {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
-    # TODO: find . -name '*.ninja' -delete
-    rm -rf .dragon/build 
-    rm -rf .dragon/obj
-    rm -rf .dragon/hash
-    rm -rf .dragon/sign
+    # find . -name 'build.ninja' -delete
+    rm -rf .dragon/
 }
 
 build()
@@ -16,9 +13,6 @@ build()
     cd $(python3 -c "print('.' if '$1.ninja' in '$(ls | xargs)' else '$1')") || drexit
     python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
     [[ -d .dragon/_/.dragonbuilding ]] || rm -rf .dragon/_
-    mkdir -p .dragon/_/.dragonbuilding
-
-    mkdir -p .dragon/modules
 
     if [ $1 == "." ]; then 
         DNAME=${TWEAK_NAME}
@@ -29,6 +23,10 @@ build()
     if [ $clean == 1 ]; then 
         clean_dir $DNAME
     fi
+    
+    mkdir -p .dragon/_/.dragonbuilding
+
+    mkdir -p .dragon/modules
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${DNAME}${NC}"
 
