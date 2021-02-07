@@ -5,9 +5,6 @@
 [submodule "src/logos"]
 	path = src/logos
 	url = https://github.com/theos/logos.git
-[submodule "vendor"]
-	path = vendor
-	url = https://github.com/DragonBuild/vendor
 [submodule "device/appinfo"]
 	path = src/device/appinfo
 	url = https://github.com/DragonBuild/appinfo
