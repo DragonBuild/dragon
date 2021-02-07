@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Colors we load in
-source $DRAGONBUILD/internal/data/dragoncolors
+TOOLPATH=$(python3 -c 'from dragontools.util import tool_path; print(tool_path())')
+source $TOOLPATH/dragoncolors
 
 function drexit()
 {

@@ -8,7 +8,7 @@ generate()
 
     echo $simtarg | grep "1" > /dev/null && echo -e "${GenColor}[DragonGen]${BoldColor} Targeting Simulator + simject${NC}"
 
-    eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 $DRAGONBUILD/DragonGenerator.py)
+    eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 -m dragongen.generation)
 
     export TWEAK_NAME=$package_name
     export INSTALL_CMD=$install_command

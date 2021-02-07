@@ -1,6 +1,3 @@
-[submodule "sdks"]
-	path = sdks
-	url = https://github.com/DragonBuild/sdks.git
 [submodule "src/simject"]
 	path = src/simject
 	url = https://github.com/KritantaDev/simject.git
@@ -8,15 +5,6 @@
 [submodule "src/logos"]
 	path = src/logos
 	url = https://github.com/theos/logos.git
-[submodule "frameworks"]
-	path = frameworks
-	url = https://github.com/DragonBuild/frameworks
-[submodule "lib"]
-	path = lib
-	url = https://github.com/DragonBuild/lib
-[submodule "include"]
-	path = include
-	url = https://github.com/DragonBuild/include
 [submodule "vendor"]
 	path = vendor
 	url = https://github.com/DragonBuild/vendor
