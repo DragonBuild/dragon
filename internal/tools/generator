@@ -10,6 +10,8 @@ generate()
 
     eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 $DRAGONBUILD/DragonGenerator.py)
 
+    source ./.dragon/env/variables
+
     export TWEAK_NAME=$package_name
     export INSTALL_CMD=$install_command
 }

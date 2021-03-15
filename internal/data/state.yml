@@ -1,5 +1,7 @@
 device:
-  current: 0
+  current: 1
   devices:
   - ip: localhost
     port: 4444
+  - ip: 192.168.0.34
+    port: 22
