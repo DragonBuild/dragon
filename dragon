@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
+export DRAGONVERS="1.3"
 
-# Find where this specific script is located
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+# Defauld dragondir is ~/.dragon
+if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
 
-# $DIR is going to be $DRAGONBUILD
-source $DIR/internal/data/environment
-export DRAGONBUILD=$DIR
+# Run setup wizard if dragondir is empty or nonexistant
+if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
+    python3 -m dragontools.wizard
+fi
+
+
+TOOLPATH=$(python3 -c 'from dragontools.util import tool_path; print(tool_path())')
 
 # Load in colors and basic functions
-source $DRAGONBUILD/internal/tools/util
+source $TOOLPATH/util
+source $TOOLPATH/dragoncolors
 
 # Tool imports
-source $DRAGONBUILD/internal/tools/simulator 
-source $DRAGONBUILD/internal/tools/packaging 
-source $DRAGONBUILD/internal/tools/building 
-source $DRAGONBUILD/internal/tools/generator
+source $TOOLPATH/simulator
+source $TOOLPATH/packaging
+source $TOOLPATH/building
+source $TOOLPATH/generator
 
 # All "state" variables we set and then act upon.
-source $DRAGONBUILD/internal/data/variables
+source $TOOLPATH/variables
 
 set -o pipefail
 
@@ -51,7 +51,7 @@ while [ "$1" != "" ]; do
                                 ;;
         g | gen | generate)     gen=1
                                 ;;
-        n | nic | new)          python3 $DRAGONBUILD/bin/nic.py  
+        n | nic | new)          python3 $DRAGONBUILD/bin/nic.py
                                 drexit
                                 ;;
         exp | export)           gen=1
@@ -127,13 +127,13 @@ while [ "$1" != "" ]; do
         h | help | -h )         usage
                                 drexit
                                 ;;
-        test )                  python3 $DRAGONBUILD/internal/tools/test.py
+        test )                  python3 -m dragontools.test
                                 drexit
                                 ;;
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                cat $DRAGONBUILD/internal/branding/banner.txt 
+        v | -v )                cat $DRAGONBUILD/internal/branding/banner.txt
                                 ;;
         * )                     usage
                                 drexit 1
@@ -149,8 +149,8 @@ cwd=$(basename $PWD)
 # Invoke the generator
 # --------
 
-if [ $gen == 1 ]; then 
-    rm -rf .dragon/ninja/build.ninja 
+if [ $gen == 1 ]; then
+    rm -rf .dragon/ninja/build.ninja
     mkdir -p .dragon/ninja > /dev/null
     mkdir -p .dragon/modules > /dev/null
 
@@ -166,9 +166,9 @@ fi
 # Build, then package (if needed)
 # --------
 
-if [ $build == 1 ]; then 
+if [ $build == 1 ]; then
     # shellcheck disable=SC2154
-    
+
     projroot=$PWD
 
     set -f
@@ -178,7 +178,7 @@ if [ $build == 1 ]; then
     set +f
 
     for i in ${subsb[@]}; do
-        build $i            
+        build $i
     done
 
     if [ $DRAGON_DPKG == 1 ]; then
@@ -200,7 +200,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
         drexit
     fi
-    
+
     send_package packages/$OUTPUT
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Running '${INSTALL_CMD}' ${NC}"
@@ -219,3 +219,4 @@ fi
 
 rm -rf .dragon/packages > /dev/null
 set +xv
+

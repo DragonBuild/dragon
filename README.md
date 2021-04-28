@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="internal/branding/dragon.svg" alt="Logo" width=200px> 
+<img src="branding/dragon.svg" alt="Logo" width=200px> 
 </p>
 <p align="center">
   <strong>

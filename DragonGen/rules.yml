@@ -1,0 +1,239 @@
+---
+logos:
+  name: Logos Preprocessor
+  desc: Preprocessing $in using Logos
+  cmd: $logos $in > $out
+prefs:
+  name: DragonPrefs
+  desc: Building DragonPrefs
+  cmd: python3 $$DRAGONBUILD/DragonGen/dragonprefs.py $in $out
+swiftarmv6:
+  name: Swift armv6
+  cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv6-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
+swiftarmv7:
+  name: Swift armv7
+  cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv7-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
+swiftarmv7s:
+  name: Swift armv7s
+  cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv7s-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
+swiftarm64:
+  name: Swift arm64
+  cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target arm64-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
+swiftarm64e:
+  name: Swift arm64e
+  cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target arm64e-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
+swiftmoduleheader:
+  name: Swift Module Header
+  cmd: $swift -frontend -c $internalswiftflags $bridgeheader -target arm64-apple-ios7.0 -emit-module -merge-modules $in -emit-objc-header-path $out -o /dev/null
+
+
+cargoarmv6:
+  name: cargo armv6
+  desc: Compiling $in with $cc [armv6]
+  cmd: $cargo-nightly --target=i386-apple-darwin10 $internalcflags -c $in -o $out
+cargoarmv7:
+  name: cargo armv7
+  desc: Compiling $in with $cc [armv7]
+  cmd: $cc -arch armv7 $internalcflags -c $in -o $out
+cargoarmv7s:
+  name: cargo armv7s
+  desc: Compiling $in with $cc [armv7s]
+  cmd: $cc -arch armv7s $internalcflags -c $in -o $out
+cargoarm64:
+  name: cargo arm64
+  desc: Compiling $in with $cc [arm64]
+  cmd: $cc -arch arm64 $internalcflags -c $in -o $out
+cargoarm64e:
+  name: cargo arm64e
+  desc: Compiling $in with $cc [arm64e]
+  cmd: $cc -arch arm64e $internalcflags -c $in -o $out
+cargox86_64:
+  name: cargo x86_64
+  desc: Compiling $in with $cc [x86_64]
+  cmd: $cc -arch x86_64 $internalcflags -c $in -o $out
+cargoi386:
+  name: cargo i386
+  desc: Compiling $in with $cc [i386]
+  cmd: $cc -arch i386 $internalcflags -c $in -o $out
+
+carmv6:
+  name: clang armv6
+  desc: Compiling $in with $cc [armv6]
+  cmd: $cc -arch armv6 $internalcflags -c $in -o $out
+carmv7:
+  name: clang armv7
+  desc: Compiling $in with $cc [armv7]
+  cmd: $cc -arch armv7 $internalcflags -c $in -o $out
+carmv7s:
+  name: clang armv7s
+  desc: Compiling $in with $cc [armv7s]
+  cmd: $cc -arch armv7s $internalcflags -c $in -o $out
+carm64:
+  name: clang arm64
+  desc: Compiling $in with $cc [arm64]
+  cmd: $cc -arch arm64 $internalcflags -c $in -o $out
+carm64e:
+  name: clang arm64e
+  desc: Compiling $in with $cc [arm64e]
+  cmd: $cc -arch arm64e $internalcflags -c $in -o $out
+cx86_64:
+  name: clang x86_64
+  desc: Compiling $in with $cc [x86_64]
+  cmd: $cc -arch x86_64 $internalcflags -c $in -o $out
+ci386:
+  name: clang i386
+  desc: Compiling $in with $cc [i386]
+  cmd: $cc -arch i386 $internalcflags -c $in -o $out
+
+cxxarmv6:
+  name: clang++ armv6
+  desc: Compiling $in with $cxx [armv6]
+  cmd: $cxx -arch armv6 $internalcflags -c $in -o $out
+cxxarmv7:
+  name: clang++ armv7
+  desc: Compiling $in with $cxx [armv7]
+  cmd: $cxx -arch armv7 $internalcflags -c $in -o $out
+cxxarmv7s:
+  name: clang++ armv7s
+  desc: Compiling $in with $cxx [armv7s]
+  cmd: $cxx -arch armv7s $internalcflags -c $in -o $out
+cxxarm64:
+  name: clang++ arm64
+  desc: Compiling $in with $cxx [arm64]
+  cmd: $cxx -arch arm64 $internalcflags -c $in -o $out
+cxxarm64e:
+  name: clang++ arm64e
+  desc: Compiling $in with $cxx [arm64e]
+  cmd: $cxx -arch arm64e $internalcflags -c $in -o $out
+cxxx86_64:
+  name: clang++ x86_64
+  desc: Compiling $in with $cxx [x86_64]
+  cmd: $cxx -arch x86_64 $internalcflags -c $in -o $out
+cxxi386:
+  name: clang++ i386
+  desc: Compiling $in with $cxx [i386]
+  cmd: $cxx -arch i386 $internalcflags -c $in -o $out
+
+objcarmv6:
+  name: clang++ armv6
+  desc: Compiling $in with $cc [armv6]
+  cmd: $cc -arch armv6 $internalcflags -c $in -o $out
+objcarmv7:
+  name: clang++ armv7
+  desc: Compiling $in with $cc [armv7]
+  cmd: $cc -arch armv7 $internalcflags -c $in -o $out
+objcarmv7s:
+  name: clang++ armv7s
+  desc: Compiling $in with $cc [armv7s]
+  cmd: $cc -arch armv7s $internalcflags -c $in -o $out
+objcarm64:
+  name: clang++ arm64
+  desc: Compiling $in with $cc [arm64]
+  cmd: $cc -arch arm64 $internalcflags -c $in -o $out
+objcarm64e:
+  name: clang++ arm64e
+  desc: Compiling $in with $cc [arm64e]
+  cmd: $cc -arch arm64e $internalcflags -c $in -o $out
+objcx86_64:
+  name: clang++ x86_64
+  desc: Compiling $in with $cc [x86_64]
+  cmd: $cc -arch x86_64 $internalcflags -c $in -o $out
+objci386:
+  name: clang++ i386
+  desc: Compiling $in with $cc [i386]
+  cmd: $cc -arch i386 $internalcflags -c $in -o $out
+
+objcxxarmv6:
+  name: clang++ armv6
+  desc: Compiling $in with $cxx [armv6]
+  cmd: $cxx -arch armv6 $internalcflags -c $in -o $out
+objcxxarmv7:
+  name: clang++ armv7
+  desc: Compiling $in with $cxx [armv7]
+  cmd: $cxx -arch armv7 $internalcflags -c $in -o $out
+objcxxarmv7s:
+  name: clang++ armv7s
+  desc: Compiling $in with $cxx [armv7s]
+  cmd: $cxx -arch armv7s $internalcflags -c $in -o $out
+objcxxarm64:
+  name: clang++ arm64
+  desc: Compiling $in with $cxx [arm64]
+  cmd: $cxx -arch arm64 $internalcflags -c $in -o $out
+objcxxarm64e:
+  name: clang++ arm64e
+  desc: Compiling $in with $cxx [arm64e]
+  cmd: $cxx -arch arm64e $internalcflags -c $in -o $out
+objcxxx86_64:
+  name: clang++ x86_64
+  desc: Compiling $in with $cxx [x86_64]
+  cmd: $cxx -arch x86_64 $internalcflags -c $in -o $out
+objcxxi386:
+  name: clang++ i386
+  desc: Compiling $in with $cxx [i386]
+  cmd: $cxx -arch i386 $internalcflags -c $in -o $out
+
+
+linkarmv6:
+  name: armv6 Linker
+  desc: Linking $in with $ld [armv6]
+  cmd: $ld -arch armv6 $internallflags $internalldflags -o $out $in
+linkarmv7:
+  name: armv7 Linker
+  desc: Linking $in with $ld [armv7]
+  cmd: $ld -arch armv7 $internallflags $internalldflags -o $out $in
+linkarmv7s:
+  name: armv7s Linker
+  desc: Linking $in with $ld [armv7s]
+  cmd: $ld -arch armv7s $internallflags $internalldflags -o $out $in
+linkarm64:
+  name: arm64 Linker
+  desc: Linking $in with $ld [arm64]
+  cmd: $ld -arch arm64 $internallflags $internalldflags -o $out $in
+linkarm64e:
+  name: arm64e Linker
+  desc: Linking $in with $ld [arm64e]
+  cmd: $ld -arch arm64e $internallflags $internalldflags -o $out $in
+linkx86_64:
+  name: x86_64 Linker
+  desc: Linking $in with $ld [x86_64]
+  cmd: $ld -arch x86_64 $internallflags $internalldflags -o $out $in
+linki386:
+  name: i386 Linker
+  desc: Linking $in with $ld [i386]
+  cmd: $ld -arch i386 $internallflags $internalldflags -o $out $in
+archive:
+  name: Creating Archive
+  desc: Creating Static Archive with $ar from $in
+  cmd: ar cr $out $in
+dummy:
+  name: Copying Files
+  desc: Copying Files
+  cmd: cp $in $out
+copy:
+  name: Copying Files
+  desc: Copying Files
+  cmd: cp $in $out
+lipo:
+  name: Lipo Utility
+  desc: Merging architechtures
+  cmd: $lipo -create $in -output $out
+bundle:
+  name: Bundle Resources
+  desc: Copying Bundle Resources
+  cmd: mkdir -p "$proj_build_dir/_$location/" && cp -R "$resource_dir/" "$proj_build_dir/_$location"
+plist:
+  name: plutil compilation
+  desc: Compiling $in
+  cmd: $plutil -convert binary1 $in -o $out
+debug:
+  name: DsymUtil
+  desc: Generating Debug Symbols for $name
+  cmd: $dsym \"$in\" 2&> /dev/null; cp $in $out
+sign:
+  name: $codesign
+  desc: Signing $name
+  cmd: $codesign $entflag$entfile $in && cp $in $out
+stage:
+  name: Staging Commands
+  desc: Running Stage for $name
+  cmd: $stage && $stage2
