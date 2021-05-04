@@ -1,0 +1,38 @@
+copyright (c) 2020 kritanta 
+
+dragon license version 1
+
+the following statement, within quotation marks, is a non-binding summation of the following license:
+
+"
+Clauses:
+1. If you're forking/repacking the project, include this LICENSE file 
+2. If you use an individual file somewhere else, you need to keep the copyright header comment
+3. Don't take a snippet/snippets of code from here and relicense it unless you've added it to a larger project.
+4. If you repackage/fork this project, indicate so in the name and description of the project to a reasonable extent.
+
+Exemptions:
+1. Anything you used this tool to create isn't bound by this license 
+2. Submodules of this project aren't bound by this license unless they also include it.
+
+This license isn't strictly enforced, and is very loose in general, so respecting it is appreciated.
+"
+
+redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. redistributions of substantial portions of the source code of this project must retain the above copyright notice, this list of conditions and the following disclaimer. 
+
+2. redistributions of source code in any capacity must maintain the copyright notice within individual files. this does not apply to snippets of code.
+
+3. individual snippets of code alone should not be relicensed unless they do not make up a substantial portion of the project.
+
+4. redistributions of substantial portions of the source code of this project must differentiate themselves from this project within their name and within extended descriptions of the project. 
+
+4a. modified redistributions of substantial portions of the source code or compiled binary must indicate they have been modified
+
+
+the following are exempt from this license:
+
+1. projects, binaries, or any packages generated through this program are not considered derivative works, and are not bound by this license.
+
+2. submodules of this project are not bound by this license unless explicitly stated.

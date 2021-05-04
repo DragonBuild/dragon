@@ -1,0 +1,19 @@
+[submodule "src/simject"]
+	path = src/simject
+	url = https://github.com/KritantaDev/simject.git
+	branch = dragon
+[submodule "src/logos"]
+	path = src/logos
+	url = https://github.com/theos/logos.git
+[submodule "device/appinfo"]
+	path = src/device/appinfo
+	url = https://github.com/DragonBuild/appinfo
+[submodule "device/decryptor"]
+	path = src/device/decryptor
+	url = https://github.com/DragonBuild/decryptor
+[submodule "device/injection"]
+	path = src/device/injection
+	url = https://github.com/DragonBuild/injection
+[submodule "DragonGen"]
+	path = DragonGen
+	url = https://github.com/DragonBuild/DragonGen

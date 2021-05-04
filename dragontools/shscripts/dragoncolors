@@ -1,0 +1,5 @@
+export PrefixColor='\033[1;34m'
+export PackageColor='\033[1;32m'
+export GenColor='\033[1;33m'
+export BoldColor='\033[1;37m'
+export NC='\033[0m'

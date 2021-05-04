@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+send_package()
+{
+    if [ $simtarg == 1 ]; then
+        simstall
+        drexit 0
+    fi
+    if [ "${USER}" == "mobile" ]; then
+        sudo dpkg -i ./packages/${GENOUTPUT}
+        ${INSTALL_CMD} &
+        drexit 0
+    fi
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
+    OUTPUT=$1
+    if [ -z "$OUTPUT" ]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} $1 not found${NC}"
+        drexit
+    fi
+    python3 $DRAGONBUILD/internal/tools/device.py test
+
+    eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
+
+    if [ -z "$DRBIP" ]; then
+        python3 $DRAGONBUILD/internal/tools/device.py setup
+    fi
+
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
+    python3 $DRAGONBUILD/internal/tools/device.py qr mkdir -p /var/mobile/dragon/packages
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr dpkg -i /var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr rm -rf /var/mobile/dragon/${OUTPUT}
+}
+
+create_package()
+{
+    echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
+    mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
+    cp control .dragon/_/DEBIAN/control 2>/dev/null || python3 $DRAGONBUILD/internal/tools/control.py DragonMake ./.dragon/_/DEBIAN/control 
+    du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
+    chmod -R 0755 .dragon/_/DEBIAN/*
+    mkdir -p .dragon/packages
+    find . -name '.DS_Store' -type f -delete
+    echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
+    dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
+    GENOUTPUT="$(ls .dragon/packages)"
+    mkdir -p packages 2> /dev/null
+    cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    echo "${GENOUTPUT}" > .dragon/last_package
+}

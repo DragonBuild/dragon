@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+clean_dir()
+{
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
+    # find . -name 'build.ninja' -delete
+    rm -rf .dragon/
+}
+
+build()
+{
+    # shellcheck disable=SC2046
+    cd $(python3 -c "print('.' if '$1.ninja' in '$(ls | xargs)' else '$1')") || drexit
+    python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
+    [[ -d .dragon/_/.dragonbuilding ]] || rm -rf .dragon/_
+
+    if [ $1 == "." ]; then 
+        DNAME=${TWEAK_NAME}
+    else
+        DNAME=$1
+    fi
+
+    if [ $clean == 1 ]; then 
+        clean_dir $DNAME
+    fi
+    
+    mkdir -p .dragon/_/.dragonbuilding
+
+    mkdir -p .dragon/modules
+
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${DNAME}${NC}"
+
+    [[ -e build.ninja ]] || mv "${i}.ninja" build.ninja
+    env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
+    env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || cleanbuildfail $projroot
+
+    if [ $exportt == 1 ]; then 
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
+        ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
+    fi
+
+    cp -R layout/* .dragon/_/ 2>/dev/null
+
+    mv build.ninja .dragon/ninja
+    if [ $1 == "." ]; then 
+        true;
+    else
+        cp -R .dragon/_ "$projroot"/.dragon
+    fi
+
+    cd "$projroot" || drexit
+}

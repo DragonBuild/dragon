@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# Colors we load in
+TOOLPATH=$(python3 -c 'from dragontools.util import tool_path; print(tool_path())')
+source $TOOLPATH/dragoncolors
+
+function drexit()
+{
+    # This function resets terminal colors, fixes stty (just in case), and then exits with arg0's value
+    # It should be called on *EVERY* exit, no matter what. 
+    echo -e "${NC}"
+    stty sane
+    exit $1
+}
+
+function cleanbuildfail()
+{
+    # Run this when we hit an error building, so we can clean things up.
+    # This needs to eventually be updated for the new {name}.ninja format
+    # Currently it'll just leave everything sitting out
+
+    # shellcheck disable=SC2154
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
+    if [ $norm == 0 ]; then
+        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+    fi
+    cd $1 || drexit
+    if [ $norm == 0 ]; then
+        mkdir .dragon/ninja 2>/dev/null && mv build.ninja .dragon/ninja/build.ninja
+    fi
+    drexit 1
+}
+
+setupRemote()
+{
+    # remote.py | remote.sh
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
+    read IPA
+    echo "export IPA=\"$IPA\"" > $DRAGONBUILD/state/remoteip
+    echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
+    read USERN
+    if [ -z "$USERN" ]; then
+        USERN="root"
+    fi
+    echo "export USERN=\"$USERN\"" >> $DRAGONBUILD/state/remoteip
+}
+
+update()
+{
+    # update.sh
+    x=$PWD
+    cd $DRAGONBUILD || drexit
+    git pull
+    git submodule update --init --recursive
+    cd $x || drexit
+}
+
+usage()
+{
+    echo ""
+    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
+    echo "  usage: dragon [commands]"
+    echo ""
+    echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
+    echo "  do - Build and Install"
+    echo "  c|clean - recompile, link, and package your project"
+    echo "  b|build|make - compile, link, and package your project"
+    echo "  r|remote - Build using remote server"
+    echo "  sr|rconf - Setup remote server"
+    echo ""
+    echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
+    echo "  s|device - Set build device IP/Port"
+    echo "  i|install - Install to build device"
+    echo "  sim - Install to the simulator instead of a device"
+    echo "  rs|respring - Respring the current build device"
+    echo "  dr|devicerun - Run anything after this flag on device"
+    echo "  sn|send <file> - Install a .deb to the device"
+    echo ""
+    echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
+    echo "  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)"
+    echo "  exp|export - Tell ninja to create a compile_commands.json"
+    echo "  f|flutter - Build with flutter before doing anything else"
+    echo "  ch|checkra1n - Open Checkra1n GUI"
+    echo "  chc|checkra1ncli - Open Checkra1n CLI"
+    echo ""
+    echo -e "${PrefixColor}Debugging ${BoldColor}-=-=-${NC}"
+    echo "  vn - Print clang/ld/etc. commands and flags"
+    echo "  vd - echo every bash command in the main dragon file"
+    echo "  vg - DragonGen verbositiy."
+    echo "  norm - Doesn't delete build.ninja after building."
+    echo "  ddebug - Enable all debug flags"
+    echo ""
+    echo -e "${PrefixColor}-=-=-${NC}"
+    echo ""
+    echo "dragon v${DRAGONVERS} - by kritanta"
+}

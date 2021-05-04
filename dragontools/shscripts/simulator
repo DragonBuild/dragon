@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+simfail()
+{
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
+    drexit 1
+}
+
+simsetup()
+{
+    mkdir -p $DRAGONBUILD/simulator/load
+    hold=$PWD
+    cd $DRAGONBUILD/src/simject || simfail
+    dragon c b
+    cd $hold || simfail
+}
+
+simstall()
+{
+    test -f $DRAGONBUILD/simulator/resim || simsetup
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
+    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONBUILD/simulator/load || cleanbuildfail
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
+    resim
+}

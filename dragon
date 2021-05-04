@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+export DRAGONVERS="1.3"
+
+# Defauld dragondir is ~/.dragon
+if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+
+# Run setup wizard if dragondir is empty or nonexistant
+if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
+    python3 -m dragontools.wizard
+fi
+
+
+TOOLPATH=$(python3 -c 'from dragontools.util import tool_path; print(tool_path())')
+
+# Load in colors and basic functions
+source $TOOLPATH/util
+source $TOOLPATH/dragoncolors
+
+# Tool imports
+source $TOOLPATH/simulator
+source $TOOLPATH/packaging
+source $TOOLPATH/building
+source $TOOLPATH/generator
+
+# All "state" variables we set and then act upon.
+source $TOOLPATH/variables
+
+yaml() {
+    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
+}
+
+set -o pipefail
+
+# --------
+# Argument Parsing
+# Set a variable here or call a bash function if it's atool
+# --------
+
+# If we have no args, print usage and exit
+if [ "$1" == "" ]; then
+    usage
+    drexit
+fi
+
+while [ "$1" != "" ]; do
+    case $1 in
+
+        # --------
+        # Set Variables
+        # --------
+
+        do )                    gen=1
+                                build=1
+                                install=1
+                                ;;
+        g | gen | generate)     gen=1
+                                ;;
+        n | nic | new)          python3 $DRAGONBUILD/bin/nic.py
+                                drexit
+                                ;;
+        exp | export)           gen=1
+                                exportt=1
+                                build=1
+                                ;;
+        norm )                  norm=1
+                                ;;
+        b | build | make)       gen=1
+                                build=1
+                                ;;
+        sim | simulator )       export simtarg=1
+                                ;;
+        i | install )           gen=1
+                                install=1
+                                ;;
+        f | flutter )           flutter=1
+                                ;;
+        debug )                 debug=1
+                                shift
+                                debugproc="$1"
+                                ;;
+        ddebug )                NINJA_ARGS="-v"
+                                export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+                                set -xv
+                                export DGEN_DEBUG=1
+                                ;;
+        only )                  only=1
+                                ;;
+        c | clean )             clean=1
+                                ;;
+        vn )                    NINJA_ARGS="-v"
+                                ;;
+        vd )                    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+                                set -xv
+                                ;;
+        vg )                    export DGEN_DEBUG=1
+                                ;;
+
+        # --------
+        # Commands
+        # --------
+
+        u | update )            update
+                                drexit
+                                ;;
+        rs | respring )         python3 $DRAGONBUILD/internal/tools/device.py run killall -9 SpringBoard
+                                drexit
+                                ;;
+        dr | devicerun )        shift
+                                python3 $DRAGONBUILD/internal/tools/device.py run $*
+                                drexit
+                                ;;
+        s | device)             python3 $DRAGONBUILD/internal/tools/device.py setup
+                                ;;
+        sr | rconf )            setupRemote
+                                ;;
+        sn | send )             snd $2
+                                drexit
+                                ;;
+        ch | checkra1n )        /Applications/checkra1n.app/Contents/MacOS/checkra1n -g
+                                drexit
+                                ;;
+        chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
+                                drexit
+                                ;;
+        r | remote )            shift
+                                bash $DRAGONBUILD/internal/tools/remote $*
+                                drexit
+                                ;;
+        relink )                rm .dragon/sign
+                                ;;
+        h | help | -h )         usage
+                                drexit
+                                ;;
+        test )                  python3 -m dragontools.test
+                                drexit
+                                ;;
+        time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
+                                set -x
+                                ;;
+        v | -v )                cat $DRAGONBUILD/internal/branding/banner.txt
+                                ;;
+        * )                     usage
+                                drexit 1
+
+    esac # who comes up with this syntax lol
+    shift
+done
+
+cwd=$(basename $PWD)
+
+
+# --------
+# Invoke the generator
+# --------
+
+if [ $gen == 1 ]; then
+    rm -rf .dragon/ninja/build.ninja
+    mkdir -p .dragon/ninja > /dev/null
+    mkdir -p .dragon/modules > /dev/null
+
+    generate
+
+    if [ "$DRAGONGEN_FAILURE" == 1 ]; then
+        cleanbuildfail
+    fi
+fi
+
+
+# --------
+# Build, then package (if needed)
+# --------
+
+if [ $build == 1 ]; then
+    # shellcheck disable=SC2154
+
+    projroot=$PWD
+
+    set -f
+    # If there's more than one project in the root directory we need to iterate by name.
+    # shellcheck disable=SC2207
+    subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
+    set +f
+
+    for i in ${subsb[@]}; do
+        build $i
+    done
+
+    if [ $DRAGON_DPKG == 1 ]; then
+        create_package
+    fi
+
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
+fi
+
+
+# --------
+# Install a package after building (doesn't need to be same session)
+# DRAGON_DPKG is 1 by default, modified by the generator
+# --------
+if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
+    OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
+
+    if [ -z "$OUTPUT" ]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
+        drexit
+    fi
+
+    send_package packages/$OUTPUT
+
+    INSTALL_CMD=$(yaml DragonMake "['icmd']" || echo "sbreload")
+
+    python3 $DRAGONBUILD/internal/tools/device.py run ${INSTALL_CMD} || drexit
+fi
+
+# --------
+# On-device debugging
+# --------
+if [ $debug == 1 ] ; then
+    eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
+    echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
+    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
+    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
+fi
+
+rm -rf .dragon/packages > /dev/null
+set +xv
+
