@@ -17,7 +17,12 @@ send_package()
         echo -e "${PrefixColor}[Dragon]${BoldColor} $1 not found${NC}"
         drexit
     fi
-    python3 $DRAGONBUILD/internal/tools/device.py test
+
+    connectionCheck="$(python3 $DRAGONBUILD/internal/tools/device.py test)"
+    if [[ $connectionCheck =~ "Failed" ]]; then
+        echo "$connectionCheck"
+        exit 1
+    fi
 
     eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
 
