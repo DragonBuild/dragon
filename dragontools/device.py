@@ -61,6 +61,7 @@ class Device(object):
         return system(f'ssh -o PasswordAuthentication=no -p {self.port} root@{self.host} 2>/dev/null "true"') == 0
 
     def run_cmd(self, cmd, quiet=False):
+        if cmd == "none": return
         if not quiet:
             if cmd == '':
                 dbstate(f'No command entered.')
