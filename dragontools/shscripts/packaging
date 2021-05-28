@@ -27,7 +27,7 @@ send_package()
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
     python3 $DRAGONBUILD/internal/tools/device.py qr mkdir -p /var/mobile/dragon/packages
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr dpkg -i /var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr rm -rf /var/mobile/dragon/${OUTPUT}
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr dpkg -i /var/mobile/dragon/${OUTPUT} && rm -rf /var/mobile/dragon/${OUTPUT}
 }
 
 create_package()
