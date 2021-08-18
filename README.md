@@ -7,6 +7,8 @@
   </strong>
 </p>
 
+# Development on this project is currently on a hiatus.
+
 # Installing dragon
 
 In your terminal:
