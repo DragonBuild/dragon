@@ -25,20 +25,16 @@ Some guidelines for work on this file moving forward:
 
 '''
 
-import os
-from pprint import pprint
-import sys
-import termios
 import traceback
-import tty
 import platform
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
+import yaml
 
-from variable_types import ProjectVars
-from util import *
-from buildgen.generator import BuildFileGenerator
+from .variable_types import ProjectVars
+from .util import *
+from DragonGen.buildgen.generator import BuildFileGenerator
 
 
 # Rules and defaults

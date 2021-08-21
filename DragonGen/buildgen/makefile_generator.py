@@ -1,7 +1,7 @@
 import re
 import textwrap
 
-from buildgen.writer import Writer
+from .writer import Writer
 
 
 class MakefileWriter(Writer):

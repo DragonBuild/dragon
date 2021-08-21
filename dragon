@@ -3,6 +3,7 @@ export DRAGONVERS="1.4"
 
 # Defauld dragondir is ~/.dragon
 if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+DRAGONBUILD=$DRAGONDIR
 
 # Run setup wizard if dragondir is empty or nonexistant
 if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
@@ -102,14 +103,14 @@ while [ "$1" != "" ]; do
         u | update )            update
                                 drexit
                                 ;;
-        rs | respring )         python3 $DRAGONBUILD/internal/tools/device.py run killall -9 SpringBoard
+        rs | respring )         python3 -m dragontools.device run killall -9 SpringBoard
                                 drexit
                                 ;;
         dr | devicerun )        shift
-                                python3 $DRAGONBUILD/internal/tools/device.py run $*
+                                python3 -m dragontools.device run $*
                                 drexit
                                 ;;
-        s | device)             python3 $DRAGONBUILD/internal/tools/device.py setup
+        s | device)             python3 -m dragontools.device setup
                                 ;;
         sr | rconf )            setupRemote
                                 ;;
@@ -209,7 +210,7 @@ if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
 
     INSTALL_CMD=$(yaml DragonMake "['icmd']" || echo "sbreload")
 
-    python3 $DRAGONBUILD/internal/tools/device.py run ${INSTALL_CMD} || drexit
+    python3 python3 -m dragontools.device run ${INSTALL_CMD} || drexit
 fi
 
 # --------
