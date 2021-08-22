@@ -95,7 +95,7 @@ class Device(object):
 class DeviceManager(object):
 
     def __init__(self):
-        with open(f'{os.environ["DRAGONBUILD"]}/internal/data/state.yml') as state:
+        with open(f'{os.environ["DRAGONBUILD"]}/internal/state.yml') as state:
             dragon_state = yaml.safe_load(state)
 
         self.dragon_state = dragon_state
@@ -107,7 +107,7 @@ class DeviceManager(object):
         self.current = self.devices[dragon_state['device']['current']]
 
     def savestate(self):
-        with open(f'{os.environ["DRAGONBUILD"]}/internal/data/state.yml', 'w') as state:
+        with open(f'{os.environ["DRAGONBUILD"]}/internal/state.yml', 'w') as state:
             yaml.dump(self.dragon_state, state)
     
     def add_device(self, device: Device):

@@ -7,11 +7,11 @@ setup(name='Dragon',
       author='kritanta',
       url='https://github.com/DragonBuild/dragon',
       requires=['pyyaml'],
-      packages=['dragongen', 'dragongen.buildgen', 'dragontools'],
+      packages=['dragongen', 'buildgen', 'dragontools'],
       package_dir={
           'dragongen': 'DragonGen/dragongen',
           'dragontools': 'dragontools',
-          'dragongen.buildgen': 'DragonGen/dragongen/buildgen',
+          'buildgen': 'DragonGen/buildgen',
       },
       package_data={
           'dragontools': ['shscripts/*', 'deployable/*'],

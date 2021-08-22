@@ -34,7 +34,7 @@ import yaml
 
 from .variable_types import ProjectVars
 from .util import *
-from DragonGen.buildgen.generator import BuildFileGenerator
+from buildgen.generator import BuildFileGenerator
 
 
 # Rules and defaults
