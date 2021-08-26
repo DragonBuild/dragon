@@ -5,18 +5,24 @@
   <strong>
   dragon is an expansible build system built for speed and ease of use.
   </strong>
+  <br>
   <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
     <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
   </a>
 </p>
-
-# Development on this project is currently on a hiatus.
 
 # Installing dragon
 
 In your terminal:
 
 `pip3 install dragon`
+  
+## Updating
+  
+```sh
+rm -rf ~/.dragon
+pip3 install --force-reinstall dragon
+```
 
 ---
 
