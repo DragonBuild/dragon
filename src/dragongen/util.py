@@ -63,7 +63,7 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
     noprefix = False
     try:
         while 1:
-            line = file.readline()
+            line = file.readline().split('#')[0]
             if not line:
                 break
             if not arc and '-fobjc-arc' in line:
