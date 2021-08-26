@@ -6,6 +6,7 @@
   dragon is an expansible build system built for speed and ease of use.
   </strong>
   <br>
+  <br>
   <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
     <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
   </a>
