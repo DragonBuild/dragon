@@ -29,7 +29,7 @@ def setup_wizard():
 
     columns = int(os.popen('stty size', 'r').read().split()[1])
 
-    log('dragon setup utility')
+    log('installing dragon v1.4')
     log('=========================', end='\n\n')
     dragondir = os.path.expandvars('$HOME/.dragon/')
     try:
@@ -79,3 +79,4 @@ def get_supporting(api: str, destination: str):
 
 if __name__ == '__main__':
     setup_wizard()
+    os.system('dragon v')

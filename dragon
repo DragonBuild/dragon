@@ -7,6 +7,7 @@ if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
 # Run setup wizard if dragondir is empty or nonexistant
 if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
     python3 -m dragontools.wizard
+    exit 0
 fi
 
 
@@ -137,7 +138,7 @@ while [ "$1" != "" ]; do
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                cat $DRAGONDIR/internal/branding/banner.txt
+        v | -v )                cat $DRAGONDIR/internal/banner.txt
                                 ;;
         * )                     usage
                                 drexit 1
