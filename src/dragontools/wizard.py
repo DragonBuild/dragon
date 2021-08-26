@@ -29,7 +29,7 @@ def setup_wizard():
 
     columns = int(os.popen('stty size', 'r').read().split()[1])
 
-    log('installing dragon v1.4')
+    log('installing dragon v1.5')
     log('=========================', end='\n\n')
     dragondir = os.path.expandvars('$HOME/.dragon/')
     try:
