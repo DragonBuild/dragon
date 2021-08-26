@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PATH="$PATH:/usr/local/bin/:$DRAGONDIR/bin/"
+
+export DRAGONVERS="1.3"

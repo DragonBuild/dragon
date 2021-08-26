@@ -25,19 +25,15 @@ Some guidelines for work on this file moving forward:
 
 '''
 
-import os
-from pprint import pprint
-import sys
-import termios
 import traceback
-import tty
 import platform
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
+import yaml
 
-from variable_types import ProjectVars
-from util import *
+from .variable_types import ProjectVars
+from .util import *
 from buildgen.generator import BuildFileGenerator
 
 
@@ -497,9 +493,8 @@ def get_default_section_dict(*key_path: str) -> dict:
     '''
 
     global _LAZY_DEFAULTS_DOT_YML
-    if _LAZY_DEFAULTS_DOT_YML is None:
-        with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
-            _LAZY_DEFAULTS_DOT_YML = yaml.safe_load(f)
+    with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
+        _LAZY_DEFAULTS_DOT_YML = yaml.safe_load(f)
 
     key_path = list(key_path)
     ret = _LAZY_DEFAULTS_DOT_YML.copy()
@@ -542,6 +537,9 @@ def main():
         'icmd': 'install_command',
         'ip': 'DRBIP',
         'postinst': None,
+        'preinst': None,
+        'postrm': None,
+        'prerm': None,
         'port': 'DRBPORT',
         'id': None,
         'mtn': None,

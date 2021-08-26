@@ -14,7 +14,7 @@ dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 # This script will get called w/ 
 # argc=3  argv[0]                          argv[1]    argv[2]
-# python3 $DRAGONBUILD/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
+# python3 $DRAGONDIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
 def main():
     dbstate("Pulling 'control' values from DragonMake")
 

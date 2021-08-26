@@ -1,10 +1,13 @@
 <p align="center" >
-<img src="branding/dragon.svg" alt="Logo" width=200px> 
+<img src=".github/branding/dragon.svg" alt="Logo" width=200px> 
 </p>
 <p align="center">
   <strong>
   dragon is an expansible build system built for speed and ease of use.
   </strong>
+  <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
+    <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
+  </a>
 </p>
 
 # Development on this project is currently on a hiatus.

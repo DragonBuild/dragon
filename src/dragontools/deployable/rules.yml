@@ -6,7 +6,7 @@ logos:
 prefs:
   name: DragonPrefs
   desc: Building DragonPrefs
-  cmd: python3 $$DRAGONBUILD/DragonGen/dragonprefs.py $in $out
+  cmd: python3 $$DRAGONDIR/DragonGen/dragonprefs.py $in $out
 swiftarmv6:
   name: Swift armv6
   cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv6-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out

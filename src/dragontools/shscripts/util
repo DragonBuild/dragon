@@ -37,20 +37,20 @@ setupRemote()
     # remote.py | remote.sh
     echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
     read IPA
-    echo "export IPA=\"$IPA\"" > $DRAGONBUILD/state/remoteip
+    echo "export IPA=\"$IPA\"" > $DRAGONDIR/state/remoteip
     echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
     read USERN
     if [ -z "$USERN" ]; then
         USERN="root"
     fi
-    echo "export USERN=\"$USERN\"" >> $DRAGONBUILD/state/remoteip
+    echo "export USERN=\"$USERN\"" >> $DRAGONDIR/state/remoteip
 }
 
 update()
 {
     # update.sh
     x=$PWD
-    cd $DRAGONBUILD || drexit
+    cd $DRAGONDIR || drexit
     git pull
     git submodule update --init --recursive
     cd $x || drexit

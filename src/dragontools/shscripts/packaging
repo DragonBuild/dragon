@@ -17,28 +17,29 @@ send_package()
         echo -e "${PrefixColor}[Dragon]${BoldColor} $1 not found${NC}"
         drexit
     fi
-    python3 $DRAGONBUILD/internal/tools/device.py test
+    python3 -m dragontools.device test
 
-    eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
+    eval $(python3 -m dragontools.device get)
 
     if [ -z "$DRBIP" ]; then
-        python3 $DRAGONBUILD/internal/tools/device.py setup
+        python3 -m dragontools.device setup
     fi
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-    python3 $DRAGONBUILD/internal/tools/device.py qr mkdir -p /var/mobile/dragon/packages
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr dpkg -i /var/mobile/dragon/${OUTPUT} || drexit && python3 $DRAGONBUILD/internal/tools/device.py qr rm -rf /var/mobile/dragon/${OUTPUT}
+    python3 -m dragontools.device qr mkdir -p /var/mobile/dragon/packages
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragontools.device qr dpkg -i /var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragontools.device qr rm -rf /var/mobile/dragon/
 }
 
 create_package()
 {
     echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
     mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-    cp control .dragon/_/DEBIAN/control 2>/dev/null || python3 $DRAGONBUILD/internal/tools/control.py DragonMake ./.dragon/_/DEBIAN/control 
+    cp control .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragontools.control DragonMake ./.dragon/_/DEBIAN/control 
     du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
     find . -name '.DS_Store' -type f -delete
+    find . -name '.dragonbuilding' -delete
     echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
     dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
     GENOUTPUT="$(ls .dragon/packages)"

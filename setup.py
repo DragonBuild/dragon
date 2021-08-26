@@ -1,17 +1,17 @@
 from setuptools import setup
 
-setup(name='Dragon',
-      version='1.4',
+setup(name='dragon',
+      version='1.5',
       description='A powerful toolkit targeting Apple development research, '
       'and packaging.',
       author='kritanta',
       url='https://github.com/DragonBuild/dragon',
       requires=['pyyaml'],
-      packages=['dragongen', 'dragongen.buildgen', 'dragontools'],
+      packages=['dragongen', 'buildgen', 'dragontools'],
       package_dir={
-          'dragongen': 'DragonGen/dragongen',
-          'dragontools': 'dragontools',
-          'dragongen.buildgen': 'DragonGen/dragongen/buildgen',
+          'dragongen': 'src/dragongen',
+          'dragontools': 'src/dragontools',
+          'buildgen': 'src/buildgen',
       },
       package_data={
           'dragontools': ['shscripts/*', 'deployable/*'],

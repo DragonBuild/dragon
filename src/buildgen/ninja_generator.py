@@ -12,7 +12,7 @@ use Python.
 
 import re
 import textwrap
-from buildgen.writer import Writer
+from .writer import Writer
 
 
 def escape_path(word):
