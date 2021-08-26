@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-source $DRAGONBUILD/internal/data/dragoncolors
+source $DRAGONDIR/internal/data/dragoncolors
 
 set -e
-source $DRAGONBUILD/state/remoteip
+source $DRAGONDIR/state/remoteip
 LDIR=$PWD
 RDIR=$(python3 -c 'import os;print("~/.dragonbuild/server/" + os.getenv("PWD")')
 RPAR="$(dirname "$RDIR")"

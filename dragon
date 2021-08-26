@@ -3,7 +3,6 @@ export DRAGONVERS="1.4"
 
 # Defauld dragondir is ~/.dragon
 if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
-export DRAGONBUILD=$DRAGONDIR
 
 # Run setup wizard if dragondir is empty or nonexistant
 if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
@@ -56,7 +55,7 @@ while [ "$1" != "" ]; do
                                 ;;
         g | gen | generate)     gen=1
                                 ;;
-        n | nic | new)          python3 $DRAGONBUILD/bin/nic.py
+        n | nic | new)          python3 $DRAGONDIR/bin/nic.py
                                 drexit
                                 ;;
         exp | export)           gen=1
@@ -124,7 +123,7 @@ while [ "$1" != "" ]; do
                                 drexit
                                 ;;
         r | remote )            shift
-                                bash $DRAGONBUILD/internal/tools/remote $*
+                                bash $DRAGONDIR/internal/tools/remote $*
                                 drexit
                                 ;;
         relink )                rm .dragon/sign
@@ -138,7 +137,7 @@ while [ "$1" != "" ]; do
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                cat $DRAGONBUILD/internal/branding/banner.txt
+        v | -v )                cat $DRAGONDIR/internal/branding/banner.txt
                                 ;;
         * )                     usage
                                 drexit 1
@@ -226,7 +225,7 @@ fi
 # On-device debugging
 # --------
 if [ $debug == 1 ] ; then
-    eval $(python3 $DRAGONBUILD/internal/tools/device.py get)
+    eval $(python3 $DRAGONDIR/internal/tools/device.py get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
     ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"

@@ -8,7 +8,7 @@ Defaults:
   objdir: $proj_build_dir/obj
   signdir: $proj_build_dir/sign
   bridging-header: $name-Bridging-Header.h
-  dragondir: $$DRAGONBUILD
+  dragondir: $$DRAGONDIR
   toolchain-prefix: arm64-apple-darwin14-
   tool-prefix: ''
   cc: clang
@@ -42,7 +42,7 @@ Defaults:
     - '.'
   additional_lib_dirs:
   additional_fw_dirs:
-  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONBUILD/headers/ -I$pwd'
+  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONDIR/headers/ -I$pwd'
   stagedir: '_'
   modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
@@ -179,7 +179,7 @@ Types:
         - Foundation
       stage2:
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
-        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONBUILD/frameworks/$name.framework'
+        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONDIR/frameworks/$name.framework'
         - 'if [ ! -z "$public_headers" ]; then
            mkdir -p $proj_build_dir/$stagedir/$location/Headers;
            cp $public_headers $proj_build_dir/$stagedir/$location/Headers;

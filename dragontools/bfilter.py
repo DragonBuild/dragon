@@ -14,7 +14,7 @@ dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 # This script will get called w/ 
 # argc=3  argv[0]                          argv[1]     argv[2]    
-# python3 $DRAGONBUILD/internal/bfilter.py DragonMake  projectName
+# python3 $DRAGONDIR/internal/bfilter.py DragonMake  projectName
 
 def main():
     if os.path.exists(sys.argv[1]):
