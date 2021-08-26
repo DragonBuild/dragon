@@ -27,8 +27,6 @@ def setup_wizard():
     if os.environ.get('foo'):
         exit(0)
 
-    columns = int(os.popen('stty size', 'r').read().split()[1])
-
     log('installing dragon v1.5')
     log('=========================', end='\n\n')
     dragondir = os.path.expandvars('$HOME/.dragon/')
