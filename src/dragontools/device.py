@@ -61,6 +61,7 @@ class Device(object):
         return system(f'ssh -o PasswordAuthentication=no -p {self.port} root@{self.host} 2>/dev/null "true"') == 0
 
     def run_cmd(self, cmd, quiet=False):
+        if cmd == "none": return
         if not quiet:
             if cmd == '':
                 dbstate(f'No command entered.')
@@ -95,7 +96,7 @@ class Device(object):
 class DeviceManager(object):
 
     def __init__(self):
-        with open(f'{os.environ["DRAGONBUILD"]}/internal/state.yml') as state:
+        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml') as state:
             dragon_state = yaml.safe_load(state)
 
         self.dragon_state = dragon_state
@@ -107,7 +108,7 @@ class DeviceManager(object):
         self.current = self.devices[dragon_state['device']['current']]
 
     def savestate(self):
-        with open(f'{os.environ["DRAGONBUILD"]}/internal/state.yml', 'w') as state:
+        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml', 'w') as state:
             yaml.dump(self.dragon_state, state)
     
     def add_device(self, device: Device):
@@ -175,6 +176,7 @@ def main():
             exit(0)
         else:
             dberror('Connection Failed')
+            dberror('Error connecting to device, make sure SSH is functioning properly')
             exit(1)
 
 
