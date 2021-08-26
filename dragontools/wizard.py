@@ -29,16 +29,9 @@ def setup_wizard():
 
     columns = int(os.popen('stty size', 'r').read().split()[1])
 
-    log('DragonBuild setup utility'.center(columns))
-    log('========================='.center(columns), end='\n\n')
-    log('For basic users, press return for default options')
-
-    dragondir = os.path.expandvars(
-        get_input('Dragonbuild directory', '$HOME/.dragon/')
-    )
-    if dragondir != os.path.expandvars('$HOME/.dragon/'):
-        log('Be sure to set $DRAGONDIR in your shell profile!')
-
+    log('dragon setup utility')
+    log('=========================', end='\n\n')
+    dragondir = os.path.expandvars('$HOME/.dragon/')
     try:
         os.mkdir(os.path.expandvars(dragondir))
     except FileExistsError:
