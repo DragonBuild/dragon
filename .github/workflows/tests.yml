@@ -20,7 +20,11 @@ on:
       - 'dev/**'
 
 jobs:
-  run-tests:
+  tests:
+    strategy:
+      matrix:
+        project-link: 
+          - https://github.com/KritantaDev/Chapters
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -38,6 +42,10 @@ jobs:
     - name: Install DragonBuild
       run: |
         dragon
-    - name: Run Tests
-      run: | 
-        dragon test
+    - name: Cloning Project
+      run: |
+        git clone ${{ matrix.project-link }}
+    - name: Building Project
+      run: |
+        cd $(dirname $(find . -name DragonMake | xargs))
+        dragon b
