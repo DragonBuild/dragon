@@ -10,3 +10,4 @@ state/nosshkey
 state/phoneip
 state/remoteip
 testing/*
+dist/
