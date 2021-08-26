@@ -28,9 +28,9 @@ build()
         [[ -f .dragon/.clean ]] || clean_dir $DNAME
     fi
     
-    mkdir -p .dragon/_/.dragonbuilding
+    mkdir -p .dragon/_/.dragonbuilding 2>/dev/null
 
-    mkdir -p .dragon/modules
+    mkdir -p .dragon/modules 2>/dev/null
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${DNAME}${NC}"
 
@@ -49,7 +49,7 @@ build()
     if [ $1 == "." ]; then 
         true;
     else
-        cp -R .dragon/_ "$projroot"/.dragon
+        cp -R .dragon/_ "$projroot"/.dragon 2>/dev/null
     fi
 
     cd "$projroot" || drexit

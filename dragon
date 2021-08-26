@@ -155,8 +155,8 @@ cwd=$(basename $PWD)
 
 if [ $gen == 1 ]; then
     rm -rf .dragon/ninja/build.ninja
-    mkdir -p .dragon/ninja > /dev/null
-    mkdir -p .dragon/modules > /dev/null
+    mkdir -p .dragon/ninja 2>/dev/null
+    mkdir -p .dragon/modules 2>/dev/null
 
     generate
 
