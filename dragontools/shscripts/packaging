@@ -39,6 +39,7 @@ create_package()
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages
     find . -name '.DS_Store' -type f -delete
+    find . -name '.dragonbuilding' -delete
     echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
     dpkg-deb --build -Zgzip -z9 .dragon/_ .dragon/packages/
     GENOUTPUT="$(ls .dragon/packages)"

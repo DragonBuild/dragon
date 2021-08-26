@@ -4,7 +4,11 @@ clean_dir()
 {
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
     # find . -name 'build.ninja' -delete
-    rm -rf .dragon/
+    [[ -f .dragon/DragonMake ]] && cp .dragon/DragonMake .DragonMake
+    rm -rf .dragon 
+    [[ -f .DragonMake ]] && mkdir .dragon && mv .DragonMake .dragon/DragonMake
+    mkdir -p .dragon 
+    touch .dragon/.clean
 }
 
 build()
@@ -21,7 +25,7 @@ build()
     fi
 
     if [ $clean == 1 ]; then 
-        clean_dir $DNAME
+        [[ -f .dragon/.clean ]] || clean_dir $DNAME
     fi
     
     mkdir -p .dragon/_/.dragonbuilding

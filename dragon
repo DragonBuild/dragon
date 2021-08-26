@@ -182,9 +182,18 @@ if [ $build == 1 ]; then
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
+    mkdir -p .dragon 
+    cp DragonMake .dragon/DragonMake
+
     for i in ${subsb[@]}; do
+        # Copy the DragonMake into the subproject's build directory
+        # Primarily for bundle filter gen, right now.
+        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake
+
         build $i
     done
+
+    find . -name '.clean' -type f -delete
 
     if [ $DRAGON_DPKG == 1 ]; then
         create_package

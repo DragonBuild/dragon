@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='Dragon',
+setup(name='dragon',
       version='1.4',
       description='A powerful toolkit targeting Apple development research, '
       'and packaging.',

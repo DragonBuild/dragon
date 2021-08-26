@@ -128,11 +128,11 @@ Types:
       hooker-priority: libhooker
       lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000 -framework CydiaSubstrate'
-      frameworks:
+      frameworks:  
         - UIKit
         - Foundation
       stage2:
-        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
+        - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist || python3 -m dragontools.bfilter $proj_build_dir/DragonMake $name > $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
   prefs:
     required_states:
       - has_build_files

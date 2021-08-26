@@ -47,10 +47,14 @@ def setup_wizard():
     os.chdir(dragondir)
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
-        get_supporting(
-            f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',
-            repo
-        )
+        try:
+            get_supporting(
+                f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',
+                repo
+            )
+        except: 
+            log('Potentially ratelimited, attempting fallback by cloning repo (this adds some overhead)')
+            os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
 
     log('Deploying internal configuration')
     shutil.copytree(deployable_path(),
