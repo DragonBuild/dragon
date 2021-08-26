@@ -9,9 +9,9 @@ setup(name='dragon',
       requires=['pyyaml'],
       packages=['dragongen', 'buildgen', 'dragontools'],
       package_dir={
-          'dragongen': 'DragonGen/dragongen',
-          'dragontools': 'dragontools',
-          'buildgen': 'DragonGen/buildgen',
+          'dragongen': 'src/dragongen',
+          'dragontools': 'src/dragontools',
+          'buildgen': 'src/buildgen',
       },
       package_data={
           'dragontools': ['shscripts/*', 'deployable/*'],
