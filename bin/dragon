@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export DRAGONVERS="1.6.0"
+export DRAGONVERS="1.5.1"
 
 # Defauld dragondir is ~/.dragon
 if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
@@ -12,6 +12,8 @@ fi
 
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
+
+source $TOOLPATH/prerun_checks
 
 # Load in colors and basic functions
 source $TOOLPATH/util
