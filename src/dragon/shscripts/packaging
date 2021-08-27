@@ -18,28 +18,28 @@ send_package()
         drexit
     fi
 
-    connectionCheck="$(python3 -m dragontools.device test)"
+    connectionCheck="$(python3 -m dragon.device test)"
     if [[ $connectionCheck =~ "Failed" ]]; then
         echo "$connectionCheck"
         exit 1
     fi
 
-    eval $(python3 -m dragontools.device get)
+    eval $(python3 -m dragon.device get)
 
     if [ -z "$DRBIP" ]; then
-        python3 -m dragontools.device setup
+        python3 -m dragon.device setup
     fi
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-    python3 -m dragontools.device qr mkdir -p /var/mobile/dragon/packages
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragontools.device qr dpkg -i /var/mobile/dragon/${OUTPUT} && rm -rf /var/mobile/dragon/
+    python3 -m dragon.device qr mkdir -p /var/mobile/dragon/packages
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragon.device qr dpkg -i /var/mobile/dragon/${OUTPUT} && rm -rf /var/mobile/dragon/
 }
 
 create_package()
 {
     echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
     mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragontools.control DragonMake ./.dragon/_/DEBIAN/control 
+    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./.dragon/_/DEBIAN/control 
     du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages

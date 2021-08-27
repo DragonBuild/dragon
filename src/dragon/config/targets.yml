@@ -1,0 +1,36 @@
+Targets:
+  sim:
+    all:
+      targetos: iphonesimulator
+      triple: MACHINE
+      arc: yes
+      fw_dirs:                                                         
+        - /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk                                                                                  
+        - $dragondir/frameworks 
+      sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
+      archs:
+        - MACHINE
+  ios:
+    all:
+      targetos: iphoneos
+      targetvers: 10.0
+      triple: arm64-apple-ios$targetvers
+      targetprefix: -miphoneos-version-min=
+      arc: yes
+      sysroot: $dragondir/sdks/iPhoneOS.sdk
+      archs:
+        - armv7
+        - arm64
+        - arm64e
+  watchos:
+    all:
+      targetos: watchos
+      targetvers: 5.0
+      arc: yes
+      sysroot: $dragondir/sdks/WatchOS.sdk
+      archs: arm64_32
+  host:
+    all:
+      triple: MACHINE
+      archs:
+        - MACHINE

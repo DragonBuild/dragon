@@ -6,7 +6,7 @@ import sys
 import tarfile
 
 from urllib import request
-from dragontools.util import deployable_path
+from .util import deployable_path
 
 
 dragondir = ''
@@ -27,7 +27,7 @@ def setup_wizard():
     if os.environ.get('foo'):
         exit(0)
 
-    log('installing dragon v1.5.1')
+    log('installing dragon v1.6.0')
     log('=========================', end='\n\n')
     dragondir = os.path.expandvars('$HOME/.dragon/')
     try:

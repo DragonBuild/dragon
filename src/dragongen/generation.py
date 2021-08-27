@@ -495,6 +495,10 @@ def get_default_section_dict(*key_path: str) -> dict:
     global _LAZY_DEFAULTS_DOT_YML
     with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
         _LAZY_DEFAULTS_DOT_YML = yaml.safe_load(f)
+    with open(f'{os.environ["DRAGONDIR"]}/internal/targets.yml') as f:
+        _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
+    with open(f'{os.environ["DRAGONDIR"]}/internal/types.yml') as f:
+        _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
 
     key_path = list(key_path)
     ret = _LAZY_DEFAULTS_DOT_YML.copy()

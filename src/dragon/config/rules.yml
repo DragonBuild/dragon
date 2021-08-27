@@ -228,7 +228,7 @@ plist:
 debug:
   name: DsymUtil
   desc: Generating Debug Symbols for $name
-  cmd: $dsym \"$in\" 2&> /dev/null; cp $in $out
+  cmd: cp $in $out
 sign:
   name: $codesign
   desc: Signing $name

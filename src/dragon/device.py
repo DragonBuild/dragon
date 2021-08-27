@@ -16,13 +16,7 @@ import os, sys, yaml
 import subprocess
 import socket
 
-colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
-"\033[0;37m","\033[0m"],["\033[1;31m","\033[1;32m","\033[1;33m","\033[1;34m",
-"\033[1;36m","\033[1;37m","\033[0m"]]
-
-def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
-    print("%s[%s]%s %s%s%s" % (
-        colors[1][col], tool, colors[bold][textcol], ">>> " if pusher else "", msg, colors[0][6]), file=sys.stdout)
+from .util import dprintline
 
 dbstate = lambda msg: dprintline(1, "Device", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "Device", 5, 0, 0, msg)
