@@ -142,6 +142,8 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
             f'$({module_type_naming}_NAME)_EXTRA_FRAMEWORKS') or ''
         module_libraries = variables.get(module_name + '_LIBRARIES') or variables.get(
             f'$({module_type_naming}_NAME)_LIBRARIES') or ''
+        module_install_location = variables.get(module_name + '_INSTALL_PATH') or variables.get(
+            f'$({module_type_naming}_NAME)_INSTALL_PATH') or ''
 
         files = []
         if module_files:
@@ -185,8 +187,11 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
             module['cxxflags'] = module_cxxflags
         if module_ldflags:
             module['ldflags'] = module_ldflags
+        if module_install_location != '':
+            module['install_location'] = module_install_location
         if stage != []:
             module['stage'] = stage
+        
         module['arc'] = arc
         if not root:
             return module
