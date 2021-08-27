@@ -225,6 +225,10 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
         project['all'] = {
             'archs': variables['export ARCHS'].split(' ')
         }
+    if 'ARCHS' in variables:
+        project['all'] = {
+            'archs': variables['ARCHS'].split(' ')
+        }
 
     if os.environ['DGEN_DEBUG']:
         print("\n\n", file=sys.stderr)
