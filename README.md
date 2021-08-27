@@ -81,4 +81,4 @@ As the project continues to evolve these will likely be seperated so dragon isn'
 
 # Helpful links
 
-[sbinger's arm64e toolchain](https://github.com/sbingner/llvm-project/releases/tag/v10.0.0-1)
+[sbingner's arm64e toolchain](https://github.com/sbingner/llvm-project/releases/latest)
