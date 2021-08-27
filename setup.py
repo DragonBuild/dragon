@@ -5,8 +5,8 @@ setup(name='dragon',
       description='A powerful toolkit targeting Apple development research, '
       'and packaging.',
       author='kritanta',
-      url='https://github.com/DragonBuild/dragon',
-      requires=['pyyaml'],
+      url='https://dragon.krit.me/',
+      install_requires=['pyyaml', 'ruyaml'],
       packages=['dragon', 'dragongen', 'buildgen'],
       package_dir={
           'dragon': 'src/dragon',
