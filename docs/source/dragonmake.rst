@@ -67,6 +67,12 @@ If your project already has a `control` file you don't need to worry about these
      - (Optional) Comma separated list of bundle ids this package provides
 
 
+Debian Package Script Variables
+=====================
+
+Lists of commands can be specified with `preinst:`, `postinst:`, `prerm:` and/or `postrm:` to create packaging scripts included in the binary.
+
+
 Modules
 *********************
 
@@ -194,4 +200,12 @@ None of these are required by default, but you may need some of them for various
    * - cxx_files
      - List
      - List of files to be compiled STRICTLY as C++ Files
+
+
+Setting Module Defaults
+=====================
+
+A special module can be specified with the name `all:`; its variables will be set as the "default" value for all Modules in the project.
+
+If a Module specifies a different value than `all:`, it'll override the one declared in `all:`.
 
