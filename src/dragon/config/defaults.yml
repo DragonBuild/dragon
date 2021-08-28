@@ -9,7 +9,7 @@ Defaults:
   signdir: $proj_build_dir/sign
   bridging-header: $name-Bridging-Header.h
   dragondir: $$DRAGONDIR
-  toolchain-prefix: arm64-apple-darwin14-
+  toolchain-prefix: ''
   tool-prefix: ''
   cc: clang
   cxx: clang++
