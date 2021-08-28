@@ -3,6 +3,8 @@ The DragonMake Format
 
 Intead of splitting up build instructions among a ton of 'Makefile's, dragon build variables are all declared in a single `DragonMake` file at the root of the project.
 
+DragonMake files use YAML syntax.
+
 The Project 
 *********************
 
@@ -34,7 +36,6 @@ Variables
 If your project already has a `control` file you don't need to worry about these. 
 
 .. list-table::
-
    :widths: 5 1 10
 
    * - Variable
