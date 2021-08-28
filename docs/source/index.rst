@@ -8,3 +8,5 @@ dragon
    :caption: Contents:
 
    quickstart
+   dragonmake
+   theos 
