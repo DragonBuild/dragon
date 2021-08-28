@@ -10,8 +10,23 @@ The Project
 
 The full `DragonMake` represents the "Project", which contains one or more "Modules" (tweaks, prefs, etc).
 
-.. image:: images/dragonmake-package.jpg
-   :width: 600
+.. code-block:: YAML 
+   
+   name: DemoTweak
+   id: me.krit.dragondemo
+   depends: mobilesubstrate
+   architecture: iphoneos-arm
+   description: Demo Tweak
+   author: krit
+   section: Tweaks 
+
+   DemoTweak:
+     type: tweak
+     filter:
+       executables:
+         - SpringBoard
+     files:
+       - DemoTweak.x
 
 
 Variables

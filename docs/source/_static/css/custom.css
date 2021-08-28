@@ -1,0 +1,5 @@
+.related-information, .related-information a {
+    opacity: 0.4;
+    color: white !important;
+    text-decoration: none !important;
+}
