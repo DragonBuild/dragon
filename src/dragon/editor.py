@@ -11,8 +11,8 @@ dberror = lambda msg: dprintline(0, "Project Editor", 5, 1, 0, msg)
 
 
 def get_input(prompt, default):
-    dbstate(f'{prompt} ({default})\n>>')
-    ret = input()
+    dbstate(f'{prompt} ({default})')
+    ret = input('>> ')
     return ret if ret.strip() else default
 
 def get_from_selector(prompt, values, default):
