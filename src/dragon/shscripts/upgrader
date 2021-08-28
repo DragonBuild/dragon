@@ -8,7 +8,7 @@ python3 -m pip install --upgrade dragon
 
 DPOSTVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-if [ "$str1" == "$str2" ]; then
+if [ "$DPOSTVERS" == "$DPREVERS" ]; then
     echo "latest version of dragon already installed"
 else
     echo "Updated dragon. Updating resources..."
