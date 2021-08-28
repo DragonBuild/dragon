@@ -10,6 +10,12 @@
   <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
     <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
   </a>
+  <a href="https://dragon.rtfd.io">
+    <image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
+  </a>
+  <a href="https://pypi.org/project/dragon/">
+    <image src="https://pypip.in/v/dragon/badge.svg">
+  </a>
 </p>
 
 # Installing dragon
