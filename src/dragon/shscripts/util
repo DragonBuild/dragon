@@ -59,10 +59,11 @@ update()
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v1.6.1 ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
+    echo "  n|new|nic|edit|create - Open the project editor (For creating new projects/adding to existing ones)
     echo "  do - Build and Install"
     echo "  c|clean - recompile, link, and package your project"
     echo "  b|build|make - compile, link, and package your project"
