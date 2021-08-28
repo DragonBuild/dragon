@@ -19,7 +19,6 @@ Targets:
       arc: yes
       sysroot: $dragondir/sdks/iPhoneOS.sdk
       archs:
-        - armv7
         - arm64
         - arm64e
   watchos:
