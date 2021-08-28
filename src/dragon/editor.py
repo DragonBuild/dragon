@@ -37,6 +37,7 @@ class Project:
         self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
         self.variables['depends'] = 'mobilesubstrate'
         self.variables['architecture'] = 'iphoneos-arm'
+        self.variables['version'] = get_input('Version', '0.0.1')
         self.variables['description'] = get_input('Description', 'A cool MobileSubstrate Tweak')
         self.variables['author'] = get_input('Author', self.current_username)
         self.variables['section'] = 'Tweaks'
