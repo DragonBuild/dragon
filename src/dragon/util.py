@@ -2,6 +2,10 @@
 import os.path as path
 
 
+def version() -> str:
+    return '1.6.0'
+
+
 def tool_path() -> str:
     return path.dirname(__file__) + '/shscripts/'
 

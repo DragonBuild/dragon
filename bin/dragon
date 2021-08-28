@@ -102,7 +102,7 @@ while [ "$1" != "" ]; do
         # Commands
         # --------
 
-        u | update )            update
+        u | update | upgrade )            source $TOOLPATH/upgrader
                                 drexit
                                 ;;
         rs | respring )         python3 -m dragon.device run killall -9 SpringBoard

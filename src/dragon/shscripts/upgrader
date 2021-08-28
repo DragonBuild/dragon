@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+
+DPREVERS=$(python3 -c 'from dragon.util import version; print(version())')
+
+python3 -m pip install --upgrade dragon
+
+DPOSTVERS=$(python3 -c 'from dragon.util import version; print(version())')
+
+if [ "$str1" == "$str2" ]; then
+    echo "latest version of dragon already installed"
+else
+    echo "Updated dragon. Updating resources..."
+    rm -rf $DRAGONDIR
+    python3 -m dragon.wizard
+fi
