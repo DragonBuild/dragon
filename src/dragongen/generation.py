@@ -167,6 +167,7 @@ class Generator(object):
             if 'Targets' in source and target in source['Targets']:
                 project_dict.update(source['Targets'][target]['all'])
 
+        project_dict.update(module_variables)
 
         # MACHINE checks
         for d,i in enumerate(project_dict['archs']):

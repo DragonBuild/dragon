@@ -29,6 +29,31 @@ def join_escaped_newlines(lines):
             joining = False
     return out_statements
 
+def join_indented_blocks(lines):
+    out_statements = []
+    joining = False
+    current_statement = ""
+    for line in lines:
+        if line.strip().endswith('::'):
+            joining = True 
+            current_statement+=line + "\n"
+            continue
+
+        if joining:
+            if line.startswith('\t') or line.startswith('    '):
+                current_statement += line + '\n'
+            else:
+                joining = False 
+                out_statements.append(current_statement)
+                current_statement = ""
+        else:
+            out_statements.append(line)
+    if current_statement != "":
+        out_statements.append(current_statement)
+    return out_statements
+        
+
+
 
 class MakefileVariableStatementType(Enum):
     DECLARATION = 0
@@ -54,8 +79,9 @@ class Makefile:
         self.includes = []
         self.variables = {}
         lines = [strip_comments(line) for line in file_contents.split('\n')]
-        self.statements = [line for line in join_escaped_newlines(lines) if line != '']
+        self.statements = [line for line in join_indented_blocks(join_escaped_newlines(lines)) if line != '']
         self.variable_statements = []
+        self.rules = {}
         
         for statement in self.statements:
             
@@ -64,6 +90,9 @@ class Makefile:
                 
             elif '=' in statement:
                 self.variable_statements.append(MakefileVariableStatement(statement))
+
+            elif '::\n' in statement:
+                self.rules[statement.split("::\n")[0]] = [i.strip() for i in statement.split('\n')[1:] if i.strip() != ""]
         
         self.variables = self._process_variable_statements()
                 
@@ -95,6 +124,8 @@ class TheosMakefile(Makefile):
         self.module_name = ""
         self.module = {}
         self.subprojects = []
+        
+        self.module['arc'] = False
         
         for included in self.includes:
             if 'tweak.mk' in included:
@@ -143,6 +174,22 @@ class TheosMakefile(Makefile):
                 files.append(i)
 
             self.module['files'] = files
+
+        if 'stage' in self.rules:
+            stage = self.rules['stage']
+            stage_processed = []
+            for command in stage:
+                command = command.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+                command = command.replace('$(THEOS)', '~/.dragon')
+                command = command.replace('$(ECHO_NOTHING)', '')
+                command = command.replace('$(ECHO_END)', '')
+                command = command.replace('$(', '$$(')
+                stage_processed.append(command)
+            self.module['stage'] = stage_processed
+        
+        if 'files' not in self.module:
+            if self.type == TheosMakefileType.BUNDLE:
+                self.module['type'] = 'resource-bundle'
         
         if self.has_subprojects:
             self.subprojects = self.variables['SUBPROJECTS'].split(' ')
