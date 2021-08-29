@@ -47,7 +47,11 @@ class ArgList(list):
         self.prefix = prefix
 
     def __str__(self):
-        return self.prefix + self.delim.join(str(s) for s in self)
+        if self.prefix + self.delim.join(str(s) for s in self) == "None":
+            return ""
+        if self.prefix + self.delim.join(str(s) for s in self):
+            return self.prefix + self.delim.join(str(s) for s in self)
+        return ""
 
 
 # Apparently this isn't used?

@@ -420,6 +420,7 @@ class Generator(object):
             Var('frameworks'),
             Var('libs'),
             ___,
+            Var('prefix'),
             Var('macros'),
             Var('arc'),
             Var('btarg'),
