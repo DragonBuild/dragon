@@ -1,13 +1,6 @@
 dragon
 =================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   quickstart
-   dragonmake
-   theos 
 
 "dragon" is a build system primarily targeting jailbroken iOS devices, capable of building tweaks, preferences, frameworks, apps, and anything else related to them.
 
@@ -24,7 +17,7 @@ Speed
 
 Theos is unfortunately (in its current state) burdened by being written as a complex network of Makefiles, each importing one-another 
 
-On systems with slow implementations of mac, the slowdown can be immense. 
+On systems with slow implementations of GNU Make, the slowdown can be immense. 
 
 dragon consists of a quick set of python scripts, and uses ninja for building. This can result in absurd speedups, especially with larger projects.
 
@@ -44,3 +37,11 @@ Ease of development
 
 Since dragon was written in 'python', a language written for programming, adding simple or complex features to it is far far easier.
 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   quickstart
+   dragonmake
+   theos 
