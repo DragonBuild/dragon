@@ -97,6 +97,18 @@ Debian Package Script Variables
 
 Lists of commands can be specified with `preinst:`, `postinst:`, `prerm:` and/or `postrm:` to create packaging scripts included in the binary.
 
+.. code-block:: YAML 
+   
+   name: DemoTweak
+   id: me.krit.dragondemo
+   depends: mobilesubstrate
+   architecture: iphoneos-arm
+   description: Demo Tweak
+   author: krit
+   section: Tweaks 
+   # This will run on the device after installation
+   postinst:
+     - echo "Hello from dragon!"
 
 Modules
 *********************
@@ -179,7 +191,7 @@ dragon supports the standard theos format, but allows specifying the values in t
      filter:
        executables:
          - SpringBoard
-         
+
      files:
        - DemoTweak.x
 

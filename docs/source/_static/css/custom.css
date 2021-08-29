@@ -3,3 +3,6 @@
     color: white !important;
     text-decoration: none !important;
 }
+.sidebar-drawer {
+    width: calc(41% - 26em);
+}
