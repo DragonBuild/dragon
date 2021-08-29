@@ -12,6 +12,5 @@ if [ "$DPOSTVERS" == "$DPREVERS" ]; then
     echo "latest version of dragon already installed"
 else
     echo "Updated dragon. Updating resources..."
-    rm -rf $DRAGONDIR
     python3 -m dragon.wizard
 fi

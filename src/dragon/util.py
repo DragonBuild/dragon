@@ -3,7 +3,7 @@ import os.path as path
 
 
 def version() -> str:
-    return '1.6.3'
+    return '1.6.4'
 
 
 def tool_path() -> str:
