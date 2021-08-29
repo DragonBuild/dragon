@@ -5,11 +5,6 @@ Intead of splitting up build instructions among a ton of 'Makefile's, dragon bui
 
 DragonMake files use YAML syntax.
 
-The Project 
-*********************
-
-The full `DragonMake` represents the "Project", which contains one or more "Modules" (tweaks, prefs, etc).
-
 .. code-block:: YAML 
    
    name: DemoTweak
@@ -28,6 +23,21 @@ The full `DragonMake` represents the "Project", which contains one or more "Modu
      files:
        - DemoTweak.x
 
+
+The Project 
+*********************
+
+The full `DragonMake` represents the "Project", which contains one or more "Modules" (tweaks, prefs, etc).
+
+.. code-block:: YAML 
+   
+   name: DemoTweak
+   id: me.krit.dragondemo
+   depends: mobilesubstrate
+   architecture: iphoneos-arm
+   description: Demo Tweak
+   author: krit
+   section: Tweaks 
 
 Variables
 =====================
@@ -95,8 +105,15 @@ Modules in the `DragonMake` represent individual components of your package.
 
 These include things like a Tweak, Preferences, etc.
 
-.. image:: images/dragonmake-module.jpg
-   :width: 600
+.. code-block:: YAML 
+
+   DemoTweak:
+     type: tweak
+     filter:
+       executables:
+         - SpringBoard
+     files:
+       - DemoTweak.x
 
 
 The "Important" Variables
@@ -154,15 +171,24 @@ Bundle filters tell MobileSubstrate what processes to inject your tweak into.
 
 dragon supports the standard theos format, but allows specifying the values in the `DragonMake`, if you want. 
 
-.. image:: images/dragonmake-filter.jpg
-   :width: 600
+.. code-block:: YAML 
+
+   DemoTweak:
+     type: tweak
+     # This bit 
+     filter:
+       executables:
+         - SpringBoard
+         
+     files:
+       - DemoTweak.x
 
 
 .. 
    todo: info about files: stuff
 
 
-Other Module variables
+Common Module variables
 =====================
 
 None of these are required by default, but you may need some of them for various projects.
@@ -200,21 +226,21 @@ None of these are required by default, but you may need some of them for various
    * - prefix
      - List
      - List of headers to be imported into ALL files at compilation time
-   * - logos_files
+   * - for
+     - String
+     - Sets the target OS to build for [ios, watchos, host(macos)]
+   * - arc
+     - Boolean
+     - Enable ARC (Default: YES)
+   * - sysroot
+     - String
+     - Specify Directory the SDK is located in
+   * - targetvers
+     - String
+     - Version of the OS to target
+   * - macros
      - List
-     - List of files to be compiled STRICTLY as logos files
-   * - c_files
-     - List
-     - List of files to be compiled STRICTLY as C files
-   * - objc_files
-     - List
-     - List of files to be compiled STRICTLY as Objective C files
-   * - objcxx_files
-     - List
-     - List of files to be compiled STRICTLY as Objective C++ Files
-   * - cxx_files
-     - List
-     - List of files to be compiled STRICTLY as C++ Files
+     - List of declaration flags (-D<value>) to add to the compilation flags
 
 
 Setting Module Defaults
