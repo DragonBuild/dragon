@@ -10,11 +10,25 @@
   <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
     <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
   </a>
-  <a href="https://dragon.rtfd.io">
+  <a href="https://dragon.krit.me">
     <image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
   </a>
   <a href="https://pypi.org/project/dragon/">
     <image src="https://pypip.in/v/dragon/badge.svg">
+  </a>
+  <br>
+  <br>
+  <a href="https://dragon.krit.me">
+    <strong>Documentation</strong>
+  </a>
+  <a href="https://dragon.krit.me/en/latest/quickstart.html">
+    <strong>QuickStart Guide</strong>
+  </a>
+  <a href="https://github.com/dragonbuild/example ">
+    <strong>Example Project</strong>
+  </a>
+  <a href="https://github.com/dragonbuild/build ">
+    <strong>Github Actions Integration</strong>
   </a>
 </p>
 
@@ -41,17 +55,6 @@ pip3 install --force-reinstall dragon
 
 ---
 
-## Documentation
-    
-https://dragon.rtfd.io/
-    
-## Quickstart Guide
-    
-https://dragon.readthedocs.io/en/latest/quickstart.html
-    
-## Example Project
-    
-https://github.com/dragonbuild/example 
     
 # Helpful links
 
