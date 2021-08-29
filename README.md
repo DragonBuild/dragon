@@ -22,7 +22,7 @@
     <strong>Documentation</strong>
   </a> | 
   <a href="https://dragon.krit.me/en/latest/quickstart.html">
-    <strong>QuickStart Guide</strong>
+    <strong>Getting Started</strong>
   </a> | 
   <a href="https://github.com/dragonbuild/example ">
     <strong>Example Project</strong>
