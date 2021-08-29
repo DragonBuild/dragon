@@ -167,6 +167,7 @@ class Generator(object):
             if 'Targets' in source and target in source['Targets']:
                 project_dict.update(source['Targets'][target]['all'])
 
+        project_dict.update(module_variables)
 
         # MACHINE checks
         for d,i in enumerate(project_dict['archs']):
@@ -582,7 +583,9 @@ def main():
 
 
     elif os.path.exists('Makefile'):
-        config = interpret_theos_makefile(open('Makefile'))
+        from .theos import TheosMakefileProcessor
+        config = TheosMakefileProcessor().project
+        # config = interpret_theos_makefile(open('Makefile'))
         exports['theos'] = 1
         dbstate("Generating build scripts from Theos Makefile")
         global _IS_THEOS_MAKEFILE_
