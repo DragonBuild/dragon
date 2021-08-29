@@ -1,11 +1,7 @@
 Quick-Start Guide
 ---------------------
 
-
-Installing dragonbuild::
-    
-    pip3 install dragon 
-    dragon
+After completing the setup, getting started with dragon is easy.
 
 
 Creating your first project::
@@ -31,3 +27,7 @@ Installing your project::
 You can do both of these at the same time; most commands in dragon can be combined::
     
     dragon b i
+
+Building and installing to the iOS Simulator::
+
+    dragon b i sim

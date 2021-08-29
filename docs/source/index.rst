@@ -42,6 +42,8 @@ Since dragon was written in 'python', a language written for programming, adding
    :maxdepth: 2
    :caption: Contents:
 
+   setup
+   commands
    quickstart
    dragonmake
    theos 
