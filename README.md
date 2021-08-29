@@ -20,13 +20,13 @@
   <br>
   <a href="https://dragon.krit.me">
     <strong>Documentation</strong>
-  </a>
+  </a> | 
   <a href="https://dragon.krit.me/en/latest/quickstart.html">
     <strong>QuickStart Guide</strong>
-  </a>
+  </a> | 
   <a href="https://github.com/dragonbuild/example ">
     <strong>Example Project</strong>
-  </a>
+  </a> | 
   <a href="https://github.com/dragonbuild/build ">
     <strong>Github Actions Integration</strong>
   </a>
