@@ -6,3 +6,7 @@
 .sidebar-drawer {
     width: calc(41% - 26em);
 }
+tbody tr:first-of-type td {
+    font-weight: 700;
+    padding-bottom: .5em;
+}
