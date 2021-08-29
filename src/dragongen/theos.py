@@ -62,16 +62,32 @@ class MakefileVariableStatementType(Enum):
 
 class MakefileVariableStatement:
     def __init__(self, declaration):
-        if declaration.startswith('export '):
-            declaration = declaration.split('export ', 1)[1]
-        tokens = declaration.split(' ')
-        self.name = tokens[0]
-        if tokens[1] == '=' or tokens[1] == ':=' or tokens[1] == '?=':
+
+        equal_split = declaration.split('=')
+
+        variable_sect = equal_split[0]
+        value_sect = equal_split[1]
+
+        mod = variable_sect[-1]
+        if mod in [':', '?', '+']:
+            if mod == '+':
+                self.type = MakefileVariableStatementType.APPEND
+            else:
+                self.type = MakefileVariableStatementType.DECLARATION
+            variable_sect = variable_sect[:-1]
+        else: 
             self.type = MakefileVariableStatementType.DECLARATION
-        elif tokens[1] == '+=':
-            self.type = MakefileVariableStatementType.APPEND
-        
-        self.value = ' '.join(tokens[2:])
+
+        self.exported = False
+        if variable_sect.startswith('export '):
+            self.exported = True 
+            self.name = variable_sect.split('export ', 1)[1]
+        else:
+            self.name = variable_sect
+
+        self.value = value_sect
+        self.name = self.name.strip()
+        self.value = self.value.strip()
         
 
 class Makefile:
