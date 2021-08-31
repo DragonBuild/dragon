@@ -3,11 +3,11 @@ import os.path
 import pprint
 import ruyaml as yaml
 
-from .util import dprintline
+from .util import dprintline, OutputColors, OutputWeight
 
-dbstate = lambda msg: dprintline(1, "Project Editor", 5, 1, 0, msg)
-dbwarn = lambda msg: dprintline(2, "Project Editor", 5, 0, 0, msg)
-dberror = lambda msg: dprintline(0, "Project Editor", 5, 1, 0, msg)
+dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Project Editor", text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
+dbwarn = lambda msg: dprintline(label_color=OutputColors.Yellow, tool_name="Project Editor", text_color=OutputColors.White, text_weight=OutputWeight.Normal, pusher=False, msg=msg)
+dberror = lambda msg: dprintline(label_color=OutputColors.Red, tool_name="Project Editor", text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
 
 
 def get_input(prompt, default):

@@ -16,11 +16,11 @@ import os, sys, yaml
 import subprocess
 import socket
 
-from .util import dprintline
+from .util import dprintline, OutputColors, OutputWeight
 
-dbstate = lambda msg: dprintline(1, "Device", 5, 1, 0, msg)
-dbwarn = lambda msg: dprintline(2, "Device", 5, 0, 0, msg)
-dberror = lambda msg: dprintline(0, "Device", 5, 1, 0, msg)
+dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Device", text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
+dbwarn = lambda msg: dprintline(label_color=OutputColors.Yellow, tool_name="Device", text_color=OutputColors.White, text_weight=OutputWeight.Normal, pusher=False, msg=msg)
+dberror = lambda msg: dprintline(label_color=OutputColors.Red, tool_name="Device", text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
 
 def system(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
     proc = subprocess.Popen("" + cmd,
