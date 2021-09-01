@@ -12,13 +12,8 @@ dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
-# This script will get called w/ 
-# argc=3  argv[0]                          argv[1]    argv[2]
-# python3 $DRAGONDIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
-def main():
-    dbstate("Pulling 'control' values from DragonMake")
-
-    keys = {
+def control_keys():
+    return {
         'name': 'Name',
         'id': 'Package',
         'author': 'Author',
@@ -37,6 +32,23 @@ def main():
         'desc': 'Description',
     }
 
+def control_filenames():
+    return [
+        'preinst',
+        'postinst',
+        'prerm',
+        'postrm'
+    ]
+
+
+# This script will get called w/ 
+# argc=3  argv[0]                          argv[1]    argv[2]
+# python3 $DRAGONDIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
+def main():
+    dbstate("Pulling 'control' values from DragonMake")
+
+    keys = control_keys()
+
     defs = {
         'Section': 'Tweaks',
         'Description': 'A cool tweak',
@@ -44,13 +56,10 @@ def main():
         'Architecture': 'iphoneos-arm',
         'Depends': 'mobilesubstrate' # This is a blind guess, maybe we can improve this logic?
     }
-    # extrainst?
-    filenames = [
-        'preinst',
-        'postinst',
-        'prerm',
-        'postrm'
-    ]
+
+    # TODO: extrainst
+    filenames = control_filenames()
+
     # load in the DragonMake file 
     if os.path.exists(sys.argv[1]):
         with open(sys.argv[1]) as f:
@@ -99,4 +108,6 @@ def main():
                 out.seek(0)
                 out.writelines(config[name])
 
-main()
+
+if __name__ == "__main__":
+    main()

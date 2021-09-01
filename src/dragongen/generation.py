@@ -35,6 +35,7 @@ import yaml
 from .variable_types import ProjectVars
 from .util import *
 from buildgen.generator import BuildFileGenerator
+from dragon.config import ConfigManager
 
 
 # Rules and defaults
@@ -45,7 +46,6 @@ _IS_THEOS_MAKEFILE_ = False
 
 
 # Ninja Statements
-# TODO: move to types file
 
 # These are used like so:
 # a_build_object = Build("output files here", "rule name here", "input files here")

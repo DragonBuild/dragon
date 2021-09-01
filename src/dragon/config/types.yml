@@ -1,20 +1,13 @@
 Types:
-  comprehensive:
   app:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
   application:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
   tweak-jailed:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$proj_build_dir/$stagedir/$location/$name.app/$name'
@@ -22,14 +15,6 @@ Types:
       embed-libs:
         - CydiaSubstrate
   tweak:
-    required_states:
-      - has_build_files
-    production:
-      deb:
-        - 'build-files'
-        - 'copy-to-target'
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$proj_build_dir/$stagedir/$location$name.dylib'
@@ -42,10 +27,6 @@ Types:
       stage2:
         - 'cp $name.plist $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist 2>/dev/null  || python3 -m dragongen.bfilter $proj_build_dir/DragonMake $name > $proj_build_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
   prefs:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/PreferenceBundles/$name.bundle'
       build_target_file: '$proj_build_dir/$stagedir$location/$name'
@@ -60,10 +41,6 @@ Types:
         - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
   bundle:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/$name/'
       build_target_file: '$proj_build_dir/$stagedir/$location/$name.bundle/$name'
@@ -75,10 +52,6 @@ Types:
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location/$name.bundle/'
 
   framework:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/Frameworks/$name.framework'
       build_target_file: '$proj_build_dir/$stagedir/$location/$name'
@@ -93,9 +66,6 @@ Types:
            cp $public_headers $proj_build_dir/$stagedir/$location/Headers;
            fi'
   resource-bundle:
-    required_states:
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/$name/$name.bundle/'
       build_target_file: 'build.ninja'
@@ -113,11 +83,6 @@ Types:
       stage2:
         - 'true;'
   library:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: 'usr/lib'
       build_target_file: '$proj_build_dir/$stagedir/$location/$name.dylib'
@@ -126,33 +91,18 @@ Types:
       stage2:
         - 'true;'
   cli:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       build_target_file: '$proj_build_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
   binary:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       build_target_file: '$proj_build_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
   tool:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       lopts: ''
@@ -160,11 +110,6 @@ Types:
       stage2:
         - 'true;'
   static:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/lib'
       lopts: ''

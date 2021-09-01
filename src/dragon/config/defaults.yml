@@ -1,8 +1,6 @@
 ---
-# Special thanks to uroboro for suggesting this
-# Configurations here should provide enough default variables to create the specified module;
-# Please reach out to _kritanta if you need advice on extending these
 Defaults:
+  driver: apple-llvm
   proj_build_dir: .dragon
   builddir: $proj_build_dir/build
   objdir: $proj_build_dir/obj
@@ -47,8 +45,6 @@ Defaults:
   stagedir: '_'
   modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
-# Touching these without a firm grasp of what you're doing is likely to break things
-# They serve to abstract how we slap together all of the clang args
 InternalDefaults:
   internalcflags: '$cinclude $debug $fwSearch $cflags $btarg -O$optim  $targetprefix$targetvers $sysroot $header_includes $arc $triple $theosshim $macros $prefix $warnings $modulesinternal'
   internalswiftflags: '-color-diagnostics -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g -L/usr/lib/swift -swift-version 5 -module-name $name'

@@ -29,7 +29,7 @@ def setup_wizard():
     if os.environ.get('foo'):
         exit(0)
 
-    log('installing dragon v1.6.4')
+    log('installing dragon v2.0.0')
     log('=========================', end='\n\n')
     dragondir = os.path.expandvars('$HOME/.dragon/')
     try:

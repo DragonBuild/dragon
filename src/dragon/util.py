@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import os.path as path
+from enum import IntEnum
 
 
 def version() -> str:
-    return '1.6.4'
+    return '2.0.0'
 
 
 def tool_path() -> str:

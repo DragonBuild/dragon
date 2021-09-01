@@ -59,7 +59,7 @@ update()
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v1.6.4 ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v2.0.0 ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"

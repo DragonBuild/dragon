@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export DRAGONVERS="1.6.4"
+export DRAGONVERS="2.0.0"
 
 # Defauld dragondir is ~/.dragon
 if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
