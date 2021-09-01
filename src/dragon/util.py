@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os.path as path
-
+from enum import IntEnum
 
 def version() -> str:
     return '1.6.4'
