@@ -1,6 +1,6 @@
 ---
 Defaults:
-  driver: apple-llvm
+  driver: dragon
   proj_build_dir: .dragon
   builddir: $proj_build_dir/build
   objdir: $proj_build_dir/obj
