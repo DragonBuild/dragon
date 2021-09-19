@@ -7,13 +7,19 @@ Defaults:
   signdir: $proj_build_dir/sign
   bridging-header: $name-Bridging-Header.h
   dragondir: $$DRAGONDIR
+  libs:
+  frameworks:
+  cflags:
   toolchain-prefix: ''
   tool-prefix: ''
+  tripleprefix: '-target '
+  pwd: .
   cc: clang
   cxx: clang++
   ld: clang++
   nopack: No
   codesign: ldid
+  lopts: 
   dsym: dsymutil
   plutil: plutil
   swift: swift
@@ -29,6 +35,7 @@ Defaults:
   optim: "0"
   debug: -fcolor-diagnostics
   idflag: ''
+  ldflags: 
   entflag: '-S'
   entfile: ''
   resource_dir: 'Resources'
@@ -40,16 +47,18 @@ Defaults:
     - '.'
   additional_lib_dirs:
   additional_fw_dirs:
+  header_includes:
+  macros:
   prefix: []
-  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONDIR/headers/ -I$pwd'
+  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$dragondir/headers/ -I.'
   stagedir: '_'
   modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
 InternalDefaults:
-  internalcflags: '$cinclude $debug $fwSearch $cflags $btarg -O$optim  $targetprefix$targetvers $sysroot $header_includes $arc $triple $theosshim $macros $prefix $warnings $modulesinternal'
+  internalcflags: '$cinclude $debug $cflags -O$optim  $targetprefix$targetvers $fw_dirs $lib_dirs -isysroot $sysroot $header_includes $arc $tripleprefix$triple $macros $prefix $warnings $modulesinternal'
   internalswiftflags: '-color-diagnostics -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g -L/usr/lib/swift -swift-version 5 -module-name $name'
-  internalfflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
-  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
+  internalfflags: '$internalcflags $frameworks $libs $lopts $ldflags $libs'
+  internalldflags: '$internalcflags $frameworks $libs $lopts $ldflags $libs'
   internalsigntarget: '$signdir/$build_target_file.unsigned'
   internalsymtarget: '$signdir/$build_target_file.unsym'
   internallibflags: '-lobjc -lc++'
