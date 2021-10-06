@@ -66,6 +66,9 @@ class Module:
         self._new_for_type(self.variables['type'])
 
     def _new_for_type(self, type):
+        if self.variables['dir'] != '':
+            os.chdir(self.variables['dir'])
+
         if type == 'tweak':
             self.variables['filter'] = { 'executables': get_input('Comma seperated list of applications to inject', 'SpringBoard').split(', ')}
             self.variables['files'] = [f'{self.name}.x']
