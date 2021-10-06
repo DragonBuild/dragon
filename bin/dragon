@@ -29,7 +29,7 @@ source $TOOLPATH/generator
 source $TOOLPATH/variables
 
 yaml() {
-    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
+    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)" 2> /dev/null
 }
 
 set -o pipefail
@@ -185,12 +185,12 @@ if [ $build == 1 ]; then
     set +f
 
     mkdir -p .dragon
-    cp DragonMake .dragon/DragonMake
+    cp DragonMake .dragon/DragonMake 2> /dev/null
 
     for i in ${subsb[@]}; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
-        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake
+        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake 2> /dev/null
 
         build $i
     done

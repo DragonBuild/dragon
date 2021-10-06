@@ -42,6 +42,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install ninja
         pip install pyyaml
         pip install git+git://github.com/dragonbuild/dragon
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi

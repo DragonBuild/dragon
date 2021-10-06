@@ -57,7 +57,7 @@ Types:
         - Foundation
       stage2:
         - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
-        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist'
+        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
   bundle:
     required_states:
