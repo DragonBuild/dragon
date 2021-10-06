@@ -32,7 +32,7 @@ class OutputColors(IntEnum):
 
 class OutputWeight(IntEnum):
     Normal = 0
-    Bold = 1 
+    Bold = 1
 
 
 def color_string(output_color, output_weight):

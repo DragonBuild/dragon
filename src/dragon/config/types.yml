@@ -36,7 +36,7 @@ Types:
       hooker-priority: libhooker
       lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000 -framework CydiaSubstrate'
-      frameworks:  
+      frameworks:
         - UIKit
         - Foundation
       stage2:

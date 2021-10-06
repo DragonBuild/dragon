@@ -77,7 +77,7 @@ class Device(object):
         if not exists:
             dbstate('Generating Keyfile')
             system("ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null")
-        
+
         # We don't use ssh-copy-id because some systems (bingners bootstrap, etc) don't have it
         dbstate('Copying keyfile')
         success = system(f'cat ~/.ssh/id_rsa.pub | ssh -p {self.port} root@{self.host} "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"')
@@ -104,13 +104,13 @@ class DeviceManager(object):
     def savestate(self):
         with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml', 'w') as state:
             yaml.dump(self.dragon_state, state)
-    
+
     def add_device(self, device: Device):
         self.dragon_state['device']['devices'].append({'ip': device.as_dict()['ip'], 'port': device.as_dict()['port']})
         self.devices.append(device)
         self.dragon_state['device']['current'] = len(self.devices)-1
         self.savestate()
-    
+
     def setup(self):
         '''
         Setup checklist:
@@ -119,7 +119,7 @@ class DeviceManager(object):
         3. Check and setup key auth
 
         '''
-        
+
         dbstate('Enter Device IP or hostname')
         ip = input('>>> ')
         dbstate('enter port (leave empty for 22)')
@@ -140,12 +140,12 @@ class DeviceManager(object):
         else:
             dbwarn('Connection failed, add it anyways? (y/n)')
             if 'y' not in input('> ').lower():
-                return 
-            
+                return
+
         if connected:
             if not device.test_keybased_auth():
                 device.setup_key_auth()
-        
+
         self.add_device(device)
 
 # device.py cmd

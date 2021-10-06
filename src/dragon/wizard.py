@@ -40,13 +40,13 @@ def setup_wizard():
     os.chdir(dragondir)
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
-                
+
         try:
             get_supporting(
                 f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',
                 repo
             )
-        except Exception as ex: 
+        except Exception as ex:
             log(ex)
             log('Potentially ratelimited, attempting fallback by cloning repo (this adds some overhead)')
             os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
@@ -55,7 +55,7 @@ def setup_wizard():
     os.system(f'rm -rf ./internal')
     shutil.copytree(deployable_path(),
                     dragondir + '/internal')
-                    
+
     try:
         os.mkdir(os.path.expandvars('$HOME/.dragon/toolchain'))
     except FileExistsError:
@@ -74,7 +74,7 @@ def get_supporting(api: str, destination: str):
                 log(f'Latest {destination} already installed')
                 return
     tar_url = response['tarball_url']
-    
+
     os.system(f'rm -rf ./{destination}')
 
     log(f'Updating supporting {destination} v{response["tag_name"]} from {tar_url} ...')

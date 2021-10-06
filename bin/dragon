@@ -184,7 +184,7 @@ if [ $build == 1 ]; then
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
-    mkdir -p .dragon 
+    mkdir -p .dragon
     cp DragonMake .dragon/DragonMake
 
     for i in ${subsb[@]}; do

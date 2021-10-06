@@ -17,20 +17,20 @@ while True:
         fields.append(input(f'Field Name {i} > '))
 
     text = '.. list-table::\n   :widths: ' + ' '.join(widths) + '\n\n'
-    
+
     fo = True
     for field in fields:
         text += f'   {"*" if fo else " "} - {field}\n'
         if fo:
             fo = False
-    
+
     while True:
         field_vals = []
         breakOut = False
         for field in fields:
             inp = input(f'{field} > ')
             if inp == 'done':
-                breakOut=True 
+                breakOut=True
                 break
             field_vals.append(inp)
         if breakOut:

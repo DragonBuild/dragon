@@ -5,9 +5,9 @@ clean_dir()
     echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
     # find . -name 'build.ninja' -delete
     [[ -f .dragon/DragonMake ]] && cp .dragon/DragonMake .DragonMake
-    rm -rf .dragon 
+    rm -rf .dragon
     [[ -f .DragonMake ]] && mkdir .dragon && mv .DragonMake .dragon/DragonMake
-    mkdir -p .dragon 
+    mkdir -p .dragon
     touch .dragon/.clean
 }
 
@@ -18,16 +18,16 @@ build()
     python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
     [[ -d .dragon/_/.dragonbuilding ]] || rm -rf .dragon/_
 
-    if [ $1 == "." ]; then 
+    if [ $1 == "." ]; then
         DNAME=${TWEAK_NAME}
     else
         DNAME=$1
     fi
 
-    if [ $clean == 1 ]; then 
+    if [ $clean == 1 ]; then
         [[ -f .dragon/.clean ]] || clean_dir $DNAME
     fi
-    
+
     mkdir -p .dragon/_/.dragonbuilding 2>/dev/null
 
     mkdir -p .dragon/modules 2>/dev/null
@@ -38,7 +38,7 @@ build()
     env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j17 $NINJA_ARGS || cleanbuildfail $projroot
     env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j9 stage $NINJA_ARGS || cleanbuildfail $projroot
 
-    if [ $exportt == 1 ]; then 
+    if [ $exportt == 1 ]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
         ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
     fi
@@ -46,7 +46,7 @@ build()
     cp -R layout/* .dragon/_/ 2>/dev/null
 
     mv build.ninja .dragon/ninja
-    if [ $1 == "." ]; then 
+    if [ $1 == "." ]; then
         true;
     else
         cp -R .dragon/_ "$projroot"/.dragon 2>/dev/null

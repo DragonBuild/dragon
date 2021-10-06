@@ -9,7 +9,7 @@ def strip_comments(text):
     if not out:
         return ''
     return out
-    
+
 def join_escaped_newlines(lines):
     out_statements = []
     joining = False
@@ -17,9 +17,9 @@ def join_escaped_newlines(lines):
     for index, line in enumerate(lines):
         escaped = False
         if line.strip().endswith('\\'):
-            escaped = True 
+            escaped = True
         if joining:
-            current_statement += ' ' + line 
+            current_statement += ' ' + line
             if not escaped:
                 out_statements.append(current_statement)
                 current_statement = ""
@@ -35,7 +35,7 @@ def join_indented_blocks(lines):
     current_statement = ""
     for line in lines:
         if line.strip().endswith('::'):
-            joining = True 
+            joining = True
             current_statement+=line + "\n"
             continue
 
@@ -43,7 +43,7 @@ def join_indented_blocks(lines):
             if line.startswith('\t') or line.startswith('    '):
                 current_statement += line + '\n'
             else:
-                joining = False 
+                joining = False
                 out_statements.append(current_statement)
                 current_statement = ""
         else:
@@ -51,14 +51,14 @@ def join_indented_blocks(lines):
     if current_statement != "":
         out_statements.append(current_statement)
     return out_statements
-        
+
 
 
 
 class MakefileVariableStatementType(Enum):
     DECLARATION = 0
     APPEND = 1
-    
+
 
 class MakefileVariableStatement:
     def __init__(self, declaration):
@@ -75,12 +75,12 @@ class MakefileVariableStatement:
             else:
                 self.type = MakefileVariableStatementType.DECLARATION
             variable_sect = variable_sect[:-1]
-        else: 
+        else:
             self.type = MakefileVariableStatementType.DECLARATION
 
         self.exported = False
         if variable_sect.startswith('export '):
-            self.exported = True 
+            self.exported = True
             self.name = variable_sect.split('export ', 1)[1]
         else:
             self.name = variable_sect
@@ -88,7 +88,7 @@ class MakefileVariableStatement:
         self.value = value_sect
         self.name = self.name.strip()
         self.value = self.value.strip()
-        
+
 
 class Makefile:
     def __init__(self, file_contents: str):
@@ -98,20 +98,20 @@ class Makefile:
         self.statements = [line for line in join_indented_blocks(join_escaped_newlines(lines)) if line != '']
         self.variable_statements = []
         self.rules = {}
-        
+
         for statement in self.statements:
-            
+
             if statement.startswith('include '):
                 self.includes.append(statement.split('include ')[1])
-                
+
             elif '=' in statement:
                 self.variable_statements.append(MakefileVariableStatement(statement))
 
             elif '::\n' in statement:
                 self.rules[statement.split("::\n")[0]] = [i.strip() for i in statement.split('\n')[1:] if i.strip() != ""]
-        
+
         self.variables = self._process_variable_statements()
-                
+
     def _process_variable_statements(self):
         variables = {}
         for statement in self.variable_statements:
@@ -123,26 +123,26 @@ class Makefile:
                 else:
                     variables[statement.name] = " ".join(statement.value.split())
         return variables
-        
+
 
 class TheosMakefileType(Enum):
     TWEAK = 0
     BUNDLE = 1
     LIBRARY = 2
-    
+
 
 class TheosMakefile(Makefile):
     def __init__(self, file_contents: str):
         super().__init__(file_contents)
-        
+
         self.type = None
         self.has_subprojects = False
         self.module_name = ""
         self.module = {}
         self.subprojects = []
-        
+
         self.module['arc'] = False
-        
+
         for included in self.includes:
             if 'tweak.mk' in included:
                 self.type = TheosMakefileType.TWEAK
@@ -156,7 +156,7 @@ class TheosMakefile(Makefile):
             if 'library.mk' in included:
                 self.module['type'] = 'library'
                 self.type = TheosMakefileType.LIBRARY
-                
+
         for variable in self.variables:
             if variable.endswith('_NAME'):
                 self.module_name = self.variables[variable]
@@ -176,8 +176,8 @@ class TheosMakefile(Makefile):
                 self.module['install_location'] = self.variables[variable]
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
-            
-        
+
+
         files = []
         if 'files' in self.module:
             tokens = self.module['files']
@@ -208,14 +208,14 @@ class TheosMakefile(Makefile):
                 command = command.replace('$(', '$$(')
                 stage_processed.append(command)
             self.module['stage'] = stage_processed
-        
+
         if 'files' not in self.module:
             if self.type == TheosMakefileType.BUNDLE:
                 self.module['type'] = 'resource-bundle'
-        
+
         if self.has_subprojects:
             self.subprojects = self.variables['SUBPROJECTS'].split(' ')
-                
+
 
 class TheosMakefileProcessor:
     def __init__(self):
@@ -225,15 +225,15 @@ class TheosMakefileProcessor:
         with open('Makefile', 'r') as makefile:
             self.root_makefile = TheosMakefile(makefile.read())
 
-        with open('control', 'r') as control: 
+        with open('control', 'r') as control:
             yaml=YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
             self.control = yaml.load(control)
 
         self.project['name'] = self.control['Name']
-        
+
         if 'INSTALL_TARGET_PROCESSES' in self.root_makefile.variables:
             self.project['icmd'] = 'killall -9 ' + self.root_makefile.variables['INSTALL_TARGET_PROCESSES']
-        
+
         self._process_makefile(self.root_makefile)
 
     def _process_makefile(self, makefile):

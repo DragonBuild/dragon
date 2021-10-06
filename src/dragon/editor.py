@@ -31,7 +31,7 @@ class Project:
         self.directory_name = self.root_directory.split('/')[-1]
         self.current_username = pwd.getpwuid(os.getuid()).pw_name
         self.variables = {}
-    
+
     def create_new(self):
         self.variables['name'] = get_input('Project Name', self.directory_name)
         self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
@@ -75,7 +75,7 @@ class Module:
 
 class ProjectEditor:
     def __init__(self):
-        
+
         self.project_root_directory = os.getcwd()
 
         if os.path.exists('DragonMake'):
@@ -90,7 +90,7 @@ class ProjectEditor:
         if not self.preexisting_config:
             project = Project(self.project_root_directory)
             project.create_new()
-            self.config = project.variables 
+            self.config = project.variables
 
         mod = Module()
         mod.create_new()

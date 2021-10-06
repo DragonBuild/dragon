@@ -12,7 +12,7 @@ dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
-# This script will get called w/ 
+# This script will get called w/
 # argc=3  argv[0]                          argv[1]    argv[2]
 # python3 $DRAGONDIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
 def main():
@@ -51,7 +51,7 @@ def main():
         'prerm',
         'postrm'
     ]
-    # load in the DragonMake file 
+    # load in the DragonMake file
     if os.path.exists(sys.argv[1]):
         with open(sys.argv[1]) as f:
             config = yaml.safe_load(f)
