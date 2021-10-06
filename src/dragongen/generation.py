@@ -413,7 +413,6 @@ class Generator(object):
             Var('swift'),
             ___,
             Var('targetvers'),
-            Var('targetprefix'),
             Var('targetos'),
             Var('triple'),
             ___,

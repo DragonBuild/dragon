@@ -15,7 +15,6 @@ Targets:
       targetos: iphoneos
       targetvers: 10.0
       triple: arm64-apple-ios$targetvers
-      targetprefix: -miphoneos-version-min=
       arc: yes
       sysroot: $dragondir/sdks/iPhoneOS.sdk
       archs:
