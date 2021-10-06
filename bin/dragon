@@ -153,28 +153,24 @@ cwd=$(basename $PWD)
 
 
 # --------
-# Invoke the generator
-# --------
-
-if [ $gen == 1 ]; then
-    rm -rf .dragon/ninja/build.ninja
-    mkdir -p .dragon/ninja 2>/dev/null
-    mkdir -p .dragon/modules 2>/dev/null
-
-    generate
-
-    if [ "$DRAGONGEN_FAILURE" == 1 ]; then
-        cleanbuildfail
-    fi
-fi
-
-
-# --------
 # Build, then package (if needed)
 # --------
 
 if [ $build == 1 ]; then
     # shellcheck disable=SC2154
+
+    # Invoke the generator
+    if [ $gen == 1 ]; then
+        rm -rf .dragon/ninja/build.ninja
+        mkdir -p .dragon/ninja 2>/dev/null
+        mkdir -p .dragon/modules 2>/dev/null
+
+        generate
+
+        if [ "$DRAGONGEN_FAILURE" == 1 ]; then
+            cleanbuildfail
+        fi
+    fi
 
     projroot=$PWD
 
