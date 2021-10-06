@@ -2,7 +2,6 @@
 requires = [
     "setuptools>=42",
     "wheel",
-    "ninja",
     "pyyaml"
 ]
 build-backend = "setuptools.build_meta"
