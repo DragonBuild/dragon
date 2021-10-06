@@ -34,7 +34,7 @@ class Project:
 
     def create_new(self):
         self.variables['name'] = get_input('Project Name', self.directory_name)
-        self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
+        self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.project')
         self.variables['depends'] = 'mobilesubstrate'
         self.variables['architecture'] = 'iphoneos-arm'
         self.variables['version'] = get_input('Version', '0.0.1')
@@ -50,9 +50,9 @@ class Module:
 
     def create_new(self):
         self.variables['type'] = get_from_selector('Select Module Type', {'Tweak':'tweak', 'CLI Tool':'cli', 'Library':'library'}, '0')
-        self.name = get_input('Name', 'TweakName')
+        self.name = get_input('Name', 'ModuleName')
         while True:
-            subdir = get_input('Subdiretory Name (Leave empty for no subdir)', '')
+            subdir = get_input('Subdirectory Name', '(Leave empty to work in current directory)')
             if subdir != '':
                 if os.path.exists(subdir):
                     print('File/Directory already exists;')
@@ -73,7 +73,7 @@ class Module:
             self.variables['filter'] = { 'executables': get_input('Comma seperated list of applications to inject', 'SpringBoard').split(', ')}
             self.variables['files'] = [f'{self.name}.x']
             with open(f'{self.name}.x', 'w') as out:
-                out.write('// Insert your code here!')
+                out.write('// Insert your code here!\n')
 
 
 class ProjectEditor:
