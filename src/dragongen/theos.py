@@ -172,8 +172,8 @@ class TheosMakefile(Makefile):
                 self.module['cxxflags'] = self.variables[variable]
             elif variable.endswith('_LDFLAGS'):
                 self.module['ldflags'] = self.variables[variable]
-            elif variable.endswith('_INSTALL_PATH'):
-                self.module['install_location'] = self.variables[variable]
+            # elif variable.endswith('_INSTALL_PATH'):
+            #     self.module['install_location'] = self.variables[variable]
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
 

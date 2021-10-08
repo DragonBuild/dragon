@@ -34,7 +34,7 @@ class Project:
 
     def create_new(self):
         self.variables['name'] = get_input('Project Name', self.directory_name)
-        self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.project')
+        self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
         self.variables['depends'] = 'mobilesubstrate'
         self.variables['architecture'] = 'iphoneos-arm'
         self.variables['version'] = get_input('Version', '0.0.1')
