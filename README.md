@@ -14,7 +14,7 @@
     <image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
   </a>
   <a href="https://pypi.org/project/dragon/">
-    <image src="https://pypip.in/v/dragon/badge.svg">
+    <image src="https://badge.fury.io/py/dragon">
   </a>
   <br>
   <br>
