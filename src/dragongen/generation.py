@@ -79,11 +79,11 @@ class Generator(object):
         Keyword arguments:
         stream -- IO stream to which the ninja data should be writen
         '''
-        
+
         # Compute project variables
         self.project_variables: ProjectVars = ProjectVars(
                                 self.generate_vars(self.config[self.module_name], self.target_platform))
-        
+
         # Generate the outline
         outline = self.generate_ninja_outline()
 
@@ -106,7 +106,7 @@ class Generator(object):
                         description=item.description,
                         command=item.command)
                 continue
-            if isinstance(item, Build): 
+            if isinstance(item, Build):
                 gen.build(item.outputs, item.rule, item.inputs)
                 continue
             if isinstance(item, Default):
@@ -141,7 +141,7 @@ class Generator(object):
         project_dict.update(get_default_section_dict('Defaults'))  # Universal
         try:
             # Apply Type Variables
-            project_dict.update(get_default_section_dict('Types', 
+            project_dict.update(get_default_section_dict('Types',
                                 module_variables['type'], 'variables'))  # Type-based
         except KeyError as ex:
             try:
@@ -149,7 +149,7 @@ class Generator(object):
                 project_dict.update(get_default_section_dict('Types',
                                     module_variables['type'].lower(), 'variables'))
             except KeyError:
-                # They either didn't include a type variable, or they misspelled the 
+                # They either didn't include a type variable, or they misspelled the
                 #     type they used.
                 raise ex
 
@@ -178,7 +178,7 @@ class Generator(object):
             project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() \
                 if 'MACHINE' in project_dict['triple'] else '-target ' + project_dict['triple']
 
-        
+
         # A few variables that need to be renamed
         NINJA_KEYS = {
             'location': 'install_location',
@@ -188,8 +188,8 @@ class Generator(object):
             'lopt': 'lopts'
         }
         # Rename them
-        project_dict.update({key: project_dict[NINJA_KEYS[key]] 
-                            for key in NINJA_KEYS 
+        project_dict.update({key: project_dict[NINJA_KEYS[key]]
+                            for key in NINJA_KEYS
                                 if NINJA_KEYS[key] in project_dict})
 
 
@@ -197,12 +197,12 @@ class Generator(object):
 
         # Apply framework/lib search and additional search dirs
         project_dict['fwSearch'] = project_dict['fw_dirs'] \
-                                    + (project_dict['additional_fw_dirs'] 
-                                        if project_dict['additional_fw_dirs'] 
+                                    + (project_dict['additional_fw_dirs']
+                                        if project_dict['additional_fw_dirs']
                                         else [])
         project_dict['libSearch'] = project_dict['lib_dirs'] \
-                                    + (project_dict['additional_lib_dirs'] 
-                                        if project_dict['additional_lib_dirs'] 
+                                    + (project_dict['additional_lib_dirs']
+                                        if project_dict['additional_lib_dirs']
                                         else [] )
 
 
@@ -234,7 +234,7 @@ class Generator(object):
 
         if 'name_override' in project_dict:
             project_dict['name'] = project_dict['name_override']
-        
+
         if os.environ['DGEN_DEBUG']:
             pprint("project_dict after processing through generate_vars:" + str(project_dict), stream=sys.stderr)
             print("\n\n", file=sys.stderr)
@@ -267,7 +267,7 @@ class Generator(object):
 
 
         # Only load rules we need
-        FILE_RULES = {  
+        FILE_RULES = {
             'c_files': 'c',
             'cxx_files': 'cxx',
             'dlists': None,
@@ -413,7 +413,6 @@ class Generator(object):
             Var('swift'),
             ___,
             Var('targetvers'),
-            Var('targetprefix'),
             Var('targetos'),
             Var('triple'),
             ___,
@@ -431,7 +430,7 @@ class Generator(object):
             Var('warnings'),
             ___,
             Var('cinclude'),
-            Var('header_includes'), 
+            Var('header_includes'),
             Var('public_headers'),
             ___,
             Var('usrCflags'),
@@ -536,7 +535,7 @@ def main():
         - Process raw data if needed via the Makefile or Legacy (bash) interpreters
         - Iterate through the top-level keys in the dictionary
         - Call the Generator class to write to {top-level-key-name}.ninja for each
-        - Pass some export commands to the parent bash script via stdout 
+        - Pass some export commands to the parent bash script via stdout
     '''
     META_KEYS = {  # Keys that may be at the root of the DragonMake dict
         'name': 'package_name',
@@ -573,7 +572,7 @@ def main():
                 # If the file we tried to load isn't YAML, try running it as a bash script
                 if os.system("sh DragonMake 2>/dev/null") == 0:
                     # If that worked, it's the old (OLD) legacy DragonMake format,
-                    #   which we can easily support via a couple lines of regex 
+                    #   which we can easily support via a couple lines of regex
                     config = load_old_format(open('DragonMake'))
                     dbstate("Loading Legacy format DragonMake")
                 else:
@@ -594,12 +593,12 @@ def main():
 
     else:
         raise FileNotFoundError
-    
+
     dbstate("Generating build scripts")
     for key in config:
         if key in META_KEYS:
             continue
-        
+
         # Hack to run a bash command in the context of DragonGen from a DragonMake file
         # TODO: remove this when the main dragon script is pythonized
         if key == 'exports':

@@ -31,7 +31,7 @@ class Project:
         self.directory_name = self.root_directory.split('/')[-1]
         self.current_username = pwd.getpwuid(os.getuid()).pw_name
         self.variables = {}
-    
+
     def create_new(self):
         self.variables['name'] = get_input('Project Name', self.directory_name)
         self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
@@ -50,9 +50,9 @@ class Module:
 
     def create_new(self):
         self.variables['type'] = get_from_selector('Select Module Type', {'Tweak':'tweak', 'CLI Tool':'cli', 'Library':'library'}, '0')
-        self.name = get_input('Name', 'TweakName')
+        self.name = get_input('Name', 'ModuleName')
         while True:
-            subdir = get_input('Subdiretory Name (Leave empty for no subdir)', '')
+            subdir = get_input('Subdirectory Name', '(Leave empty to work in current directory)')
             if subdir != '':
                 if os.path.exists(subdir):
                     print('File/Directory already exists;')
@@ -66,16 +66,19 @@ class Module:
         self._new_for_type(self.variables['type'])
 
     def _new_for_type(self, type):
+        if self.variables['dir'] != '':
+            os.chdir(self.variables['dir'])
+
         if type == 'tweak':
             self.variables['filter'] = { 'executables': get_input('Comma seperated list of applications to inject', 'SpringBoard').split(', ')}
             self.variables['files'] = [f'{self.name}.x']
             with open(f'{self.name}.x', 'w') as out:
-                out.write('// Insert your code here!')
+                out.write('// Insert your code here!\n')
 
 
 class ProjectEditor:
     def __init__(self):
-        
+
         self.project_root_directory = os.getcwd()
 
         if os.path.exists('DragonMake'):
@@ -90,7 +93,7 @@ class ProjectEditor:
         if not self.preexisting_config:
             project = Project(self.project_root_directory)
             project.create_new()
-            self.config = project.variables 
+            self.config = project.variables
 
         mod = Module()
         mod.create_new()

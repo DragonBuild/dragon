@@ -2,20 +2,20 @@ import re as regex
 import os, sys, glob
 from pprint import pprint
 import termios
-import tty 
+import tty
 from .variable_types import ArgList
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
 "\033[0;37m","\033[0m"],["\033[1;31m","\033[1;32m","\033[1;33m","\033[1;34m",
 "\033[1;36m","\033[1;37m","\033[0m"]]
 
-# Everything needs to go out of stderr *for now!*. the bash script executes anything 
+# Everything needs to go out of stderr *for now!*. the bash script executes anything
 #     sent via stdout
-# worth also noting print() to stdout works like system() for us, except its in the 
+# worth also noting print() to stdout works like system() for us, except its in the
 #     context of a shell above us
 def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
     print("%s[%s]%s %s%s%s" % (
-        colors[1][col], tool, colors[bold][textcol], ">>> " if pusher 
+        colors[1][col], tool, colors[bold][textcol], ">>> " if pusher
             else "", msg, colors[0][6]), file=sys.stderr)
 
 dbstate = lambda msg: dprintline(1, "DragonGen", 5, 1, 0, msg)
@@ -191,7 +191,7 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
             module['install_location'] = module_install_location
         if stage != []:
             module['stage'] = stage
-        
+
         module['arc'] = arc
         if not root:
             return module
@@ -278,11 +278,11 @@ def load_old_format(file: object, root: object = True) -> dict:
 
 def standardize_file_list(subdir: str, files: list) -> list:
     '''Strip list of empty strings and evaluate globbed paths.'''
-    
+
     # hotfix for #67, standardize the subdirectory string we get, we want /subdir/
     subdir = subdir.strip('/')
     subdir = f'/{subdir}/'
-    
+
     ret = []
     for filename in files:
         if not filename:

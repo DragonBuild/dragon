@@ -1,5 +1,5 @@
 <p align="center" >
-<img src=".github/branding/dragon.svg" alt="Logo" width=200px> 
+<img src=".github/branding/dragon.svg" alt="Logo" width=200px>
 </p>
 <p align="center">
   <strong>
@@ -20,13 +20,13 @@
   <br>
   <a href="https://dragon.krit.me">
     <strong>Documentation</strong>
-  </a> | 
+  </a> |
   <a href="https://dragon.krit.me/en/latest/quickstart.html">
     <strong>Getting Started</strong>
-  </a> | 
+  </a> |
   <a href="https://github.com/dragonbuild/example ">
     <strong>Example Project</strong>
-  </a> | 
+  </a> |
   <a href="https://github.com/dragonbuild/build ">
     <strong>Github Actions Integration</strong>
   </a>
@@ -37,17 +37,17 @@
 In your terminal:
 
 `pip3 install dragon`
-  
+
 ## Updating
-    
+
 Version 1.6.0 and later:
-    
+
 ```sh
 dragon update
 ```
-    
+
 Version 1.5.1 and older:
-  
+
 ```sh
 rm -rf ~/.dragon
 pip3 install --force-reinstall dragon
@@ -55,7 +55,7 @@ pip3 install --force-reinstall dragon
 
 ---
 
-    
+
 # Helpful links
 
 [sbingner's arm64e toolchain](https://github.com/sbingner/llvm-project/releases/latest)

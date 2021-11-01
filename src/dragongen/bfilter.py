@@ -12,8 +12,8 @@ dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
-# This script will get called w/ 
-# argc=3  argv[0]                          argv[1]     argv[2]    
+# This script will get called w/
+# argc=3  argv[0]                          argv[1]     argv[2]
 # python3 $DRAGONDIR/internal/bfilter.py DragonMake  projectName
 
 def main():
@@ -26,7 +26,7 @@ def main():
     filter_dict = config[sys.argv[2]]['filter']
     print(filter_serialize(filter_dict))
 
-    
+
 def filter_serialize(filter_dict):
     # {'executables':['SpringBoard']}
     # out: { Filter = { Executables = ( "SpringBoard" ); }; }

@@ -29,7 +29,7 @@ source $TOOLPATH/generator
 source $TOOLPATH/variables
 
 yaml() {
-    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
+    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)" 2> /dev/null
 }
 
 set -o pipefail
@@ -153,28 +153,24 @@ cwd=$(basename $PWD)
 
 
 # --------
-# Invoke the generator
-# --------
-
-if [ $gen == 1 ]; then
-    rm -rf .dragon/ninja/build.ninja
-    mkdir -p .dragon/ninja 2>/dev/null
-    mkdir -p .dragon/modules 2>/dev/null
-
-    generate
-
-    if [ "$DRAGONGEN_FAILURE" == 1 ]; then
-        cleanbuildfail
-    fi
-fi
-
-
-# --------
 # Build, then package (if needed)
 # --------
 
 if [ $build == 1 ]; then
     # shellcheck disable=SC2154
+
+    # Invoke the generator
+    if [ $gen == 1 ]; then
+        rm -rf .dragon/ninja/build.ninja
+        mkdir -p .dragon/ninja 2>/dev/null
+        mkdir -p .dragon/modules 2>/dev/null
+
+        generate
+
+        if [ "$DRAGONGEN_FAILURE" == 1 ]; then
+            cleanbuildfail
+        fi
+    fi
 
     projroot=$PWD
 
@@ -184,13 +180,13 @@ if [ $build == 1 ]; then
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
-    mkdir -p .dragon 
-    cp DragonMake .dragon/DragonMake
+    mkdir -p .dragon
+    cp DragonMake .dragon/DragonMake 2> /dev/null
 
     for i in ${subsb[@]}; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
-        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake
+        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake 2> /dev/null
 
         build $i
     done

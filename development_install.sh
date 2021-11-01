@@ -6,5 +6,4 @@
 
 python3 -m pip uninstall --yes dragon
 python3 -m pip install .
-python3 -m dragon.wizard 
-
+python3 -m dragon.wizard

@@ -39,7 +39,7 @@ create_package()
 {
     echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
     mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./.dragon/_/DEBIAN/control 
+    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./.dragon/_/DEBIAN/control
     du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
     chmod -R 0755 .dragon/_/DEBIAN/*
     mkdir -p .dragon/packages

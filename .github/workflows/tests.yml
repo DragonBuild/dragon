@@ -23,7 +23,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        project-link: 
+        project-link:
           - https://github.com/KritantaDev/Chapters
           - https://github.com/KritantaDev/Docky
           - https://github.com/KritantaDev/Shakelight

@@ -7,7 +7,7 @@ source $TOOLPATH/dragoncolors
 function drexit()
 {
     # This function resets terminal colors, fixes stty (just in case), and then exits with arg0's value
-    # It should be called on *EVERY* exit, no matter what. 
+    # It should be called on *EVERY* exit, no matter what.
     echo -e "${NC}"
     stty sane
     exit $1
