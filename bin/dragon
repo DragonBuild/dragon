@@ -161,7 +161,7 @@ if [ $build == 1 ]; then
 
     # Invoke the generator
     if [ $gen == 1 ]; then
-        rm -rf .dragon/ninja/build.ninja
+        rm -rf .dragon/ninja/build.ninja 2>/dev/null
         mkdir -p .dragon/ninja 2>/dev/null
         mkdir -p .dragon/modules 2>/dev/null
 

@@ -35,6 +35,9 @@ def main():
         'package': 'Package',
         'description': 'Description',
         'desc': 'Description',
+        'icon': 'Icon',
+        'depiction': 'Depiction',
+        'sldepiction': 'Sileodepiction',
     }
 
     defs = {

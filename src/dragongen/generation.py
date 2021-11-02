@@ -558,6 +558,9 @@ def main():
         'package': None,
         'desc': None,
         'all': None,
+        'icon': None,
+        'depiction': None,
+        'sldepiction': None,
     }
 
     exports = {}
