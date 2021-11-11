@@ -38,6 +38,8 @@ def main():
         'icon': 'Icon',
         'depiction': 'Depiction',
         'sldepiction': 'Sileodepiction',
+        'sileodepiction': 'Sileodepiction',
+
     }
 
     defs = {
