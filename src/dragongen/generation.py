@@ -561,6 +561,7 @@ def main():
         'icon': None,
         'depiction': None,
         'sldepiction': None,
+        'sileodepiction': None
     }
 
     exports = {}
