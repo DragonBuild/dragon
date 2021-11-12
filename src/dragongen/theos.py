@@ -129,6 +129,8 @@ class TheosMakefileType(Enum):
     TWEAK = 0
     BUNDLE = 1
     LIBRARY = 2
+    APPLICATION = 3
+    FRAMEWORK = 4
 
 
 class TheosMakefile(Makefile):
@@ -147,7 +149,7 @@ class TheosMakefile(Makefile):
         for included in self.includes:
             if 'tweak.mk' in included:
                 self.type = TheosMakefileType.TWEAK
-                self.module['frameworks'] = ['Foundation', 'UIKit'] # :/
+                self.module['frameworks'] = ['Foundation', 'UIKit']  # :/
                 self.module['type'] = 'tweak'
             if 'aggregate.mk' in included:
                 self.has_subprojects = True
@@ -157,6 +159,12 @@ class TheosMakefile(Makefile):
             if 'library.mk' in included:
                 self.module['type'] = 'library'
                 self.type = TheosMakefileType.LIBRARY
+            if 'application.mk' in included:
+                self.module['type'] = 'app'
+                self.type = TheosMakefileType.APPLICATION
+            if 'framework.mk' in included:
+                self.module['type'] = 'framework'
+                self.type = TheosMakefileType.FRAMEWORK
 
         for variable in self.variables:
             self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
