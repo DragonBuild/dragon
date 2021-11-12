@@ -158,6 +158,11 @@ class TheosMakefile(Makefile):
                 self.type = TheosMakefileType.LIBRARY
 
         for variable in self.variables:
+            self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+            self.variables[variable] = self.variables[variable].replace('$(THEOS)', '~/.dragon')
+            self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
+            self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
+            self.variables[variable] = self.variables[variable].replace('$(', '$$(')
             if variable.endswith('_NAME'):
                 self.module_name = self.variables[variable]
             elif variable.endswith('_FILES'):

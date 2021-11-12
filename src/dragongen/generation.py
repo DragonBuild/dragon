@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-
-'''
+"""
 
 DragonGen.py
 
@@ -22,8 +21,11 @@ Some guidelines for work on this file moving forward:
   - Comment any lines of code that are confusing
   - Don't code-golf
 
+Things to keep in mind when working on this file:
 
-'''
+
+
+"""
 
 import traceback
 import platform
@@ -36,13 +38,11 @@ from .variable_types import ProjectVars
 from .util import *
 from buildgen.generator import BuildFileGenerator
 
-
 # Rules and defaults
 _LAZY_RULES_DOT_YML: dict = None
 _LAZY_DEFAULTS_DOT_YML: dict = None
 
 _IS_THEOS_MAKEFILE_ = False
-
 
 # Ninja Statements
 # TODO: move to types file
@@ -70,19 +70,19 @@ class Generator(object):
         self.config: dict = config
         self.module_name: str = module_name
         self.target_platform: str = target_platform
-
+        self.project_variables: ProjectVars = None
 
     def write_output_file(self, stream: TextIO):
-        '''
+        """
         Evaluate outline with variables and write ninja file to given IO stream
 
         Keyword arguments:
         stream -- IO stream to which the ninja data should be writen
-        '''
+        """
 
         # Compute project variables
         self.project_variables: ProjectVars = ProjectVars(
-                                self.generate_vars(self.config[self.module_name], self.target_platform))
+            self.generate_vars(self.config[self.module_name], self.target_platform))
 
         # Generate the outline
         outline = self.generate_ninja_outline()
@@ -103,8 +103,8 @@ class Generator(object):
                 continue
             if isinstance(item, Rule):
                 gen.rule(item.name,
-                        description=item.description,
-                        command=item.command)
+                         description=item.description,
+                         command=item.command)
                 continue
             if isinstance(item, Build):
                 gen.build(item.outputs, item.rule, item.inputs)
@@ -112,9 +112,8 @@ class Generator(object):
             if isinstance(item, Default):
                 gen.default(['$build_target_file'])
 
-
     def generate_vars(self, module_variables: dict, target: str) -> dict:
-        '''
+        """
         Generate ProjectVars object for a project
 
         Keyword arguments:
@@ -122,7 +121,7 @@ class Generator(object):
         target -- target platform
 
         Raises: KeyError
-        '''
+        """
 
         if 'for' in module_variables:
             target = module_variables['for']
@@ -134,20 +133,20 @@ class Generator(object):
 
         if _IS_THEOS_MAKEFILE_:
             project_dict.update({
-                        'theosshim': '-include$$DRAGONDIR/include/PrefixShim.h -w'
-                        })
+                'theosshim': '-include$$DRAGONDIR/include/PrefixShim.h -w'
+            })
 
         # Setup with default vars
         project_dict.update(get_default_section_dict('Defaults'))  # Universal
         try:
             # Apply Type Variables
             project_dict.update(get_default_section_dict('Types',
-                                module_variables['type'], 'variables'))  # Type-based
+                                                         module_variables['type'], 'variables'))  # Type-based
         except KeyError as ex:
             try:
                 # Cast type to lowercase and try again
                 project_dict.update(get_default_section_dict('Types',
-                                    module_variables['type'].lower(), 'variables'))
+                                                             module_variables['type'].lower(), 'variables'))
             except KeyError:
                 # They either didn't include a type variable, or they misspelled the
                 #     type they used.
@@ -170,14 +169,13 @@ class Generator(object):
         project_dict.update(module_variables)
 
         # MACHINE checks
-        for d,i in enumerate(project_dict['archs']):
+        for d, i in enumerate(project_dict['archs']):
             if 'MACHINE' in i:
                 project_dict['archs'][d] = platform.machine()
 
         if 'triple' in project_dict and project_dict['triple'] != '':
             project_dict['triple'] = '-target ' + os.popen('clang -print-target-triple').read().strip() \
                 if 'MACHINE' in project_dict['triple'] else '-target ' + project_dict['triple']
-
 
         # A few variables that need to be renamed
         NINJA_KEYS = {
@@ -189,40 +187,38 @@ class Generator(object):
         }
         # Rename them
         project_dict.update({key: project_dict[NINJA_KEYS[key]]
-                            for key in NINJA_KEYS
-                                if NINJA_KEYS[key] in project_dict})
-
+                             for key in NINJA_KEYS
+                             if NINJA_KEYS[key] in project_dict})
 
         project_dict['lowername'] = str(project_dict['name']).lower()
 
         # Apply framework/lib search and additional search dirs
         project_dict['fwSearch'] = project_dict['fw_dirs'] \
-                                    + (project_dict['additional_fw_dirs']
-                                        if project_dict['additional_fw_dirs']
-                                        else [])
+                                   + (project_dict['additional_fw_dirs']
+                                      if project_dict['additional_fw_dirs']
+                                      else [])
         project_dict['libSearch'] = project_dict['lib_dirs'] \
                                     + (project_dict['additional_lib_dirs']
-                                        if project_dict['additional_lib_dirs']
-                                        else [] )
-
+                                       if project_dict['additional_lib_dirs']
+                                       else [])
 
         # Specify toolchain paths
         # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
         if len(os.listdir(os.environ['DRAGONDIR'] + '/toolchain')) > 1:
             project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/'
-                + project_dict[k] for k in [
-                'cc',
-                'cxx',
-                'lipo',
-                'dsym',
-                'plutil',
-                'swift',
-                'ld',
-            ]})
+                                    + project_dict[k] for k in [
+                                     'cc',
+                                     'cxx',
+                                     'lipo',
+                                     'dsym',
+                                     'plutil',
+                                     'swift',
+                                     'ld',
+                                 ]})
             project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/'
-                + project_dict[k] for k in [
-                    'codesign',
-            ]})
+                                    + project_dict[k] for k in [
+                                     'codesign',
+                                 ]})
 
         # TODO: lazy hack
         if 'cxxflags' in project_dict:
@@ -241,30 +237,28 @@ class Generator(object):
 
         return project_dict
 
-
     def rules_and_build_statements(self) -> (list, list):
-        '''
+        """
         Generate build statements and rules for a given variable set.
 
         Returns rule_list, build_state as extensions for an outline
-        '''
+        """
 
         # Trivial project types
         if self.project_variables['type'] == 'resource-bundle':
             return [
-                    get_rule('bundle'),
-                    get_rule('stage'),
-                ], [
-                    Build('bundle', 'bundle', 'build.ninja'),
-                    Build('stage', 'stage', 'build.ninja'),
-                ]
+                       get_rule('bundle'),
+                       get_rule('stage'),
+                   ], [
+                       Build('bundle', 'bundle', 'build.ninja'),
+                       Build('stage', 'stage', 'build.ninja'),
+                   ]
         if self.project_variables['type'] == 'stage':
             return [
-                    get_rule('stage'),
-                ], [
-                    Build('stage', 'stage', 'build.ninja'),
-                ]
-
+                       get_rule('stage'),
+                   ], [
+                       Build('stage', 'stage', 'build.ninja'),
+                   ]
 
         # Only load rules we need
         FILE_RULES = {
@@ -295,7 +289,7 @@ class Generator(object):
                 name, ext = os.path.split(f)[1], os.path.splitext(f)[1]
                 if ext == '.x':
                     build_state.append(Build(f'$builddir/logos/{name}.m', 'logos', f))
-                    filedict.setdefault('objc_files', []) # Create a list here if it doens't exist
+                    filedict.setdefault('objc_files', [])  # Create a list here if it doens't exist
                     filedict['objc_files'].append(f'$builddir/logos/{name}.m')
                 elif ext == '.xm':
                     build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
@@ -328,23 +322,23 @@ class Generator(object):
                 cmd = rules(f'archive{a}', 'cmd') + ' ' + ' '.join(linker_conds)
                 rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
                 build_state.append(Build(f'$builddir/$name.{a}',
-                                        f'link{a}',
-                                        arch_specific_object_files))
+                                         f'link{a}',
+                                         arch_specific_object_files))
             else:
                 # Linker rules and build statements
                 cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
                 rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
                 build_state.append(Build(f'$builddir/$name.{a}',
-                                        f'link{a}',
-                                        arch_specific_object_files))
+                                         f'link{a}',
+                                         arch_specific_object_files))
 
         build_state.extend([
             # lipo if needed, else use a dummy rule to rename it to what the next rule expects
             # the dummy rule could be optimized out, but its probably more developmentally clear
             #       to have it there anyways /shrug
             Build('$internalsymtarget',
-                'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
-                [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
+                  'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
+                  [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
             # Debug symbols
             Build('$internalsigntarget', 'debug', '$internalsymtarget'),
             # Codesign
@@ -362,13 +356,12 @@ class Generator(object):
 
         return rule_list, build_state
 
-
     def generate_ninja_outline(self) -> list:
-        '''
+        """
         Generate list of unevaluated build.ninja statements
 
         Seealso: rules_and_build_statements
-        '''
+        """
 
         outline = [
             Var('name'),
@@ -467,11 +460,11 @@ class Generator(object):
 
 
 def rules(*key_path: str) -> dict:
-    '''
+    """
     Lazy load default rules and return value specified path.
 
     Raises: FileNotFoundError, KeyError
-    '''
+    """
 
     global _LAZY_RULES_DOT_YML
     if _LAZY_RULES_DOT_YML is None:
@@ -487,11 +480,11 @@ def rules(*key_path: str) -> dict:
 
 
 def get_default_section_dict(*key_path: str) -> dict:
-    '''
+    """
     Lazy load defaults.yml and return the requested dictionary from it
 
     Raises: FileNotFoundError, KeyError
-    '''
+    """
 
     global _LAZY_DEFAULTS_DOT_YML
     with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
@@ -509,7 +502,7 @@ def get_default_section_dict(*key_path: str) -> dict:
 
 
 def handle(ex: Exception):
-    ''' Optionally print debug information '''
+    """ Optionally print debug information """
 
     dberror("Press v for detailed debugging output, any other key to exit.")
 
@@ -527,7 +520,7 @@ def handle(ex: Exception):
 
 
 def main():
-    '''
+    """
     Generate and write build.ninja file from DragonMake or Makefile
 
     Outline of this method:
@@ -536,7 +529,7 @@ def main():
         - Iterate through the top-level keys in the dictionary
         - Call the Generator class to write to {top-level-key-name}.ninja for each
         - Pass some export commands to the parent bash script via stdout
-    '''
+    """
     META_KEYS = {  # Keys that may be at the root of the DragonMake dict
         'name': 'package_name',
         'icmd': 'install_command',
@@ -581,7 +574,6 @@ def main():
                     dberror("Check YAML syntax or file an issue")
                     raise ex
 
-
     elif os.path.exists('Makefile'):
         from .theos import TheosMakefileProcessor
         config = TheosMakefileProcessor().project
@@ -615,7 +607,7 @@ def main():
             # if i add a key to control.py and don't add it to meta tags here, this happens
             # so maybe find a better way to do that, dpkg is complex and has many fields
             dbwarn("! Warning: Key %s is not a valid module (a dictionary),"
-                " nor is it a known configuration key" % key)
+                   " nor is it a known configuration key" % key)
             dbwarn("! This key will be ignored.")
             continue
 
@@ -645,7 +637,6 @@ def main():
 
     for x in exports:
         print(f'export {x}="{exports[x]}"')
-
 
 
 if __name__ == '__main__':
