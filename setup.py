@@ -6,7 +6,7 @@ setup(name='dragon',
       'and packaging.',
       author='kritanta',
       url='https://dragon.krit.me/',
-      install_requires=['pyyaml', 'ruyaml'],
+      install_requires=['ninja', 'pyyaml', 'ruyaml'],
       packages=['dragon', 'dragongen', 'buildgen'],
       package_dir={
           'dragon': 'src/dragon',

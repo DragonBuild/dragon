@@ -3,7 +3,6 @@
 check()
 {
     packagesNeeded=""
-    [ -x "$(command -v ninja)" ] || packagesNeeded+="ninja "
     [ -x "$(command -v ldid)" ] || packagesNeeded+="ldid "
 
     [[ -z "$packagesNeeded" ]] && return
