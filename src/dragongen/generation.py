@@ -152,6 +152,7 @@ class Generator(object):
                 #     type they used.
                 raise ex
 
+
         # Apply the set of variables the user included on this module
         project_dict.update(module_variables)
         # Apply the module name
@@ -163,7 +164,7 @@ class Generator(object):
         for source in get_default_section_dict(), module_variables, self.config:
             if 'all' in source:
                 project_dict.update(source['all'])
-            if 'Targets' in source and target in source['Targets']:
+            if 'Targets' in source and target in source['Targets'] and 'all' in source['Targets'][target]:
                 project_dict.update(source['Targets'][target]['all'])
 
         project_dict.update(module_variables)
@@ -223,7 +224,7 @@ class Generator(object):
         # TODO: lazy hack
         if 'cxxflags' in project_dict:
             project_dict['cxx'] = project_dict['cxx'] + ' ' + project_dict['cxxflags']
-
+        # dberror(project_dict)
         # TODO: move this to arglist maybe
         if project_dict['sysroot']:
             project_dict['sysroot'] = '-isysroot ' + project_dict['sysroot']

@@ -289,7 +289,7 @@ def standardize_file_list(subdir: str, files: list) -> list:
             continue
 
         if '*' in filename:
-            ret.extend('.' + f[len(subdir):] for f in glob.glob('.' + subdir + filename,
+            ret.extend('./' + f[len(subdir):] for f in glob.glob('.' + subdir + filename,
                                                           recursive=True))
             continue
 

@@ -142,6 +142,7 @@ class TheosMakefile(Makefile):
         self.subprojects = []
 
         self.module['arc'] = False
+        self.module['for'] = 'ios'
 
         for included in self.includes:
             if 'tweak.mk' in included:
@@ -163,6 +164,8 @@ class TheosMakefile(Makefile):
             self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
             self.variables[variable] = self.variables[variable].replace('$(', '$$(')
+            if variable == 'ARCHS':
+                self.module['archs'] = self.variables[variable].split(' ')
             if variable.endswith('_NAME'):
                 self.module_name = self.variables[variable]
             elif variable.endswith('_FILES'):
@@ -240,6 +243,7 @@ class TheosMakefileProcessor:
             self.project['icmd'] = 'killall -9 ' + self.root_makefile.variables['INSTALL_TARGET_PROCESSES']
 
         self._process_makefile(self.root_makefile)
+        #print(self.project, file=sys.stderr)
 
     def _process_makefile(self, makefile):
         if makefile.type:
