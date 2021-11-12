@@ -152,7 +152,6 @@ class Generator(object):
                 #     type they used.
                 raise ex
 
-
         # Apply the set of variables the user included on this module
         project_dict.update(module_variables)
         # Apply the module name
@@ -224,7 +223,7 @@ class Generator(object):
         # TODO: lazy hack
         if 'cxxflags' in project_dict:
             project_dict['cxx'] = project_dict['cxx'] + ' ' + project_dict['cxxflags']
-        # dberror(project_dict)
+
         # TODO: move this to arglist maybe
         if project_dict['sysroot']:
             project_dict['sysroot'] = '-isysroot ' + project_dict['sysroot']
@@ -232,9 +231,7 @@ class Generator(object):
         if 'name_override' in project_dict:
             project_dict['name'] = project_dict['name_override']
 
-        if os.environ['DGEN_DEBUG']:
-            pprint("project_dict after processing through generate_vars:" + str(project_dict), stream=sys.stderr)
-            print("\n\n", file=sys.stderr)
+        log.debug("project_dict after processing through generate_vars:" + log.format(project_dict))
 
         return project_dict
 
@@ -646,6 +643,8 @@ def main():
 
 if __name__ == '__main__':
     try:
+        if os.environ['DGEN_DEBUG']:
+            log.LOG_LEVEL = LogLevel.DEBUG
         main()
     except FileNotFoundError as exception:
         print('Error: No project files found', file=sys.stderr)

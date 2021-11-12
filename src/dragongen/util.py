@@ -1,6 +1,8 @@
+import inspect
 import re as regex
 import os, sys, glob
-from pprint import pprint
+from enum import Enum
+from pprint import pprint, pformat
 import termios
 import tty
 from .variable_types import ArgList
@@ -295,3 +297,54 @@ def standardize_file_list(subdir: str, files: list) -> list:
 
         ret.append(filename)
     return ret
+
+
+class LogLevel(Enum):
+    NONE = -1
+    ERROR = 0
+    WARN = 1
+    INFO = 2
+    DEBUG = 3
+
+
+class log:
+    """
+    Python's default logging library is absolute garbage
+
+    so we use this.
+    """
+    LOG_LEVEL = LogLevel.ERROR
+
+    @staticmethod
+    def line():
+        return 'dragon.' + os.path.basename(inspect.stack()[2][1]).split('.')[0] + ":" + str(inspect.stack()[2][2]) \
+               + ":" + inspect.stack()[2][3] + '()'
+
+    @staticmethod
+    def format(ob):
+        return pformat(ob, indent=4)
+
+    @staticmethod
+    def debug(msg: str):
+        if log.LOG_LEVEL.value >= LogLevel.DEBUG.value:
+            print(f'DEBUG - {log.line()} - {msg}', file=sys.stderr)
+
+    @staticmethod
+    def info(msg: str):
+        if log.LOG_LEVEL.value >= LogLevel.INFO.value:
+            print(f'INFO - {log.line()} - {msg}', file=sys.stderr)
+
+    @staticmethod
+    def warn(msg: str):
+        if log.LOG_LEVEL.value >= LogLevel.WARN.value:
+            print(f'WARN - {log.line()} - {msg}', file=sys.stderr)
+
+    @staticmethod
+    def warning(msg: str):
+        if log.LOG_LEVEL.value >= LogLevel.WARN.value:
+            print(f'WARN - {log.line()} - {msg}', file=sys.stderr)
+
+    @staticmethod
+    def error(msg: str):
+        if log.LOG_LEVEL.value >= LogLevel.ERROR.value:
+            print(f'ERROR - {log.line()} - {msg}', file=sys.stderr)
