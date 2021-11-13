@@ -53,5 +53,5 @@ jobs:
         git clone ${{ matrix.project-link }}
     - name: Building Project
       run: |
-        cd $(dirname $(find . -name DragonMake | xargs))
+        cd $(dirname $(find . -name DragonMake | xargs)) || cd $(dirname $(find . -name Makefile | xargs)) 
         dragon b
