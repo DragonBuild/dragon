@@ -50,7 +50,9 @@ jobs:
         dragon
     - name: Cloning Project
       run: |
-        git clone ${{ matrix.project-link }} .
+        git init .
+        git remote add origin ${{ matrix.project-link }}
+        git pull origin master
     - name: Building Project
       run: |
         dragon b
