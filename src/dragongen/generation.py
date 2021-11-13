@@ -44,9 +44,6 @@ _LAZY_DEFAULTS_DOT_YML: dict = None
 
 _IS_THEOS_MAKEFILE_ = False
 
-# Ninja Statements
-# TODO: move to types file
-
 # These are used like so:
 # a_build_object = Build("output files here", "rule name here", "input files here")
 # outputs = a_build_object.outputs
@@ -504,14 +501,17 @@ def handle(ex: Exception):
 
     dberror("Press v for detailed debugging output, any other key to exit.")
 
-    old_setting = termios.tcgetattr(sys.stdin.fileno())
-    tty.setraw(sys.stdin)
-    x = sys.stdin.read(1)
-    termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
-    if str(x).lower() == 'v':
-        dberror(str(ex))
-        dberror(''.join(traceback.format_tb(ex.__traceback__)))
-    else:
+    try:
+        old_setting = termios.tcgetattr(sys.stdin.fileno())
+        tty.setraw(sys.stdin)
+        x = sys.stdin.read(1)
+        termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
+        if str(x).lower() == 'v':
+            dberror(str(ex))
+            dberror(''.join(traceback.format_tb(ex.__traceback__)))
+        else:
+            dberror("Exiting...")
+    except Exception:
         dberror("Exiting...")
 
     print(f'export DRAGONGEN_FAILURE=1')
