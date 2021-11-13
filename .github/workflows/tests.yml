@@ -30,7 +30,6 @@ jobs:
           - https://github.com/KritantaDev/Gravitation
           - https://github.com/KritantaDev/Signe
           - https://github.com/KritantaDev/StatusViz
-          - https://github.com/KritantaDev/StopCrashingPls
           - https://github.com/KritantaDev/libCozy
     runs-on: macos-latest
     steps:
