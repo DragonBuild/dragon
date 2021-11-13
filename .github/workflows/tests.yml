@@ -34,7 +34,6 @@ jobs:
           - https://github.com/KritantaDev/libCozy
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
