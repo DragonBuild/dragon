@@ -2,8 +2,13 @@
 import os.path as path
 from enum import IntEnum
 
+import pkg_resources
+
+DRAGONBUILD_VERSION = pkg_resources.get_distribution('dragon').version
+
+
 def version() -> str:
-    return '1.6.4'
+    return DRAGONBUILD_VERSION
 
 
 def tool_path() -> str:
