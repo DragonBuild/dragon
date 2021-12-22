@@ -52,7 +52,7 @@ class Module:
         self.variables['type'] = get_from_selector('Select Module Type', {'Tweak':'tweak', 'CLI Tool':'cli', 'Library':'library'}, '0')
         self.name = get_input('Name', 'ModuleName')
         while True:
-            subdir = get_input('Subdirectory Name', '(Leave empty to work in current directory)')
+            subdir = get_input('Subdirectory Name (Leave empty to work in current directory)', '')
             if subdir != '':
                 if os.path.exists(subdir):
                     print('File/Directory already exists;')
@@ -66,8 +66,9 @@ class Module:
         self._new_for_type(self.variables['type'])
 
     def _new_for_type(self, type):
-        if self.variables['dir'] != '':
+        if 'dir' in self.variables:
             os.chdir(self.variables['dir'])
+            del self.variables['dir']
 
         if type == 'tweak':
             self.variables['filter'] = { 'executables': get_input('Comma seperated list of applications to inject', 'SpringBoard').split(', ')}
