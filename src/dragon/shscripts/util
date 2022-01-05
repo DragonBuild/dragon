@@ -58,10 +58,12 @@ update()
     cd $x || drexit
 }
 
+
+
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v1.6.4 ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v1.6.7 ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
@@ -96,5 +98,6 @@ usage()
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "dragon v${DRAGONVERS} - by kritanta"
+    echo "dragon v${DRAGONVERS} by cynder"
+    echo "lead contributors: Lorenzo Pane, Lightmann"
 }

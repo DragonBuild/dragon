@@ -1,9 +1,8 @@
 from setuptools import setup
 
 setup(name='dragon',
-      version='1.6.6',
-      description='A powerful toolkit targeting Apple development research, '
-      'and packaging.',
+      version='1.6.7',
+      description='A powerful toolkit targeting Apple development, research, and packaging.',
       author='kritanta',
       url='https://dragon.krit.me/',
       install_requires=['ninja', 'pyyaml', 'ruyaml', 'packaging'],
