@@ -10,7 +10,9 @@ function drexit()
     # It should be called on *EVERY* exit, no matter what.
     echo -e "${NC}"
     stty sane
+    python3 -m dragon.update_check
     exit $1
+
 }
 
 function cleanbuildfail()
@@ -63,7 +65,7 @@ update()
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v1.6.7 ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"

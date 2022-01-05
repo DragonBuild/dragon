@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export DRAGONVERS="1.6.4"
+export DRAGONVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
 # Defauld dragondir is ~/.dragon
 if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
@@ -233,3 +233,4 @@ fi
 rm -rf .dragon/packages > /dev/null
 set +xv
 
+python3 -m dragon.update_check

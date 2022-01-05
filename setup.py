@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='dragon',
-      version='1.6.7',
+      version='1.6.8',
       description='A powerful toolkit targeting Apple development, research, and packaging.',
       author='kritanta',
       url='https://dragon.krit.me/',

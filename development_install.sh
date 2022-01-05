@@ -6,4 +6,4 @@
 
 python3 -m pip uninstall --yes dragon
 python3 -m pip install .
-python3 -m dragon.wizard
+DRAGONVERS=$(python3 -c 'from dragon.util import version; print(version())') python3 -m dragon.wizard
