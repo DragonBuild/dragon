@@ -28,7 +28,7 @@ def get_input(prompt: str, default: str) -> str:
 def setup_wizard():
     log(f'installing dragon v{os.environ.get("DRAGONVERS")}')
     log('=========================', end='\n\n')
-    dragondir = os.path.expandvars('$HOME/.dragon/')
+    dragondir = os.path.expandvars('$DRAGONDIR/')
     try:
         os.mkdir(os.path.expandvars(dragondir))
     except FileExistsError:
@@ -54,7 +54,7 @@ def setup_wizard():
                     dragondir + '/internal')
 
     try:
-        os.mkdir(os.path.expandvars('$HOME/.dragon/toolchain'))
+        os.mkdir(os.path.expandvars('$DRAGONDIR/toolchain'))
     except FileExistsError:
         pass
     log('Done!')
