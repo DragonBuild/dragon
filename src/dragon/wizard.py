@@ -2,6 +2,7 @@
 import json
 import os
 import shutil
+import ssl
 import sys
 import tarfile
 
@@ -61,7 +62,10 @@ def setup_wizard():
 
 
 def get_supporting(api: str, destination: str):
-    response: dict = json.load(request.urlopen(api))
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE  # python doesn't bundle certs on macOS. So we have to disable SSL :)
+    response: dict = json.load(request.urlopen(api, context=ctx))
     if os.path.exists(f'{destination}/metadata.yml'):
         with open(f'{destination}/metadata.yml', 'r') as fd:
             yaml=YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
@@ -75,7 +79,7 @@ def get_supporting(api: str, destination: str):
     os.system(f'rm -rf ./{destination}')
 
     log(f'Updating supporting {destination} v{response["tag_name"]} from {tar_url} ...')
-    tar_bytes = request.urlopen(tar_url).read()
+    tar_bytes = request.urlopen(tar_url, context=ctx).read()
 
     fname = 'tmp.tar.gz'
     with open(fname, 'wb') as f:
@@ -83,7 +87,6 @@ def get_supporting(api: str, destination: str):
 
     tar = tarfile.open(fname)
     extracted_name = tar.members[0].name
-
 
     log(f'Extracting into {os.path.expandvars(dragondir + destination)}')
     tar.extractall()
