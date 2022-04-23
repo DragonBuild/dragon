@@ -32,7 +32,7 @@ send_package()
 
     echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
     python3 -m dragon.device qr mkdir -p /var/mobile/dragon/packages
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragon.device qr dpkg -i /var/mobile/dragon/${OUTPUT} && rm -rf /var/mobile/dragon/
+    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragon.device qr apt install --reinstall /var/mobile/dragon/${OUTPUT} -y && rm -rf /var/mobile/dragon/
 }
 
 create_package()
