@@ -50,7 +50,7 @@ jobs:
       run: |
         git init .
         git remote add origin ${{ matrix.project-link }}
-        git pull origin master
+        git pull origin $(git remote show origin | grep "HEAD branch" | sed 's/.*: //')
     - name: Building Project
       run: |
         dragon b
