@@ -30,7 +30,7 @@ jobs:
           - https://github.com/kritanta-ios-tweaks/Gravitation
           - https://github.com/kritanta-ios-tweaks/Signe
           - https://github.com/kritanta-ios-tweaks/StatusViz
-          - https://github.com/kritanta-ios-tweaks/lockdown
+          - https://github.com/kritanta-ios-tweaks/Garden
     runs-on: macos-latest
     steps:
     - name: Set up Python
