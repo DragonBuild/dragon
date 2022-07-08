@@ -24,13 +24,13 @@ jobs:
     strategy:
       matrix:
         project-link:
-          - https://github.com/KritantaDev/Chapters
-          - https://github.com/KritantaDev/Docky
-          - https://github.com/KritantaDev/Shakelight
-          - https://github.com/KritantaDev/Gravitation
-          - https://github.com/KritantaDev/Signe
-          - https://github.com/KritantaDev/StatusViz
-          - https://github.com/KritantaDev/libCozy
+          - https://github.com/kritanta-ios-tweaks/Chapters
+          - https://github.com/kritanta-ios-tweaks/Pivot
+          - https://github.com/kritanta-ios-tweaks/Shakelight
+          - https://github.com/kritanta-ios-tweaks/Gravitation
+          - https://github.com/kritanta-ios-tweaks/Signe
+          - https://github.com/kritanta-ios-tweaks/StatusViz
+          - https://github.com/kritanta-ios-tweaks/DeadRinger
     runs-on: macos-latest
     steps:
     - name: Set up Python
@@ -41,7 +41,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyyaml
-        pip install git+git://github.com/dragonbuild/dragon
+        pip install "git+https://github.com/dragonbuild/dragon"
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Install DragonBuild
       run: |
@@ -50,7 +50,7 @@ jobs:
       run: |
         git init .
         git remote add origin ${{ matrix.project-link }}
-        git pull origin master
+        git pull origin $(git remote show origin | grep "HEAD branch" | sed 's/.*: //')
     - name: Building Project
       run: |
         dragon b
