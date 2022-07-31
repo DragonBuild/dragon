@@ -1,35 +1,38 @@
-<p align="center" >
-<img src=".github/branding/dragon.svg" alt="Logo" width=200px>
+<p align="center">
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="https://dragon.krit.me/en/latest/_static/logo-dark.png" width=400px>
+		<img src="https://dragon.krit.me/en/latest/_static/logo-light.png" alt="Logo" width=400px>
+	</picture>
 </p>
 <p align="center">
-  <strong>
-  dragon is an expansible build system built for speed and ease of use.
-  </strong>
-  <br>
-  <br>
-  <a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
-    <image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
-  </a>
-  <a href="https://dragon.krit.me">
-    <image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
-  </a>
-  <a href="https://pypi.org/project/dragon/">
-    <image src="https://badge.fury.io/py/dragon.svg">
-  </a>
-  <br>
-  <br>
-  <a href="https://dragon.krit.me">
-    <strong>Documentation</strong>
-  </a> |
-  <a href="https://dragon.krit.me/en/latest/quickstart.html">
-    <strong>Getting Started</strong>
-  </a> |
-  <a href="https://github.com/dragonbuild/example ">
-    <strong>Example Project</strong>
-  </a> |
-  <a href="https://github.com/dragonbuild/build ">
-    <strong>Github Actions Integration</strong>
-  </a>
+	<strong>
+		An expansible build system built for speed and ease of use.
+	</strong>
+	<br>
+	<br>
+	<a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
+		<image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
+	</a>
+	<a href="https://dragon.krit.me">
+		<image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
+	</a>
+	<a href="https://pypi.org/project/dragon/">
+		<image src="https://badge.fury.io/py/dragon.svg">
+	</a>
+	<br>
+	<br>
+	<a href="https://dragon.krit.me">
+		<strong>Documentation</strong>
+	</a> |
+	<a href="https://dragon.krit.me/en/latest/quickstart.html">
+		<strong>Getting Started</strong>
+	</a> |
+	<a href="https://github.com/dragonbuild/example ">
+		<strong>Example Project</strong>
+	</a> |
+	<a href="https://github.com/dragonbuild/build ">
+		<strong>Github Actions Integration</strong>
+	</a>
 </p>
 
 # Installing dragon
