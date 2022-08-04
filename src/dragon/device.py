@@ -4,7 +4,7 @@
 
 device.py
 
-(c) 2020 kritanta
+(c) 2020 cynder
 Please refer to the LICENSE file included with dragon regarding the usage of code herein.
 
 https://dragon.krit.me/

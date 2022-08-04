@@ -4,11 +4,11 @@
 
 DragonGen.py
 
-(c) 2020 kritanta
+(c) 2020 cynder
 Please refer to the LICENSE file included with this project regarding the usage of code herein.
 
 Author credits:
-  - @kritanta
+  - @cynder
   - @l0renzo
 
 Some guidelines for work on this file moving forward:

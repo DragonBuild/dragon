@@ -1,7 +1,7 @@
 ---
 # Special thanks to uroboro for suggesting this
 # Configurations here should provide enough default variables to create the specified module;
-# Please reach out to _kritanta if you need advice on extending these
+# Please reach out to cynder if you need advice on extending these
 Defaults:
   proj_build_dir: .dragon
   builddir: $proj_build_dir/build
