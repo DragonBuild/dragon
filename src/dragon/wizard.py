@@ -6,9 +6,6 @@ from urllib import request
 from .util import deployable_path
 
 
-dragon_root_dir = ''
-
-
 def log(s: str, end: str = '\n') -> None:
     print(s, file=sys.stderr, end=end)
     sys.stderr.flush()
@@ -23,16 +20,15 @@ def get_input(prompt: str, default: str) -> str:
 def setup_wizard():
     log(f'installing dragon v{os.environ.get("DRAGON_VERS")}')
     log('=========================', end='\n\n')
-    dragon_root_dir = os.path.expandvars('$HOME/.dragon/')
+    dragon_root_dir = os.environ.get("DRAGON_ROOT_DIR")
     try:
         os.mkdir(os.path.expandvars(dragon_root_dir))
     except FileExistsError:
         pass
 
-    os.chdir(dragon_root_dir)
+    os.chdir(os.path.expandvars(dragon_root_dir))
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
-
         try:
             get_supporting(
                 f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',
@@ -45,11 +41,10 @@ def setup_wizard():
 
     log('Deploying internal configuration')
     os.system(f'rm -rf ./internal')
-    shutil.copytree(deployable_path(),
-                    dragon_root_dir + '/internal')
+    shutil.copytree(deployable_path(), dragon_root_dir + '/internal')
 
     try:
-        os.mkdir(os.path.expandvars('$HOME/.dragon/toolchain'))
+        os.mkdir(os.path.expandvars(dragon_root_dir) + '/toolchain')
     except FileExistsError:
         pass
     log('Done!')

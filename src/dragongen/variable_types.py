@@ -5,8 +5,8 @@ class ArgList(list):
     Variables with values of type list: their corresponding delims and prefixes
     '''
 
-    # This LIST_KEYS logic needs to be shortened, its horribly repetitive
-    # As its now in a seperate file, as well, that's problematic. Maybe it can be moved
+    # This LIST_KEYS logic needs to be shortened, it's horribly repetitive
+    # As it's now in a separate file as well which is problematic. Maybe it can be moved
     # into defaults.py?
     LIST_KEYS = {
         'files': ('', ' '),

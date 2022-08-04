@@ -327,7 +327,7 @@ class Generator(object):
         build_state.extend([
             # lipo if needed, else use a dummy rule to rename it to what the next rule expects
             # the dummy rule could be optimized out, but its probably more developmentally clear
-            #       to have it there anyways /shrug
+            # to have it there anyways /shrug
             Build('$internalsymtarget',
                   'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
                   [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
@@ -564,7 +564,7 @@ def main():
                 # If the file we tried to load isn't YAML, try running it as a bash script
                 if os.system("sh DragonMake 2>/dev/null") == 0:
                     # If that worked, it's the old (OLD) legacy DragonMake format,
-                    #   which we can easily support via a couple lines of regex
+                    # which we can easily support via a couple lines of regex
                     config = load_old_format(open('DragonMake'))
                     dbstate("Loading Legacy format DragonMake")
                 else:

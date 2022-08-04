@@ -15,7 +15,7 @@ dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 # This script will get called w/
-# argc=3  argv[0]                          argv[1]    argv[2]
+# argc=3  argv[0]                                argv[1]    argv[2]
 # python3 $DRAGON_ROOT_DIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
 def main():
     dbstate("Pulling 'control' values from DragonMake")
@@ -50,8 +50,8 @@ def main():
         'Architecture': 'iphoneos-arm',
         'Depends': 'mobilesubstrate' # This is a blind guess, maybe we can improve this logic?
     }
-    # extrainst?
-    filenames = [
+
+    filenames = [ # extrainst?
         'preinst',
         'postinst',
         'prerm',
@@ -71,7 +71,6 @@ def main():
 
 
     # Fallbacks section
-
     if 'Name' not in control:
         control['Name'] = os.path.basename(os.getcwd())
         # Warn for this bc it's kinda important

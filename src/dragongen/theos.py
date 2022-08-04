@@ -190,6 +190,7 @@ class TheosMakefile(Makefile):
                 self.module['cxxflags'] = self.variables[variable]
             elif variable.endswith('_LDFLAGS'):
                 self.module['ldflags'] = self.variables[variable]
+            # This borks prefs installs # TODO: figure out why
             # elif variable.endswith('_INSTALL_PATH'):
             #     self.module['install_location'] = self.variables[variable]
             elif variable.endswith('_LIBRARIES'):
@@ -205,7 +206,7 @@ class TheosMakefile(Makefile):
                     nextisawildcard = 1
                     continue
                 if nextisawildcard:
-                    # We dont want to stop with these till we hit a ')'
+                    # We dont want to stop with these til we hit a ')'
                     # thanks cr4shed ._.
                     nextisawildcard = 0 if ')' in i else 1
                     grab = i.split(')')[0]

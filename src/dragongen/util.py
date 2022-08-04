@@ -10,10 +10,10 @@ colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
 "\033[0;37m","\033[0m"],["\033[1;31m","\033[1;32m","\033[1;33m","\033[1;34m",
 "\033[1;36m","\033[1;37m","\033[0m"]]
 
-# Everything needs to go out of stderr *for now!*. the bash script executes anything
-#     sent via stdout
-# worth also noting print() to stdout works like system() for us, except its in the
-#     context of a shell above us
+# Everything needs to go out of stderr *for now*. the bash script executes anything
+# sent via stdout
+# Also worth noting print() to stdout works like system() for us, except it's in the
+# context of a shell above us
 def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
     print("%s[%s]%s %s%s%s" % (
         colors[1][col], tool, colors[bold][textcol], ">>> " if pusher
@@ -25,7 +25,7 @@ dberror = lambda msg: dprintline(0, "DragonGen", 5, 1, 0, msg)
 
 make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'include.*\/(.*)\.mk')
-nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
+nepmatch = regex.compile(r'(.*)\+=(.*)#?') # nep used subproj += instead of w/e and everyone copies her.
 
 
 def classify(filedict: dict) -> dict:
@@ -155,8 +155,8 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
                     nextisawildcard = 1
                     continue
                 if nextisawildcard:
-                    # We dont want to stop with these till we hit a ')'
-                    # thanks cr4shed ._.
+                    # We dont want to stop with these til we hit a ')'
+                    # thanks cr4shed ._. (x2)
                     nextisawildcard = 0 if ')' in i else 1
                     grab = i.split(')')[0]
                     files.append(grab.replace(')', ''))
@@ -226,7 +226,6 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
             i += 1
 
     # the magic of theos
-
     if 'export ARCHS' in variables:
         project['all'] = {
             'archs': variables['export ARCHS'].split(' ')
