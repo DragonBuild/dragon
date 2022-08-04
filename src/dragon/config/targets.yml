@@ -1,9 +1,10 @@
+---
 Targets:
   sim:
     all:
       targetos: iphonesimulator
       triple: MACHINE
-      arc: yes
+      arc: true
       fw_dirs:
         - /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk
         - $dragon_root_dir/frameworks
@@ -15,7 +16,7 @@ Targets:
       targetos: iphoneos
       targetvers: 10.0
       triple: arm64-apple-ios$targetvers
-      arc: yes
+      arc: true
       sysroot: $dragon_root_dir/sdks/iPhoneOS.sdk
       archs:
         - arm64
@@ -24,7 +25,7 @@ Targets:
     all:
       targetos: watchos
       targetvers: 5.0
-      arc: yes
+      arc: true
       sysroot: $dragon_root_dir/sdks/WatchOS.sdk
       archs: arm64_32
   host:

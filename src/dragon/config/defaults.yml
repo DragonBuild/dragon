@@ -14,7 +14,7 @@ Defaults:
   cc: clang
   cxx: clang++
   ld: clang++
-  nopack: No
+  nopack: false
   codesign: ldid
   dsym: dsymutil
   plutil: plutil
@@ -26,7 +26,7 @@ Defaults:
   optool: $dragon_root_dir/bin/optool
   stage:
     - 'true'
-  wild_recurse: No
+  wild_recurse: false
   warnings: -Wall
   optim: "0"
   debug: -fcolor-diagnostics

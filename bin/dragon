@@ -160,7 +160,6 @@ done
 # --------
 if [[ $build -eq 1 ]]; then
     # shellcheck disable=SC2154
-
     # Invoke the generator
     if [[ $gen -eq 1 ]]; then
         rm -rf $DRAGON_DATA_DIR/ninja/build.ninja 2>/dev/null
