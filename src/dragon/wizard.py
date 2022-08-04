@@ -12,7 +12,7 @@ from urllib import request
 from .util import deployable_path
 
 
-dragondir = ''
+dragon_root_dir = ''
 
 
 def log(s: str, end: str = '\n') -> None:
@@ -27,15 +27,15 @@ def get_input(prompt: str, default: str) -> str:
 
 
 def setup_wizard():
-    log(f'installing dragon v{os.environ.get("DRAGONVERS")}')
+    log(f'installing dragon v{os.environ.get("DRAGON_VERS")}')
     log('=========================', end='\n\n')
-    dragondir = os.path.expandvars('$HOME/.dragon/')
+    dragon_root_dir = os.path.expandvars('$HOME/.dragon/')
     try:
-        os.mkdir(os.path.expandvars(dragondir))
+        os.mkdir(os.path.expandvars(dragon_root_dir))
     except FileExistsError:
         pass
 
-    os.chdir(dragondir)
+    os.chdir(dragon_root_dir)
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
 
@@ -52,7 +52,7 @@ def setup_wizard():
     log('Deploying internal configuration')
     os.system(f'rm -rf ./internal')
     shutil.copytree(deployable_path(),
-                    dragondir + '/internal')
+                    dragon_root_dir + '/internal')
 
     try:
         os.mkdir(os.path.expandvars('$HOME/.dragon/toolchain'))
@@ -88,7 +88,7 @@ def get_supporting(api: str, destination: str):
     tar = tarfile.open(fname)
     extracted_name = tar.members[0].name
 
-    log(f'Extracting into {os.path.expandvars(dragondir + destination)}')
+    log(f'Extracting into {os.path.expandvars(dragon_root_dir + destination)}')
     tar.extractall()
     os.rename(extracted_name, destination)
     os.remove(fname)

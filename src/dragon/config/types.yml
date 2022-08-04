@@ -87,7 +87,7 @@ Types:
         - Foundation
       stage2:
         - 'cp -R Resources/ $proj_build_dir/$stagedir/$location'
-        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGONDIR/frameworks/$name.framework'
+        - 'cp -R $proj_build_dir/$stagedir$location $$DRAGON_ROOT_DIR/frameworks/$name.framework'
         - 'if [ ! -z "$public_headers" ]; then
            mkdir -p $proj_build_dir/$stagedir/$location/Headers;
            cp $public_headers $proj_build_dir/$stagedir/$location/Headers;

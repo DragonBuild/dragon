@@ -23,7 +23,7 @@ export release=0
 
 export ToolchainPath=""
 export ToolchainPrefix=""
-command -v dsymutil >/dev/null || export ToolchainPath="${DRAGONDIR}/toolchain/bin/"; export ToolchainPrefix="";
+command -v dsymutil >/dev/null || export ToolchainPath="${DRAGON_ROOT_DIR}/toolchain/bin/"; export ToolchainPrefix="";
 
 
 # This controls ninja colors.

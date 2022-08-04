@@ -46,7 +46,7 @@ create_package()
     find . -name '.DS_Store' -type f -delete
     find . -name '.dragonbuilding' -delete
     echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
-    perl $DRAGONDIR/src/dm.pl/dm.pl -Zgzip -z9 .dragon/_ .dragon/packages/
+    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 .dragon/_ .dragon/packages/
     GENOUTPUT="$(ls .dragon/packages)"
     mkdir -p packages 2> /dev/null
     cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}

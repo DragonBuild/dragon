@@ -11,5 +11,5 @@ state/phoneip
 state/remoteip
 testing/*
 dist/
-build
-dragon.egg-info
+build/
+dragon.egg-info/

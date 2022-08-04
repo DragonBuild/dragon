@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+if [ -z $DRAGON_ROOT_DIR ]; then export DRAGON_ROOT_DIR=$HOME/.dragon; fi
 
 DPREVERS=$(python3 -c 'from dragon.util import version; print(version())')
 

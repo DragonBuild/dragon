@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 
-export DRAGONVERS=$(python3 -c 'from dragon.util import version; print(version())')
+export DRAGON_VERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-# Default dragondir is ~/.dragon
-if [[ -z $DRAGONDIR ]]; then
-    export DRAGONDIR=$HOME/.dragon;
+# Default dragon root dir is ~/.dragon
+if [[ -z $DRAGON_ROOT_DIR ]]; then
+    export DRAGON_ROOT_DIR=$HOME/.dragon;
 fi
 
-# Run setup wizard if dragondir is empty or nonexistent
-if [[ -z "$(ls -A $DRAGONDIR)" ]]; then
+# Run setup wizard if dragon root dir is empty or nonexistent
+if [[ -z "$(ls -A $DRAGON_ROOT_DIR)" ]]; then
     python3 -m dragon.wizard
     exit 0
 fi
-
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
 
@@ -36,6 +35,11 @@ yaml() {
 }
 
 set -o pipefail
+
+# Define the local dragon data dir
+if [[ $PWD != $HOME ]]; then
+    export DRAGON_DATA_DIR=$PWD/.dragon;
+fi
 
 # --------
 # Argument Parsing
@@ -127,10 +131,10 @@ while ! [[ -z $1 ]]; do
                                 drexit
                                 ;;
         r | remote )            shift
-                                bash $DRAGONDIR/internal/tools/remote $*
+                                bash $DRAGON_ROOT_DIR/internal/tools/remote $*
                                 drexit
                                 ;;
-        relink )                rm .dragon/sign
+        relink )                rm .dragon/sign/*
                                 ;;
         h | help | -h )         usage
                                 drexit
@@ -141,7 +145,7 @@ while ! [[ -z $1 ]]; do
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                cat $DRAGONDIR/internal/banner.txt
+        v | -v )                cat $DRAGON_ROOT_DIR/internal/banner.txt
                                 ;;
         * )                     usage
                                 drexit 1
@@ -149,9 +153,6 @@ while ! [[ -z $1 ]]; do
     esac # who comes up with this syntax lol
     shift
 done
-
-cwd=$(basename $PWD)
-
 
 # --------
 # Build, then package (if needed)
@@ -224,7 +225,7 @@ fi
 # On-device debugging
 # --------
 if [[ $debug -eq 1 ]] ; then
-    eval $(python3 $DRAGONDIR/internal/tools/device.py get)
+    eval $(python3 $DRAGON_ROOT_DIR/internal/tools/device.py get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
     ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install -y lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"

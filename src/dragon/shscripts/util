@@ -41,20 +41,20 @@ setupRemote()
     # remote.py | remote.sh
     echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
     read IPA
-    echo "export IPA=\"$IPA\"" > $DRAGONDIR/state/remoteip
+    echo "export IPA=\"$IPA\"" > $DRAGON_ROOT_DIR/state/remoteip
     echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
     read USERN
     if [ -z "$USERN" ]; then
         USERN="root"
     fi
-    echo "export USERN=\"$USERN\"" >> $DRAGONDIR/state/remoteip
+    echo "export USERN=\"$USERN\"" >> $DRAGON_ROOT_DIR/state/remoteip
 }
 
 update()
 {
     # update.sh
     x=$PWD
-    cd $DRAGONDIR || drexit
+    cd $DRAGON_ROOT_DIR || drexit
     git pull
     git submodule update --init --recursive
     cd $x || drexit
@@ -65,7 +65,7 @@ update()
 usage()
 {
     echo ""
-    echo -e "${PrefixColor}dragon v${DRAGONVERS} ${BoldColor}-=-=-${NC}"
+    echo -e "${PrefixColor}dragon v${DRAGON_VERS} ${BoldColor}-=-=-${NC}"
     echo "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
@@ -100,6 +100,6 @@ usage()
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "dragon v${DRAGONVERS} by cynder"
+    echo "dragon v${DRAGON_VERS} by cynder"
     echo "lead contributors: Lorenzo Pane, Lightmann"
 }

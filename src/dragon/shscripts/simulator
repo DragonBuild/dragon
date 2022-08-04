@@ -9,18 +9,18 @@ simfail()
 
 simsetup()
 {
-    mkdir -p $DRAGONDIR/simulator/load
+    mkdir -p $DRAGON_ROOT_DIR/simulator/load
     hold=$PWD
-    cd $DRAGONDIR/src/simject || simfail
+    cd $DRAGON_ROOT_DIR/src/simject || simfail
     dragon c b
     cd $hold || simfail
 }
 
 simstall()
 {
-    test -f $DRAGONDIR/simulator/resim || simsetup
+    test -f $DRAGON_ROOT_DIR/simulator/resim || simsetup
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONDIR/simulator/load || cleanbuildfail
+    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGON_ROOT_DIR/simulator/load || cleanbuildfail
     echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
     resim
 }

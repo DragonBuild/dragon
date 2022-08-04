@@ -130,7 +130,7 @@ class Generator(object):
 
         if _IS_THEOS_MAKEFILE_:
             project_dict.update({
-                'theosshim': '-include$$DRAGONDIR/include/PrefixShim.h -w'
+                'theosshim': '-include$$DRAGON_ROOT_DIR/include/PrefixShim.h -w'
             })
 
         # Setup with default vars
@@ -201,8 +201,8 @@ class Generator(object):
 
         # Specify toolchain paths
         # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
-        if len(os.listdir(os.environ['DRAGONDIR'] + '/toolchain')) > 1:
-            project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/'
+        if len(os.listdir(os.environ['DRAGON_ROOT_DIR'] + '/toolchain')) > 1:
+            project_dict.update({k: f'$dragon_root_dir/toolchain/linux/iphone/bin/'
                                     + project_dict[k] for k in [
                                      'cc',
                                      'cxx',
@@ -212,7 +212,7 @@ class Generator(object):
                                      'swift',
                                      'ld',
                                  ]})
-            project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/'
+            project_dict.update({k: '$dragon_root_dir/toolchain/linux/iphone/bin/'
                                     + project_dict[k] for k in [
                                      'codesign',
                                  ]})
@@ -367,7 +367,7 @@ class Generator(object):
             ___,
             Var('stagedir'),
             Var('location'),
-            Var('dragondir'),
+            Var('dragon_root_dir'),
             Var('sysroot'),
             Var('proj_build_dir'),
             Var('objdir'),
@@ -463,7 +463,7 @@ def rules(*key_path: str) -> dict:
 
     global _LAZY_RULES_DOT_YML
     if _LAZY_RULES_DOT_YML is None:
-        with open(f'{os.environ["DRAGONDIR"]}/internal/rules.yml') as f:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/rules.yml') as f:
             _LAZY_RULES_DOT_YML = yaml.safe_load(f)
 
     key_path = list(key_path)
@@ -482,11 +482,11 @@ def get_default_section_dict(*key_path: str) -> dict:
     """
 
     global _LAZY_DEFAULTS_DOT_YML
-    with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/defaults.yml') as f:
         _LAZY_DEFAULTS_DOT_YML = yaml.safe_load(f)
-    with open(f'{os.environ["DRAGONDIR"]}/internal/targets.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/targets.yml') as f:
         _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
-    with open(f'{os.environ["DRAGONDIR"]}/internal/types.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/types.yml') as f:
         _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
 
     key_path = list(key_path)
