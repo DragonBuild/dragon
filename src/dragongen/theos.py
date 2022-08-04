@@ -167,7 +167,7 @@ class TheosMakefile(Makefile):
                 self.type = TheosMakefileType.FRAMEWORK
 
         for variable in self.variables:
-            self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+            self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
             self.variables[variable] = self.variables[variable].replace('$(THEOS)', '~/.dragon')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
@@ -217,7 +217,7 @@ class TheosMakefile(Makefile):
             stage = self.rules['stage']
             stage_processed = []
             for command in stage:
-                command = command.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+                command = command.replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
                 command = command.replace('$(THEOS)', '~/.dragon')
                 command = command.replace('$(ECHO_NOTHING)', '')
                 command = command.replace('$(ECHO_END)', '')

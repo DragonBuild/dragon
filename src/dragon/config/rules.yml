@@ -220,7 +220,7 @@ lipo:
 bundle:
   name: Bundle Resources
   desc: Copying Bundle Resources
-  cmd: mkdir -p "$proj_build_dir/_$location/" && cp -R "$resource_dir/" "$proj_build_dir/_$location"
+  cmd: mkdir -p "$dragon_data_dir/_$location/" && cp -R "$resource_dir/" "$dragon_data_dir/_$location"
 plist:
   name: plutil compilation
   desc: Compiling $in

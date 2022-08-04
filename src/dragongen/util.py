@@ -78,7 +78,7 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
             if stageactive:
                 if line.startswith((' ', '\t')):
                     x = line
-                    x = x.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
+                    x = x.replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
                     x = x.replace('$(ECHO_NOTHING)', '')
                     x = x.replace('$(ECHO_END)', '')
                     stage.append(x)

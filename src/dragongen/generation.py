@@ -369,7 +369,7 @@ class Generator(object):
             Var('location'),
             Var('dragon_root_dir'),
             Var('sysroot'),
-            Var('proj_build_dir'),
+            Var('dragon_data_dir'),
             Var('objdir'),
             Var('signdir'),
             Var('builddir'),
