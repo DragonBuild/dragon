@@ -185,8 +185,10 @@ if [[ $build -eq 1 ]]; then
     for i in ${subsb[@]}; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
-        [[ -d $i ]] && mkdir -p $i/$DRAGON_DIR/ && cp DragonMake $i/$DRAGON_DIR/DragonMake 2> /dev/null
-
+        if [[ -d $i ]]; then
+            mkdir -p $i/$DRAGON_DIR/
+            cp DragonMake $i/$DRAGON_DIR/DragonMake 2> /dev/null
+        fi
         build $i
     done
 
