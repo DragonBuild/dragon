@@ -223,11 +223,11 @@ fi
 # --------
 # On-device debugging
 # --------
-if [[ $debug -eq 1 ]] ; then
-    eval $(python3 $DRAGON_ROOT_DIR/internal/tools/device.py get)
+if [[ $debug -eq 1 ]]; then
+    eval $(python3 -m dragon.device get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
-    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install -y lldb" || drexit
-    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
+    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install lldb" || drexit
+    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc || killall lldb" || drexit
 fi
 
 rm -rf $DRAGON_DATA_DIR/packages > /dev/null
