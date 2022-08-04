@@ -120,6 +120,8 @@ class Device:
 
         if not self.test_connection():
             dberror(f'Could not connect to device at {self.host}:{self.port}')
+            if self.host == "localhost" and self.port == 4444:
+                dberror(f'To configure a new device, run "dragon s"')
             self.connection_failure_resolver()
             return
 
@@ -159,7 +161,7 @@ class Device:
 class DeviceManager(object):
 
     def __init__(self):
-        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml') as state:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/state.yml') as state:
             dragon_state = yaml.safe_load(state)
 
         self.dragon_state = dragon_state
@@ -171,7 +173,7 @@ class DeviceManager(object):
         self.current = self.devices[dragon_state['device']['current']]
 
     def savestate(self):
-        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml', 'w') as state:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/state.yml', 'w') as state:
             yaml.dump(self.dragon_state, state)
 
     def add_device(self, device: Device):
@@ -292,8 +294,8 @@ def main():
             dbstate('Connected!')
             exit(0)
         else:
-            dberror('Connection Failed')
-            dberror('Error connecting to device, make sure SSH is functioning properly')
+            dberror('Connection to device failed')
+            dberror('Make sure SSH is functioning properly and/or run "dragon s" to configure your device')
             exit(1)
 
 
