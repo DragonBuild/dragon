@@ -11,3 +11,5 @@ state/phoneip
 state/remoteip
 testing/*
 dist/
+build
+dragon.egg-info
