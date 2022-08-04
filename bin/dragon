@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
+export DRAGON_DIR=.dragon
 export DRAGON_VERS=$(python3 -c 'from dragon.util import version; print(version())')
 
 # Default dragon root dir is ~/.dragon
 if [[ -z $DRAGON_ROOT_DIR ]]; then
-    export DRAGON_ROOT_DIR=$HOME/.dragon;
+    export DRAGON_ROOT_DIR=$HOME/$DRAGON_DIR;
 fi
 
 # Run setup wizard if dragon root dir is empty or nonexistent
@@ -38,7 +39,7 @@ set -o pipefail
 
 # Define the local dragon data dir
 if [[ $PWD != $HOME ]]; then
-    export DRAGON_DATA_DIR=$PWD/.dragon;
+    export DRAGON_DATA_DIR=$PWD/$DRAGON_DIR;
 fi
 
 # --------
@@ -134,7 +135,7 @@ while ! [[ -z $1 ]]; do
                                 bash $DRAGON_ROOT_DIR/internal/tools/remote $*
                                 drexit
                                 ;;
-        relink )                rm .dragon/sign/*
+        relink )                rm $DRAGON_DATA_DIR/sign/*
                                 ;;
         h | help | -h )         usage
                                 drexit
@@ -162,9 +163,9 @@ if [[ $build -eq 1 ]]; then
 
     # Invoke the generator
     if [[ $gen -eq 1 ]]; then
-        rm -rf .dragon/ninja/build.ninja 2>/dev/null
-        mkdir -p .dragon/ninja 2>/dev/null
-        mkdir -p .dragon/modules 2>/dev/null
+        rm -rf $DRAGON_DATA_DIR/ninja/build.ninja 2>/dev/null
+        mkdir -p $DRAGON_DATA_DIR/ninja 2>/dev/null
+        mkdir -p $DRAGON_DATA_DIR/modules 2>/dev/null
 
         generate
 
@@ -173,21 +174,19 @@ if [[ $build -eq 1 ]]; then
         fi
     fi
 
-    projroot=$PWD
-
     set -f
     # If there's more than one project in the root directory we need to iterate by name.
     # shellcheck disable=SC2207
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
-    mkdir -p .dragon
-    cp DragonMake .dragon/DragonMake 2> /dev/null
+    mkdir -p $DRAGON_DATA_DIR
+    cp DragonMake $DRAGON_DATA_DIR/DragonMake 2> /dev/null
 
     for i in ${subsb[@]}; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
-        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake 2> /dev/null
+        [[ -d $i ]] && mkdir -p $i/$DRAGON_DIR/ && cp DragonMake $i/$DRAGON_DIR/DragonMake 2> /dev/null
 
         build $i
     done
@@ -207,7 +206,7 @@ fi
 # DRAGON_DPKG is 1 by default, modified by the generator
 # --------
 if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
-    OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
+    OUTPUT="$(cat $DRAGON_DATA_DIR/last_package | tr -d '\040\011\012\015' )"
 
     if [[ -z $OUTPUT ]]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
@@ -231,7 +230,7 @@ if [[ $debug -eq 1 ]] ; then
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
 fi
 
-rm -rf .dragon/packages > /dev/null
+rm -rf $DRAGON_DATA_DIR/packages > /dev/null
 set +xv
 
 python3 -m dragon.update_check
