@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
+
 export DRAGONVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-# Defauld dragondir is ~/.dragon
-if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+# Default dragondir is ~/.dragon
+if [[ -z $DRAGONDIR ]]; then
+    export DRAGONDIR=$HOME/.dragon;
+fi
 
-# Run setup wizard if dragondir is empty or nonexistant
-if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
+# Run setup wizard if dragondir is empty or nonexistent
+if [[ -z "$(ls -A $DRAGONDIR)" ]]; then
     python3 -m dragon.wizard
     exit 0
 fi
@@ -36,22 +39,21 @@ set -o pipefail
 
 # --------
 # Argument Parsing
-# Set a variable here or call a bash function if it's atool
+# Set a variable here or call a bash function if it's a tool
 # --------
 
 # If we have no args, print usage and exit
-if [ "$1" == "" ]; then
+if [[ -z $1 ]]; then
     usage
     drexit
 fi
 
-while [ "$1" != "" ]; do
+while ! [[ -z $1 ]]; do
     case $1 in
 
         # --------
         # Set Variables
         # --------
-
         do )                    gen=1
                                 build=1
                                 install=1
@@ -101,7 +103,6 @@ while [ "$1" != "" ]; do
         # --------
         # Commands
         # --------
-
         u | update | upgrade )            source $TOOLPATH/upgrader
                                 drexit
                                 ;;
@@ -155,19 +156,18 @@ cwd=$(basename $PWD)
 # --------
 # Build, then package (if needed)
 # --------
-
-if [ $build == 1 ]; then
+if [[ $build -eq 1 ]]; then
     # shellcheck disable=SC2154
 
     # Invoke the generator
-    if [ $gen == 1 ]; then
+    if [[ $gen -eq 1 ]]; then
         rm -rf .dragon/ninja/build.ninja 2>/dev/null
         mkdir -p .dragon/ninja 2>/dev/null
         mkdir -p .dragon/modules 2>/dev/null
 
         generate
 
-        if [ "$DRAGONGEN_FAILURE" == 1 ]; then
+        if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
             cleanbuildfail
         fi
     fi
@@ -193,7 +193,7 @@ if [ $build == 1 ]; then
 
     find . -name '.clean' -type f -delete
 
-    if [ $DRAGON_DPKG == 1 ]; then
+    if [[ $DRAGON_DPKG -eq 1 ]]; then
         create_package
     fi
 
@@ -205,10 +205,10 @@ fi
 # Install a package after building (doesn't need to be same session)
 # DRAGON_DPKG is 1 by default, modified by the generator
 # --------
-if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
+if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
     OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
 
-    if [ -z "$OUTPUT" ]; then
+    if [[ -z $OUTPUT ]]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
         drexit
     fi
@@ -223,10 +223,10 @@ fi
 # --------
 # On-device debugging
 # --------
-if [ $debug == 1 ] ; then
+if [[ $debug -eq 1 ]] ; then
     eval $(python3 $DRAGONDIR/internal/tools/device.py get)
     echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
-    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
+    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install -y lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
 fi
 
