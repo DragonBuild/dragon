@@ -27,13 +27,10 @@ Things to keep in mind when working on this file:
 
 """
 
-import traceback
-import platform
+import traceback, platform, yaml
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
-import yaml
-
 from .variable_types import ProjectVars
 from .util import *
 from buildgen.generator import BuildFileGenerator

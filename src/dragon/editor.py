@@ -1,6 +1,6 @@
-import os, sys, pwd
-import os.path
-import pprint
+#!/usr/bin/env python3
+
+import os, sys, pwd, pprint
 import ruyaml as yaml
 
 from .util import dprintline, OutputColors, OutputWeight

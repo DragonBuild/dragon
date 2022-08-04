@@ -3,10 +3,6 @@ logos:
   name: Logos Preprocessor
   desc: Preprocessing $in using Logos
   cmd: $logos $in > $out
-prefs:
-  name: DragonPrefs
-  desc: Building DragonPrefs
-  cmd: python3 $$DRAGON_ROOT_DIR/DragonGen/dragonprefs.py $in $out
 swiftarmv6:
   name: Swift armv6
   cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv6-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out

@@ -1,13 +1,7 @@
 #!/usr/env/bin python3
-import json
-import os
-import shutil
-import ssl
-import sys
-import tarfile
 
+import json, os, shutil, ssl, sys, tarfile
 from ruyaml import YAML
-
 from urllib import request
 from .util import deployable_path
 

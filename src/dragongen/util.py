@@ -1,10 +1,9 @@
-import inspect
+#!/usr/env/bin python3
+
+import os, sys, glob, inspect, termios, tty
 import re as regex
-import os, sys, glob
 from enum import Enum
 from pprint import pprint, pformat
-import termios
-import tty
 from .variable_types import ArgList
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",

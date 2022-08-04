@@ -1,4 +1,4 @@
-
+#!/usr/env/bin python3
 
 class ArgList(list):
     '''
@@ -7,7 +7,7 @@ class ArgList(list):
 
     # This LIST_KEYS logic needs to be shortened, its horribly repetitive
     # As its now in a seperate file, as well, that's problematic. Maybe it can be moved
-    #       into defaults.py?
+    # into defaults.py?
     LIST_KEYS = {
         'files': ('', ' '),
         'logos_files': ('', ' '),

@@ -1,22 +1,22 @@
 ProjectTests:
   General:
-    - https://github.com/KritantaDev/Chapters
-    - https://github.com/KritantaDev/Docky
-    - https://github.com/KritantaDev/Shakelight
-    - https://github.com/KritantaDev/Gravitation
+    - https://github.com/kritanta-ios-tweaks/Chapters
+    - https://github.com/kritanta-ios-tweaks/Docky
+    - https://github.com/kritanta-ios-tweaks/Shakelight
+    - https://github.com/kritanta-ios-tweaks/Gravitation
   Globbing:
-    - https://github.com/KritantaDev/Signe
+    - https://github.com/kritanta-ios-tweaks/Signe
   Legacy:
-    - https://github.com/KritantaDev/StatusViz
+    - https://github.com/kritanta-ios-tweaks/StatusViz
   Theos:
-    - https://github.com/KritantaDev/StopCrashingPls
-    - https://github.com/KritantaDev/libCozy
+    - https://github.com/kritanta-ios-tweaks/DeadRinger
+    - https://github.com/kritanta-ios-tweaks/libCozy
 BaselineData:
   cpu_bench: 1.3837896153333336
   ProjectScores:
-    https://github.com/KritantaDev/Chapters: 0.7295811089999997
-    https://github.com/KritantaDev/Docky: 1.3256995099999997
-    https://github.com/KritantaDev/Shakelight: 0.7603968410000022
-    https://github.com/KritantaDev/StatusViz: 1.176904830999998
-    https://github.com/KritantaDev/StopCrashingPls: 0.631509568000002
-    https://github.com/KritantaDev/libCozy: 0.7155977580000004
+    https://github.com/kritanta-ios-tweaks/Chapters: 0.7295811089999997
+    https://github.com/kritanta-ios-tweaks/Docky: 1.3256995099999997
+    https://github.com/kritanta-ios-tweaks/Shakelight: 0.7603968410000022
+    https://github.com/kritanta-ios-tweaks/StatusViz: 1.176904830999998
+    https://github.com/kritanta-ios-tweaks/StopCrashingPls: 0.631509568000002
+    https://github.com/kritanta-ios-tweaks/libCozy: 0.7155977580000004

@@ -1,6 +1,6 @@
-import json
-import os
-import urllib.request
+#!/usr/bin/env python3
+
+import json, os, urllib.request
 from packaging.version import Version
 
 if __name__ == '__main__':

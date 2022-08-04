@@ -1,5 +1,7 @@
-from enum import Enum
+#!/usr/env/bin python3
+
 import os, sys
+from enum import Enum
 from ruyaml import YAML
 
 def strip_comments(text):

@@ -1,3 +1,5 @@
+#!/usr/env/bin python3
+
 import yaml, os, sys
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",

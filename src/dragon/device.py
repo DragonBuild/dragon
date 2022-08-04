@@ -12,9 +12,7 @@ https://github.com/DragonBuild/dragon
 
 '''
 
-import os, sys, yaml
-import subprocess
-import socket
+import os, sys, yaml, subprocess, socket
 
 from .util import dprintline, OutputColors, OutputWeight
 

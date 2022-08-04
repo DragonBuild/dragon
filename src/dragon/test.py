@@ -1,7 +1,8 @@
-import subprocess, sys, os
+#!/usr/bin/env python3
+
+import subprocess, sys, os, timeit, time, yaml
 from pprint import pprint
 from math import sin, cos, radians
-import timeit, time, yaml
 
 TestDict = yaml.safe_load(open(os.environ['DRAGON_ROOT_DIR'] + '/internal/tests.yml'))
 projects = TestDict['ProjectTests']

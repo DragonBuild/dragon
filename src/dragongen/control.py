@@ -1,3 +1,5 @@
+#!/usr/env/bin python3
+
 import yaml, os, sys
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
@@ -38,8 +40,7 @@ def main():
         'icon': 'Icon',
         'depiction': 'Depiction',
         'sldepiction': 'Sileodepiction',
-        'sileodepiction': 'Sileodepiction',
-
+        'sileodepiction': 'Sileodepiction'
     }
 
     defs = {
@@ -78,7 +79,7 @@ def main():
 
     if 'Package' not in control:
         control['Package'] = f'com.yourcompany.{control["Name"].lower()}'
-        # Warn for this too, its fairly important
+        # Warn for this too, it's fairly important
         dbwarn(f'No "id:" key in DragonMake, creating default based on Name: key')
 
     if 'Author' not in control:
