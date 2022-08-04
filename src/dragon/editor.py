@@ -2,7 +2,6 @@
 
 import os, sys, pwd, pprint
 import ruyaml as yaml
-
 from .util import dprintline, OutputColors, OutputWeight
 
 dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Project Editor", text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)

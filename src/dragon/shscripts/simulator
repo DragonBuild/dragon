@@ -20,7 +20,7 @@ simstall()
 {
     test -f $DRAGON_ROOT_DIR/simulator/resim || simsetup
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGON_ROOT_DIR/simulator/load || cleanbuildfail
+    cp $DRAGON_DIR/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGON_ROOT_DIR/simulator/load || cleanbuildfail
     echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
     resim
 }

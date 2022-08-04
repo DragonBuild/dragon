@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-if [ -z $DRAGON_ROOT_DIR ]; then export DRAGON_ROOT_DIR=$HOME/.dragon; fi
+export DRAGON_DIR=.dragon
+if [[ -z $DRAGON_ROOT_DIR ]; then
+    export DRAGON_ROOT_DIR=$HOME/$DRAGON_DIR;
+fi
 
 DPREVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
@@ -8,7 +11,7 @@ python3 -m pip install --upgrade dragon
 
 DPOSTVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-if [ "$DPOSTVERS" == "$DPREVERS" ]; then
+if [[ $DPOSTVERS == $DPREVERS ]]; then
     echo "latest version of dragon already installed"
 else
     echo "Updated dragon. Updating resources..."

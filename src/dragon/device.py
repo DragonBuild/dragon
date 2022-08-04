@@ -13,7 +13,6 @@ https://github.com/DragonBuild/dragon
 '''
 
 import os, sys, yaml, subprocess, socket
-
 from .util import dprintline, OutputColors, OutputWeight
 
 dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Device", text_color=OutputColors.White,

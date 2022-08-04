@@ -6,7 +6,6 @@ import pkg_resources
 
 DRAGONBUILD_VERSION = pkg_resources.get_distribution('dragon').version
 
-
 def version() -> str:
     return DRAGONBUILD_VERSION
 
