@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
 
-source $DRAGON_ROOT_DIR/internal/data/dragoncolors
-
-set -e
-source $DRAGON_ROOT_DIR/state/remoteip
-LDIR=$PWD
-RDIR=$(python3 -c 'import os;print("~/.dragon/server/" + os.getenv("PWD")')
-RPAR="$(dirname "$RDIR")"
-ssh ${USERN}@${IPA} "mkdir -p ${RDIR}"
-prefix_print "Syncing..."
-rsync -aL --exclude '.dragon' --exclude 'packages' --exclude '.idea' ${PWD} ${USERN}@${IPA}:$RPAR
-prefix_print "Starting Build"
-ssh ${USERN}@${IPA} -t "cd $RDIR; ~/.dragonbuild/dragon $*"
-set +e
+remote()
+{
+    set -e
+    source $DRAGON_ROOT_DIR/state/remoteip
+    prefix_print "Checking for Dragon on remote server..."
+    DRG='$(python3 -c "import site; print(site.USER_BASE)")/bin/dragon'
+    DRG_CHECK=$(ssh ${USERN}@${IPA} "[[ -x $DRG ]] && echo $DRG")
+    if [[ -z $DRG_CHECK ]]; then
+        prefix_print "Dragon is not installed on the remote server. Please install it with 'pip3 install dragon' before proceeding."
+        drexit
+    else
+        prefix_print "Remote dragon is $DRG_CHECK"
+    fi
+    prefix_print "Determining remote directory path..."
+    RDIR=$(ssh ${USERN}@${IPA} 'echo $HOME/.dragon/server/ && mkdir -p $HOME/.dragon/server/')
+    prefix_print "Remote directory path is $RDIR"
+    prefix_print "Syncing project directory..."
+    rsync -aL --exclude '.dragon' --exclude 'packages' --exclude '.idea' $PWD ${USERN}@${IPA}:$RDIR
+    RPROJ_DIR=${RDIR}$(basename $PWD)
+    prefix_print "Remote project directory is $RPROJ_DIR"
+    prefix_print "Starting Build..."
+    ssh ${USERN}@${IPA} -t "cd $RPROJ_DIR && $DRG $*"
+    set +e
+}

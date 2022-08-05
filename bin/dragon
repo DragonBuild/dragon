@@ -27,6 +27,7 @@ source $TOOLPATH/simulator
 source $TOOLPATH/packaging
 source $TOOLPATH/building
 source $TOOLPATH/generator
+source $TOOLPATH/remote
 
 # All "state" variables we set and then act upon.
 source $TOOLPATH/variables
@@ -134,7 +135,7 @@ while ! [[ -z $1 ]]; do
                                 drexit
                                 ;;
         r | remote )            shift
-                                bash $DRAGON_ROOT_DIR/internal/tools/remote $*
+                                remote $*
                                 drexit
                                 ;;
         relink )                rm $DRAGON_DATA_DIR/sign/*
