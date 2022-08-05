@@ -39,6 +39,7 @@ setupRemote()
     # remote.py | remote.sh
     echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
     read IPA
+    mkdir -p $DRAGON_ROOT_DIR/state
     echo "export IPA=\"$IPA\"" > $DRAGON_ROOT_DIR/state/remoteip
     echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
     read USERN

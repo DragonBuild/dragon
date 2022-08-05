@@ -122,13 +122,15 @@ while ! [[ -z $1 ]]; do
                                 ;;
         sr | rconf )            setupRemote
                                 ;;
-        sn | send )             snd $2
+        sn | send )             send_package $2
                                 drexit
                                 ;;
-        ch | checkra1n )        /Applications/checkra1n.app/Contents/MacOS/checkra1n -g
+        ch | checkra1n )        C1=$(which checkra1n) ||  echo -e "${PrefixColor}[Dragon]${BoldColor} Checkra1n is not currently installed. Exiting."; drexit 1
+                                $C1 -g
                                 drexit
                                 ;;
-        chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
+        chc | checkra1ncli )    C1=$(which checkra1n) ||  echo -e "${PrefixColor}[Dragon]${BoldColor} Checkra1n is not currently installed. Exiting."; drexit 1
+                                $C1 -c
                                 drexit
                                 ;;
         r | remote )            shift

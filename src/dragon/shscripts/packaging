@@ -2,18 +2,23 @@
 
 send_package()
 {
-    if [ $simtarg == 1 ]; then
+    if [[ $1 == "" ]]; then
+        echo -e "${PrefixColor}[Dragon]${BoldColor} No package provided. Exiting.${NC}"
+        exit 1
+    fi
+
+    if [[ $simtarg -eq 1 ]]; then
         simstall
         drexit 0
     fi
-    if [ "${USER}" == "mobile" ]; then
+    if [[ $USER == "mobile" ]]; then
         sudo dpkg -i ./packages/${GENOUTPUT}
         ${INSTALL_CMD} &
         drexit 0
     fi
     echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
     OUTPUT=$1
-    if [ -z "$OUTPUT" ]; then
+    if [[ -z $OUTPUT ]]; then
         echo -e "${PrefixColor}[Dragon]${BoldColor} $1 not found${NC}"
         drexit
     fi
@@ -26,7 +31,7 @@ send_package()
 
     eval $(python3 -m dragon.device get)
 
-    if [ -z "$DRBIP" ]; then
+    if [[ -z $DRBIP ]]; then
         python3 -m dragon.device setup
     fi
 
@@ -38,17 +43,18 @@ send_package()
 create_package()
 {
     echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
-    mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./.dragon/_/DEBIAN/control
-    du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
-    chmod -R 0755 .dragon/_/DEBIAN/*
-    mkdir -p .dragon/packages
-    find . -name '.DS_Store' -type f -delete
-    find . -name '.dragonbuilding' -delete
+    mv $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/_/DEBIAN
+    if [[ -f control ]]; then
+        echo -e "$(cat control)" > $DRAGON_DIR/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./$DRAGON_DIR/_/DEBIAN/control
+    fi
+    du -d 0 $DRAGON_DIR/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> $DRAGON_DIR/_/DEBIAN/control
+    chmod -R 0755 $DRAGON_DIR/_/DEBIAN/*
+    mkdir -p $DRAGON_DIR/packages
+    find . -type f -name '.DS_Store' -o -name '.dragonbuilding' -delete
     echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
-    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 .dragon/_ .dragon/packages/
-    GENOUTPUT="$(ls .dragon/packages)"
+    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 $DRAGON_DIR/_ $DRAGON_DIR/packages/
+    GENOUTPUT="$(ls $DRAGON_DIR/packages)"
     mkdir -p packages 2> /dev/null
-    cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
-    echo "${GENOUTPUT}" > .dragon/last_package
+    cp $DRAGON_DIR/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    echo "${GENOUTPUT}" > $DRAGON_DIR/last_package
 }

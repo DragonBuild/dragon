@@ -5,7 +5,7 @@ source $DRAGON_ROOT_DIR/internal/data/dragoncolors
 set -e
 source $DRAGON_ROOT_DIR/state/remoteip
 LDIR=$PWD
-RDIR=$(python3 -c 'import os;print("~/.dragonbuild/server/" + os.getenv("PWD")')
+RDIR=$(python3 -c 'import os;print("~/.dragon/server/" + os.getenv("PWD")')
 RPAR="$(dirname "$RDIR")"
 ssh ${USERN}@${IPA} "mkdir -p ${RDIR}"
 echo -e "${PrefixColor}[Dragon]${BoldColor} Syncing... ${NC}"
