@@ -7,12 +7,10 @@ clean_dir()
     if [[ -f $DRAGON_DIR/DragonMake ]]; then
         cp $DRAGON_DIR/DragonMake .DragonMake
     fi
-    rm -rf $DRAGON_DIR
+    rm -rf $DRAGON_DIR/*
     if [[ -f .DragonMake ]]; then
-        mkdir $DRAGON_DIR
         mv .DragonMake $DRAGON_DIR/DragonMake
     fi
-    mkdir -p $DRAGON_DIR
     touch $DRAGON_DIR/.clean
 }
 

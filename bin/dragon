@@ -166,8 +166,7 @@ if [[ $build -eq 1 ]]; then
     # Invoke the generator
     if [[ $gen -eq 1 ]]; then
         rm -rf $DRAGON_DATA_DIR/ninja/build.ninja 2>/dev/null
-        mkdir -p $DRAGON_DATA_DIR/ninja
-        mkdir -p $DRAGON_DATA_DIR/modules
+        mkdir -p $DRAGON_DATA_DIR/{ninja,modules}
 
         generate
 
