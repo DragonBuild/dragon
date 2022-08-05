@@ -36,10 +36,10 @@ send_package()
     fi
 
     prefix_print "Copying package to device and running install commands"
-    TMP_PATH="/tmp/packages"
-    FILE_PATH="/tmp/$OUTPUT"
+    TMP_PATH="/tmp/dragon/packages"
+    FILE_PATH="/tmp/dragon/$OUTPUT"
     python3 -m dragon.device qr mkdir -p $TMP_PATH
-    (scp -P $DRBPORT ${OUTPUT} root@$DRBIP:$FILE_PATH && python3 -m dragon.device qr "apt install -y --reinstall $FILE_PATH; rm -r $TMP_PATH") || drexit 1
+    (scp -P $DRBPORT ${OUTPUT} root@$DRBIP:$FILE_PATH && python3 -m dragon.device qr "apt install -y --reinstall $FILE_PATH; rm -r $(dirname $TMP_PATH)") || drexit 1
 }
 
 create_package()

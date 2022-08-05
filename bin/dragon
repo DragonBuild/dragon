@@ -112,7 +112,7 @@ while ! [[ -z $1 ]]; do
         u | update | upgrade )            source $TOOLPATH/upgrader
                                 drexit
                                 ;;
-        rs | respring )         python3 -m dragon.device run killall -9 SpringBoard
+        rs | respring )         python3 -m dragon.device run sbreload
                                 drexit
                                 ;;
         dr | devicerun )        shift
