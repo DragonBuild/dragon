@@ -4,7 +4,7 @@ send_package()
 {
     if [[ $1 == "" ]]; then
         prefix_print "No package provided. Exiting."
-        exit 1
+        drexit 1
     fi
 
     if [[ $simtarg -eq 1 ]]; then
@@ -26,7 +26,7 @@ send_package()
     connectionCheck="$(python3 -m dragon.device test)"
     if [[ $connectionCheck =~ "Failed" ]]; then
         echo "$connectionCheck"
-        exit 1
+        drexit 1
     fi
 
     eval $(python3 -m dragon.device get)

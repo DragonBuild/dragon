@@ -11,7 +11,7 @@ fi
 # Run setup wizard if dragon root dir is empty or nonexistent
 if [[ -z "$(ls -A $DRAGON_ROOT_DIR)" ]]; then
     python3 -m dragon.wizard
-    exit 0
+    drexit 0
 fi
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')

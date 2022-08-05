@@ -21,7 +21,7 @@ check()
     # elif [[ -x "$(command -v apt-get)" ]];    then sudo apt-get install $packagesNeeded
     # elif [[ -x "$(command -v dnf)" ]];    then sudo dnf install $packagesNeeded
     # elif [[ -x "$(command -v zypper)" ]]; then sudo zypper install $packagesNeeded
-    else echo "ERROR: $packagesNeeded could not be found and must be installed manually.">&2; exit 1; fi
+    else echo "ERROR: $packagesNeeded could not be found and must be installed manually.">&2; drexit 1; fi
 }
 
 check
