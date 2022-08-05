@@ -52,9 +52,9 @@ create_package()
     mkdir -p $DRAGON_DIR/packages
     find . -type f -name '.DS_Store' -o -name '.dragonbuilding' -delete
     pkg_print "Building Package"
-    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 $DRAGON_DIR/_ $DRAGON_DIR/packages/
+    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 $DRAGON_DIR/_ $DRAGON_DIR/packages/ || return
     GENOUTPUT="$(ls $DRAGON_DIR/packages)"
-    mkdir -p packages 2> /dev/null
+    mkdir -p packages
     cp $DRAGON_DIR/packages/${GENOUTPUT} packages/${GENOUTPUT}
     echo "${GENOUTPUT}" > $DRAGON_DIR/last_package
 }

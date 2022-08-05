@@ -35,9 +35,7 @@ build()
         clean_dir $DNAME
     fi
 
-    mkdir -p $DRAGON_DIR/_/.dragonbuilding 2>/dev/null
-
-    mkdir -p $DRAGON_DIR/modules 2>/dev/null
+    mkdir -p $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/modules
 
     prefix_print "Building ${DNAME}"
 
