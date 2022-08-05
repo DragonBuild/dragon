@@ -201,6 +201,10 @@ if [[ $build -eq 1 ]]; then
     fi
 
     prefix_print "Cleaning Up"
+
+    if [[ $norm -eq 0 ]]; then
+        find . -name '*.ninja' -type f -delete
+    fi
 fi
 
 

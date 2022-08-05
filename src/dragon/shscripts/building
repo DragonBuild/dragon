@@ -63,7 +63,8 @@ build()
 
     cp -R layout/* $DRAGON_DIR/_/ 2>/dev/null
 
-    mv build.ninja $DRAGON_DIR/ninja
+    # mv build.ninja $DRAGON_DIR/ninja # Was this renamed "ninja" for use elsewhere?
+    mv build.ninja $DRAGON_DIR/build.ninja
     if [[ $1 == "." ]]; then
         true;
     else

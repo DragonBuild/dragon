@@ -23,13 +23,15 @@ cleanbuildfail()
     # shellcheck disable=SC2154
     prefix_print "Build failed"
     prefix_print "Cleaning Up"
-    find . -type f -name '.clean' -o -name "*.ninja" -delete
-    if [[ $norm -eq 0 ]]; then
+    find . -name '.clean' -type f -delete
+    if [[ $norm -eq 1 ]]; then
         mkdir $DRAGON_DIR/ninja 2>/dev/null && mv build.ninja $DRAGON_DIR/ninja/build.ninja
-    fi
-    cd $1 || drexit
-    if [[ $norm -eq 0 ]]; then
-        mkdir $DRAGON_DIR/ninja 2>/dev/null && mv build.ninja $DRAGON_DIR/ninja/build.ninja
+        if [[ $1 != "" ]]; then
+            cd $1 || drexit
+            mkdir $DRAGON_DIR/ninja 2>/dev/null && mv build.ninja $DRAGON_DIR/ninja/build.ninja
+        fi
+    else
+        find . -type f -name "*.ninja" -delete
     fi
     drexit 1
 }
