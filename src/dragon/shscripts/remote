@@ -8,8 +8,8 @@ LDIR=$PWD
 RDIR=$(python3 -c 'import os;print("~/.dragon/server/" + os.getenv("PWD")')
 RPAR="$(dirname "$RDIR")"
 ssh ${USERN}@${IPA} "mkdir -p ${RDIR}"
-echo -e "${PrefixColor}[Dragon]${BoldColor} Syncing... ${NC}"
+prefix_print "Syncing..."
 rsync -aL --exclude '.dragon' --exclude 'packages' --exclude '.idea' ${PWD} ${USERN}@${IPA}:$RPAR
-echo -e "${PrefixColor}[Dragon]${BoldColor} Starting Build ${NC}"
+prefix_print "Starting Build"
 ssh ${USERN}@${IPA} -t "cd $RDIR; ~/.dragonbuild/dragon $*"
 set +e

@@ -125,11 +125,11 @@ while ! [[ -z $1 ]]; do
         sn | send )             send_package $2
                                 drexit
                                 ;;
-        ch | checkra1n )        C1=$(which checkra1n) ||  echo -e "${PrefixColor}[Dragon]${BoldColor} Checkra1n is not currently installed. Exiting."; drexit 1
+        ch | checkra1n )        C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
                                 $C1 -g
                                 drexit
                                 ;;
-        chc | checkra1ncli )    C1=$(which checkra1n) ||  echo -e "${PrefixColor}[Dragon]${BoldColor} Checkra1n is not currently installed. Exiting."; drexit 1
+        chc | checkra1ncli )    C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
                                 $C1 -c
                                 drexit
                                 ;;
@@ -200,7 +200,7 @@ if [[ $build -eq 1 ]]; then
         create_package
     fi
 
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
+    prefix_print "Cleaning Up"
 fi
 
 
@@ -212,7 +212,7 @@ if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
     OUTPUT="$(cat $DRAGON_DATA_DIR/last_package | tr -d '\040\011\012\015' )"
 
     if [[ -z $OUTPUT ]]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
+        prefix_print "Packaging Failed"
         drexit
     fi
 
@@ -228,7 +228,7 @@ fi
 # --------
 if [[ $debug -eq 1 ]]; then
     eval $(python3 -m dragon.device get)
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
+    prefix_print "Starting on device debugger and targeting '$debugproc'"
     ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc || killall lldb" || drexit
 fi

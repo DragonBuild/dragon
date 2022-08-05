@@ -2,7 +2,7 @@
 
 clean_dir()
 {
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning $1${NC}"
+    prefix_print "Cleaning $1"
     # find . -name 'build.ninja' -delete
     if [[ -f $DRAGON_DIR/DragonMake ]]; then
         cp $DRAGON_DIR/DragonMake .DragonMake
@@ -39,7 +39,7 @@ build()
 
     mkdir -p $DRAGON_DIR/modules 2>/dev/null
 
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Building ${DNAME}${NC}"
+    prefix_print "Building ${DNAME}"
 
     if ! [[ -e build.ninja ]]; then
         mv "${i}.ninja" build.ninja
@@ -57,8 +57,8 @@ build()
     env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j$JOBS stage $NINJA_ARGS || cleanbuildfail $projroot
 
     if [[ $exportt -eq 1 ]]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Generating compile_commands.json ${NC}"
-        ninja -t compdb "$(awk '/^rule (C|CXX)_COMPILER__/ { print $2 }' build.ninja)" > compile_commands.json
+        prefix_print "Generating compile_commands.json"
+        ninja -t compdb > compile_commands.json
     fi
 
     cp -R layout/* $DRAGON_DIR/_/ 2>/dev/null

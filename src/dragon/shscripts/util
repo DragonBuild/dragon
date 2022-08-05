@@ -21,8 +21,8 @@ cleanbuildfail()
     # Currently it'll just leave everything sitting out
 
     # shellcheck disable=SC2154
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Build failed${NC}"
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up${NC}"
+    prefix_print "Build failed"
+    prefix_print "Cleaning Up"
     find . -type f -name '.clean' -o -name "*.ninja" -delete
     if [[ $norm -eq 0 ]]; then
         mkdir $DRAGON_DIR/ninja 2>/dev/null && mv build.ninja $DRAGON_DIR/ninja/build.ninja
@@ -37,11 +37,11 @@ cleanbuildfail()
 setupRemote()
 {
     # remote.py | remote.sh
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Server IP"
+    prefix_print "Enter Server IP:"
     read IPA
     mkdir -p $DRAGON_ROOT_DIR/state
     echo "export IPA=\"$IPA\"" > $DRAGON_ROOT_DIR/state/remoteip
-    echo -e "${PrefixColor}[Dragon]${NC} Enter Username"
+    prefix_print "Enter Username:"
     read USERN
     if [[ -z $USERN ]]; then
         USERN="root"
