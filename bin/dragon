@@ -16,11 +16,12 @@ fi
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
 
-source $TOOLPATH/prerun_checks
-
 # Load in colors and basic functions
 source $TOOLPATH/util
 source $TOOLPATH/dragoncolors
+
+# Check deps are good to go
+source $TOOLPATH/prerun_checks
 
 # Tool imports
 source $TOOLPATH/simulator
