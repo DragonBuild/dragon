@@ -41,7 +41,7 @@ if [[ $PLATFORM == Darwin ]]; then
 				brew install ldid gzip
 			else
 				read -p "Homebrew, which provides tools Dragon depends on, is not installed. Would you like to have it installed for you? [y/n]" hbrew
-				if [[ $hbrew == "y" || $hbrew == "yes" || $hbrew == "yes" || $hbrew == "YES" || $hbrew == "Yes" ]] ; then
+				if [[ $hbrew == "y" || $hbrew == "Y" || $hbrew == "yes" || $hbrew == "YES" || $hbrew == "Yes" ]] ; then
 					bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install ldid gzip
 				else
 					prefix_print "Homebrew provides tools Dragon depends on and thus is mandatory. Please install Homebrew before proceeding."
