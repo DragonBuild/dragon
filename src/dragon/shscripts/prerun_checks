@@ -57,7 +57,7 @@ if [[ $PLATFORM == Darwin ]]; then
 				drexit 1
 			elif [[ $TC_NEEDED -eq 1 ]]; then
 				python3 -m pip uninstall ninja
-				sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep ldid ninja odcctools perl plutil rsync
+				sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep gzip ldid ninja odcctools perl plutil rsync
 			elif [[ $LDID_NEEDED -eq 1 ]]; then
 				sudo apt install -y --allow-downgrades ldid
 			fi
@@ -92,10 +92,10 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 	elif [[ $TC_NEEDED -eq 1 ]]; then
 		case $DISTRO in
 			debian)
-				sudo apt install -y build-essential libtinfo5 ninja-build rsync curl perl git
+				sudo apt install -y build-essential libtinfo5 ninja-build rsync curl perl git libxml2
 				;;
 			arch)
-				sudo pacman -S --needed --noconfirm base-devel ninja libbsd openssl rsync curl perl git
+				sudo pacman -S --needed --noconfirm base-devel ninja libbsd openssl rsync curl perl git libxml2
 				# libtinfo5 equivalent (get from AUR)
 				if ! pacman -Qs ncurses5-compat-libs > /dev/null; then
 					git clone https://aur.archlinux.org/ncurses5-compat-libs.git
@@ -106,11 +106,11 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 				;;
 			redhat)
 				sudo dnf group install -y "C Development Tools and Libraries"
-				sudo dnf install -y ncurses-compat-libs lzma libbsd ninja-build rsync curl perl git
+				sudo dnf install -y ncurses-compat-libs lzma libbsd ninja-build rsync curl perl git libxml2
 				;;
 			suse)
 				sudo zypper install -y -t pattern devel_basis
-				sudo zypper install -y libbsd0 libncurses5 ninja rsync curl perl git
+				sudo zypper install -y libbsd0 libncurses5 ninja rsync curl perl git libxml2
 				;;
 		esac
 
