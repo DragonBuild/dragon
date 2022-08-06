@@ -2,7 +2,7 @@
 
 send_package()
 {
-    if [[ $1 == "" ]]; then
+    if [[ -z $1 ]]; then
         prefix_print "No package provided. Exiting."
         drexit 1
     fi
