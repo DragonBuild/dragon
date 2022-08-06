@@ -47,7 +47,9 @@ create_package()
     pkg_print "Generating Package Structure"
     mv $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/_/DEBIAN
     if [[ -f control ]]; then
-        echo -e "$(cat control)" > $DRAGON_DIR/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./$DRAGON_DIR/_/DEBIAN/control
+        echo -e "$(cat control)" > $DRAGON_DIR/_/DEBIAN/control 2>/dev/null
+    else
+        python3 -m dragongen.control DragonMake ./$DRAGON_DIR/_/DEBIAN/control
     fi
     du -d 0 $DRAGON_DIR/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> $DRAGON_DIR/_/DEBIAN/control
     chmod -R 0755 $DRAGON_DIR/_/DEBIAN/*
