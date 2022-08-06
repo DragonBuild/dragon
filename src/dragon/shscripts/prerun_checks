@@ -1,27 +1,132 @@
 #!/usr/bin/env bash
 
-check()
-{
-    # Linux has a separate toolchain
-    # iOS has to install the toolchain and replace the pip ninja with a ported ninja
-    # MacOS has XCode and just needs ldid:
-    packagesNeeded=""
-    if ! [[ -x $(command -v ldid) ]]; then
-        packagesNeeded+="ldid"
+PLATFORM=$(uname)
+TC_NEEDED=0
+LDID_NEEDED=0
+
+if ! [[ -x $(command -v clang) ]]; then
+    TC_NEEDED=1
+fi
+
+if ! [[ -x $(command -v ldid) ]]; then
+    LDID_NEEDED=1
+fi
+
+# Have a tc, but binaries aren't readily available ... not in $PATH!!
+if [[ $(ls -A "$DRAGON_ROOT_DIR/toolchain/") && (TC_NEEDED -eq 1 || LDID_NEEDED -eq 1) ]]; then
+    prefix_print "$DRAGON_ROOT_DIR/toolchain/ appears to be populated, but not functional."
+    prefix_print "To fix that, add $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/ to your \$PATH and $DRAGON_ROOT_DIR/toolchain/linux/iphone/lib/ to your \$LD_LIBRARY_PATH."
+    prefix_print "Then restart your shell and you should be good to go!"
+    drexit 1
+fi
+
+if [[ TC_NEEDED -eq 0 && LDID_NEEDED -eq 0 ]]; then
+    # All good to go!
+    return
+fi
+
+if [[ $PLATFORM == Darwin ]]; then
+    # MacOS
+    if [[ -x $(command -v xcode-select) ]]; then
+        if [[ TC_NEEDED -eq 1 ]]; then
+            prefix_print "Please install Xcode before proceeding."
+            drexit 1
+        elif [[ LDID_NEEDED -eq 1 ]]; then
+            prefix_print "ldid does not appear to be installed. Attempting to install now..."
+            if [[ -x $(command -v apt) && -f /opt/procursus/.procursus_strapped ]]; then
+                sudo apt install -y ldid
+            elif [[ -x "$(command -v port)" ]]; then
+                sudo port install ldid
+            elif [[ -x "$(command -v brew)" ]]; then
+                brew install ldid
+            else
+                read -p "Homebrew, which provides a tool Dragon depends on, is not installed. Would you like to have it installed for you? [y/n]" hbrew
+                if [[ $hbrew == "y" || $hbrew == "yes" || $hbrew == "yes" || $hbrew == "YES" || $hbrew == "Yes" ]] ; then
+                    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install ldid
+                else
+                    prefix_print "Homebrew provides a tool Dragon depends on and thus is mandatory. Please install Homebrew before proceeding."
+                    drexit 1
+                fi
+            fi
+        fi
+    # iOS
+    else
+        if [[ -f /.procursus_strapped ]]; then
+            if ! [[ -x $(command -v sudo) ]]; then
+                prefix_print "Please install sudo before proceeding."
+                drexit 1
+            elif [[ TC_NEEDED -eq 1 ]]; then
+                python3 -m pip uninstall ninja
+                sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep ldid ninja odcctools perl plutil rsync
+            elif [[ LDID_NEEDED -eq 1 ]]; then
+                sudo apt install -y --allow-downgrades ldid
+            fi
+        else
+            prefix_print "Dragon only supports Procursus-based jailbreaks as Elucubratus doesn't have a 'ninja/ninja-build' package available."
+            drexit 1
+        fi
+    fi
+# Linux
+elif [[ ${PLATFORM,,} == linux ]]; then
+    DISTRO="unknown"
+    if [[ -x "$(command -v apt)" ]]; then
+        DISTRO="debian"
+    elif [[ -x "$(command -v dnf)" ]]; then
+        DISTRO="redhat"
+    elif [[ -x "$(command -v pacman)" ]]; then
+        DISTRO="arch"
+    elif [[ -x "$(command -v zypper)" ]]; then
+        DISTRO="suse"
     fi
 
-    if [[ -z "$packagesNeeded" ]]; then
-        return
+    if [[ $DISTRO == "unknown" ]]; then
+        prefix_print "Your distro's current package manager is unknown and thus Dragon cannot determine which dependencies you'll need."
+        prefix_print "If you want to try to figure that out, install the toolchain from https://github.com/sbingner/llvm-project/releases/latest"
+        prefix_print "... and then attempt to build a project. You'll very likely get a couple errors which you'll have to decipher."
+        drexit 1
     fi
 
-    if [[ -x "$(command -v port)" ]];   then sudo port install $packagesNeeded
-    elif [[ -x "$(command -v brew)" ]];    then brew install $packagesNeeded
-    # elif [[ -x "$(command -v yum)" ]];    then yum install $packagesNeeded
-    # elif [[ -x "$(command -v apk)" ]];    then sudo apk add --no-cache $packagesNeeded
-    # elif [[ -x "$(command -v apt-get)" ]];    then sudo apt-get install $packagesNeeded
-    # elif [[ -x "$(command -v dnf)" ]];    then sudo dnf install $packagesNeeded
-    # elif [[ -x "$(command -v zypper)" ]]; then sudo zypper install $packagesNeeded
-    else echo "ERROR: $packagesNeeded could not be found and must be installed manually.">&2; drexit 1; fi
-}
+    if ! [[ -x $(command -v sudo) ]]; then
+        prefix_print "Please install sudo before proceeding."
+        drexit 1
+    elif [[ TC_NEEDED -eq 1 ]]; then
+        case $DISTRO in
+            debian)
+                sudo apt install -y build-essential libtinfo5 ninja-build rsync curl perl git
+                ;;
+            arch)
+                sudo pacman -S --needed --noconfirm base-devel ninja libbsd openssl rsync curl perl git
+                # libtinfo5 equivalent (get from AUR)
+                if ! pacman -Qs ncurses5-compat-libs > /dev/null; then
+                    git clone https://aur.archlinux.org/ncurses5-compat-libs.git
+                    cd ncurses5-compat-libs
+                    gpg --recv-keys "$(cat PKGBUILD | grep validpgp | grep -oP "(?<=').*(?=')")"
+                    MAKEFLAGS="-j$(nproc --all)" makepkg -sir --noconfirm && cd .. && rm -rf ncurses5-compat-libs
+                fi
+                ;;
+            redhat)
+                sudo dnf group install -y "C Development Tools and Libraries"
+                sudo dnf install -y ncurses-compat-libs lzma libbsd ninja-build rsync curl perl git
+                ;;
+            suse)
+                sudo zypper install -y -t pattern devel_basis
+                sudo zypper install -y libbsd0 libncurses5 ninja rsync curl perl git
+                ;;
+        esac
 
-check
+		curl -LO https://github.com/sbingner/llvm-project/releases/latest/download/linux-ios-arm64e-clang-toolchain.tar.lzma
+        TMP=$(mktemp -d)
+        tar -xvf linux-ios-arm64e-clang-toolchain.tar.lzma -C $TMP
+        mkdir -p $DRAGON_ROOT_DIR/toolchain/linux/iphone
+        mv $TMP/ios-arm64e-clang-toolchain/* $DRAGON_ROOT_DIR/toolchain/linux/iphone/
+        rm -r linux-ios-arm64e-clang-toolchain.tar.lzma $TMP
+    elif [[ LDID_NEEDED -eq 1 ]]; then
+        prefix_print "You appear to be missing ldid, but have clang. Not sure how we got here honestly ..."
+        prefix_print "Please build it or download it from https://github.com/sbingner/ldid or https://github.com/ProcursusTeam/ldid and place it in $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/."
+        drexit 1
+    fi
+else
+    prefix_print "Failed to determine the package manager for '$PLATFORM'."
+    prefix_print "You will need, at a minimum, Apple's clang and ldid before proceeding."
+    drexit 1
+fi
