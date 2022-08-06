@@ -26,7 +26,7 @@ cleanbuildfail()
     find . -name '.clean' -type f -delete
     if [[ $norm -eq 1 ]]; then
         mkdir -p $DRAGON_DIR/ninja && mv build.ninja $DRAGON_DIR/ninja/build.ninja
-        if [[ $1 != "" ]]; then
+        if ! [[ -z $1 ]]; then
             cd $1 || drexit
             mkdir -p $DRAGON_DIR/ninja && mv build.ninja $DRAGON_DIR/ninja/build.ninja
         fi
