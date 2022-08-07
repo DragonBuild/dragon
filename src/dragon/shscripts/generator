@@ -2,7 +2,7 @@
 
 generate()
 {
-    echo $DGEN_DEBUG | grep "1" > /dev/null && echo "DragonGen Debug Enabled"
+    echo $DGEN_DEBUG | grep "1" > /dev/null && gen_print "DragonGen Debug Enabled"
 
     echo $simtarg | grep "1" > /dev/null && gen_print "Targeting Simulator + simject"
 
