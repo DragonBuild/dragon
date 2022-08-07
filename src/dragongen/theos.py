@@ -170,7 +170,7 @@ class TheosMakefile(Makefile):
 
         for variable in self.variables:
             self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
-            self.variables[variable] = self.variables[variable].replace('$(THEOS)', '~/.dragon')
+            self.variables[variable] = self.variables[variable].replace('$(THEOS)', '$dragon_root_dir')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
             self.variables[variable] = self.variables[variable].replace('$(', '$$(')
@@ -221,7 +221,7 @@ class TheosMakefile(Makefile):
             stage_processed = []
             for command in stage:
                 command = command.replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
-                command = command.replace('$(THEOS)', '~/.dragon')
+                command = command.replace('$(THEOS)', '$dragon_root_dir')
                 command = command.replace('$(ECHO_NOTHING)', '')
                 command = command.replace('$(ECHO_END)', '')
                 command = command.replace('$(', '$$(')
