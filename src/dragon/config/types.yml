@@ -57,8 +57,8 @@ Types:
         - UIKit
         - Foundation
       stage2:
-        - 'mkdir -p .dragon/_/Library/PreferenceLoader/Preferences/'
-        - 'cp entry.plist .dragon/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
+        - 'mkdir -p $dragon_data_dir/_/Library/PreferenceLoader/Preferences/'
+        - 'cp entry.plist $dragon_data_dir/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
   bundle:
     required_states:
@@ -88,8 +88,8 @@ Types:
         - Foundation
       stage2:
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
-        - 'cp -R $dragon_data_dir/$stagedir$location $$DRAGON_ROOT_DIR/frameworks/$name.framework'
-        - 'if [ ! -z "$public_headers" ]; then
+        - 'cp -R $dragon_data_dir/$stagedir$location $dragon_root_dir/frameworks/$name.framework'
+        - 'if ! [[ -z $public_headers ]]; then
            mkdir -p $dragon_data_dir/$stagedir/$location/Headers;
            cp $public_headers $dragon_data_dir/$stagedir/$location/Headers;
            fi'
