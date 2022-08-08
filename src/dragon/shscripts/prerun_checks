@@ -34,11 +34,11 @@ if [[ $PLATFORM == Darwin ]]; then
 		elif [[ $LDID_NEEDED -eq 1 ]]; then
 			prefix_print "ldid does not appear to be installed. Attempting to install now..."
 			if [[ -x $(command -v apt) && -f /opt/procursus/.procursus_strapped ]]; then
-				sudo apt install -y ldid gzip
+				sudo apt install -y ldid
 			elif [[ -x "$(command -v port)" ]]; then
-				sudo port install ldid gzip
+				sudo port install ldid
 			elif [[ -x "$(command -v brew)" ]]; then
-				brew install ldid gzip
+				brew install ldid
 			else
 				read -p "Homebrew, which provides tools Dragon depends on, is not installed. Would you like to have it installed for you? [y/n]" hbrew
 				if [[ $hbrew == "y" || $hbrew == "Y" || $hbrew == "yes" || $hbrew == "YES" || $hbrew == "Yes" ]] ; then
