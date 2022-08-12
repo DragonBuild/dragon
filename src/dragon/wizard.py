@@ -1,4 +1,4 @@
-#!/usr/env/bin python3
+#!/usr/bin/env python3
 
 import json, os, shutil, ssl, sys, tarfile
 from ruyaml import YAML

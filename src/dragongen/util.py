@@ -1,4 +1,4 @@
-#!/usr/env/bin python3
+#!/usr/bin/env python3
 
 import os, sys, glob, inspect, termios, tty
 import re as regex
