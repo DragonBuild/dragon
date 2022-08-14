@@ -4,7 +4,7 @@ PLATFORM=$(uname)
 TC_NEEDED=0
 LDID_NEEDED=0
 
-if ! [[ -x $(command -v clang) ]]; then
+if ! [[ -x $(command -v otool) ]]; then
 	TC_NEEDED=1
 fi
 
@@ -121,8 +121,8 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 		mv $TMP/ios-arm64e-clang-toolchain/* $DRAGON_ROOT_DIR/toolchain/linux/iphone/
 		rm -r linux-ios-arm64e-clang-toolchain.tar.lzma $TMP
 	elif [[ $LDID_NEEDED -eq 1 ]]; then
-		prefix_print "You appear to be missing ldid, but have clang. Not sure how we got here honestly ..."
-		prefix_print "Please build it or download it from https://github.com/sbingner/ldid or https://github.com/ProcursusTeam/ldid and place it in $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/."
+		prefix_print "You appear to be missing ldid, but have the toolchain. Not sure how we got here honestly ..."
+		prefix_print "Please build or download ldid from https://github.com/sbingner/ldid or https://github.com/ProcursusTeam/ldid and place it in $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/."
 		drexit 1
 	fi
 else
