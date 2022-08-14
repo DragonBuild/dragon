@@ -198,7 +198,8 @@ class Generator(object):
 
         # Specify toolchain paths
         # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
-        if len(os.listdir(os.environ['DRAGON_ROOT_DIR'] + '/toolchain')) > 1:
+        linux_bin = os.environ['DRAGON_ROOT_DIR'] + '/toolchain/linux/iphone/bin/'
+        if os.path.isdir(linux_bin) and len(os.listdir(linux_bin)) > 1:
             project_dict.update({k: f'$dragon_root_dir/toolchain/linux/iphone/bin/'
                                     + project_dict[k] for k in [
                                      'cc',
@@ -208,9 +209,6 @@ class Generator(object):
                                      'plutil',
                                      'swift',
                                      'ld',
-                                 ]})
-            project_dict.update({k: '$dragon_root_dir/toolchain/linux/iphone/bin/'
-                                    + project_dict[k] for k in [
                                      'codesign',
                                  ]})
 
