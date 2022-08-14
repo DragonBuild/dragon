@@ -42,14 +42,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install "git+https://github.com/dragonbuild/dragon"
         if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
-    - name: Install DragonBuild
+    - name: Install dragon
       run: |
         dragon
-    - name: Cloning Project
+    - name: Clone project
       run: |
         git init .
         git remote add origin ${{ matrix.project-link }}
         git pull origin $(git remote show origin | grep "HEAD branch" | sed 's/.*: //')
-    - name: Building Project
+    - name: Build project
       run: |
         dragon b
