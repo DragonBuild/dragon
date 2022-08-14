@@ -1,37 +1,14 @@
 #!/usr/bin/env bash
 
 PLATFORM=$(uname)
-TC_NEEDED=0
-LDID_NEEDED=0
-
-if ! [[ -x $(command -v otool) ]]; then
-	TC_NEEDED=1
-fi
-
-if ! [[ -x $(command -v ldid) ]]; then
-	LDID_NEEDED=1
-fi
-
-# Have a tc, but binaries aren't readily available ... not in $PATH!!
-if [[ $(ls -A "$DRAGON_ROOT_DIR/toolchain/") && ($TC_NEEDED -eq 1 || $LDID_NEEDED -eq 1) ]]; then
-	prefix_print "$DRAGON_ROOT_DIR/toolchain/ appears to be populated, but not functional."
-	prefix_print "To fix that, add $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/ to your \$PATH and $DRAGON_ROOT_DIR/toolchain/linux/iphone/lib/ to your \$LD_LIBRARY_PATH."
-	prefix_print "Then restart your shell and you should be good to go!"
-	drexit 1
-fi
-
-if [[ $TC_NEEDED -eq 0 && $LDID_NEEDED -eq 0 ]]; then
-	# All good to go!
-	return
-fi
 
 if [[ $PLATFORM == Darwin ]]; then
 	# MacOS
 	if [[ -x $(command -v xcode-select) ]]; then
-		if [[ $TC_NEEDED -eq 1 ]]; then
+		if ! [[ -x $(command -v clang) ]]; then
 			prefix_print "Please install Xcode before proceeding."
 			drexit 1
-		elif [[ $LDID_NEEDED -eq 1 ]]; then
+		elif ! [[ -x $(command -v ldid) ]]; then
 			prefix_print "ldid does not appear to be installed. Attempting to install now..."
 			if [[ -x $(command -v apt) && -f /opt/procursus/.procursus_strapped ]]; then
 				sudo apt install -y ldid
@@ -42,7 +19,7 @@ if [[ $PLATFORM == Darwin ]]; then
 			else
 				read -p "Homebrew, which provides tools Dragon depends on, is not installed. Would you like to have it installed for you? [y/n]" hbrew
 				if [[ $hbrew == "y" || $hbrew == "Y" || $hbrew == "yes" || $hbrew == "YES" || $hbrew == "Yes" ]] ; then
-					bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install ldid gzip
+					bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install ldid
 				else
 					prefix_print "Homebrew provides tools Dragon depends on and thus is mandatory. Please install Homebrew before proceeding."
 					drexit 1
@@ -55,10 +32,10 @@ if [[ $PLATFORM == Darwin ]]; then
 			if ! [[ -x $(command -v sudo) ]]; then
 				prefix_print "Please install sudo before proceeding."
 				drexit 1
-			elif [[ $TC_NEEDED -eq 1 ]]; then
+			elif ! [[ -x $(command -v clang) ]]; then
 				python3 -m pip uninstall -y ninja
 				sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep gzip ldid ninja odcctools perl plutil rsync
-			elif [[ $LDID_NEEDED -eq 1 ]]; then
+			elif ! [[ -x $(command -v ldid) ]]; then
 				sudo apt install -y --allow-downgrades ldid
 			fi
 		else
@@ -89,7 +66,7 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 	if ! [[ -x $(command -v sudo) ]]; then
 		prefix_print "Please install sudo before proceeding."
 		drexit 1
-	elif [[ $TC_NEEDED -eq 1 ]]; then
+	elif ! [[ -d $DRAGON_ROOT_DIR/toolchain/linux/iphone/ && $(ls -A "$DRAGON_ROOT_DIR/toolchain/linux/iphone/") ]]; then
 		case $DISTRO in
 			debian)
 				sudo apt install -y build-essential libtinfo5 ninja-build rsync curl perl git libxml2
@@ -120,7 +97,7 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 		mkdir -p $DRAGON_ROOT_DIR/toolchain/linux/iphone
 		mv $TMP/ios-arm64e-clang-toolchain/* $DRAGON_ROOT_DIR/toolchain/linux/iphone/
 		rm -r linux-ios-arm64e-clang-toolchain.tar.lzma $TMP
-	elif [[ $LDID_NEEDED -eq 1 ]]; then
+	elif ! [[ -x $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/ldid ]]; then
 		prefix_print "You appear to be missing ldid, but have the toolchain. Not sure how we got here honestly ..."
 		prefix_print "Please build or download ldid from https://github.com/sbingner/ldid or https://github.com/ProcursusTeam/ldid and place it in $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/."
 		drexit 1
