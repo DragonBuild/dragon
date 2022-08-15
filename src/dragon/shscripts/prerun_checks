@@ -56,13 +56,6 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 		DISTRO="suse"
 	fi
 
-	if [[ $DISTRO == "unknown" ]]; then
-		prefix_print "Your distro's current package manager is unknown and thus Dragon cannot determine which dependencies you'll need."
-		prefix_print "If you want to try to figure that out, install the toolchain from https://github.com/sbingner/llvm-project/releases/latest"
-		prefix_print "... and then attempt to build a project. You'll very likely get a couple errors which you'll have to decipher."
-		drexit 1
-	fi
-
 	if ! [[ -x $(command -v sudo) ]]; then
 		prefix_print "Please install sudo before proceeding."
 		drexit 1
@@ -89,6 +82,11 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 				sudo zypper install -y -t pattern devel_basis
 				sudo zypper install -y libbsd0 libncurses5 ninja rsync curl perl git libxml2
 				;;
+			*)
+				prefix_print "Your distro's current package manager is unknown and thus Dragon cannot install the dependencies you'll need."
+				prefix_print "On Debian-based distros, the necessary dependencies are: build-essential libtinfo5 ninja-build rsync curl perl git libxml2."
+				prefix_print "Additional dependencies may also be required depending on what your distro provides."
+				;;
 		esac
 
 		curl -LO https://github.com/sbingner/llvm-project/releases/latest/download/linux-ios-arm64e-clang-toolchain.tar.lzma
@@ -103,7 +101,7 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 		drexit 1
 	fi
 else
-	prefix_print "Failed to determine the package manager for '$PLATFORM'."
-	prefix_print "You will need, at a minimum, Apple's clang and ldid before proceeding."
-	drexit 1
+	prefix_print "Note: '$PLATFORM' is currently unsupported by Dragon."
+	prefix_print "If you want to try running dragon, you will need, at a minimum, Apple's clang and ldid."
+	prefix_print "Additional dependencies may also be required depending on what your platform provides."
 fi
