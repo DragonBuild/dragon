@@ -22,11 +22,11 @@ def setup_wizard():
     log('=========================', end='\n\n')
     dragon_root_dir = os.environ['DRAGON_ROOT_DIR']
     try:
-        os.mkdir(os.path.expandvars(dragon_root_dir))
+        os.mkdir(dragon_root_dir)
     except FileExistsError:
         pass
 
-    os.chdir(os.path.expandvars(dragon_root_dir))
+    os.chdir(dragon_root_dir)
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
         try:
@@ -37,14 +37,22 @@ def setup_wizard():
         except Exception as ex:
             log(ex)
             log('Potentially ratelimited, attempting fallback by cloning repo (this adds some overhead)')
-            os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
+            if os.path.isdir(f'{repo}') and os.path.isdir(f'{repo}/.git'):
+                os.chdir(f'{repo}')
+                os.system('git pull origin $(git rev-parse --abbrev-ref HEAD)')
+                os.chdir(dragon_root_dir)
+            else:
+                os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
 
     log('Deploying internal configuration')
-    os.system(f'rm -rf ./internal')
+    try:
+        shutil.rmtree(f'./internal')
+    except FileNotFoundError:
+        pass
     shutil.copytree(deployable_path(), dragon_root_dir + '/internal')
 
     try:
-        os.mkdir(os.path.expandvars(dragon_root_dir) + '/toolchain')
+        os.mkdir(dragon_root_dir + '/toolchain')
     except FileExistsError:
         pass
     log('Done!')
@@ -65,7 +73,7 @@ def get_supporting(api: str, destination: str):
                 return
     tar_url = response['tarball_url']
 
-    os.system(f'rm -rf ./{destination}')
+    shutil.rmtree(f'./{destination}')
 
     log(f'Updating supporting {destination} v{response["tag_name"]} from {tar_url} ...')
     tar_bytes = request.urlopen(tar_url, context=ctx).read()
@@ -77,7 +85,7 @@ def get_supporting(api: str, destination: str):
     tar = tarfile.open(fname)
     extracted_name = tar.members[0].name
 
-    log(f'Extracting into {os.path.expandvars(dragon_root_dir + destination)}')
+    log(f'Extracting into {os.environ["DRAGON_ROOT_DIR"] + destination}')
     tar.extractall()
     os.rename(extracted_name, destination)
     os.remove(fname)

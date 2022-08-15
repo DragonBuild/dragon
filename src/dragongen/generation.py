@@ -415,8 +415,8 @@ class Generator(object):
             Var('header_includes'),
             Var('public_headers'),
             ___,
-            Var('usrCflags'),
-            Var('usrLDflags'),
+            Var('usrCflags'), # Unused?
+            Var('usrLDflags'), # Unused?
             ___,
             Var('libflags'),
             Var('lopts'),
