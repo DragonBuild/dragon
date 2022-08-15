@@ -6,8 +6,8 @@ class ArgList(list):
     '''
 
     # This LIST_KEYS logic needs to be shortened, it's horribly repetitive
-    # As it's now in a separate file as well which is problematic. Maybe it can be moved
-    # into defaults.py?
+    # As it's now in a separate file as well which is problematic.
+    # Maybe it can be moved into defaults.py?
     LIST_KEYS = {
         'files': ('', ' '),
         'logos_files': ('', ' '),

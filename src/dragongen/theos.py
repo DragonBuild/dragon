@@ -192,7 +192,7 @@ class TheosMakefile(Makefile):
                 self.module['ldflags'] = self.variables[variable]
             # This borks prefs installs # TODO: figure out why
             # elif variable.endswith('_INSTALL_PATH'):
-            #     self.module['install_location'] = self.variables[variable]
+            # self.module['install_location'] = self.variables[variable]
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
 

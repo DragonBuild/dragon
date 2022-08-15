@@ -36,10 +36,11 @@ def main():
     times = {
 
     }
+    testing_dir = os.environ['DRAGON_ROOT_DIR'] + '/testing/'
     if len(os.environ['DRAGON_ROOT_DIR']) > 0:
-        system('rm -rf ' + os.environ['DRAGON_ROOT_DIR'] + '/testing/')
-    system('mkdir -p ' + os.environ['DRAGON_ROOT_DIR'] + '/testing/')
-    os.chdir(os.environ['DRAGON_ROOT_DIR'] + '/testing/')
+        system('rm -rf ' + testing_dir)
+    system('mkdir -p ' + testing_dir)
+    os.chdir(testing_dir)
 
     # print('Doing Benchmarks')
     # perform_benchmark()
@@ -48,7 +49,7 @@ def main():
         cattests = {}
         cattimes = {}
         for i in projects[category]:
-            os.chdir(os.environ['DRAGON_ROOT_DIR'] + '/testing/')
+            os.chdir(testing_dir)
             print(os.getcwd())
             system('''
             echo $PWD
@@ -66,7 +67,7 @@ def main():
             print('-+- Passed -+-' if passed else '-!- Failed -!-')
             cattests[dirName] = passed
             cattimes[dirName] = s
-            os.chdir(os.environ['DRAGON_ROOT_DIR'] + '/testing/')
+            os.chdir(testing_dir)
             if passed:
                 system(f'rm -rf {dirName}', sys.stdout, sys.stderr)
         tests[category] = cattests

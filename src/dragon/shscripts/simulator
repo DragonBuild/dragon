@@ -4,6 +4,7 @@ simfail()
 {
     prefix_print "Simulator Injection Failed."
     prefix_print "Please file an issue with project details."
+    prefix_print "https://github.com/DragonBuild/dragon"
     drexit 1
 }
 

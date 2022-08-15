@@ -145,7 +145,7 @@ class Device:
             dbstate('Generating Keyfile')
             system("ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null")
 
-        # We don't use ssh-copy-id because some systems (bingners bootstrap, etc) don't have it
+        # We don't use ssh-copy-id because some systems (Elucubratus, etc) don't have it
         dbstate('Copying keyfile')
         success = system(
             f'cat ~/.ssh/id_rsa.pub | ssh -p {self.port} root@{self.host} "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"')

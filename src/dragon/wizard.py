@@ -53,7 +53,7 @@ def setup_wizard():
 def get_supporting(api: str, destination: str):
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE  # python doesn't bundle certs on macOS. So we have to disable SSL :)
+    ctx.verify_mode = ssl.CERT_NONE  # python doesn't bundle certs on macOS, so we have to disable SSL :)
     response: dict = json.load(request.urlopen(api, context=ctx))
     if os.path.exists(f'{destination}/metadata.yml'):
         with open(f'{destination}/metadata.yml', 'r') as fd:

@@ -19,7 +19,7 @@ It also includes several support files used with theos projects.
 
 Compiling a theos project should be as simple as::
 
-    dragon b 
+    dragon b
 
-If you encounter any issues with it, feel free to file an issue on https://github.com/dragonbuild/dragon .
+If you encounter any issues with it, feel free to file an issue on https://github.com/DragonBuild/dragon .
 

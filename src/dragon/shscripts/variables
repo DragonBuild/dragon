@@ -22,9 +22,6 @@ export release=0
 
 export ToolchainPath=""
 export ToolchainPrefix=""
-if ! [[ -x $(command -v dsymutil) ]]; then
-    export ToolchainPath="${DRAGON_ROOT_DIR}/toolchain/bin/"
-fi
 
 # This controls ninja colors.
 export NINJA_STATUS="\x1b[34m[Dragon] [%f/%t] (%e)"

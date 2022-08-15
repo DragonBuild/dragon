@@ -45,8 +45,8 @@ def main():
 
     defs = {
         'Section': 'Tweaks',
-        'Description': 'A cool tweak',
-        'Version': '0.1.0',
+        'Description': 'A cool MobileSubstrate Tweak',
+        'Version': '0.0.1',
         'Architecture': 'iphoneos-arm',
         'Depends': 'mobilesubstrate' # This is a blind guess, maybe we can improve this logic?
     }

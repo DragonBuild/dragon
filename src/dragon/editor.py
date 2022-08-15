@@ -70,7 +70,7 @@ class Module:
             del self.variables['dir']
 
         if type == 'tweak':
-            self.variables['filter'] = { 'executables': get_input('Comma seperated list of applications to inject', 'SpringBoard').split(', ')}
+            self.variables['filter'] = { 'executables': get_input('Comma separated list of processes to target', 'SpringBoard').split(', ')}
             self.variables['files'] = [f'{self.name}.x']
             with open(f'{self.name}.x', 'w') as out:
                 out.write('// Insert your code here!\n')
@@ -104,6 +104,7 @@ def main():
     editor.create_new_module()
     with open('DragonMake', 'w') as f:
         f.write(yaml.dump(editor.config, Dumper=yaml.RoundTripDumper))
+
 
 if __name__ == '__main__':
     main()
