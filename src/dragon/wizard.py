@@ -18,7 +18,7 @@ def get_input(prompt: str, default: str) -> str:
 
 
 def setup_wizard():
-    log(f'installing dragon v{os.environ['DRAGON_VERS']}')
+    log(f'installing dragon v{os.environ["DRAGON_VERS"]}')
     log('=========================', end='\n\n')
     dragon_root_dir = os.environ['DRAGON_ROOT_DIR']
     try:

@@ -13,6 +13,6 @@ if __name__ == '__main__':
             print('\nAn update is available!\nGrab it with `dragon update`')
         else:
             if 'UCDBG' in os.environ.keys():
-                print(f'Remote Version: {data["info"]["version"]} | Local Version: {os.environ['DRAGON_VERS']}')
+                print(f'Remote Version: {data["info"]["version"]} | Local Version: {os.environ["DRAGON_VERS"]}')
     except Exception as ex:
         pass
