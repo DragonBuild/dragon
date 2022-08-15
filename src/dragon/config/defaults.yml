@@ -23,7 +23,7 @@ Defaults:
   logos: $dragon_root_dir/src/logos/bin/logos.pl
   cargo: cargo
   cargo-nightly: 'cargo +nightly'
-  optool: $dragon_root_dir/bin/optool
+  optool: optool
   stage:
     - 'true'
   wild_recurse: false
