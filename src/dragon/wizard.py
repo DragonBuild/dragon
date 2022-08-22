@@ -73,7 +73,10 @@ def get_supporting(api: str, destination: str):
                 return
     tar_url = response['tarball_url']
 
-    shutil.rmtree(f'./{destination}')
+    try:
+        shutil.rmtree(f'./{destination}')
+    except FileNotFoundError:
+        pass
 
     log(f'Updating supporting {destination} v{response["tag_name"]} from {tar_url} ...')
     tar_bytes = request.urlopen(tar_url, context=ctx).read()
