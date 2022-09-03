@@ -11,10 +11,13 @@ if [[ $PLATFORM == Darwin ]]; then
 		elif ! [[ -x $(command -v ldid) ]]; then
 			prefix_print "ldid does not appear to be installed. Attempting to install now..."
 			if [[ -x $(command -v apt) && -f /opt/procursus/.procursus_strapped ]]; then
+				sudo apt update
 				sudo apt install -y ldid
 			elif [[ -x "$(command -v port)" ]]; then
+				sudo port selfupdate
 				sudo port install ldid
 			elif [[ -x "$(command -v brew)" ]]; then
+				brew update
 				brew install ldid
 			else
 				read -p "Homebrew, which provides tools Dragon depends on, is not installed. Would you like to have it installed for you? [y/n]" hbrew
@@ -32,10 +35,20 @@ if [[ $PLATFORM == Darwin ]]; then
 			if ! [[ -x $(command -v sudo) ]]; then
 				prefix_print "Please install sudo before proceeding."
 				drexit 1
-			elif ! [[ -x $(command -v clang) ]]; then
+			fi
+
+			# need ninja built specifically for iOS
+			if python3 -c "import ninja" > /dev/null; then
 				python3 -m pip uninstall -y ninja
-				sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep gzip ldid ninja odcctools perl plutil rsync
+				sudo apt update --allow-insecure-repositories
+				sudo apt install -y ninja
+			fi
+
+			if ! [[ -x $(command -v clang) ]]; then
+				sudo apt update --allow-insecure-repositories
+				sudo apt install -y --allow-downgrades ca-certificates clang coreutils dpkg git grep gzip ldid odcctools perl plutil rsync
 			elif ! [[ -x $(command -v ldid) ]]; then
+				sudo apt update --allow-insecure-repositories
 				sudo apt install -y --allow-downgrades ldid
 			fi
 		else
@@ -62,9 +75,11 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 	elif ! [[ -d $DRAGON_ROOT_DIR/toolchain/linux/iphone/ && $(ls -A "$DRAGON_ROOT_DIR/toolchain/linux/iphone/") ]]; then
 		case $DISTRO in
 			debian)
+				sudo apt update
 				sudo apt install -y build-essential libtinfo5 ninja-build rsync curl perl git libxml2
 				;;
 			arch)
+				sudo pacman -Syy
 				sudo pacman -S --needed --noconfirm base-devel ninja libbsd openssl rsync curl perl git libxml2
 				# libtinfo5 equivalent (get from AUR)
 				if ! pacman -Qs ncurses5-compat-libs > /dev/null; then
@@ -75,10 +90,12 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 				fi
 				;;
 			redhat)
+				sudo dnf check-update
 				sudo dnf group install -y "C Development Tools and Libraries"
 				sudo dnf install -y ncurses-compat-libs lzma libbsd ninja-build rsync curl perl git libxml2
 				;;
 			suse)
+				sudo zypper refresh
 				sudo zypper install -y -t pattern devel_basis
 				sudo zypper install -y libbsd0 libncurses5 ninja rsync curl perl git libxml2
 				;;
