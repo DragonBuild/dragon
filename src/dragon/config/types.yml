@@ -83,13 +83,14 @@ Types:
     variables:
       install_location: '/Library/Frameworks/$name.framework'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
+      public_headers: '$dragon_root_dir/include/'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
       frameworks:
         - Foundation
       stage2:
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
         - 'cp -R $dragon_data_dir/$stagedir$location $dragon_root_dir/frameworks/$name.framework'
-        - 'if ! [[ -z $public_headers ]]; then
+        - 'if ! [ -z "$public_headers" ]; then
            mkdir -p $dragon_data_dir/$stagedir/$location/Headers;
            cp $public_headers $dragon_data_dir/$stagedir/$location/Headers;
            fi'
