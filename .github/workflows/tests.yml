@@ -41,7 +41,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install "git+https://github.com/dragonbuild/dragon"
-        if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Install dragon
       run: |
         dragon
