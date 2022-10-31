@@ -121,7 +121,7 @@ Types:
       - deb
       - raw
     variables:
-      install_location: 'usr/lib'
+      install_location: '/usr/lib'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.dylib'
       ldflags: '-install_name $location$name.dylib'
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
