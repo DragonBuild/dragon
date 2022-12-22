@@ -3,8 +3,8 @@ from setuptools import setup
 setup(name='dragon',
       version='1.6.8',
       description='A powerful toolkit targeting Apple development, research, and packaging.',
-      author='kritanta',
-      url='https://dragon.krit.me/',
+      author='cynder',
+      url='https://dragon.cynder.me/',
       install_requires=['ninja', 'pyyaml', 'ruyaml', 'packaging'],
       packages=['dragon', 'dragongen', 'buildgen'],
       package_dir={
