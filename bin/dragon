@@ -41,7 +41,7 @@ set -o pipefail
 
 # Define the local dragon data dir
 if [[ $PWD != $HOME ]]; then
-    export DRAGON_DATA_DIR=$PWD/$DRAGON_DIR
+    export DRAGON_DATA_DIR="$PWD/$DRAGON_DIR"
 fi
 
 # --------
@@ -139,7 +139,7 @@ while ! [[ -z $1 ]]; do
                                 remote $*
                                 drexit
                                 ;;
-        relink )                rm $DRAGON_DATA_DIR/sign/*
+        relink )                rm -r "$DRAGON_DATA_DIR/sign/"
                                 ;;
         h | help | -h )         usage
                                 drexit
@@ -166,8 +166,8 @@ if [[ $build -eq 1 ]]; then
     # shellcheck disable=SC2154
     # Invoke the generator
     if [[ $gen -eq 1 ]]; then
-        rm -rf $DRAGON_DATA_DIR/ninja/build.ninja 2>/dev/null
-        mkdir -p $DRAGON_DATA_DIR/{ninja,modules}
+        rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
+        mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
 
         generate
 
@@ -182,15 +182,15 @@ if [[ $build -eq 1 ]]; then
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
-    mkdir -p $DRAGON_DATA_DIR
-    cp DragonMake $DRAGON_DATA_DIR/DragonMake 2> /dev/null
+    mkdir -p "$DRAGON_DATA_DIR"
+    cp DragonMake "$DRAGON_DATA_DIR/DragonMake" 2> /dev/null
 
-    for i in ${subsb[@]}; do
+    for i in "${subsb[@]}"; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
         if [[ -d $i ]]; then
-            mkdir -p $i/$DRAGON_DIR/
-            cp DragonMake $i/$DRAGON_DIR/DragonMake 2> /dev/null
+            mkdir -p "$i/$DRAGON_DIR/"
+            cp DragonMake "$i/$DRAGON_DIR/DragonMake" 2> /dev/null
         fi
         build $i
     done
@@ -214,7 +214,7 @@ fi
 # DRAGON_DPKG is 1 by default, modified by the generator
 # --------
 if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
-    OUTPUT="$(cat $DRAGON_DATA_DIR/last_package | tr -d '\040\011\012\015' )"
+    OUTPUT="$(cat "$DRAGON_DATA_DIR/last_package" | tr -d '\040\011\012\015' )"
 
     if [[ -z $OUTPUT ]]; then
         prefix_print "Packaging Failed"
@@ -238,7 +238,7 @@ if [[ $debug -eq 1 ]]; then
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc || killall lldb" || drexit
 fi
 
-rm -rf $DRAGON_DATA_DIR/packages > /dev/null
+rm -rf "$DRAGON_DATA_DIR/packages" > /dev/null
 set +xv
 
 python3 -m dragon.update_check

@@ -42,7 +42,7 @@ def setup_wizard():
                 os.system('git pull origin $(git rev-parse --abbrev-ref HEAD)')
                 os.chdir(dragon_root_dir)
             else:
-                os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
+                os.system(f'git clone --depth=1 https://github.com/dragonbuild/{repo}')
 
     log('Deploying internal configuration')
     try:

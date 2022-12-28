@@ -29,7 +29,7 @@ build()
         DNAME=$1
     fi
 
-    if [[ $clean -eq 1 ]] && ! [[ -f $DRAGON_DIR/.clean ]]; then
+    if [[ $clean -eq 1 && ! -f $DRAGON_DIR/.clean ]]; then
         clean_dir $DNAME
     fi
 
@@ -48,7 +48,7 @@ build()
         JOBS=$(sysctl -n hw.ncpu)
     fi
 
-    projroot=$(dirname $DRAGON_DATA_DIR)
+    projroot="$(dirname "$DRAGON_DATA_DIR")"
     env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[35m[%f/%t] \x1b[34m(%e)\x1b[0m ' CLICOLOR_FORCE=1 ninja -j$JOBS $NINJA_ARGS || cleanbuildfail $projroot
     env $'NINJA_STATUS=\x1b[1;34m[Dragon] \x1b[34m>>>\x1b[0m ' CLICOLOR_FORCE=1 ninja -j$JOBS stage $NINJA_ARGS || cleanbuildfail $projroot
 
@@ -64,8 +64,8 @@ build()
     if [[ $1 == "." ]]; then
         true
     else
-        cp -R $DRAGON_DIR/_ $DRAGON_DATA_DIR 2>/dev/null
+        cp -R $DRAGON_DIR/_ "$DRAGON_DATA_DIR" 2>/dev/null
     fi
 
-    cd $projroot || drexit
+    cd "$projroot" || drexit
 }

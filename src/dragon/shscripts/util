@@ -54,11 +54,11 @@ setupRemote()
 update()
 {
     # update.sh
-    hold=$PWD
+    hold="$PWD"
     cd $DRAGON_ROOT_DIR || drexit
     git pull
     git submodule update --init --recursive
-    cd $hold || drexit
+    cd "$hold" || drexit
 }
 
 usage()
@@ -100,5 +100,5 @@ usage()
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
     echo "dragon v${DRAGON_VERS} by cynder"
-    echo "lead contributors: Lorenzo Pane, Lightmann"
+    echo "lead contributors: Lorenzo Pane and Lightmann"
 }
