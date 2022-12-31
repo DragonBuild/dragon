@@ -31,25 +31,30 @@ jobs:
           - https://github.com/kritanta-ios-tweaks/Signe
           - https://github.com/kritanta-ios-tweaks/StatusViz
           - https://github.com/kritanta-ios-tweaks/DeadRinger
+
     runs-on: macos-latest
     steps:
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.9.5
+        python-version: 3.10
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install "git+https://github.com/dragonbuild/dragon"
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Install dragon
       run: |
         dragon
+
     - name: Clone project
       run: |
         git init .
         git remote add origin ${{ matrix.project-link }}
         git pull origin $(git remote show origin | grep "HEAD branch" | sed 's/.*: //')
+
     - name: Build project
       run: |
-        dragon b
+        dragon c b
