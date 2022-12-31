@@ -1,7 +1,7 @@
 <p align="center">
 	<picture>
-		<source media="(prefers-color-scheme: dark)" srcset="https://dragon.krit.me/en/latest/_static/logo-dark.png" width=400px>
-		<img src="https://dragon.krit.me/en/latest/_static/logo-light.png" alt="Logo" width=400px>
+		<source media="(prefers-color-scheme: dark)" srcset="docs/source/_static/logo-dark.png" width=400px>
+		<img src="docs/source/_static/logo-light.png" alt="Logo" width=400px>
 	</picture>
 </p>
 <p align="center">
@@ -13,7 +13,7 @@
 	<a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
 		<image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
 	</a>
-	<a href="https://dragon.krit.me">
+	<a href="https://dragon.cynder.me">
 		<image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
 	</a>
 	<a href="https://pypi.org/project/dragon/">
@@ -21,10 +21,10 @@
 	</a>
 	<br>
 	<br>
-	<a href="https://dragon.krit.me">
+	<a href="https://dragon.cynder.me">
 		<strong>Documentation</strong>
 	</a> |
-	<a href="https://dragon.krit.me/en/latest/quickstart.html">
+	<a href="https://dragon.cynder.me/en/latest/quickstart.html">
 		<strong>Getting Started</strong>
 	</a> |
 	<a href="https://github.com/dragonbuild/example ">
