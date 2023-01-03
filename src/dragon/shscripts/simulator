@@ -2,25 +2,26 @@
 
 simfail()
 {
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Simulator Injection Failed."
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Please file an issue with project details."
+    prefix_print "Simulator Injection Failed."
+    prefix_print "Please file an issue with project details."
+    prefix_print "https://github.com/DragonBuild/dragon"
     drexit 1
 }
 
 simsetup()
 {
-    mkdir -p $DRAGONDIR/simulator/load
+    mkdir -p $DRAGON_ROOT_DIR/simulator/load
     hold=$PWD
-    cd $DRAGONDIR/src/simject || simfail
+    cd $DRAGON_ROOT_DIR/src/simject || simfail
     dragon c b
     cd $hold || simfail
 }
 
 simstall()
 {
-    test -f $DRAGONDIR/simulator/resim || simsetup
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing files to the simulator..."
-    cp .dragon/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGONDIR/simulator/load || cleanbuildfail
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Respringing..."
+    test -f $DRAGON_ROOT_DIR/simulator/resim || simsetup
+    prefix_print "Installing files to the simulator..."
+    cp $DRAGON_DIR/_/Library/MobileSubstrate/DynamicLibraries/* $DRAGON_ROOT_DIR/simulator/load || cleanbuildfail
+    prefix_print "Respringing..."
     resim
 }

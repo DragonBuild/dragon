@@ -1,5 +1,7 @@
-from enum import Enum
+#!/usr/bin/env python3
+
 import os, sys
+from enum import Enum
 from ruyaml import YAML
 
 def strip_comments(text):
@@ -167,8 +169,8 @@ class TheosMakefile(Makefile):
                 self.type = TheosMakefileType.FRAMEWORK
 
         for variable in self.variables:
-            self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
-            self.variables[variable] = self.variables[variable].replace('$(THEOS)', '~/.dragon')
+            self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
+            self.variables[variable] = self.variables[variable].replace('$(THEOS)', '$dragon_root_dir')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
             self.variables[variable] = self.variables[variable].replace('$(', '$$(')
@@ -188,8 +190,9 @@ class TheosMakefile(Makefile):
                 self.module['cxxflags'] = self.variables[variable]
             elif variable.endswith('_LDFLAGS'):
                 self.module['ldflags'] = self.variables[variable]
+            # This borks prefs installs # TODO: figure out why
             # elif variable.endswith('_INSTALL_PATH'):
-            #     self.module['install_location'] = self.variables[variable]
+            # self.module['install_location'] = self.variables[variable]
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
 
@@ -203,7 +206,7 @@ class TheosMakefile(Makefile):
                     nextisawildcard = 1
                     continue
                 if nextisawildcard:
-                    # We dont want to stop with these till we hit a ')'
+                    # We dont want to stop with these til we hit a ')'
                     # thanks cr4shed ._.
                     nextisawildcard = 0 if ')' in i else 1
                     grab = i.split(')')[0]
@@ -217,8 +220,8 @@ class TheosMakefile(Makefile):
             stage = self.rules['stage']
             stage_processed = []
             for command in stage:
-                command = command.replace('$(THEOS_STAGING_DIR)', '$proj_build_dir/_')
-                command = command.replace('$(THEOS)', '~/.dragon')
+                command = command.replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
+                command = command.replace('$(THEOS)', '$dragon_root_dir')
                 command = command.replace('$(ECHO_NOTHING)', '')
                 command = command.replace('$(ECHO_END)', '')
                 command = command.replace('$(', '$$(')

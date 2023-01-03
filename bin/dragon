@@ -1,29 +1,34 @@
 #!/usr/bin/env bash
-export DRAGONVERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-# Defauld dragondir is ~/.dragon
-if [ -z $DRAGONDIR ]; then export DRAGONDIR=$HOME/.dragon; fi
+export DRAGON_DIR=.dragon
+export DRAGON_VERS=$(python3 -c 'from dragon.util import version; print(version())')
 
-# Run setup wizard if dragondir is empty or nonexistant
-if [ -z "$(ls -A $DRAGONDIR 2> /dev/null)" ]; then
-    python3 -m dragon.wizard
-    exit 0
+# Default dragon root dir is ~/.dragon
+if [[ -z $DRAGON_ROOT_DIR ]]; then
+    export DRAGON_ROOT_DIR=$HOME/$DRAGON_DIR
 fi
 
+# Run setup wizard if dragon root dir is empty or nonexistent
+if [[ -z "$(ls -A $DRAGON_ROOT_DIR)" ]]; then
+    python3 -m dragon.wizard
+    drexit 0
+fi
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
-
-source $TOOLPATH/prerun_checks
 
 # Load in colors and basic functions
 source $TOOLPATH/util
 source $TOOLPATH/dragoncolors
+
+# Check deps are good to go
+source $TOOLPATH/prerun_checks
 
 # Tool imports
 source $TOOLPATH/simulator
 source $TOOLPATH/packaging
 source $TOOLPATH/building
 source $TOOLPATH/generator
+source $TOOLPATH/remote
 
 # All "state" variables we set and then act upon.
 source $TOOLPATH/variables
@@ -34,24 +39,28 @@ yaml() {
 
 set -o pipefail
 
+# Define the local dragon data dir
+if [[ $PWD != $HOME ]]; then
+    export DRAGON_DATA_DIR="$PWD/$DRAGON_DIR"
+fi
+
 # --------
 # Argument Parsing
-# Set a variable here or call a bash function if it's atool
+# Set a variable here or call a bash function if it's a tool
 # --------
 
 # If we have no args, print usage and exit
-if [ "$1" == "" ]; then
+if [[ -z $1 ]]; then
     usage
     drexit
 fi
 
-while [ "$1" != "" ]; do
+while ! [[ -z $1 ]]; do
     case $1 in
 
         # --------
         # Set Variables
         # --------
-
         do )                    gen=1
                                 build=1
                                 install=1
@@ -101,11 +110,10 @@ while [ "$1" != "" ]; do
         # --------
         # Commands
         # --------
-
         u | update | upgrade )            source $TOOLPATH/upgrader
                                 drexit
                                 ;;
-        rs | respring )         python3 -m dragon.device run killall -9 SpringBoard
+        rs | respring )         python3 -m dragon.device run sbreload
                                 drexit
                                 ;;
         dr | devicerun )        shift
@@ -116,20 +124,22 @@ while [ "$1" != "" ]; do
                                 ;;
         sr | rconf )            setupRemote
                                 ;;
-        sn | send )             snd $2
+        sn | send )             send_package $2
                                 drexit
                                 ;;
-        ch | checkra1n )        /Applications/checkra1n.app/Contents/MacOS/checkra1n -g
+        ch | checkra1n )        C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
+                                $C1 -g
                                 drexit
                                 ;;
-        chc | checkra1ncli )    /Applications/checkra1n.app/Contents/MacOS/checkra1n -c
+        chc | checkra1ncli )    C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
+                                $C1 -c
                                 drexit
                                 ;;
         r | remote )            shift
-                                bash $DRAGONDIR/internal/tools/remote $*
+                                remote $*
                                 drexit
                                 ;;
-        relink )                rm .dragon/sign
+        relink )                rm -r "$DRAGON_DATA_DIR/sign/"
                                 ;;
         h | help | -h )         usage
                                 drexit
@@ -140,7 +150,7 @@ while [ "$1" != "" ]; do
         time )                  N=`date +%s%N`; export PS4='+[$(((`date +%s%N`-$N)/1000000))ms][${BASH_SOURCE}:${LINENO}]: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }';
                                 set -x
                                 ;;
-        v | -v )                cat $DRAGONDIR/internal/banner.txt
+        v | -v )                cat $DRAGON_ROOT_DIR/internal/banner.txt
                                 ;;
         * )                     usage
                                 drexit 1
@@ -149,30 +159,22 @@ while [ "$1" != "" ]; do
     shift
 done
 
-cwd=$(basename $PWD)
-
-
 # --------
 # Build, then package (if needed)
 # --------
-
-if [ $build == 1 ]; then
+if [[ $build -eq 1 ]]; then
     # shellcheck disable=SC2154
-
     # Invoke the generator
-    if [ $gen == 1 ]; then
-        rm -rf .dragon/ninja/build.ninja 2>/dev/null
-        mkdir -p .dragon/ninja 2>/dev/null
-        mkdir -p .dragon/modules 2>/dev/null
+    if [[ $gen -eq 1 ]]; then
+        rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
+        mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
 
         generate
 
-        if [ "$DRAGONGEN_FAILURE" == 1 ]; then
+        if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
             cleanbuildfail
         fi
     fi
-
-    projroot=$PWD
 
     set -f
     # If there's more than one project in the root directory we need to iterate by name.
@@ -180,24 +182,30 @@ if [ $build == 1 ]; then
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
     set +f
 
-    mkdir -p .dragon
-    cp DragonMake .dragon/DragonMake 2> /dev/null
+    mkdir -p "$DRAGON_DATA_DIR"
+    cp DragonMake "$DRAGON_DATA_DIR/DragonMake" 2> /dev/null
 
-    for i in ${subsb[@]}; do
+    for i in "${subsb[@]}"; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
-        [[ -d $i ]] && mkdir -p $i/.dragon/ && cp DragonMake $i/.dragon/DragonMake 2> /dev/null
-
+        if [[ -d $i ]]; then
+            mkdir -p "$i/$DRAGON_DIR/"
+            cp DragonMake "$i/$DRAGON_DIR/DragonMake" 2> /dev/null
+        fi
         build $i
     done
 
     find . -name '.clean' -type f -delete
 
-    if [ $DRAGON_DPKG == 1 ]; then
+    if [[ $DRAGON_DPKG -eq 1 ]]; then
         create_package
     fi
 
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Cleaning Up"
+    prefix_print "Cleaning Up"
+
+    if [[ $norm -eq 0 ]]; then
+        find . -name '*.ninja' -type f -delete
+    fi
 fi
 
 
@@ -205,11 +213,11 @@ fi
 # Install a package after building (doesn't need to be same session)
 # DRAGON_DPKG is 1 by default, modified by the generator
 # --------
-if [ $install == 1 ] && [ $DRAGON_DPKG == 1 ]; then
-    OUTPUT="$(cat .dragon/last_package | tr -d '\040\011\012\015' )"
+if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
+    OUTPUT="$(cat "$DRAGON_DATA_DIR/last_package" | tr -d '\040\011\012\015' )"
 
-    if [ -z "$OUTPUT" ]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} Packaging Failed${NC}"
+    if [[ -z $OUTPUT ]]; then
+        prefix_print "Packaging Failed"
         drexit
     fi
 
@@ -223,14 +231,14 @@ fi
 # --------
 # On-device debugging
 # --------
-if [ $debug == 1 ] ; then
-    eval $(python3 $DRAGONDIR/internal/tools/device.py get)
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Starting on device debugger and targeting '$debugproc' ${NC}"
-    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt-get install lldb" || drexit
-    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc" || ssh -p $DRBPORT root@$DRBIP "killall lldb"
+if [[ $debug -eq 1 ]]; then
+    eval $(python3 -m dragon.device get)
+    prefix_print "Starting on device debugger and targeting '$debugproc'"
+    ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install lldb" || drexit
+    ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc || killall lldb" || drexit
 fi
 
-rm -rf .dragon/packages > /dev/null
+rm -rf "$DRAGON_DATA_DIR/packages" > /dev/null
 set +xv
 
 python3 -m dragon.update_check

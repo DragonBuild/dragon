@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import yaml, os, sys
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
@@ -13,8 +15,8 @@ dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 # This script will get called w/
-# argc=3  argv[0]                          argv[1]    argv[2]
-# python3 $DRAGONDIR/internal/control.py DragonMake ./.dragon/_/DEBIAN/control
+# argc=3  argv[0]                                argv[1]    argv[2]
+# python3 $DRAGON_ROOT_DIR/internal/control.py DragonMake ./$DRAGON_DIR/_/DEBIAN/control
 def main():
     dbstate("Pulling 'control' values from DragonMake")
 
@@ -38,19 +40,18 @@ def main():
         'icon': 'Icon',
         'depiction': 'Depiction',
         'sldepiction': 'Sileodepiction',
-        'sileodepiction': 'Sileodepiction',
-
+        'sileodepiction': 'Sileodepiction'
     }
 
     defs = {
         'Section': 'Tweaks',
-        'Description': 'A cool tweak',
-        'Version': '0.1.0',
+        'Description': 'A cool MobileSubstrate Tweak',
+        'Version': '0.0.1',
         'Architecture': 'iphoneos-arm',
         'Depends': 'mobilesubstrate' # This is a blind guess, maybe we can improve this logic?
     }
-    # extrainst?
-    filenames = [
+
+    filenames = [ # extrainst?
         'preinst',
         'postinst',
         'prerm',
@@ -70,7 +71,6 @@ def main():
 
 
     # Fallbacks section
-
     if 'Name' not in control:
         control['Name'] = os.path.basename(os.getcwd())
         # Warn for this bc it's kinda important
@@ -78,7 +78,7 @@ def main():
 
     if 'Package' not in control:
         control['Package'] = f'com.yourcompany.{control["Name"].lower()}'
-        # Warn for this too, its fairly important
+        # Warn for this too, it's fairly important
         dbwarn(f'No "id:" key in DragonMake, creating default based on Name: key')
 
     if 'Author' not in control:

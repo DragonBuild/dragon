@@ -2,53 +2,63 @@
 
 send_package()
 {
-    if [ $simtarg == 1 ]; then
+    if [[ -z $1 ]]; then
+        prefix_print "No package provided. Exiting."
+        drexit 1
+    fi
+
+    if [[ $simtarg -eq 1 ]]; then
         simstall
         drexit 0
     fi
-    if [ "${USER}" == "mobile" ]; then
+    if [[ $USER == "mobile" ]]; then
         sudo dpkg -i ./packages/${GENOUTPUT}
         ${INSTALL_CMD} &
         drexit 0
     fi
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Installing..."
+    prefix_print "Installing..."
     OUTPUT=$1
-    if [ -z "$OUTPUT" ]; then
-        echo -e "${PrefixColor}[Dragon]${BoldColor} $1 not found${NC}"
+    if [[ -z $OUTPUT ]]; then
+        prefix_print "$1 not found"
         drexit
     fi
 
     connectionCheck="$(python3 -m dragon.device test)"
     if [[ $connectionCheck =~ "Failed" ]]; then
         echo "$connectionCheck"
-        exit 1
+        drexit 1
     fi
 
     eval $(python3 -m dragon.device get)
 
-    if [ -z "$DRBIP" ]; then
+    if [[ -z $DRBIP ]]; then
         python3 -m dragon.device setup
     fi
 
-    echo -e "${PrefixColor}[Dragon]${BoldColor} Copying package to device and running install commands${NC}"
-    python3 -m dragon.device qr mkdir -p /var/mobile/dragon/packages
-    scp -P $DRBPORT ${OUTPUT} root@$DRBIP:/var/mobile/dragon/${OUTPUT} || drexit && python3 -m dragon.device qr apt install --reinstall /var/mobile/dragon/${OUTPUT} -y && rm -rf /var/mobile/dragon/
+    prefix_print "Copying package to device and running install commands"
+    TMP_PATH="/tmp/dragon/packages"
+    FILE_PATH="/tmp/dragon/$OUTPUT"
+    python3 -m dragon.device qr mkdir -p $TMP_PATH
+    (scp -P $DRBPORT ${OUTPUT} root@$DRBIP:$FILE_PATH && python3 -m dragon.device qr "apt install -y --reinstall $FILE_PATH; rm -r $(dirname $TMP_PATH)") || drexit 1
 }
 
 create_package()
 {
-    echo -e "${PackageColor}[Packager]${NC} Generating Package Structure"
-    mv .dragon/_/.dragonbuilding .dragon/_/DEBIAN
-    [[ -f control ]] && echo -e "$(cat control)" > .dragon/_/DEBIAN/control 2>/dev/null || python3 -m dragongen.control DragonMake ./.dragon/_/DEBIAN/control
-    du -d 0 .dragon/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> .dragon/_/DEBIAN/control
-    chmod -R 0755 .dragon/_/DEBIAN/*
-    mkdir -p .dragon/packages
-    find . -name '.DS_Store' -type f -delete
-    find . -name '.dragonbuilding' -delete
-    echo -e "${PackageColor}[Packager]${BoldColor} Building Package${NC}"
-    perl $DRAGONDIR/src/dm.pl/dm.pl -Zgzip -z9 .dragon/_ .dragon/packages/
-    GENOUTPUT="$(ls .dragon/packages)"
-    mkdir -p packages 2> /dev/null
-    cp .dragon/packages/${GENOUTPUT} packages/${GENOUTPUT}
-    echo "${GENOUTPUT}" > .dragon/last_package
+    pkg_print "Generating Package Structure"
+    mv $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/_/DEBIAN
+    if [[ -f control ]]; then
+        echo -e "$(cat control)" > $DRAGON_DIR/_/DEBIAN/control 2>/dev/null
+    else
+        python3 -m dragongen.control DragonMake ./$DRAGON_DIR/_/DEBIAN/control
+    fi
+    du -d 0 $DRAGON_DIR/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> $DRAGON_DIR/_/DEBIAN/control
+    chmod -R 0755 $DRAGON_DIR/_/DEBIAN/*
+    mkdir -p $DRAGON_DIR/packages
+    find . -type f -name '.DS_Store' -o -name '.dragonbuilding' -delete
+    pkg_print "Building Package"
+    perl $DRAGON_ROOT_DIR/src/dm.pl/dm.pl -Zgzip -z9 $DRAGON_DIR/_ $DRAGON_DIR/packages/ || return
+    GENOUTPUT="$(ls $DRAGON_DIR/packages)"
+    mkdir -p packages
+    cp $DRAGON_DIR/packages/${GENOUTPUT} packages/${GENOUTPUT}
+    echo "${GENOUTPUT}" > $DRAGON_DIR/last_package
 }

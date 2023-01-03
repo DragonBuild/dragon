@@ -4,11 +4,11 @@
 
 DragonGen.py
 
-(c) 2020 kritanta
+(c) 2020 cynder
 Please refer to the LICENSE file included with this project regarding the usage of code herein.
 
 Author credits:
-  - @kritanta
+  - @cynder
   - @l0renzo
 
 Some guidelines for work on this file moving forward:
@@ -27,13 +27,10 @@ Things to keep in mind when working on this file:
 
 """
 
-import traceback
-import platform
+import traceback, platform, yaml
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
-import yaml
-
 from .variable_types import ProjectVars
 from .util import *
 from buildgen.generator import BuildFileGenerator
@@ -125,12 +122,12 @@ class Generator(object):
 
         # Load in internal defaults
         # These are ones that really probably shouldn't be touched often as they
-        #       serve to slap together all the variables we *do* touch
+        # serve to slap together all the variables we *do* touch
         project_dict: dict = get_default_section_dict('InternalDefaults')
 
         if _IS_THEOS_MAKEFILE_:
             project_dict.update({
-                'theosshim': '-include$$DRAGONDIR/include/PrefixShim.h -w'
+                'theosshim': '-include$$DRAGON_ROOT_DIR/include/PrefixShim.h -w'
             })
 
         # Setup with default vars
@@ -146,7 +143,7 @@ class Generator(object):
                                                              module_variables['type'].lower(), 'variables'))
             except KeyError:
                 # They either didn't include a type variable, or they misspelled the
-                #     type they used.
+                # type they used.
                 raise ex
 
         # Apply the set of variables the user included on this module
@@ -156,7 +153,7 @@ class Generator(object):
 
         # We allow the user to create their own Target and all sections
         # Iterate through defaults.yml, the module's specific variables, and the root of
-        #       the DragonMake
+        # the DragonMake
         for source in get_default_section_dict(), module_variables, self.config:
             if 'all' in source:
                 project_dict.update(source['all'])
@@ -201,9 +198,9 @@ class Generator(object):
 
         # Specify toolchain paths
         # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
-        if len(os.listdir(os.environ['DRAGONDIR'] + '/toolchain')) > 1:
-            project_dict.update({k: f'$dragondir/toolchain/linux/iphone/bin/'
-                                    + project_dict[k] for k in [
+        linux_bin = os.environ['DRAGON_ROOT_DIR'] + '/toolchain/linux/iphone/bin/'
+        if os.path.isdir(linux_bin) and len(os.listdir(linux_bin)) > 1:
+            project_dict.update({k: linux_bin + project_dict[k] for k in [
                                      'cc',
                                      'cxx',
                                      'lipo',
@@ -211,9 +208,6 @@ class Generator(object):
                                      'plutil',
                                      'swift',
                                      'ld',
-                                 ]})
-            project_dict.update({k: '$dragondir/toolchain/linux/iphone/bin/'
-                                    + project_dict[k] for k in [
                                      'codesign',
                                  ]})
 
@@ -330,7 +324,7 @@ class Generator(object):
         build_state.extend([
             # lipo if needed, else use a dummy rule to rename it to what the next rule expects
             # the dummy rule could be optimized out, but its probably more developmentally clear
-            #       to have it there anyways /shrug
+            # to have it there anyways /shrug
             Build('$internalsymtarget',
                   'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
                   [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
@@ -367,9 +361,9 @@ class Generator(object):
             ___,
             Var('stagedir'),
             Var('location'),
-            Var('dragondir'),
+            Var('dragon_root_dir'),
             Var('sysroot'),
-            Var('proj_build_dir'),
+            Var('dragon_data_dir'),
             Var('objdir'),
             Var('signdir'),
             Var('builddir'),
@@ -421,8 +415,8 @@ class Generator(object):
             Var('header_includes'),
             Var('public_headers'),
             ___,
-            Var('usrCflags'),
-            Var('usrLDflags'),
+            Var('usrCflags'), # Unused?
+            Var('usrLDflags'), # Unused?
             ___,
             Var('libflags'),
             Var('lopts'),
@@ -463,7 +457,7 @@ def rules(*key_path: str) -> dict:
 
     global _LAZY_RULES_DOT_YML
     if _LAZY_RULES_DOT_YML is None:
-        with open(f'{os.environ["DRAGONDIR"]}/internal/rules.yml') as f:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/rules.yml') as f:
             _LAZY_RULES_DOT_YML = yaml.safe_load(f)
 
     key_path = list(key_path)
@@ -482,11 +476,11 @@ def get_default_section_dict(*key_path: str) -> dict:
     """
 
     global _LAZY_DEFAULTS_DOT_YML
-    with open(f'{os.environ["DRAGONDIR"]}/internal/defaults.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/defaults.yml') as f:
         _LAZY_DEFAULTS_DOT_YML = yaml.safe_load(f)
-    with open(f'{os.environ["DRAGONDIR"]}/internal/targets.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/targets.yml') as f:
         _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
-    with open(f'{os.environ["DRAGONDIR"]}/internal/types.yml') as f:
+    with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/types.yml') as f:
         _LAZY_DEFAULTS_DOT_YML.update(yaml.safe_load(f))
 
     key_path = list(key_path)
@@ -567,13 +561,14 @@ def main():
                 # If the file we tried to load isn't YAML, try running it as a bash script
                 if os.system("sh DragonMake 2>/dev/null") == 0:
                     # If that worked, it's the old (OLD) legacy DragonMake format,
-                    #   which we can easily support via a couple lines of regex
+                    # which we can easily support via a couple lines of regex
                     config = load_old_format(open('DragonMake'))
                     dbstate("Loading Legacy format DragonMake")
                 else:
                     # bad format
                     dberror("Formatting Error in the DragonMake file")
                     dberror("Check YAML syntax or file an issue")
+                    dberror('https://github.com/DragonBuild/dragon')
                     raise ex
 
     elif os.path.exists('Makefile'):

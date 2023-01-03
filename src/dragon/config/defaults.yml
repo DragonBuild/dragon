@@ -1,32 +1,32 @@
 ---
 # Special thanks to uroboro for suggesting this
 # Configurations here should provide enough default variables to create the specified module;
-# Please reach out to _kritanta if you need advice on extending these
+# Please reach out to cynder if you need advice on extending these
 Defaults:
-  proj_build_dir: .dragon
-  builddir: $proj_build_dir/build
-  objdir: $proj_build_dir/obj
-  signdir: $proj_build_dir/sign
+  dragon_data_dir: .dragon
+  builddir: $dragon_data_dir/build
+  objdir: $dragon_data_dir/obj
+  signdir: $dragon_data_dir/sign
   bridging-header: $name-Bridging-Header.h
-  dragondir: $$DRAGONDIR
+  dragon_root_dir: $$DRAGON_ROOT_DIR
   toolchain-prefix: ''
   tool-prefix: ''
   cc: clang
   cxx: clang++
   ld: clang++
-  nopack: No
+  nopack: false
   codesign: ldid
   dsym: dsymutil
   plutil: plutil
   swift: swift
   lipo: lipo
-  logos: $dragondir/src/logos/bin/logos.pl
+  logos: $dragon_root_dir/src/logos/bin/logos.pl
   cargo: cargo
   cargo-nightly: 'cargo +nightly'
-  optool: $dragondir/bin/optool
+  optool: optool
   stage:
     - 'true'
-  wild_recurse: No
+  wild_recurse: false
   warnings: -Wall
   optim: "0"
   debug: -fcolor-diagnostics
@@ -35,17 +35,17 @@ Defaults:
   entfile: ''
   resource_dir: 'Resources'
   fw_dirs:
-    - $dragondir/sdks/iPhoneOS.sdk/System/Library/PrivateFrameworks/
-    - $dragondir/frameworks
+    - $dragon_root_dir/sdks/iPhoneOS.sdk/System/Library/PrivateFrameworks/
+    - $dragon_root_dir/frameworks
   lib_dirs:
-    - $dragondir/lib
+    - $dragon_root_dir/lib
     - '.'
   additional_lib_dirs:
   additional_fw_dirs:
   prefix: []
-  cinclude: '-I$dragondir/include -I$dragondir/vendor/include -I$dragondir/include/_fallback -I$DRAGONDIR/headers/ -I$pwd'
+  cinclude: '-I$dragon_root_dir/include -I$dragon_root_dir/vendor/include -I$dragon_root_dir/include/_fallback -I$dragon_root_dir/headers/ -I$pwd'
   stagedir: '_'
-  modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$proj_build_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
+  modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$dragon_data_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
 # Touching these without a firm grasp of what you're doing is likely to break things
 # They serve to abstract how we slap together all of the clang args

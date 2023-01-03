@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'dragon'
-copyright = '2021, _kritanta'
-author = '_kritanta'
+copyright = '2022, cynder'
+author = 'cynder'
 
 # The full version, including alpha/beta/rc tags
 release = '1.6.4'

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
+
 import os.path as path
 from enum import IntEnum
-
 import pkg_resources
 
 DRAGONBUILD_VERSION = pkg_resources.get_distribution('dragon').version
-
 
 def version() -> str:
     return DRAGONBUILD_VERSION

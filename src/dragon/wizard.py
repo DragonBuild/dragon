@@ -1,18 +1,9 @@
-#!/usr/env/bin python3
-import json
-import os
-import shutil
-import ssl
-import sys
-import tarfile
+#!/usr/bin/env python3
 
+import json, os, shutil, ssl, sys, tarfile
 from ruyaml import YAML
-
 from urllib import request
 from .util import deployable_path
-
-
-dragondir = ''
 
 
 def log(s: str, end: str = '\n') -> None:
@@ -27,18 +18,17 @@ def get_input(prompt: str, default: str) -> str:
 
 
 def setup_wizard():
-    log(f'installing dragon v{os.environ.get("DRAGONVERS")}')
+    log(f'installing dragon v{os.environ["DRAGON_VERS"]}')
     log('=========================', end='\n\n')
-    dragondir = os.path.expandvars('$HOME/.dragon/')
+    dragon_root_dir = os.environ['DRAGON_ROOT_DIR']
     try:
-        os.mkdir(os.path.expandvars(dragondir))
+        os.mkdir(dragon_root_dir)
     except FileExistsError:
         pass
 
-    os.chdir(dragondir)
+    os.chdir(dragon_root_dir)
 
     for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
-
         try:
             get_supporting(
                 f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',
@@ -47,15 +37,22 @@ def setup_wizard():
         except Exception as ex:
             log(ex)
             log('Potentially ratelimited, attempting fallback by cloning repo (this adds some overhead)')
-            os.system(f'git clone https://github.com/dragonbuild/{repo} --depth 1')
+            if os.path.isdir(f'{repo}') and os.path.isdir(f'{repo}/.git'):
+                os.chdir(f'{repo}')
+                os.system('git pull origin $(git rev-parse --abbrev-ref HEAD)')
+                os.chdir(dragon_root_dir)
+            else:
+                os.system(f'git clone --depth=1 https://github.com/dragonbuild/{repo}')
 
     log('Deploying internal configuration')
-    os.system(f'rm -rf ./internal')
-    shutil.copytree(deployable_path(),
-                    dragondir + '/internal')
+    try:
+        shutil.rmtree(f'./internal')
+    except FileNotFoundError:
+        pass
+    shutil.copytree(deployable_path(), dragon_root_dir + '/internal')
 
     try:
-        os.mkdir(os.path.expandvars('$HOME/.dragon/toolchain'))
+        os.mkdir(dragon_root_dir + '/toolchain')
     except FileExistsError:
         pass
     log('Done!')
@@ -64,7 +61,7 @@ def setup_wizard():
 def get_supporting(api: str, destination: str):
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE  # python doesn't bundle certs on macOS. So we have to disable SSL :)
+    ctx.verify_mode = ssl.CERT_NONE  # python doesn't bundle certs on macOS, so we have to disable SSL :)
     response: dict = json.load(request.urlopen(api, context=ctx))
     if os.path.exists(f'{destination}/metadata.yml'):
         with open(f'{destination}/metadata.yml', 'r') as fd:
@@ -76,7 +73,10 @@ def get_supporting(api: str, destination: str):
                 return
     tar_url = response['tarball_url']
 
-    os.system(f'rm -rf ./{destination}')
+    try:
+        shutil.rmtree(f'./{destination}')
+    except FileNotFoundError:
+        pass
 
     log(f'Updating supporting {destination} v{response["tag_name"]} from {tar_url} ...')
     tar_bytes = request.urlopen(tar_url, context=ctx).read()
@@ -88,7 +88,7 @@ def get_supporting(api: str, destination: str):
     tar = tarfile.open(fname)
     extracted_name = tar.members[0].name
 
-    log(f'Extracting into {os.path.expandvars(dragondir + destination)}')
+    log(f'Extracting into {os.environ["DRAGON_ROOT_DIR"] + destination}')
     tar.extractall()
     os.rename(extracted_name, destination)
     os.remove(fname)

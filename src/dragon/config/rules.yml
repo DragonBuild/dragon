@@ -3,10 +3,6 @@ logos:
   name: Logos Preprocessor
   desc: Preprocessing $in using Logos
   cmd: $logos $in > $out
-prefs:
-  name: DragonPrefs
-  desc: Building DragonPrefs
-  cmd: python3 $$DRAGONDIR/DragonGen/dragonprefs.py $in $out
 swiftarmv6:
   name: Swift armv6
   cmd: SwiftFiles=$$(echo '$swiftfiles $in' | tr ' ' '\\n' | sort | uniq -u); $swift -frontend -c $internalswiftflags $bridgeheader -target armv6-apple-ios -emit-module-path $out.swiftmodule -primary-file $in $$SwiftFiles -o $out
@@ -220,7 +216,7 @@ lipo:
 bundle:
   name: Bundle Resources
   desc: Copying Bundle Resources
-  cmd: mkdir -p "$proj_build_dir/_$location/" && cp -R "$resource_dir/" "$proj_build_dir/_$location"
+  cmd: mkdir -p "$dragon_data_dir/_$location/" && cp -R "$resource_dir/" "$dragon_data_dir/_$location"
 plist:
   name: plutil compilation
   desc: Compiling $in

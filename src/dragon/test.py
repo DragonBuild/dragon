@@ -1,9 +1,10 @@
-import subprocess, sys, os
+#!/usr/bin/env python3
+
+import subprocess, sys, os, timeit, time, yaml
 from pprint import pprint
 from math import sin, cos, radians
-import timeit, time, yaml
 
-TestDict = yaml.safe_load(open(os.environ['DRAGONDIR'] + '/internal/tests.yml'))
+TestDict = yaml.safe_load(open(os.environ['DRAGON_ROOT_DIR'] + '/internal/tests.yml'))
 projects = TestDict['ProjectTests']
 
 
@@ -35,10 +36,11 @@ def main():
     times = {
 
     }
-    if len(os.environ['DRAGONDIR']) > 0:
-        system('rm -rf ' + os.environ['DRAGONDIR'] + '/testing/')
-    system('mkdir -p ' + os.environ['DRAGONDIR'] + '/testing/')
-    os.chdir(os.environ['DRAGONDIR'] + '/testing/')
+    testing_dir = os.environ['DRAGON_ROOT_DIR'] + '/testing/'
+    if len(os.environ['DRAGON_ROOT_DIR']) > 0:
+        system('rm -rf ' + testing_dir)
+    system('mkdir -p ' + testing_dir)
+    os.chdir(testing_dir)
 
     # print('Doing Benchmarks')
     # perform_benchmark()
@@ -47,7 +49,7 @@ def main():
         cattests = {}
         cattimes = {}
         for i in projects[category]:
-            os.chdir(os.environ['DRAGONDIR'] + '/testing/')
+            os.chdir(testing_dir)
             print(os.getcwd())
             system('''
             echo $PWD
@@ -65,7 +67,7 @@ def main():
             print('-+- Passed -+-' if passed else '-!- Failed -!-')
             cattests[dirName] = passed
             cattimes[dirName] = s
-            os.chdir(os.environ['DRAGONDIR'] + '/testing/')
+            os.chdir(testing_dir)
             if passed:
                 system(f'rm -rf {dirName}', sys.stdout, sys.stderr)
         tests[category] = cattests

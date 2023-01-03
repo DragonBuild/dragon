@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import yaml, os, sys
 
 colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
@@ -13,8 +15,8 @@ dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 # This script will get called w/
-# argc=3  argv[0]                          argv[1]     argv[2]
-# python3 $DRAGONDIR/internal/bfilter.py DragonMake  projectName
+# argc=3  argv[0]                                argv[1]     argv[2]
+# python3 $DRAGON_ROOT_DIR/internal/bfilter.py DragonMake  projectName
 
 def main():
     if os.path.exists(sys.argv[1]):

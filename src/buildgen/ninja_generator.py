@@ -10,8 +10,7 @@ just a helpful utility for build-file-generation systems that already
 use Python.
 """
 
-import re
-import textwrap
+import re, textwrap
 from .writer import Writer
 
 

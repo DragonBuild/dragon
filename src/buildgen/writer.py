@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class Writer(object):
     def __init__(self, output, width=78):
         pass

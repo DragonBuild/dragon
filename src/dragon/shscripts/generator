@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 generate()
 {
-    echo $DGEN_DEBUG | grep "1" > /dev/null && echo "DragonGen Debug Enabled"
+    echo $DGEN_DEBUG | grep "1" > /dev/null && gen_print "DragonGen Debug Enabled"
 
-    echo $simtarg | grep "1" > /dev/null && echo -e "${GenColor}[DragonGen]${BoldColor} Targeting Simulator + simject${NC}"
+    echo $simtarg | grep "1" > /dev/null && gen_print "Targeting Simulator + simject"
 
     eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 -m dragongen.generation)
 

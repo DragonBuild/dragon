@@ -4,18 +4,15 @@
 
 device.py
 
-(c) 2020 kritanta
+(c) 2020 cynder
 Please refer to the LICENSE file included with dragon regarding the usage of code herein.
 
-https://dragon.krit.me/
+https://dragon.cynder.me/
 https://github.com/DragonBuild/dragon
 
 '''
 
-import os, sys, yaml
-import subprocess
-import socket
-
+import os, sys, yaml, subprocess, socket
 from .util import dprintline, OutputColors, OutputWeight
 
 dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Device", text_color=OutputColors.White,
@@ -120,6 +117,8 @@ class Device:
 
         if not self.test_connection():
             dberror(f'Could not connect to device at {self.host}:{self.port}')
+            if self.host == "localhost" and self.port == 4444:
+                dberror(f'To configure a new device, run "dragon s"')
             self.connection_failure_resolver()
             return
 
@@ -146,7 +145,7 @@ class Device:
             dbstate('Generating Keyfile')
             system("ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null")
 
-        # We don't use ssh-copy-id because some systems (bingners bootstrap, etc) don't have it
+        # We don't use ssh-copy-id because some systems (Elucubratus, etc) don't have it
         dbstate('Copying keyfile')
         success = system(
             f'cat ~/.ssh/id_rsa.pub | ssh -p {self.port} root@{self.host} "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"')
@@ -159,7 +158,7 @@ class Device:
 class DeviceManager(object):
 
     def __init__(self):
-        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml') as state:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/state.yml') as state:
             dragon_state = yaml.safe_load(state)
 
         self.dragon_state = dragon_state
@@ -171,7 +170,7 @@ class DeviceManager(object):
         self.current = self.devices[dragon_state['device']['current']]
 
     def savestate(self):
-        with open(f'{os.environ["DRAGONDIR"]}/internal/state.yml', 'w') as state:
+        with open(f'{os.environ["DRAGON_ROOT_DIR"]}/internal/state.yml', 'w') as state:
             yaml.dump(self.dragon_state, state)
 
     def add_device(self, device: Device):
@@ -292,8 +291,8 @@ def main():
             dbstate('Connected!')
             exit(0)
         else:
-            dberror('Connection Failed')
-            dberror('Error connecting to device, make sure SSH is functioning properly')
+            dberror('Connection to device failed')
+            dberror('Make sure SSH is functioning properly and/or run "dragon s" to configure your device')
             exit(1)
 
 
