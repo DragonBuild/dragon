@@ -1,7 +1,7 @@
 Commands
 ---------------------
 
-Running ``dragon`` without any arguments will list available commands, many of which have multiple aliases
+Running ``dragon`` without any arguments will list available commands, many of which have multiple aliases.
 
 You can combine most commands to do multiple actions with one command.
 
@@ -53,7 +53,7 @@ Respringing a device
 
 Running a command on the device
 *********************
-``dragon dr <commands>`` or ``dragon devicerun <commands>`` will execute anything after the command on the device (don't use quotes)
+``dragon dr <commands>`` or ``dragon devicerun <commands>`` will execute anything after the command on the current device (i.e. current installation target) [don't use quotes]
 
 
 Installing any deb on the device
