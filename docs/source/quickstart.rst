@@ -28,6 +28,11 @@ You can do both of these at the same time; most commands in dragon can be combin
 
     dragon b i
 
+
+Or you can use the shorthand notation::
+
+    dragon do
+
 Building and installing to the iOS Simulator::
 
     dragon b i sim

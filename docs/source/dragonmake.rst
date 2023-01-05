@@ -179,9 +179,9 @@ Types
 
 Tweak bundle filters
 ^^^^^^^^^^^^^^^^^^^^^
-Bundle filters tell MobileSubstrate what processes to inject your tweak into.
+Bundle filters tell MobileSubstrate (or whatever injection system your jailbreak uses) what processes to inject your tweak into.
 
-dragon supports the standard theos format, but allows specifying the values in the `DragonMake`, if you want.
+dragon supports the standard Theos format, but allows specifying the values in the `DragonMake`, if you want.
 
 .. code-block:: YAML
 

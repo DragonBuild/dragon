@@ -1,9 +1,7 @@
 Commands
 ---------------------
 
-Running ``dragon`` without any arguments will list commands
-
-Many commands have multiple aliases
+Running ``dragon`` without any arguments will list available commands, many of which have multiple aliases
 
 You can combine most commands to do multiple actions with one command.
 
@@ -14,15 +12,13 @@ Packaging Commands
 Creating a new project/module
 *********************
 
-``dragon n``, ``dragon new``, ``dragon nic``, ``dragon edit``, or ``dragon create``
-
-Opens the Project Editor
+``dragon n``, ``dragon new``, ``dragon nic``, ``dragon edit``, or ``dragon create`` will open the Project Editor
 
 
 Building a package
 *********************
 
-``dragon b``, ``dragon build``, or ``dragon make``
+``dragon b``, ``dragon build``, or ``dragon make`` builds a package
 
 
 Clean Building a package
@@ -39,7 +35,7 @@ Device Commands
 Setting up a device
 *********************
 
-``dragon s`` or ``dragon device`` Can be used to set up an installation target
+``dragon s`` or ``dragon device`` will set up an installation target
 
 
 Installing a package
@@ -52,21 +48,21 @@ Combine it with the build command, or use ``dragon do`` to build and install a p
 Respringing a device
 *********************
 
-``dragon rs`` or ``dragon respring`` will respring the current device
+``dragon rs`` or ``dragon respring`` will respring the current device (i.e. current installation target)
 
 
 Running a command on the device
 *********************
-``dragon dr <commands>`` or ``dragon devicerun`` will execute anything after the command on the device (don't use quotes)
+``dragon dr <commands>`` or ``dragon devicerun <commands>`` will execute anything after the command on the device (don't use quotes)
 
 
 Installing any deb on the device
 *********************
 
-``dragon sn <file>`` or ``dragon send <file>`` anywhere on your drive, where <file> is a ``.deb``, will install that deb on your device.
+``dragon sn <file>`` or ``dragon send <file>`` will install a ``.deb`` anywhere on your drive to the current device (i.e. current installation target)
 
 
 Building and installing to the iOS Simulator
 *********************
 
-Adding the ``sim`` command to a set of commands targets the simulator, and if added to an ``install`` command, will install it to the iOS simulator
+Adding the ``sim`` command to a set of commands targets the simulator. If added to an ``install`` command, it will install the specified deb to the iOS simulator

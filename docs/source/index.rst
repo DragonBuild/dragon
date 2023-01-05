@@ -4,12 +4,12 @@ dragon
 
 "dragon" is a build system primarily targeting jailbroken iOS devices, capable of building tweaks, preferences, frameworks, apps, and anything else related to them.
 
-it's designed to be simple, both in installation and usage, and to be hackable and configurable at every step of the way.
+It's designed to be simple, both in installation and usage, and to be hackable and configurable at every step of the way.
 
 Benifits over "theos"
 ---------------------------------
 
-**Note:** `dragon is currently maintained by a single developer. while thorough testing is done, and dragon can run perfectly fine without theos, it's reccomended that you keep theos installed if you've already installed it. Theos has the advantage of long-term stability, being maintained by a team of developers for the past decade.`
+**Note:** `dragon is currently maintained by a single developer. while thorough testing is done, and dragon can run perfectly fine without Theos, it's reccomended that you keep Theos installed if you've already installed it. Theos has the advantage of long-term stability, as it has been maintained by a team of developers for more than a decade.`
 
 
 Speed
@@ -27,7 +27,7 @@ For an average project on an average PC, dragon typically takes **less than a se
 Simplicity
 *********************************
 
-Instead of "submodules" each having their own "Makefile" like in theos, the DragonMake format contains all of the build variables in a single file, at the root of a project.
+Instead of "submodules" each having their own "Makefile" like in theos, the DragonMake format contains all of the build variables in a single file at the root of a project.
 
 Manually writing, adding to, modifying, or hacking things together in a DragonMake file is simple and much more readable.
 
