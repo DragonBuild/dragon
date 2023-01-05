@@ -22,10 +22,10 @@ Opens the Project Editor
 Building a package
 *********************
 
-``dragon b``, ``dragon build``, or ``dragon make`` 
+``dragon b``, ``dragon build``, or ``dragon make``
 
 
-Clean Building a package 
+Clean Building a package
 *********************
 
 ``dragon c`` or ``dragon clean`` will clean the 'build cache'
@@ -33,29 +33,29 @@ Clean Building a package
 Combine it with the build command to run a clean build (e.g. ``dragon c b``)
 
 
-Device Commands 
+Device Commands
 =====================
 
-Setting up a device 
+Setting up a device
 *********************
 
-``dragon s`` or ``dragon device`` Can be used to set up an installation target 
+``dragon s`` or ``dragon device`` Can be used to set up an installation target
 
 
 Installing a package
 *********************
 
-``dragon i`` or ``dragon install`` installs a package 
+``dragon i`` or ``dragon install`` installs a package
 
-Combine it with the build command, or use ``dragon do`` to build and install a package 
+Combine it with the build command, or use ``dragon do`` to build and install a package
 
-Respringing a device 
+Respringing a device
 *********************
 
-``dragon rs`` or ``dragon respring`` will respring the current device 
+``dragon rs`` or ``dragon respring`` will respring the current device
 
 
-Running a command on the device 
+Running a command on the device
 *********************
 ``dragon dr <commands>`` or ``dragon devicerun`` will execute anything after the command on the device (don't use quotes)
 
@@ -63,7 +63,7 @@ Running a command on the device
 Installing any deb on the device
 *********************
 
-``dragon sn <file>`` or ``dragon send <file>`` anywhere on your drive, where <file> is a ``.deb``, will install that deb on your device. 
+``dragon sn <file>`` or ``dragon send <file>`` anywhere on your drive, where <file> is a ``.deb``, will install that deb on your device.
 
 
 Building and installing to the iOS Simulator
