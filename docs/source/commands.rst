@@ -70,4 +70,3 @@ Building and installing to the iOS Simulator
 *********************
 
 Adding the ``sim`` command to a set of commands targets the simulator, and if added to an ``install`` command, will install it to the iOS simulator
-

@@ -22,4 +22,3 @@ Compiling a theos project should be as simple as::
     dragon b
 
 If you encounter any issues with it, feel free to file an issue on https://github.com/DragonBuild/dragon .
-

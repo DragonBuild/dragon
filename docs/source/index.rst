@@ -46,4 +46,5 @@ Since dragon was written in 'python', a language written for programming, adding
    commands
    quickstart
    dragonmake
+   structure
    theos

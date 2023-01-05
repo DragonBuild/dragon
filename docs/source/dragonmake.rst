@@ -261,4 +261,3 @@ Setting Module Defaults
 A special module can be specified with the name `all:`; its variables will be set as the "default" value for all Modules in the project.
 
 If a Module specifies a different value than `all:`, it'll override the one declared in `all:`.
-
