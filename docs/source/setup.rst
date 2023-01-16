@@ -22,3 +22,4 @@ Updating from earlier versions::
     rm -rf ~/.dragon
     pip3 install --force-reinstall dragon
     dragon
+
