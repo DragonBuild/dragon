@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -10,19 +12,18 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
+import os, sys
 
 sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'dragon'
-copyright = '2022, cynder'
+copyright = '2023, cynder'
 author = 'cynder'
 
 # The full version, including alpha/beta/rc tags
-release = '1.6.4'
+release = '1.6.9'
 
 # -- General configuration ---------------------------------------------------
 

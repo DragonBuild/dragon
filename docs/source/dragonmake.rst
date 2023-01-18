@@ -5,15 +5,15 @@ Intead of splitting up build instructions among a ton of 'Makefile's, dragon bui
 
 DragonMake files use YAML syntax.
 
-.. code-block:: YAML 
-   
+.. code-block:: YAML
+
    name: DemoTweak
-   id: me.krit.dragondemo
+   id: me.cynder.dragondemo
    depends: mobilesubstrate
    architecture: iphoneos-arm
    description: Demo Tweak
-   author: krit
-   section: Tweaks 
+   author: cynder
+   section: Tweaks
 
    DemoTweak:
      type: tweak
@@ -24,20 +24,20 @@ DragonMake files use YAML syntax.
        - DemoTweak.x
 
 
-The Project 
+The Project
 *********************
 
 The full `DragonMake` represents the "Project", which contains one or more "Modules" (tweaks, prefs, etc).
 
-.. code-block:: YAML 
-   
+.. code-block:: YAML
+
    name: DemoTweak
-   id: me.krit.dragondemo
+   id: me.cynder.dragondemo
    depends: mobilesubstrate
    architecture: iphoneos-arm
    description: Demo Tweak
-   author: krit
-   section: Tweaks 
+   author: cynder
+   section: Tweaks
 
 Variables
 =====================
@@ -58,7 +58,7 @@ Variables
 `control` Variables
 =====================
 
-If your project already has a `control` file you don't need to worry about these. 
+If your project already has a `control` file you don't need to worry about these.
 
 .. list-table::
    :widths: 5 1 10
@@ -68,7 +68,7 @@ If your project already has a `control` file you don't need to worry about these
      - Description
    * - id
      - String
-     - Bundle ID (e.g. me.krit.demotweak) for the Project
+     - Bundle ID (e.g. me.cynder.demotweak) for the Project
    * - author
      - String
      - Author of the project. Current account's username will be used if none is provided
@@ -97,15 +97,15 @@ Debian Package Script Variables
 
 Lists of commands can be specified with `preinst:`, `postinst:`, `prerm:` and/or `postrm:` to create packaging scripts included in the binary.
 
-.. code-block:: YAML 
-   
+.. code-block:: YAML
+
    name: DemoTweak
-   id: me.krit.dragondemo
+   id: me.cynder.dragondemo
    depends: mobilesubstrate
    architecture: iphoneos-arm
    description: Demo Tweak
-   author: krit
-   section: Tweaks 
+   author: cynder
+   section: Tweaks
    # This will run on the device after installation
    postinst:
      - echo "Hello from dragon!"
@@ -117,7 +117,7 @@ Modules in the `DragonMake` represent individual components of your package.
 
 These include things like a Tweak, Preferences, etc.
 
-.. code-block:: YAML 
+.. code-block:: YAML
 
    DemoTweak:
      type: tweak
@@ -147,7 +147,7 @@ The "Important" Variables
      - List
      - List of files in the project to be compiled
 
-Types 
+Types
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
@@ -177,17 +177,17 @@ Types
      - Module containing only a stage variable
 
 
-Tweak bundle filters 
+Tweak bundle filters
 ^^^^^^^^^^^^^^^^^^^^^
-Bundle filters tell MobileSubstrate what processes to inject your tweak into.
+Bundle filters tell MobileSubstrate (or whatever injection system your jailbreak uses) what processes to inject your tweak into.
 
-dragon supports the standard theos format, but allows specifying the values in the `DragonMake`, if you want. 
+dragon supports the standard Theos format, but allows specifying the values in the `DragonMake`, if you want.
 
-.. code-block:: YAML 
+.. code-block:: YAML
 
    DemoTweak:
      type: tweak
-     # This bit 
+     # This bit
      filter:
        executables:
          - SpringBoard
@@ -196,7 +196,7 @@ dragon supports the standard theos format, but allows specifying the values in t
        - DemoTweak.x
 
 
-.. 
+..
    todo: info about files: stuff
 
 
@@ -261,4 +261,3 @@ Setting Module Defaults
 A special module can be specified with the name `all:`; its variables will be set as the "default" value for all Modules in the project.
 
 If a Module specifies a different value than `all:`, it'll override the one declared in `all:`.
-

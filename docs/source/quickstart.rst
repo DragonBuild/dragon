@@ -15,18 +15,23 @@ This opens the dragon project editor
 
 
 Building your project::
-    
+
     dragon b
 
 
 Installing your project::
 
-    dragon i 
+    dragon i
 
 
 You can do both of these at the same time; most commands in dragon can be combined::
-    
+
     dragon b i
+
+
+Or you can use the shorthand notation::
+
+    dragon do
 
 Building and installing to the iOS Simulator::
 

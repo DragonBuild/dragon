@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
+
 '''
 Quick rST syntax table generator i threw together
 '''
 
 while True:
-
     size = int(input('Size > '))
 
     fields = []
@@ -42,3 +43,4 @@ while True:
                 f = False
 
     print(text)
+
