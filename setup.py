@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='dragon',
-      version='1.6.9',
+      version='1.7.0',
       description='A powerful toolkit targeting Apple development, research, and packaging.',
       author='cynder',
       url='https://dragon.cynder.me/',
