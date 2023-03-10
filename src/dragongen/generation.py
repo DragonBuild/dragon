@@ -7,23 +7,9 @@ DragonGen.py
 (c) 2020 cynder
 Please refer to the LICENSE file included with this project regarding the usage of code herein.
 
-Author credits:
-  - @cynder
-  - @l0renzo
+this file looks moderately sane thanks to wonderful work by @l0renzo
 
-Some guidelines for work on this file moving forward:
-  - `dragon test` before pushing, always
-  - Avoid re-typing variables and use type hints where possible
-  - Avoid lines longer than 80-90 chars
-  - Code should make a 'good attempt' to stick to PEP-8 guidelines
-  - Avoid anything in the global namespace
-  - Use descriptive variable names. Code should be extremely self-documenting
-  - Comment any lines of code that are confusing
-  - Don't code-golf
-
-Things to keep in mind when working on this file:
-
-
+any remaining or new travesties are my own fabrications.
 
 """
 
@@ -40,6 +26,8 @@ _LAZY_RULES_DOT_YML: dict = None
 _LAZY_DEFAULTS_DOT_YML: dict = None
 
 _IS_THEOS_MAKEFILE_ = False
+
+_RELEASE_BUILD = False
 
 # These are used like so:
 # a_build_object = Build("output files here", "rule name here", "input files here")
@@ -428,6 +416,9 @@ class Generator(object):
             Var('lfflags'),
             Var('swiftflags'),
             ___,
+            Var('internalreleaseflags') if _RELEASE_BUILD else Var('internaldbgflags'),
+            Var('releaseflags') if _RELEASE_BUILD else Var('dbgflags'),
+            ___,
             Var('theosshim'),
             Var('internalcflags'),
             Var('internalldflags'),
@@ -640,6 +631,8 @@ if __name__ == '__main__':
     try:
         if os.environ['DGEN_DEBUG']:
             log.LOG_LEVEL = LogLevel.DEBUG
+        if os.environ['RELEASE'] == "1":
+            _RELEASE_BUILD = True
         main()
     except FileNotFoundError as exception:
         print('Error: No project files found', file=sys.stderr)

@@ -21,6 +21,14 @@ Building a package
 ``dragon b``, ``dragon build``, or ``dragon make`` builds a package
 
 
+Building a package for release
+^^^^^^^^^^^^^^^^^^^^^
+
+The ``r`` / ``release`` command can be added to the ``build`` command to define "NDEBUG" and undefine "DEBUG" within compiled code.
+
+Passing this flag will also cause the contents of the DragonMake variable ``dbgflags`` to be ignored, and the contents of ``releaseflags`` to be used instead.
+
+
 Clean Building a package
 *********************
 

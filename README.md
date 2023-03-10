@@ -49,7 +49,7 @@ Version 1.6.0 and later:
 dragon update
 ```
 
-Version 1.5.1 and older:
+To reinstall a broken installation:
 
 ```sh
 rm -rf ~/.dragon

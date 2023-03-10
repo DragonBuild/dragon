@@ -135,9 +135,7 @@ while ! [[ -z $1 ]]; do
                                 $C1 -c
                                 drexit
                                 ;;
-        r | remote )            shift
-                                remote $*
-                                drexit
+        r | release )           release=1
                                 ;;
         relink )                rm -r "$DRAGON_DATA_DIR/sign/"
                                 ;;
@@ -205,6 +203,17 @@ if [[ $build -eq 1 ]]; then
 
     if [[ $norm -eq 0 ]]; then
         find . -name '*.ninja' -type f -delete
+    fi
+else
+    if [[ $gen -eq 1 ]]; then
+        rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
+        mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
+
+        generate
+
+        if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
+            cleanbuildfail
+        fi
     fi
 fi
 

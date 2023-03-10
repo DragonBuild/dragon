@@ -79,6 +79,8 @@ usage()
     echo -e "  ${PackageColor}c${NC}|clean - ${BoldColor}Clear build cache${NC}"
     echo -e "  ${PackageColor}b${NC}|build|make - ${BoldColor}Compile, link, and package your project${NC}"
     echo ""
+    echo -e "  ${PackageColor}r${NC}|release - ${BoldColor}Create a release build (defines NDEBUG, enables 'releaseflags' value)${NC}"
+    echo ""
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
     echo -e "  ${PackageColor}s${NC}|device - ${BoldColor}Set build device IP/Port${NC}"
     echo -e "  ${PackageColor}i${NC}|install - ${BoldColor}Install to build device${NC}"

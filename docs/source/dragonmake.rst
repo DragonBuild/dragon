@@ -217,6 +217,12 @@ None of these are required by default, but you may need some of them for various
    * - cflags
      - String/List
      - List (or a space seperated string) with cflags used at compilation time
+   * - releaseflags
+     - String/List
+     - List (or a space seperated string) with cflags used on release (dragon b r) builds
+   * - dbgflags
+     - String/List
+     - List (or a space seperated string) with cflags used on debug builds (without r/release command)
    * - frameworks
      - List
      - List of frameworks to link against

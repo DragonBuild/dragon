@@ -6,7 +6,20 @@ generate()
 
     echo $simtarg | grep "1" > /dev/null && gen_print "Targeting Simulator + simject"
 
-    eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} python3 -m dragongen.generation)
+
+    if [[ $release -eq 1 ]]; then
+       gen_print "---"
+       gen_print "Building For RELEASE"
+       gen_print "(#ifdef DEBUG == false, #ifdef NDEBUG == true)"
+       gen_print "---"
+    else
+       gen_print "---"
+       gen_print "Building For DEBUG"
+       gen_print "(#ifdef DEBUG == true, #ifdef NDEBUG = false)"
+       gen_print "---"
+    fi
+
+    eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} RELEASE=${release} python3 -m dragongen.generation)
 
     export TWEAK_NAME=$package_name
     export INSTALL_CMD=$install_command

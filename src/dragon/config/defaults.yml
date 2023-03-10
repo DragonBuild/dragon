@@ -50,7 +50,9 @@ Defaults:
 # Touching these without a firm grasp of what you're doing is likely to break things
 # They serve to abstract how we slap together all of the clang args
 InternalDefaults:
-  internalcflags: '$cinclude $debug $fwSearch $cflags $btarg -O$optim $sysroot $header_includes $arc $triple $theosshim $macros $prefix $warnings $modulesinternal'
+  internaldbgflags: '-DDEBUG'
+  internalreleaseflags: '-DNDEBUG'
+  internalcflags: '$cinclude $debug $fwSearch $cflags $btarg -O$optim $sysroot $header_includes $arc $triple $theosshim $macros $prefix $warnings $modulesinternal $internaldbgflags $internalreleaseflags $dbgflags $releaseflags'
   internalswiftflags: '-color-diagnostics -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g -L/usr/lib/swift -swift-version 5 -module-name $name'
   internalfflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
   internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
