@@ -3,6 +3,9 @@
 clean_dir()
 {
     prefix_print "Cleaning $1"
+    if [ -z "$DRAGON_DIR" ];  then
+      drexit_reason "nil DRAGON_DIR"
+    fi
     # find . -name 'build.ninja' -delete
     if [[ -f $DRAGON_DIR/DragonMake ]]; then
         cp $DRAGON_DIR/DragonMake .DragonMake
@@ -19,6 +22,9 @@ build()
     # shellcheck disable=SC2046
     cd $(python3 -c "print('.' if '$1.ninja' in '$(ls | xargs)' else '$1')") || drexit
     python3 -c "exit(0 if ('${project_dirs}'.count('.')<2) else 1)" && mv "$(ls *.ninja | xargs | cut -d' ' -f1)" ./build.ninja
+    if [ -z "$DRAGON_DIR" ];  then
+      drexit_reason "nil DRAGON_DIR"
+    fi
     if ! [[ -d $DRAGON_DIR/_/.dragonbuilding ]]; then
         rm -rf $DRAGON_DIR/_
     fi

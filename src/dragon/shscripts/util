@@ -4,6 +4,12 @@
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
 source $TOOLPATH/dragoncolors
 
+drexit_reason()
+{
+  prefix_print $1
+  drexit
+}
+
 drexit()
 {
     # This function resets terminal colors, fixes stty (just in case), and then exits with arg0's value
@@ -63,42 +69,32 @@ update()
 
 usage()
 {
-    echo ""
+    echo -e ""
     echo -e "${PrefixColor}dragon v${DRAGON_VERS} ${BoldColor}-=-=-${NC}"
-    echo "  usage: dragon [commands]"
+    echo -e "  usage: dragon [commands]"
     echo ""
     echo -e "${PrefixColor}Building ${BoldColor}-=-=-${NC}"
-    echo "  n|new|nic|edit|create - Open the project editor (For creating new projects/adding to existing ones)"
-    echo "  do - Build and Install"
-    echo "  c|clean - recompile, link, and package your project"
-    echo "  b|build|make - compile, link, and package your project"
-    echo "  r|remote - Build using remote server"
-    echo "  sr|rconf - Setup remote server"
+    echo -e "  ${PackageColor}n${NC}|new|nic|edit|create - ${BoldColor}Open the project editor (For creating new projects/adding to existing ones)${NC}"
+    echo -e "  ${PackageColor}do${NC} - ${BoldColor}Build and Install${NC}"
+    echo -e "  ${PackageColor}c${NC}|clean - ${BoldColor}Clear build cache${NC}"
+    echo -e "  ${PackageColor}b${NC}|build|make - ${BoldColor}Compile, link, and package your project${NC}"
     echo ""
     echo -e "${PrefixColor}Installation ${BoldColor}-=-=-${NC}"
-    echo "  s|device - Set build device IP/Port"
-    echo "  i|install - Install to build device"
-    echo "  sim - Install to the simulator instead of a device"
-    echo "  rs|respring - Respring the current build device"
-    echo "  dr|devicerun - Run anything after this flag on device"
-    echo "  sn|send <file> - Install a .deb to the device"
+    echo -e "  ${PackageColor}s${NC}|device - ${BoldColor}Set build device IP/Port${NC}"
+    echo -e "  ${PackageColor}i${NC}|install - ${BoldColor}Install to build device${NC}"
+    echo -e "  ${PackageColor}sim${NC} - ${BoldColor}Install to the simulator instead of a device${NC}"
+    echo -e "  ${PackageColor}rs${NC}|respring - ${BoldColor}Respring the current build device${NC}"
+    echo -e "  ${PackageColor}dr${NC}|devicerun - ${BoldColor}Run anything after this flag on device${NC}"
+    echo -e "  ${PackageColor}sn${NC}|send <file> - ${BoldColor}Install a .deb to the device${NC}"
     echo ""
     echo -e "${PrefixColor}Tools ${BoldColor}-=-=-${NC}"
-    echo "  d|debug [Process Name] - Start a debugging server on device and connect to it (Can be used with the install flag as well)"
-    echo "  exp|export - Tell ninja to create a compile_commands.json"
-    echo "  f|flutter - Build with flutter before doing anything else"
-    echo "  ch|checkra1n - Open Checkra1n GUI"
-    echo "  chc|checkra1ncli - Open Checkra1n CLI"
-    echo ""
-    echo -e "${PrefixColor}Debugging ${BoldColor}-=-=-${NC}"
-    echo "  vn - Print clang/ld/etc. commands and flags"
-    echo "  vd - echo every bash command in the main dragon file"
-    echo "  vg - DragonGen verbositiy."
-    echo "  norm - Doesn't delete build.ninja after building."
-    echo "  ddebug - Enable all debug flags"
+    echo -e "  ${PackageColor}d${NC}|debug [Process Name] - ${BoldColor}Start a debugging server on device and connect to it (Can be used with the install flag as well)${NC}"
+    echo -e "  ${PackageColor}exp${NC}|export - ${BoldColor}Tell ninja to create a compile_commands.json${NC}"
     echo ""
     echo -e "${PrefixColor}-=-=-${NC}"
     echo ""
-    echo "dragon v${DRAGON_VERS} by cynder"
-    echo "lead contributors: Lorenzo Pane and Lightmann"
+    echo "dragon v${DRAGON_VERS}"
+    echo "created by cynder, made possible through crucial contributions from Lorenzo Pane, Lightmann"
+    echo "with contributions from: iCrazeiOS, Squidkingdom, Amy While, Conor, MrGcGamer, jaidan, Diego Magdaleno"
+    # <3
 }
