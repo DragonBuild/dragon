@@ -23,7 +23,7 @@ copyright = '2023, cynder'
 author = 'cynder'
 
 # The full version, including alpha/beta/rc tags
-release = '1.7.2'
+release = '1.7.3'
 
 # -- General configuration ---------------------------------------------------
 
