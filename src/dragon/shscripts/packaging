@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+uninstall_package()
+{
+  packid=""
+  if [[ -z $1 ]]; then
+    packid="$(python3 -m dragongen.cliutils packid)"
+  else
+    packid="$1"
+  fi
+  if [[ -z $packid ]]; then
+    prefix_print "Couldn't autodetect package id. You can provide one manually via (e.g. dragon u com.mycompany.mytweak)"
+    drexit 1
+  fi
+  prefix_print "Uninstalling \"${packid}\""
+  python3 -m dragon.device qr dpkg -r ${packid}
+}
+
 send_package()
 {
     if [[ -z $1 ]]; then

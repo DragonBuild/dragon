@@ -65,6 +65,10 @@ while ! [[ -z $1 ]]; do
                                 build=1
                                 install=1
                                 ;;
+        u | uninstall )         shift
+                                uninstall_package $*
+                                drexit
+                                ;;
         g | gen | generate)     gen=1
                                 ;;
         n | nic | new | edit | create )          python3 -m dragon.editor
