@@ -205,7 +205,7 @@ class Generator(object):
 
         # TODO: move this to arglist maybe
         if project_dict['sysroot']:
-            project_dict['sysroot'] = '-isysroot ' + project_dict['sysroot']
+            project_dict['sysroot'] = '-isysroot' + project_dict['sysroot']
 
         if 'name_override' in project_dict:
             project_dict['name'] = project_dict['name_override']

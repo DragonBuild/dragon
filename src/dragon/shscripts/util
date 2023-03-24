@@ -84,7 +84,7 @@ usage()
     echo -e "${PrefixColor}Distribution ${BoldColor}-=-=-${NC}"
     echo -e "  ${PackageColor}r${NC}  | release         - ${BoldColor}Create a release build (defines NDEBUG, enables 'releaseflags' value)${NC}"
     echo -e "  ${PackageColor}i${NC}  | install         - ${BoldColor}Install latest build to build device${NC}"
-    echo -e "  ${PackageColor}u${NC}  | uninstall         - ${BoldColor}Install latest build to build device${NC}"
+    echo -e "  ${PackageColor}u${NC}  | uninstall       - ${BoldColor}Uninstall latest build from build device${NC}"
     echo -e "  ${PackageColor}sn${NC} | send <file>     - ${BoldColor}Install an arbitrary .deb to the device${NC}"
     echo -e "  ${PackageColor}sim${NC}                  - ${BoldColor}Install to the simulator instead of a device${NC}"
     echo ""

@@ -89,6 +89,10 @@ class ProjectEditor:
             self.config = {}
             self.preexisting_config = False
 
+        if self.config is None: # ??
+            self.config = {}
+            self.preexisting_config = False
+
     def create_new_module(self):
         if not self.preexisting_config:
             project = Project(self.project_root_directory)
