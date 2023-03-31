@@ -63,7 +63,8 @@ pip3 install --force-reinstall dragon
 </p> 
 <p align=center>
 a project by cynder
-
+</p>
+<p align=center>
 brought to reality with the ongoing help of so many others.
 </p>
 
