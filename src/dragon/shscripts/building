@@ -17,6 +17,11 @@ clean_dir()
     touch $DRAGON_DIR/.clean
 }
 
+validate_objcs()
+{
+  stat "${DRAGON_ROOT_DIR}/llvm-objcs" || python3 -m dragon.lo setup
+}
+
 build()
 {
     # shellcheck disable=SC2046
@@ -28,6 +33,8 @@ build()
     if ! [[ -d $DRAGON_DIR/_/.dragonbuilding ]]; then
         rm -rf $DRAGON_DIR/_
     fi
+
+    python3 -m dragongen.cliutils needsobjcs && validate_objcs
 
     if [[ $1 == "." ]]; then
         DNAME=${TWEAK_NAME}

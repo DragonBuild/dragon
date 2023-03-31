@@ -11,15 +11,7 @@ Defaults:
   dragon_root_dir: $$DRAGON_ROOT_DIR
   toolchain-prefix: ''
   tool-prefix: ''
-  cc: clang
-  cxx: clang++
-  ld: clang++
   nopack: false
-  codesign: ldid
-  dsym: dsymutil
-  plutil: plutil
-  swift: swift
-  lipo: lipo
   logos: $dragon_root_dir/src/logos/bin/logos.pl
   cargo: cargo
   cargo-nightly: 'cargo +nightly'

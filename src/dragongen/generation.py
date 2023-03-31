@@ -16,9 +16,11 @@ any remaining or new travesties are my own fabrications.
 import traceback, platform, yaml
 from collections import namedtuple
 from datetime import datetime
+import platform
 from typing import TextIO
 from .variable_types import ProjectVars
 from .util import *
+from .toolchain import Toolchain
 from buildgen.generator import BuildFileGenerator
 
 # Rules and defaults
@@ -185,19 +187,38 @@ class Generator(object):
                                        else [])
 
         # Specify toolchain paths
-        # TODO: maybe we can use `find` to track down the binaries and figure out prefixes?
-        linux_bin = os.environ['DRAGON_ROOT_DIR'] + '/toolchain/linux/iphone/bin/'
-        if os.path.isdir(linux_bin) and len(os.listdir(linux_bin)) > 1:
-            project_dict.update({k: linux_bin + project_dict[k] for k in [
-                                     'cc',
-                                     'cxx',
-                                     'lipo',
-                                     'dsym',
-                                     'plutil',
-                                     'swift',
-                                     'ld',
-                                     'codesign',
-                                 ]})
+
+        use_objcs = 'objcs' in project_dict
+
+        if platform.platform().startswith('macOS'):
+            toolchain = Toolchain.locate_macos_toolchain(use_objcs)
+        # elif WINDOWS IS NOT A REAL OPERATING SYSTEM ::::)
+        else:
+            toolchain = Toolchain.locate_linux_toolchain(use_objcs)
+
+        if toolchain is None:
+            dberror("Could not locate any usable toolchain or even determine the existence of clang.")
+            dberror("If you're on macOS, install XCode and the Command Line Tools package")
+            dberror("If you're on linux, install sbingner's iOS toolchain to ~/.dragon/toolchain")
+            dberror("You can also add the key 'objcs': True to your DragonMake module to have dragon automatically"
+                    "install its internal toolchain, however note this isn't really reccomended for non-objcs "
+                    "projects")
+            exit(64)
+
+        if 'cc' not in project_dict:
+            project_dict['cc'] = toolchain.clang
+        if 'cxx' not in project_dict:
+            project_dict['cxx'] = toolchain.clangpp
+        if 'lipo' not in project_dict:
+            project_dict['lipo'] = toolchain.lipo
+        if 'dsym' not in project_dict:
+            project_dict['dsym'] = toolchain.dsym
+        if 'plutil' not in project_dict:
+            project_dict['plutil'] = toolchain.plutil
+        if 'ld' not in project_dict:
+            project_dict['ld'] = toolchain.ld
+        if 'codesign' not in project_dict:
+            project_dict['codesign'] = toolchain.codesign
 
         # TODO: lazy hack
         if 'cxxflags' in project_dict:
@@ -224,18 +245,18 @@ class Generator(object):
         # Trivial project types
         if self.project_variables['type'] == 'resource-bundle':
             return [
-                       get_rule('bundle'),
-                       get_rule('stage'),
-                   ], [
-                       Build('bundle', 'bundle', 'build.ninja'),
-                       Build('stage', 'stage', 'build.ninja'),
-                   ]
+                get_rule('bundle'),
+                get_rule('stage'),
+            ], [
+                Build('bundle', 'bundle', 'build.ninja'),
+                Build('stage', 'stage', 'build.ninja'),
+            ]
         if self.project_variables['type'] == 'stage':
             return [
-                       get_rule('stage'),
-                   ], [
-                       Build('stage', 'stage', 'build.ninja'),
-                   ]
+                get_rule('stage'),
+            ], [
+                Build('stage', 'stage', 'build.ninja'),
+            ]
 
         # Only load rules we need
         FILE_RULES = {
@@ -403,8 +424,8 @@ class Generator(object):
             Var('header_includes'),
             Var('public_headers'),
             ___,
-            Var('usrCflags'), # Unused?
-            Var('usrLDflags'), # Unused?
+            Var('usrCflags'),  # Unused?
+            Var('usrLDflags'),  # Unused?
             ___,
             Var('libflags'),
             Var('lopts'),
@@ -527,6 +548,7 @@ def main():
         'author': None,
         'version': None,
         'depends': None,
+        'conflicts': None,
         'architecture': None,
         'description': None,
         'section': None,
