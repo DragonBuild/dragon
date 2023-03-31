@@ -580,7 +580,6 @@ def main():
             continue
 
         # Hack to run a bash command in the context of DragonGen from a DragonMake file
-        # TODO: remove this when the main dragon script is pythonized
         if key == 'exports':
             exports.update(config[key])
             continue

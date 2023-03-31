@@ -4,6 +4,7 @@ import os, sys
 from enum import Enum
 from ruyaml import YAML
 
+
 def strip_comments(text):
     if not text:
         return ''
@@ -11,6 +12,7 @@ def strip_comments(text):
     if not out:
         return ''
     return out
+
 
 def join_escaped_newlines(lines):
     out_statements = []
@@ -31,6 +33,7 @@ def join_escaped_newlines(lines):
             joining = False
     return out_statements
 
+
 def join_indented_blocks(lines):
     out_statements = []
     joining = False
@@ -38,7 +41,7 @@ def join_indented_blocks(lines):
     for line in lines:
         if line.strip().endswith('::'):
             joining = True
-            current_statement+=line + "\n"
+            current_statement += line + "\n"
             continue
 
         if joining:
@@ -53,8 +56,6 @@ def join_indented_blocks(lines):
     if current_statement != "":
         out_statements.append(current_statement)
     return out_statements
-
-
 
 
 class MakefileVariableStatementType(Enum):
@@ -110,7 +111,8 @@ class Makefile:
                 self.variable_statements.append(MakefileVariableStatement(statement))
 
             elif '::\n' in statement:
-                self.rules[statement.split("::\n")[0]] = [i.strip() for i in statement.split('\n')[1:] if i.strip() != ""]
+                self.rules[statement.split("::\n")[0]] = [i.strip() for i in statement.split('\n')[1:] if
+                                                          i.strip() != ""]
 
         self.variables = self._process_variable_statements()
 
@@ -196,7 +198,6 @@ class TheosMakefile(Makefile):
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
 
-
         files = []
         if 'files' in self.module:
             tokens = self.module['files']
@@ -245,7 +246,7 @@ class TheosMakefileProcessor:
             self.root_makefile = TheosMakefile(makefile.read())
 
         with open('control', 'r') as control:
-            yaml=YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
+            yaml = YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
             self.control = yaml.load(control)
 
         self.project['name'] = self.control['Name']
@@ -254,7 +255,7 @@ class TheosMakefileProcessor:
             self.project['icmd'] = 'killall -9 ' + self.root_makefile.variables['INSTALL_TARGET_PROCESSES']
 
         self._process_makefile(self.root_makefile)
-        #print(self.project, file=sys.stderr)
+        # print(self.project, file=sys.stderr)
 
     def _process_makefile(self, makefile):
         if makefile.type:

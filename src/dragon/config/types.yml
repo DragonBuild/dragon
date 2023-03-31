@@ -34,8 +34,6 @@ Types:
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$dragon_data_dir/$stagedir/$location$name.dylib'
-      hooker-priority: libhooker
-      lang: logos
       lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000 -framework CydiaSubstrate'
       frameworks:
         - UIKit

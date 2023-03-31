@@ -6,9 +6,10 @@ from enum import Enum
 from pprint import pprint, pformat
 from .variable_types import ArgList
 
-colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
-"\033[0;37m","\033[0m"],["\033[1;31m","\033[1;32m","\033[1;33m","\033[1;34m",
-"\033[1;36m","\033[1;37m","\033[0m"]]
+colors = [["\033[0;31m", "\033[0;32m", "\033[0;33m", "\033[0;34m", "\033[0;36m",
+           "\033[0;37m", "\033[0m"], ["\033[1;31m", "\033[1;32m", "\033[1;33m", "\033[1;34m",
+                                      "\033[1;36m", "\033[1;37m", "\033[0m"]]
+
 
 # Everything needs to go out of stderr *for now*. the bash script executes anything
 # sent via stdout
@@ -17,7 +18,8 @@ colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
 def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
     print("%s[%s]%s %s%s%s" % (
         colors[1][col], tool, colors[bold][textcol], ">>> " if pusher
-            else "", msg, colors[0][6]), file=sys.stderr)
+        else "", msg, colors[0][6]), file=sys.stderr)
+
 
 dbstate = lambda msg: dprintline(1, "DragonGen", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "DragonGen", 5, 0, 0, msg)
@@ -25,7 +27,7 @@ dberror = lambda msg: dprintline(0, "DragonGen", 5, 1, 0, msg)
 
 make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'include.*\/(.*)\.mk')
-nepmatch = regex.compile(r'(.*)\+=(.*)#?') # nep used subproj += instead of w/e and everyone copies her.
+nepmatch = regex.compile(r'(.*)\+=(.*)#?')  # nep used subproj += instead of w/e and everyone copies her.
 
 
 def classify(filedict: dict) -> dict:
@@ -49,7 +51,6 @@ def classify(filedict: dict) -> dict:
         }[ext]].append(f)
     # Clear out empty keys
     return {key: value for (key, value) in filedict.items() if value != []}
-
 
 
 # this was supposed to be a really small function, i dont know what happened ;-;
@@ -125,9 +126,12 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
     module_name = variables.get(f'{module_type_naming}_NAME')
     if module_name:
         module_archs = variables.get(f'ARCHS')
-        module_files = variables.get(module_name + '_FILES') or variables.get(f'$({module_type_naming}_NAME)_FILES') or ''
-        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get('$({module_type_naming}_NAME)_CFLAGS') or ''
-        module_cxxflags = variables.get(module_name + '_CXXFLAGS') or variables.get('$({module_type_naming}_NAME)_CXXFLAGS') or ''
+        module_files = variables.get(module_name + '_FILES') or variables.get(
+            f'$({module_type_naming}_NAME)_FILES') or ''
+        module_cflags = variables.get(module_name + '_CFLAGS') or variables.get(
+            '$({module_type_naming}_NAME)_CFLAGS') or ''
+        module_cxxflags = variables.get(module_name + '_CXXFLAGS') or variables.get(
+            '$({module_type_naming}_NAME)_CXXFLAGS') or ''
         module_cflags = variables.get(f'ADDITIONAL_CFLAGS') or ''
         module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(
             f'$({module_type_naming}_NAME)_LDFLAGS') or ''
@@ -249,8 +253,9 @@ def load_old_format(file: object, root: object = True) -> dict:
 
     moddict = {}
 
-    for i in [x for x in variables if len(x) > 0 and x!='SUBPROJECTS' ]:
-        translation = i.lower().replace('tweak_', '').replace('logos_file', 'logos_files').replace('install_cmd','icmd')
+    for i in [x for x in variables if len(x) > 0 and x != 'SUBPROJECTS']:
+        translation = i.lower().replace('tweak_', '').replace('logos_file', 'logos_files').replace('install_cmd',
+                                                                                                   'icmd')
         variables[i] = os.popen(f'echo {variables[i]}').read().strip()
         if i in ['ARCHS', 'LIBS', 'FRAMEWORKS', 'LOGOS_FILES', 'TWEAK_FILES']:
 
@@ -276,6 +281,7 @@ def load_old_format(file: object, root: object = True) -> dict:
             moddict[subproject['name']] = {i: v for (i, v) in subproject.items() if i not in ['name', 'icmd']}
         return moddict
 
+
 def standardize_file_list(subdir: str, files: list) -> list:
     '''Strip list of empty strings and evaluate globbed paths.'''
 
@@ -290,7 +296,7 @@ def standardize_file_list(subdir: str, files: list) -> list:
 
         if '*' in filename:
             ret.extend('./' + f[len(subdir):] for f in glob.glob('.' + subdir + filename,
-                                                          recursive=True))
+                                                                 recursive=True))
             continue
 
         ret.append(filename)
@@ -316,7 +322,7 @@ class log:
     @staticmethod
     def line():
         return 'dragon.' + os.path.basename(inspect.stack()[2][1]).split('.')[0] + ":" + str(inspect.stack()[2][2]) \
-               + ":" + inspect.stack()[2][3] + '()'
+            + ":" + inspect.stack()[2][3] + '()'
 
     @staticmethod
     def format(ob):

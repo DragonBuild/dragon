@@ -3,11 +3,11 @@
 from setuptools import setup
 
 setup(name='dragon',
-      version='1.7.3',
+      version='2.0.0',
       description='A powerful toolkit targeting Apple development, research, and packaging.',
       author='cynder',
       url='https://dragon.cynder.me/',
-      install_requires=['ninja', 'pyyaml', 'ruyaml', 'packaging'],
+      install_requires=['ninja', 'pyyaml', 'ruyaml', 'packaging', 'tqdm'],
       packages=['dragon', 'dragongen', 'buildgen'],
       package_dir={
           'dragon': 'src/dragon',

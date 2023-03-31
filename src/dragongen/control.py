@@ -2,17 +2,20 @@
 
 import yaml, os, sys
 
-colors = [["\033[0;31m","\033[0;32m","\033[0;33m","\033[0;34m","\033[0;36m",
-"\033[0;37m","\033[0m"],["\033[1;31m","\033[1;32m","\033[1;33m","\033[1;34m",
-"\033[1;36m","\033[1;37m","\033[0m"]]
+colors = [["\033[0;31m", "\033[0;32m", "\033[0;33m", "\033[0;34m", "\033[0;36m",
+           "\033[0;37m", "\033[0m"], ["\033[1;31m", "\033[1;32m", "\033[1;33m", "\033[1;34m",
+                                      "\033[1;36m", "\033[1;37m", "\033[0m"]]
+
 
 def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
     print("%s[%s]%s %s%s%s" % (
         colors[1][col], tool, colors[bold][textcol], ">>> " if pusher else "", msg, colors[0][6]))
 
+
 dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
 dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
 dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
+
 
 # This script will get called w/
 # argc=3  argv[0]                                argv[1]    argv[2]
@@ -32,6 +35,7 @@ def main():
         'depends': 'Depends',
         'deps': 'Depends',
         'provides': 'Provides',
+        'conflicts': 'Conflicts',
         'architecture': 'Architecture',
         'section': 'Section',
         'package': 'Package',
@@ -48,10 +52,10 @@ def main():
         'Description': 'A cool MobileSubstrate Tweak',
         'Version': '0.0.1',
         'Architecture': 'iphoneos-arm',
-        'Depends': 'mobilesubstrate' # This is a blind guess, maybe we can improve this logic?
+        'Depends': 'mobilesubstrate'  # This is a blind guess, maybe we can improve this logic?
     }
 
-    filenames = [ # extrainst?
+    filenames = [  # extrainst?
         'preinst',
         'postinst',
         'prerm',
@@ -68,7 +72,6 @@ def main():
         dberror('https://github.com/DragonBuild/dragon')
 
     control = {keys[key]: value for (key, value) in config.items() if key in keys}
-
 
     # Fallbacks section
     if 'Name' not in control:
@@ -104,4 +107,6 @@ def main():
                 out.seek(0)
                 out.writelines(config[name])
 
-main()
+
+if __name__ == "__main__":
+    main()

@@ -58,7 +58,21 @@ pip3 install --force-reinstall dragon
 
 ---
 
+<p align=center>
+<img src=".github/vri.png" alt="vri" width=110px>
+</p> 
+<p align=center>
+a project by cynder
 
-# Helpful links
+brought to reality with the ongoing help of so many others.
+</p>
 
-[sbingner's arm64e toolchain](https://github.com/sbingner/llvm-project/releases/latest)
+---
+
+<p align=center>
+Continued in honor of Lorenzo Pane, without whom this project, and so much else, would not have been possible.
+</p>
+
+<p align=center>
+in lieu of personal donations/sponsorships, please direct donations to <a href="https://give.thetrevorproject.org/fundraiser/4567595">The Trevor Project</a>
+</p>
