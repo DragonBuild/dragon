@@ -18,7 +18,7 @@ dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
 
 
 # This script will get called w/
-# argc=3  argv[0]                                argv[1]    argv[2]
+# argc=3  argv[0]                              argv[1]    argv[2]
 # python3 $DRAGON_ROOT_DIR/internal/control.py DragonMake ./$DRAGON_DIR/_/DEBIAN/control
 def main():
     dbstate("Pulling 'control' values from DragonMake")
@@ -51,7 +51,7 @@ def main():
         'Section': 'Tweaks',
         'Description': 'A cool MobileSubstrate Tweak',
         'Version': '0.0.1',
-        'Architecture': 'iphoneos-arm',
+        'Architecture': 'iphoneos-arm' if 'ROOTLESS' not in os.environ else 'iphoneos-arm64',
         'Depends': 'mobilesubstrate'  # This is a blind guess, maybe we can improve this logic?
     }
 
@@ -82,13 +82,15 @@ def main():
     if 'Package' not in control:
         control['Package'] = f'com.yourcompany.{control["Name"].lower()}'
         # Warn for this too, it's fairly important
-        dbwarn(f'No "id:" key in DragonMake, creating default based on Name: key')
+        dbwarn(f'No "id:" key in DragonMake, creating default based on `Name:` key')
 
     if 'Author' not in control:
         control['Author'] = os.getlogin()
+        dbwarn(f'No "Author:" key in DragonMake, guessing based on current user ({control["Author"]})')
 
-    if 'Author' in control and 'Maintainer' not in control:
+    if 'Maintainer' not in control:
         control['Maintainer'] = control['Author']
+        dbwarn(f'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
 
     # print(defs.update(control))
     # print(control)

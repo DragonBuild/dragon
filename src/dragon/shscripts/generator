@@ -19,7 +19,7 @@ generate()
        gen_print "---"
     fi
 
-    eval $(DGEN_DEBUG=${DGEN_DEBUG} TARG_SIM=${simtarg} RELEASE=${release} python3 -m dragongen.generation)
+    eval $(DGEN_DEBUG="${DGEN_DEBUG}" TARG_SIM="${simtarg}" RELEASE="${release}" ROOTLESS="${rootless}" python3 -m dragongen.generation)
 
     export TWEAK_NAME=$package_name
     export INSTALL_CMD=$install_command

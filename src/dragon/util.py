@@ -3,6 +3,7 @@
 import os.path as path
 from enum import IntEnum
 import pkg_resources
+import sys
 
 DRAGONBUILD_VERSION = pkg_resources.get_distribution('dragon').version
 
@@ -57,7 +58,7 @@ class ShellHarnessAdapter:
 
     @staticmethod
     def echo(string):
-        print(f'echo -e "{string}"')
+        print(f'echo -e "{string}"', file=sys.stdout)
 
     @staticmethod
     def printline(label_color: OutputColors, tool_name: str, text_color: OutputColors, text_weight: OutputWeight,
@@ -66,6 +67,11 @@ class ShellHarnessAdapter:
             color_string(label_color, OutputWeight.Bold), tool_name, color_string(text_color, text_weight),
             ">>> " if pusher else "", msg, colors[0][6])
         ShellHarnessAdapter.echo(output_string)
+
+    def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
+        ShellHarnessAdapter.echo("%s[%s]%s %s%s%s" % (
+            colors[1][col], tool, colors[bold][textcol], ">>> " if pusher
+            else "", msg, colors[0][6]))
 
     @staticmethod
     def run(cmd: str):

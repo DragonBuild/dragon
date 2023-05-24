@@ -2,35 +2,20 @@
 Types:
   comprehensive:
   app:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
   application:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
   tweak-jailed:
-    required_states:
-      - has_build_files
     variables:
       install_location: '/Applications/'
       target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
-      loader: DragonLoad
       embed-libs:
         - CydiaSubstrate
   tweak:
-    required_states:
-      - has_build_files
-    production:
-      deb:
-        - 'build-files'
-        - 'copy-to-target'
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$dragon_data_dir/$stagedir/$location$name.dylib'
@@ -41,16 +26,12 @@ Types:
       stage2:
         - 'cp $name.plist $dragon_data_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist 2>/dev/null  || python3 -m dragongen.bfilter $dragon_data_dir/DragonMake $name > $dragon_data_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
   prefs:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/PreferenceBundles/$name.bundle'
       build_target_file: '$dragon_data_dir/$stagedir$location/$name'
       libs:
         - 'substrate'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000 -framework Preferences'
+      lopts: '-dynamiclib -ggdb -framework Preferences'
       frameworks:
         - UIKit
         - Foundation
@@ -59,14 +40,10 @@ Types:
         - 'cp entry.plist $dragon_data_dir/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
   bundle:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/$name/'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.bundle/$name'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      lopts: '-dynamiclib -ggdb'
       frameworks:
         - UIKit
         - Foundation
@@ -74,15 +51,11 @@ Types:
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location/$name.bundle/'
 
   framework:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/Frameworks/$name.framework'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
       public_headers: '$dragon_root_dir/include/'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      lopts: '-dynamiclib -ggdb'
       frameworks:
         - Foundation
       stage2:
@@ -93,15 +66,12 @@ Types:
            cp $public_headers $dragon_data_dir/$stagedir/$location/Headers;
            fi'
   resource-bundle:
-    required_states:
-    production_allow:
-      - deb
     variables:
       install_location: '/Library/$name/$name.bundle/'
       build_target_file: 'build.ninja'
       libs:
         - 'substrate'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      lopts: '-dynamiclib -ggdb'
       frameworks:
         - UIKit
         - Foundation
@@ -113,46 +83,26 @@ Types:
       stage2:
         - 'true;'
   library:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/lib'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.dylib'
       ldflags: '-install_name $location$name.dylib'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000'
+      lopts: '-dynamiclib -ggdb'
       stage2:
         - 'true;'
   cli:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
   binary:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
       stage2:
         - 'true;'
   tool:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/bin'
       lopts: ''
@@ -160,11 +110,6 @@ Types:
       stage2:
         - 'true;'
   static:
-    required_states:
-      - has_build_files
-    production_allow:
-      - deb
-      - raw
     variables:
       install_location: '/usr/lib'
       lopts: ''

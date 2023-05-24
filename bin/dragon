@@ -88,8 +88,6 @@ while ! [[ -z $1 ]]; do
         i | install )           gen=1
                                 install=1
                                 ;;
-        f | flutter )           flutter=1
-                                ;;
         debug )                 debug=1
                                 shift
                                 debugproc="$1"
@@ -136,15 +134,9 @@ while ! [[ -z $1 ]]; do
         sn | send )             send_package $2
                                 drexit
                                 ;;
-        ch | checkra1n )        C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
-                                $C1 -g
-                                drexit
-                                ;;
-        chc | checkra1ncli )    C1=$(which checkra1n) ||  prefix_print "Checkra1n is not currently installed. Exiting."; drexit 1
-                                $C1 -c
-                                drexit
-                                ;;
         r | release )           release=1
+                                ;;
+        ro | rootless )         rootless=1
                                 ;;
         relink )                rm -r "$DRAGON_DATA_DIR/sign/"
                                 ;;

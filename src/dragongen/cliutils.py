@@ -12,6 +12,9 @@ if __name__ == "__main__":
                 if 'package' in data:
                     print(data['package'])
                     exit(0)
+                if 'id' in data:
+                    print(data['id'])
+                    exit(0)
                 if 'Package' in data:
                     print(data['Package'])
                     exit(0)

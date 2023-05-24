@@ -11,6 +11,7 @@ plat = platform.platform()
 host_os = plat.split('-')[0]
 host_arch = plat.split('-')[2]
 
+ssl._create_default_https_context = ssl._create_unverified_context
 
 def log(s: str, end: str = '\n') -> None:
     dprintline(OutputColors.Cyan, "llvm-ObjCS", OutputColors.White, OutputWeight.Normal, False, s)

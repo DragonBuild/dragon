@@ -8,7 +8,7 @@ frameworks/:
 include/:
     A place for headers (.h)
 internal/:
-    A place for YAML configuration files (.yml) [not meant to be edited]
+    A place for YAML configuration files (.yml) [not meant to be edited, but feel free to get your hands dirty]
 lib/:
     A place for libraries [uses .dylib or .tbd format]
 sdks/:

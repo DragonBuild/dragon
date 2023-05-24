@@ -19,6 +19,7 @@ export DRAGON_POSTINST=0
 export simtarg=0
 
 export release=0
+export rootless=0
 
 export ToolchainPath=""
 export ToolchainPrefix=""

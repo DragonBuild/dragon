@@ -39,8 +39,10 @@ Defaults:
   stagedir: '_'
   modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$dragon_data_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
-# Touching these without a firm grasp of what you're doing is likely to break things
+# Touching these without a firm grasp of what you're doing is extremely likely to break things
+# And assigning to them within a DragonMake will outdate that project *any* time these are updated
 # They serve to abstract how we slap together all of the clang args
+# Seriously dont touch em.
 InternalDefaults:
   internaldbgflags: '-DDEBUG'
   internalreleaseflags: '-DNDEBUG'
@@ -52,3 +54,9 @@ InternalDefaults:
   internalsymtarget: '$signdir/$build_target_file.unsym'
   internallibflags: '-lobjc -lc++'
   pwd: '.'
+
+# Applied on top of both of these.
+Rootless:
+  rootless_prefix: '/var/jb'
+  rpathflags: '-rpath $rootless_prefix/Library/Frameworks -rpath $rootless_prefix/usr/lib'
+  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs $rpathflags'
