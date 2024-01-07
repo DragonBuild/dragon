@@ -35,7 +35,7 @@ Defaults:
   additional_lib_dirs:
   additional_fw_dirs:
   prefix: []
-  cinclude: '-I$dragon_root_dir/include -I$dragon_root_dir/vendor/include -I$dragon_root_dir/include/_fallback -I$dragon_root_dir/headers/ -I$pwd'
+  cinclude: '-I$dragon_root_dir/include -I$dragon_root_dir/include/_fallback -I$dragon_root_dir/headers/ -I$pwd'
   stagedir: '_'
   modulesinternal: '-fmodules -fcxx-modules -fmodule-name=$name -fbuild-session-file=$dragon_data_dir/modules/ -fmodules-validate-once-per-build-session -fmodules-prune-after=345600 -fmodules-prune-interval=86400'
 
