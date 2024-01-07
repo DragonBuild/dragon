@@ -9,12 +9,6 @@ def log(s: str, end: str = '\n') -> None:
     sys.stderr.flush()
 
 
-def get_input(prompt: str, default: str) -> str:
-    log(f'{prompt} ({default})', end='\n> ')
-    ret = input()
-    return ret if ret.strip() else default
-
-
 def setup_wizard():
     log(f'installing dragon v{os.environ["DRAGON_VERS"]}')
     log('=========================', end='\n\n')
@@ -27,11 +21,11 @@ def setup_wizard():
     os.chdir(dragon_root_dir)
 
     for repo in ('lib', 'include', 'frameworks', 'sdks', 'src'):
-        if os.path.isdir(f'{repo}') and not os.path.isdir(f'{repo}/.git'):
-            shutil.rmtree(f'{repo}')
+        if os.path.isdir(repo) and not os.path.isdir(f'{repo}/.git'):
+            shutil.rmtree(repo)
             os.system(f'git clone --depth=1 --recursive https://github.com/DragonBuild/{repo}')
-        elif os.path.isdir(f'{repo}') and os.path.isdir(f'{repo}/.git'):
-            os.chdir(f'{repo}')
+        elif os.path.isdir(repo) and os.path.isdir(f'{repo}/.git'):
+            os.chdir(repo)
             os.system('git pull origin $(git rev-parse --abbrev-ref HEAD)')
             os.chdir(dragon_root_dir)
         else:
@@ -49,6 +43,7 @@ def setup_wizard():
     except FileExistsError:
         pass
     log('Done!')
+
 
 if __name__ == '__main__':
     setup_wizard()
