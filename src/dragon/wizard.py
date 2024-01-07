@@ -28,7 +28,7 @@ def setup_wizard():
 
     os.chdir(dragon_root_dir)
 
-    for repo in ('lib', 'include', 'frameworks', 'vendor', 'sdks', 'src'):
+    for repo in ('lib', 'include', 'frameworks', 'sdks', 'src'):
         try:
             get_supporting(
                 f'https://api.github.com/repos/DragonBuild/{repo}/releases/latest',

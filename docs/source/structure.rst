@@ -17,5 +17,3 @@ src/:
     A place for out-sourced tools modified and built for use with dragon
 toolchain/:
     A place for a user-provided toolchain [unnecessary on Darwin platforms]
-vendor/:
-    A place for tools and resources provided by dragon [not meant to be edited]
