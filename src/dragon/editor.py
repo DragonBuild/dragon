@@ -7,26 +7,19 @@
 
 # if you're here to contribute to this file, im sorry. ::::)
 
-import os, sys, pwd, pprint
+import os, sys, pwd
 import ruyaml as yaml
-from .util import dprintline, OutputColors, OutputWeight
-
-dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Project Editor",
-                                 text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
-dbwarn = lambda msg: dprintline(label_color=OutputColors.Yellow, tool_name="Project Editor",
-                                text_color=OutputColors.White, text_weight=OutputWeight.Normal, pusher=False, msg=msg)
-dberror = lambda msg: dprintline(label_color=OutputColors.Red, tool_name="Project Editor",
-                                 text_color=OutputColors.White, text_weight=OutputWeight.Bold, pusher=False, msg=msg)
+from shared.util import dbstate
 
 
 def get_input(prompt, default):
-    dbstate(f'{prompt} ({default})')
+    dbstate("Project Editor", f'{prompt} ({default})')
     ret = input('>> ')
     return ret if ret.strip() else default
 
 
 def get_from_selector(prompt, values, default):
-    dbstate(prompt)
+    dbstate("Project Editor", prompt)
     itemlist = []
     for i, key in enumerate(values):
         print(f'[{i}] > {key}')
@@ -430,9 +423,9 @@ class Project:
         self.variables = {}
 
     def create_new(self):
-        dbstate('-=-=============================')
-        dbstate('Creating new Package')
-        dbstate('-=-=============================')
+        dbstate("Project Editor", '-=-=============================')
+        dbstate("Project Editor", 'Creating new Package')
+        dbstate("Project Editor", '-=-=============================')
         self.variables['name'] = get_input('Project Name', self.directory_name)
         self.variables['id'] = get_input('Bundle ID', f'com.{self.current_username}.{self.directory_name}')
         self.variables['depends'] = 'mobilesubstrate'
@@ -455,9 +448,9 @@ class Module:
         self.name = ''
 
     def create_new(self, proj_root):
-        dbstate('-=-=============================')
-        dbstate('Creating new Module')
-        dbstate('-=-=============================')
+        dbstate("Project Editor", '-=-=============================')
+        dbstate("Project Editor", 'Creating new Module')
+        dbstate("Project Editor", '-=-=============================')
         self.variables['type'] = get_from_selector('Select Module Type', {'Tweak': 'tweak', 'App': 'app',
                                                                           'CLI Tool': 'cli', 'Library': 'library',
                                                                           'Preference Bundle': 'prefs',

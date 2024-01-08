@@ -22,6 +22,7 @@ from .variable_types import ProjectVars
 from .util import *
 from .toolchain import Toolchain
 from buildgen.generator import BuildFileGenerator
+from shared.util import dbstate, dbwarn, dberror
 
 # Rules and defaults
 _LAZY_RULES_DOT_YML: dict = None
@@ -197,10 +198,10 @@ class Generator(object):
             toolchain = Toolchain.locate_linux_toolchain(use_objcs)
 
         if toolchain is None:
-            dberror("Could not locate any usable toolchain or even determine the existence of clang.")
-            dberror("If you're on macOS, install XCode and the Command Line Tools package")
-            dberror("If you're on linux, install sbingner's iOS toolchain to ~/.dragon/toolchain")
-            dberror("You can also add the key 'objcs': True to your DragonMake module to have dragon automatically"
+            dberror("Dragon Gen", "Could not locate any usable toolchain or even determine the existence of clang.")
+            dberror("Dragon Gen", "If you're on macOS, install XCode and the Command Line Tools package")
+            dberror("Dragon Gen", "If you're on linux, install sbingner's iOS toolchain to ~/.dragon/toolchain")
+            dberror("Dragon Gen", "You can also add the key 'objcs': True to your DragonMake module to have dragon automatically"
                     "install its internal toolchain, however note this isn't really reccomended for non-objcs "
                     "projects")
             exit(64)
@@ -505,7 +506,7 @@ def get_default_section_dict(*key_path: str) -> dict:
 def handle(ex: Exception):
     """ Optionally print debug information """
 
-    dberror("Press v for detailed debugging output, any other key to exit.")
+    dberror("Dragon Gen", "Press v for detailed debugging output, any other key to exit.")
 
     try:
         old_setting = termios.tcgetattr(sys.stdin.fileno())
@@ -513,12 +514,12 @@ def handle(ex: Exception):
         x = sys.stdin.read(1)
         termios.tcsetattr(0, termios.TCSADRAIN, old_setting)
         if str(x).lower() == 'v':
-            dberror(str(ex))
-            dberror(''.join(traceback.format_tb(ex.__traceback__)))
+            dberror("Dragon Gen", str(ex))
+            dberror("Dragon Gen", ''.join(traceback.format_tb(ex.__traceback__)))
         else:
-            dberror("Exiting...")
+            dberror("Dragon Gen", "Exiting...")
     except Exception:
-        dberror("Exiting...")
+        dberror("Dragon Gen", "Exiting...")
 
     print(f'export DRAGONGEN_FAILURE=1')
 
@@ -576,12 +577,12 @@ def main():
                     # If that worked, it's the old (OLD) legacy DragonMake format,
                     # which we can easily support via a couple lines of regex
                     config = load_old_format(open('DragonMake'))
-                    dbstate("Loading Legacy format DragonMake")
+                    dbstate("Dragon Gen", "Loading Legacy format DragonMake")
                 else:
                     # bad format
-                    dberror("Formatting Error in the DragonMake file")
-                    dberror("Check YAML syntax or file an issue")
-                    dberror('https://github.com/DragonBuild/dragon')
+                    dberror("Dragon Gen", "Formatting Error in the DragonMake file")
+                    dberror("Dragon Gen", "Check YAML syntax or file an issue")
+                    dberror("Dragon Gen", 'https://github.com/DragonBuild/dragon')
                     raise ex
 
     elif os.path.exists('Makefile'):
@@ -589,14 +590,14 @@ def main():
         config = TheosMakefileProcessor().project
         # config = interpret_theos_makefile(open('Makefile'))
         exports['theos'] = 1
-        dbstate("Generating build scripts from Theos Makefile")
+        dbstate("Dragon Gen", "Generating build scripts from Theos Makefile")
         global _IS_THEOS_MAKEFILE_
         _IS_THEOS_MAKEFILE_ = True
 
     else:
         raise FileNotFoundError
 
-    dbstate("Generating build scripts")
+    dbstate("Dragon Gen", "Generating build scripts")
     for key in config:
         if key in META_KEYS:
             continue
@@ -615,9 +616,9 @@ def main():
         except ValueError:
             # if i add a key to control.py and don't add it to meta tags here, this happens
             # so maybe find a better way to do that, dpkg is complex and has many fields
-            dbwarn("! Warning: Key %s is not a valid module (a dictionary),"
+            dbwarn("Dragon Gen", "! Warning: Key %s is not a valid module (a dictionary),"
                    " nor is it a known configuration key" % key)
-            dbwarn("! This key will be ignored.")
+            dbwarn("Dragon Gen", "! This key will be ignored.")
             continue
 
         default_target = 'ios'
@@ -627,10 +628,10 @@ def main():
         with open(f'{submodule_config["dir"]}/{submodule_config["name"]}.ninja', 'w+') as out:
             try:
                 generator = Generator(config, key, default_target)
-                dbstate(f"Creating build script for {key}")
+                dbstate("Dragon Gen", f"Creating build script for {key}")
                 generator.write_output_file(out)
             except Exception as ex:
-                dberror(f'Exception in module "{key}":')
+                dberror("Dragon Gen", f'Exception in module "{key}":')
                 raise ex
 
         dirs = dirs + ' ' + submodule_config['dir']

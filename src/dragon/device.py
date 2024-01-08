@@ -13,14 +13,7 @@ https://github.com/DragonBuild/dragon
 '''
 
 import os, sys, yaml, subprocess, socket
-from .util import dprintline, OutputColors, OutputWeight
-
-dbstate = lambda msg: dprintline(label_color=OutputColors.Green, tool_name="Device", text_color=OutputColors.White,
-                                 text_weight=OutputWeight.Bold, pusher=False, msg=msg)
-dbwarn = lambda msg: dprintline(label_color=OutputColors.Yellow, tool_name="Device", text_color=OutputColors.White,
-                                text_weight=OutputWeight.Normal, pusher=False, msg=msg)
-dberror = lambda msg: dprintline(label_color=OutputColors.Red, tool_name="Device", text_color=OutputColors.White,
-                                 text_weight=OutputWeight.Bold, pusher=False, msg=msg)
+from shared.util import dbstate, dbwarn, dberror
 
 
 def system(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
@@ -116,18 +109,18 @@ class Device:
             return
 
         if not self.test_connection():
-            dberror(f'Could not connect to device at {self.host}:{self.port}')
+            dberror("Device", f'Could not connect to device at {self.host}:{self.port}')
             if self.host == "localhost" and self.port == 4444:
-                dberror(f'To configure a new device, run "dragon s"')
+                dberror("Device", f'To configure a new device, run "dragon s"')
             self.connection_failure_resolver()
             return
 
         if not quiet:
             if cmd == '':
-                dbstate("Launching Device Shell")
+                dbstate("Device", "Launching Device Shell")
                 DeviceShell.launch(self)
                 return
-            dbstate(f'Running "{cmd}" on {self.host}:{self.port}')
+            dbstate("Device", f'Running "{cmd}" on {self.host}:{self.port}')
         return system_pipe_output(f'ssh -p {self.port} root@{self.host} "{cmd}"')
 
     def export_ip(self):
@@ -139,20 +132,20 @@ class Device:
             print(f'export {x}="{exports[x]}"')
 
     def setup_key_auth(self):
-        dbstate('Setting up keybased auth')
+        dbstate("Device", 'Setting up keybased auth')
         exists = system('stat ~/.ssh/id_rsa') == 0
         if not exists:
-            dbstate('Generating Keyfile')
+            dbstate("Device", 'Generating Keyfile')
             system("ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null")
 
         # We don't use ssh-copy-id because some systems (Elucubratus, etc) don't have it
-        dbstate('Copying keyfile')
+        dbstate("Device", 'Copying keyfile')
         success = system(
             f'cat ~/.ssh/id_rsa.pub | ssh -p {self.port} root@{self.host} "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"')
         if success == 0:
-            dbstate('Enabled keybased auth')
+            dbstate("Device", 'Enabled keybased auth')
         else:
-            dberror('Failed')
+            dberror("Device", 'Failed')
 
 
 class DeviceManager(object):
@@ -188,10 +181,10 @@ class DeviceManager(object):
                 known_hosts_line = int(line.split('known_hosts:')[-1])
                 file_location = line.split(' key in ')[-1].split(":")[0]
 
-        dbwarn("There is already an entry in the known_hosts file for your system")
+        dbwarn("Device", "There is already an entry in the known_hosts file for your system")
         if file_location:
-            dbwarn(f'Bad entry: {file_location}:{known_hosts_line}')
-            dbwarn("You will not be able to connect to this device until this is resolved. Remove this line? (y/n)")
+            dbwarn("Device", f'Bad entry: {file_location}:{known_hosts_line}')
+            dbwarn("Device", "You will not be able to connect to this device until this is resolved. Remove this line? (y/n)")
             if 'y' in input('> ').lower():
                 try:
                     with open(file_location, "r") as infile:
@@ -206,13 +199,13 @@ class DeviceManager(object):
                                 print(f'Removed {line}')
                     return True
                 except IOError:
-                    dberror("Error reading or writing to file. Please manually remove the line.")
+                    dberror("Device", "Error reading or writing to file. Please manually remove the line.")
                     return False
                 except Exception:
-                    dberror("Unknown error occured.")
+                    dberror("Device", "Unknown error occured.")
                     return False
 
-        dberror("Could not automatically resolve any information about the error. Please See the following output.")
+        dberror("Device", "Could not automatically resolve any information about the error. Please See the following output.")
         print(stderr)
         return False
 
@@ -225,9 +218,9 @@ class DeviceManager(object):
 
         '''
 
-        dbstate('Enter Device IP or hostname')
+        dbstate("Device", 'Enter Device IP or hostname')
         ip = input('>>> ')
-        dbstate('enter port (leave empty for 22)')
+        dbstate("Device", 'enter port (leave empty for 22)')
         port = input('>>> ')
 
         if port == '':
@@ -237,13 +230,13 @@ class DeviceManager(object):
 
         device = Device(ip, port)
 
-        dbstate('Testing Connection')
+        dbstate("Device", 'Testing Connection')
         connected = False
         if device.test_connection():
-            dbstate('Connected!')
+            dbstate("Device", 'Connected!')
             connected = True
         else:
-            dbwarn('Connection failed, add it anyways? (y/n)')
+            dbwarn("Device", 'Connection failed, add it anyways? (y/n)')
             if 'y' not in input('> ').lower():
                 return
 
@@ -258,14 +251,14 @@ class DeviceManager(object):
                         if success:
                             break
                 if success:
-                    dbstate("Successfully resolved issue")
+                    dbstate("Device", "Successfully resolved issue")
                 else:
-                    dberror("Could not resolve known_hosts issue.")
+                    dberror("Device", "Could not resolve known_hosts issue.")
 
             if not device.test_keybased_auth():
                 device.setup_key_auth()
             else:
-                dbstate("Keybased auth already configured")
+                dbstate("Device", "Keybased auth already configured")
 
         self.add_device(device)
 
@@ -278,7 +271,7 @@ def main():
             device_manager.setup()
         except KeyboardInterrupt:
             print()
-            dbstate('Cancelled')
+            dbstate("Device", 'Cancelled')
     if 'run' in sys.argv[1]:
         device_manager.current.run_cmd(' '.join(sys.argv[2:]))
     if 'qr' in sys.argv[1]:
@@ -286,13 +279,13 @@ def main():
     if 'get' in sys.argv[1]:
         device_manager.current.export_ip()
     if 'test' in sys.argv[1]:
-        dbstate('Testing Connection')
+        dbstate("Device", 'Testing Connection')
         if device_manager.current.test_connection():
-            dbstate('Connected!')
+            dbstate("Device", 'Connected!')
             exit(0)
         else:
-            dberror('Connection to device failed')
-            dberror('Make sure SSH is functioning properly and/or run "dragon s" to configure your device')
+            dberror("Device", 'Connection to device failed')
+            dberror("Device", 'Make sure SSH is functioning properly and/or run "dragon s" to configure your device')
             exit(1)
 
 
