@@ -9,7 +9,7 @@ if [[ -z $DRAGON_ROOT_DIR ]]; then
 fi
 
 # Run setup wizard if dragon root dir is empty or nonexistent
-if [[ -z "$(ls -A $DRAGON_ROOT_DIR)" ]]; then
+if [[ -z "$(ls -A $DRAGON_ROOT_DIR 2> /dev/null)" ]]; then
     python3 -m dragon.wizard
     drexit 0
 fi
