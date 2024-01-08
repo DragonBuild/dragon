@@ -31,10 +31,8 @@ def get_from_selector(prompt, values, default):
 AppDelegate_h = """#import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *rootViewController;
-
 @end
 """
 AppDelegate_m = """#import "AppDelegate.h"
@@ -55,7 +53,6 @@ AppDelegate_m = """#import "AppDelegate.h"
 RootViewController_h = """#import <UIKit/UIKit.h>
 
 @interface RootViewController : UITableViewController
-
 @end
 """
 RootViewController_m = """#import "RootViewController.h"
@@ -193,79 +190,6 @@ InfoPlist = """<?xml version="1.0" encoding="UTF-8"?>
 	</array>
 	<key>UILaunchImageFile</key>
 	<string>LaunchImage</string>
-	<key>UILaunchImages</key>
-	<array>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{{320, 480}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-700-568h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{{320, 568}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-Portrait</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{{768, 1024}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-Landscape</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Landscape</string>
-			<key>UILaunchImageSize</key>
-			<string>{{768, 1024}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-800-667h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{{375, 667}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-800-Portrait-736h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{{414, 736}}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>LaunchImage-800-Landscape-736h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Landscape</string>
-			<key>UILaunchImageSize</key>
-			<string>{{414, 736}}</string>
-		</dict>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -365,7 +289,6 @@ Prefs_R_RootPlist = """<?xml version="1.0" encoding="UTF-8"?>
 Prefs_RootListController_h = """#import <Preferences/PSListController.h>
 
 @interface {}RootListController : PSListController
-
 @end
 """
 Prefs_RootListController_m = """#import <Foundation/Foundation.h>
@@ -546,11 +469,7 @@ class Module:
             _l = 'AppIcon29x29.png AppIcon29x29@2x.png AppIcon29x29@3x.png AppIcon40x40.png AppIcon40x40@2x.png ' \
                  'AppIcon40x40@3x.png AppIcon50x50.png AppIcon50x50@2x.png AppIcon57x57.png AppIcon57x57@2x.png ' \
                  'AppIcon57x57@3x.png AppIcon60x60.png AppIcon60x60@2x.png AppIcon60x60@3x.png AppIcon72x72.png ' \
-                 'AppIcon72x72@2x.png AppIcon76x76.png AppIcon76x76@2x.png LaunchImage-700-568h@2x.png ' \
-                 'LaunchImage-700-Landscape@2x~ipad.png LaunchImage-700-Landscape~ipad.png ' \
-                 'LaunchImage-700-Portrait@2x~ipad.png LaunchImage-700-Portrait~ipad.png LaunchImage-800-667h@2x.png ' \
-                 'LaunchImage-800-Landscape-736h@3x.png LaunchImage-800-Portrait-736h@3x.png LaunchImage.png ' \
-                 'LaunchImage@2x.png'.split(' ')
+                 'AppIcon72x72@2x.png AppIcon76x76.png AppIcon76x76@2x.png'.split(' ')
             for file in _l:
                 with open(f'Resources/{file}', 'wb') as out:
                     out.write(b'')
