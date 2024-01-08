@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 
 import yaml, os, sys
-
-colors = [["\033[0;31m", "\033[0;32m", "\033[0;33m", "\033[0;34m", "\033[0;36m",
-           "\033[0;37m", "\033[0m"], ["\033[1;31m", "\033[1;32m", "\033[1;33m", "\033[1;34m",
-                                      "\033[1;36m", "\033[1;37m", "\033[0m"]]
-
-
-def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
-    print("%s[%s]%s %s%s%s" % (
-        colors[1][col], tool, colors[bold][textcol], ">>> " if pusher else "", msg, colors[0][6]))
-
-
-dbstate = lambda msg: dprintline(1, "Packager", 5, 1, 0, msg)
-dbwarn = lambda msg: dprintline(2, "Packager", 5, 0, 0, msg)
-dberror = lambda msg: dprintline(0, "Packager", 5, 1, 0, msg)
-
+from shared.util import dbstate, dbwarn, dberror
 
 # This script will get called w/
 # argc=3  argv[0]                              argv[1]    argv[2]
 # python3 $DRAGON_ROOT_DIR/internal/control.py DragonMake ./$DRAGON_DIR/_/DEBIAN/control
 def main():
-    dbstate("Pulling 'control' values from DragonMake")
+    dbstate("Packager", "Pulling 'control' values from DragonMake")
 
     keys = {
         'name': 'Name',
@@ -67,9 +53,9 @@ def main():
             config = yaml.safe_load(f)
 
     else:
-        dberror('DragonMake not found, not sure how we got here honestly.')
-        dberror('If you believe this message is in error, file an issue.')
-        dberror('https://github.com/DragonBuild/dragon')
+        dberror("Packager", 'DragonMake not found, not sure how we got here honestly.')
+        dberror("Packager", 'If you believe this message is in error, file an issue.')
+        dberror("Packager", 'https://github.com/DragonBuild/dragon')
 
     control = {keys[key]: value for (key, value) in config.items() if key in keys}
 
@@ -77,20 +63,20 @@ def main():
     if 'Name' not in control:
         control['Name'] = os.path.basename(os.getcwd())
         # Warn for this bc it's kinda important
-        dbwarn(f'No "name:" key in DragonMake, guessing based on directory name ({control["Name"]})')
+        dbwarn("Packager", f'No "name:" key in DragonMake, guessing based on directory name ({control["Name"]})')
 
     if 'Package' not in control:
         control['Package'] = f'com.yourcompany.{control["Name"].lower()}'
         # Warn for this too, it's fairly important
-        dbwarn(f'No "id:" key in DragonMake, creating default based on `Name:` key')
+        dbwarn("Packager", f'No "id:" key in DragonMake, creating default based on `Name:` key')
 
     if 'Author' not in control:
         control['Author'] = os.getlogin()
-        dbwarn(f'No "Author:" key in DragonMake, guessing based on current user ({control["Author"]})')
+        dbwarn("Packager", f'No "Author:" key in DragonMake, guessing based on current user ({control["Author"]})')
 
     if 'Maintainer' not in control:
         control['Maintainer'] = control['Author']
-        dbwarn(f'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
+        dbwarn("Packager", f'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
 
     # print(defs.update(control))
     # print(control)
@@ -103,7 +89,7 @@ def main():
 
     for name in filenames:
         if name in config:
-            dbstate(f'Creating {name}')
+            dbstate("Packager", f'Creating {name}')
             with open(os.path.dirname(os.sys.argv[2]) + f'/{name}', 'w') as out:
                 out.truncate()
                 out.seek(0)

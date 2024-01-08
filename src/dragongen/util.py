@@ -1,29 +1,11 @@
 #!/usr/bin/env python3
 
-import os, sys, glob, inspect, termios, tty
+import os, sys, glob, inspect
 import re as regex
 from enum import Enum
 from pprint import pprint, pformat
 from .variable_types import ArgList
 
-colors = [["\033[0;31m", "\033[0;32m", "\033[0;33m", "\033[0;34m", "\033[0;36m",
-           "\033[0;37m", "\033[0m"], ["\033[1;31m", "\033[1;32m", "\033[1;33m", "\033[1;34m",
-                                      "\033[1;36m", "\033[1;37m", "\033[0m"]]
-
-
-# Everything needs to go out of stderr *for now*. the bash script executes anything
-# sent via stdout
-# Also worth noting print() to stdout works like system() for us, except it's in the
-# context of a shell above us
-def dprintline(col: int, tool: str, textcol: int, bold: int, pusher: int, msg: str):
-    print("%s[%s]%s %s%s%s" % (
-        colors[1][col], tool, colors[bold][textcol], ">>> " if pusher
-        else "", msg, colors[0][6]), file=sys.stderr)
-
-
-dbstate = lambda msg: dprintline(1, "DragonGen", 5, 1, 0, msg)
-dbwarn = lambda msg: dprintline(2, "DragonGen", 5, 0, 0, msg)
-dberror = lambda msg: dprintline(0, "DragonGen", 5, 1, 0, msg)
 
 make_match = regex.compile('(.*)=(.*)#?')
 make_type = regex.compile(r'include.*\/(.*)\.mk')

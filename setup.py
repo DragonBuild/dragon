@@ -8,11 +8,12 @@ setup(name='dragon',
       author='cynder',
       url='https://dragon.cynder.me/',
       install_requires=['ninja', 'pyyaml', 'ruyaml', 'packaging', 'tqdm'],
-      packages=['dragon', 'dragongen', 'buildgen'],
+      packages=['dragon', 'dragongen', 'buildgen', 'shared'],
       package_dir={
           'dragon': 'src/dragon',
           'dragongen': 'src/dragongen',
           'buildgen': 'src/buildgen',
+          'shared': 'src/shared',
       },
       package_data={
           'dragon': ['shscripts/*', 'config/*'],
