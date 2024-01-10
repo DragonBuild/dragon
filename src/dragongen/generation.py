@@ -199,7 +199,7 @@ class Generator(object):
         if toolchain is None:
             dberror("Dragon Gen", "Could not locate any usable toolchain or even determine the existence of clang.")
             dberror("Dragon Gen", "If you're on macOS, install XCode and the Command Line Tools package")
-            dberror("Dragon Gen", "If you're on linux, install sbingner's iOS toolchain to ~/.dragon/toolchain")
+            dberror("Dragon Gen", "If you're on linux, install L1ghtmann's iOS toolchain to ~/.dragon/toolchain")
             dberror("Dragon Gen", "You can also add the key 'objcs': True to your DragonMake module to have dragon automatically"
                     "install its internal toolchain, however note this isn't really reccomended for non-objcs "
                     "projects")
