@@ -14,7 +14,7 @@ Targets:
   ios:
     all:
       targetos: iphoneos
-      targetvers: 10.0
+      targetvers: 9.0
       triple: arm64-apple-ios$targetvers
       arc: true
       sysroot: $dragon_root_dir/sdks/iPhoneOS.sdk
