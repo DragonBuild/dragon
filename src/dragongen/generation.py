@@ -296,7 +296,13 @@ class Generator(object):
                     filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
 
         # Deal with compilation
-        for a in self.project_variables['archs']:
+        archs = self.project_variables['archs']
+        if any(x in ['armv6', 'armv7', 'armv7s'] for x in archs):
+            # https://twitter.com/saurik/status/654198997024796672
+            # iOS 9+ 32-bit pagesize on 64-bit CPUs changed to 16384 bytes from 4096
+            linker_conds.add("-Xlinker -segalign -Xlinker 4000")
+
+        for a in archs:
             arch_specific_object_files = []
 
             for ftype in (f for f in FILE_RULES if FILE_RULES[f] is not None and f in filedict):
