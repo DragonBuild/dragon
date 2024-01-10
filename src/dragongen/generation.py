@@ -283,7 +283,7 @@ class Generator(object):
         if 'logos_files' in filedict:
             for f in standardize_file_list(subdir, filedict['logos_files']):
                 used_rules.add('logos')
-                linker_conds.add('-lobjc') # TODO: generalize elsewhere
+                linker_conds.add('-lobjc')
 
                 name, ext = os.path.split(f)[1], os.path.splitext(f)[1]
                 if ext == '.x':
@@ -294,7 +294,7 @@ class Generator(object):
                     build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
                     filedict.setdefault('objcxx_files', [])
                     filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
-                    linker_conds.add('-lc++') # TODO: generalize elsewhere
+                    linker_conds.add('-lc++')
 
         # Deal with compilation
         for a in self.project_variables['archs']:

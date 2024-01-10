@@ -52,6 +52,7 @@ InternalDefaults:
   internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
   internalsigntarget: '$signdir/$build_target_file.unsigned'
   internalsymtarget: '$signdir/$build_target_file.unsym'
+  internallibflags: '-lobjc -lc++'
   pwd: '.'
 
 # Applied on top of both of these.
