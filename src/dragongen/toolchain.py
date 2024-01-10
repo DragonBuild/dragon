@@ -77,9 +77,9 @@ class Toolchain:
         tc.clang = tc_dir + 'clang'
         tc.clangpp = tc_dir + 'clang++'
         tc.ld = tc_dir + 'clang++'
-        tc.codesign = 'ldid'
+        tc.codesign = tc_dir + 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
-        tc.plutil = 'plutil'
+        tc.plutil = 'plutil' # TODO: fixme
         tc.lipo = tc_dir + 'lipo'
         tc.tapi = tc_dir + 'tapi'
 
