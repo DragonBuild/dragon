@@ -213,8 +213,6 @@ class Generator(object):
             project_dict['lipo'] = toolchain.lipo
         if 'dsym' not in project_dict:
             project_dict['dsym'] = toolchain.dsym
-        if 'plutil' not in project_dict:
-            project_dict['plutil'] = toolchain.plutil
         if 'ld' not in project_dict:
             project_dict['ld'] = toolchain.ld
         if 'codesign' not in project_dict:
@@ -410,7 +408,6 @@ class Generator(object):
             Var('lipo'),
             Var('logos'),
             Var('optool'),
-            Var('plutil'),
             Var('swift'),
             ___,
             Var('targetvers'),

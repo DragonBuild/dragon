@@ -65,10 +65,6 @@ bundle:
   name: "Bundle Resources"
   desc: "Copying Bundle Resources"
   cmd: "mkdir -p $dragon_data_dir/_$location/ && cp -R $resource_dir/ $dragon_data_dir/_$location"
-plist:
-  name: "plutil compilation"
-  desc: "Compiling $in"
-  cmd: "$plutil -convert binary1 $in -o $out"
 debug:
   name: "DsymUtil"
   desc: "Generating Debug Symbols for $name"
