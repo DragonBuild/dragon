@@ -21,7 +21,6 @@ class Toolchain:
         self.ld = ""
         self.codesign = ""
         self.dsym = ""
-        self.plutil = ""
         self.lipo = ""
         self.tapi = ""
 
@@ -50,7 +49,6 @@ class Toolchain:
         tc.ld = tc_dir + 'clang++'
         tc.codesign = 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
-        tc.plutil = 'plutil'
         # FIXME: hardcoded while I wait on a real distribution of llvm-objcs
         if use_objcs:
             tc.lipo = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo'
@@ -79,7 +77,6 @@ class Toolchain:
         tc.ld = tc_dir + 'clang++'
         tc.codesign = tc_dir + 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
-        tc.plutil = 'plutil' # TODO: fixme
         tc.lipo = tc_dir + 'lipo'
         tc.tapi = tc_dir + 'tapi'
 
