@@ -315,7 +315,7 @@ class Generator(object):
                         arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
                         build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid + f'{a}', f))
 
-                    LINKER_FLAGS = {  # Don't link objc/cpp if not needed
+                    LINKER_FLAGS = {  # Don't link objc if not needed
                         'objc': ['-lobjc'],
                         'objcxx': ['-lobjc'],
                     }
