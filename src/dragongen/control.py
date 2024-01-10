@@ -41,7 +41,7 @@ def main():
         'Depends': 'mobilesubstrate'  # This is a blind guess, maybe we can improve this logic?
     }
 
-    filenames = [  # extrainst?
+    filenames = [  # extrainst_?
         'preinst',
         'postinst',
         'prerm',
