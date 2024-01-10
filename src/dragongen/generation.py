@@ -44,7 +44,7 @@ ___ = object()  # Newline
 
 
 # Get rule by name from rules.yml
-def get_rule(name: str) -> Rule:
+def get_generic_rule(name: str) -> Rule:
     return Rule(name, rules(name, 'desc'), rules(name, 'cmd'))
 
 
@@ -187,7 +187,6 @@ class Generator(object):
                                        else [])
 
         # Specify toolchain paths
-
         use_objcs = 'objcs' in project_dict
 
         if platform.platform().startswith('macOS'):
@@ -245,20 +244,21 @@ class Generator(object):
         # Trivial project types
         if self.project_variables['type'] == 'resource-bundle':
             return [
-                get_rule('bundle'),
-                get_rule('stage'),
+                get_generic_rule('bundle'),
+                get_generic_rule('stage'),
             ], [
                 Build('bundle', 'bundle', 'build.ninja'),
                 Build('stage', 'stage', 'build.ninja'),
             ]
         if self.project_variables['type'] == 'stage':
             return [
-                get_rule('stage'),
+                get_generic_rule('stage'),
             ], [
                 Build('stage', 'stage', 'build.ninja'),
             ]
 
         # Only load rules we need
+        # { file_type : corresponding_rule_name }
         FILE_RULES = {
             'c_files': 'c',
             'cxx_files': 'cxx',
@@ -282,7 +282,7 @@ class Generator(object):
         if 'logos_files' in filedict:
             for f in standardize_file_list(subdir, filedict['logos_files']):
                 used_rules.add('logos')
-                linker_conds.add('-lobjc')
+                linker_conds.add('-lobjc') # TODO: generalize elsewhere
 
                 name, ext = os.path.split(f)[1], os.path.splitext(f)[1]
                 if ext == '.x':
@@ -293,19 +293,21 @@ class Generator(object):
                     build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
                     filedict.setdefault('objcxx_files', [])
                     filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
-                    linker_conds.add('-lc++')
+                    linker_conds.add('-lc++') # TODO: generalize elsewhere
 
         # Deal with compilation
         for a in self.project_variables['archs']:
             arch_specific_object_files = []
 
             for ftype in (f for f in FILE_RULES if FILE_RULES[f] is not None and f in filedict):
-                ruleid = f'{FILE_RULES[ftype]}{a}'
+                ruleid = f'{FILE_RULES[ftype]}'
                 for f in standardize_file_list(subdir, filedict[ftype]):
-                    name = os.path.split(f)[1]
-                    used_rules.add(ruleid)
-                    arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
-                    build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid, f))
+                    if ruleid is not None:
+                        # if file type has a rule
+                        name = os.path.split(f)[1]
+                        rule_list.append(Rule(ruleid + f'{a}', rules(ruleid, 'desc', replace={'{arch}' : f'{a}'}), rules(ruleid, 'cmd', replace={'{arch}' : f'{a}'})))
+                        arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
+                        build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid + f'{a}', f))
 
                     LINKER_FLAGS = {  # Don't link objc/cpp if not needed
                         'cxx': ['-lc++'],
@@ -317,15 +319,15 @@ class Generator(object):
                             linker_conds.add(flag)
             if self.project_variables['type'] == 'static':
                 # Linker rules and build statements
-                cmd = rules(f'archive{a}', 'cmd') + ' ' + ' '.join(linker_conds)
-                rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+                cmd = rules('archive', 'cmd') + ' ' + ' '.join(linker_conds)
+                rule_list.append(Rule(f'link{a}', rules('link', 'desc', replace={'{arch}' : f'{a}'}), cmd))
                 build_state.append(Build(f'$builddir/$name.{a}',
                                          f'link{a}',
                                          arch_specific_object_files))
             else:
                 # Linker rules and build statements
-                cmd = rules(f'link{a}', 'cmd') + ' ' + ' '.join(linker_conds)
-                rule_list.append(Rule(f'link{a}', rules(f'link{a}', 'desc'), cmd))
+                cmd = rules('link', 'cmd', replace={'{arch}' : f'{a}'}) + ' ' + ' '.join(linker_conds)
+                rule_list.append(Rule(f'link{a}', rules('link', 'desc', replace={'{arch}' : f'{a}'}), cmd))
                 build_state.append(Build(f'$builddir/$name.{a}',
                                          f'link{a}',
                                          arch_specific_object_files))
@@ -350,7 +352,7 @@ class Generator(object):
             used_rules.remove("lipo")
             used_rules.add("dummy")
 
-        rule_list.extend(get_rule(r) for r in used_rules)
+        rule_list.extend(get_generic_rule(r) for r in used_rules)
 
         return rule_list, build_state
 
@@ -460,7 +462,18 @@ class Generator(object):
         return outline
 
 
-def rules(*key_path: str) -> dict:
+def replace_placeholders(data, replace):
+    if isinstance(data, dict):
+        return {k: replace_placeholders(v, replace) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [replace_placeholders(v, replace) for v in data]
+    elif isinstance(data, str):
+        for key, value in replace.items():
+            data = data.replace(key, value)
+    return data
+
+
+def rules(*key_path: str, replace: dict = None) -> dict:
     """
     Lazy load default rules and return value specified path.
 
@@ -476,7 +489,8 @@ def rules(*key_path: str) -> dict:
     ret = _LAZY_RULES_DOT_YML.copy()
     while key_path:
         ret = ret[key_path.pop(0)]
-
+    if replace is not None:
+        ret = replace_placeholders(ret, replace)
     return ret
 
 
