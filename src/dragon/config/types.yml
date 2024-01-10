@@ -19,10 +19,9 @@ Types:
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$dragon_data_dir/$stagedir/$location$name.dylib'
-      lopts: '-dynamiclib -ggdb -Xlinker -segalign -Xlinker 4000 -framework CydiaSubstrate'
+      lopts: '-dynamiclib -ggdb -framework CydiaSubstrate'
       frameworks:
         - UIKit
-        - Foundation
       stage2:
         - 'cp $name.plist $dragon_data_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist 2>/dev/null  || python3 -m dragongen.bfilter $dragon_data_dir/DragonMake $name > $dragon_data_dir/_/Library/MobileSubstrate/DynamicLibraries/$name.plist'
   prefs:
@@ -34,7 +33,6 @@ Types:
       lopts: '-dynamiclib -ggdb -framework Preferences'
       frameworks:
         - UIKit
-        - Foundation
       stage2:
         - 'mkdir -p $dragon_data_dir/_/Library/PreferenceLoader/Preferences/'
         - 'cp entry.plist $dragon_data_dir/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
@@ -46,7 +44,6 @@ Types:
       lopts: '-dynamiclib -ggdb'
       frameworks:
         - UIKit
-        - Foundation
       stage2:
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location/$name.bundle/'
 
@@ -69,12 +66,6 @@ Types:
     variables:
       install_location: '/Library/$name/$name.bundle/'
       build_target_file: 'build.ninja'
-      libs:
-        - 'substrate'
-      lopts: '-dynamiclib -ggdb'
-      frameworks:
-        - UIKit
-        - Foundation
       stage2:
         - 'true;'
   stage:
