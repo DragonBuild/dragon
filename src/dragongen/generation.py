@@ -293,7 +293,6 @@ class Generator(object):
                     build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
                     filedict.setdefault('objcxx_files', [])
                     filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
-                    linker_conds.add('-lc++')
 
         # Deal with compilation
         for a in self.project_variables['archs']:
@@ -308,9 +307,8 @@ class Generator(object):
                     build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid, f))
 
                     LINKER_FLAGS = {  # Don't link objc/cpp if not needed
-                        'cxx': ['-lc++'],
                         'objc': ['-lobjc'],
-                        'objcxx': ['-lobjc', '-lc++'],
+                        'objcxx': ['-lobjc'],
                     }
                     if ftype in LINKER_FLAGS:
                         for flag in LINKER_FLAGS[ftype]:
