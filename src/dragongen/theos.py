@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os
 from enum import Enum
 from ruyaml import YAML
 

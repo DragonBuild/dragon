@@ -7,7 +7,7 @@
 
 # if you're here to contribute to this file, im sorry. ::::)
 
-import os, sys, pwd
+import os, pwd
 import ruyaml as yaml
 from shared.util import dbstate
 
@@ -473,7 +473,7 @@ class Module:
             for file in _l:
                 with open(f'Resources/{file}', 'wb') as out:
                     out.write(b'')
-            with open(f'Resources/Info.plist', 'w') as out:
+            with open('Resources/Info.plist', 'w') as out:
                 out.write(InfoPlist.format(self.variables['id']))
 
         try:

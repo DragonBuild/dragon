@@ -14,5 +14,5 @@ if __name__ == '__main__':
         else:
             if 'UCDBG' in os.environ.keys():
                 print(f'Remote Version: {data["info"]["version"]} | Local Version: {os.environ["DRAGON_VERS"]}')
-    except Exception as ex:
+    except Exception:
         pass

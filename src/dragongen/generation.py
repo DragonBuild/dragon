@@ -542,7 +542,7 @@ def handle(ex: Exception):
     except Exception:
         dberror("Dragon Gen", "Exiting...")
 
-    print(f'export DRAGONGEN_FAILURE=1')
+    print('export DRAGONGEN_FAILURE=1')
 
 
 def main():

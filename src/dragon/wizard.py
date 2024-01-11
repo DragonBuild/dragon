@@ -33,7 +33,7 @@ def setup_wizard():
 
     log('Deploying internal configuration')
     try:
-        shutil.rmtree(f'./internal')
+        shutil.rmtree('./internal')
     except FileNotFoundError:
         pass
     shutil.copytree(deployable_path(), dragon_root_dir + '/internal')

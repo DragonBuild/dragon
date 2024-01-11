@@ -111,7 +111,7 @@ class Device:
         if not self.test_connection():
             dberror("Device", f'Could not connect to device at {self.host}:{self.port}')
             if self.host == "localhost" and self.port == 4444:
-                dberror("Device", f'To configure a new device, run "dragon s"')
+                dberror("Device", 'To configure a new device, run "dragon s"')
             self.connection_failure_resolver()
             return
 

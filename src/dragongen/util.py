@@ -107,20 +107,18 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
 
     module_name = variables.get(f'{module_type_naming}_NAME')
     if module_name:
-        module_archs = variables.get(f'ARCHS')
+        module_archs = variables.get('ARCHS')
         module_files = variables.get(module_name + '_FILES') or variables.get(
             f'$({module_type_naming}_NAME)_FILES') or ''
         module_cflags = variables.get(module_name + '_CFLAGS') or variables.get(
             '$({module_type_naming}_NAME)_CFLAGS') or ''
         module_cxxflags = variables.get(module_name + '_CXXFLAGS') or variables.get(
             '$({module_type_naming}_NAME)_CXXFLAGS') or ''
-        module_cflags = variables.get(f'ADDITIONAL_CFLAGS') or ''
+        module_cflags = variables.get('ADDITIONAL_CFLAGS') or ''
         module_ldflags = variables.get(module_name + '_LDFLAGS') or variables.get(
             f'$({module_type_naming}_NAME)_LDFLAGS') or ''
-        module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get(
+        module_codesign_flags = variables.get(module_name + '_CODESIGN_FLAGS') or variables.get( # TODO
             f'$({module_type_naming}_NAME)_CODESIGN_FLAGS') or ''
-        module_ipath = variables.get(module_name + '_INSTALL_PATH') or variables.get(
-            f'$({module_type_naming}_NAME)_INSTALL_PATH') or ''
         module_frameworks = variables.get(module_name + '_FRAMEWORKS') or variables.get(
             f'$({module_type_naming}_NAME)_FRAMEWORKS') or ''
         module_pframeworks = variables.get(module_name + '_PRIVATE_FRAMEWORKS') or variables.get(
