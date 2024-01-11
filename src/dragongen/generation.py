@@ -16,7 +16,6 @@ any remaining or new travesties are my own fabrications.
 import traceback, platform, yaml
 from collections import namedtuple
 from datetime import datetime
-import platform
 from typing import TextIO
 from .variable_types import ProjectVars
 from .util import *
