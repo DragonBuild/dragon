@@ -2,7 +2,6 @@ from ruyaml import YAML
 import platform
 from urllib import request
 import json, os, ssl, sys, tarfile
-import urllib.request
 from tqdm import tqdm
 from dragon.util import dprintline, OutputColors, OutputWeight
 
