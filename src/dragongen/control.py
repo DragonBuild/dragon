@@ -37,7 +37,7 @@ def main():
         'Section': 'Tweaks',
         'Description': 'A cool MobileSubstrate Tweak',
         'Version': '0.0.1',
-        'Architecture': 'iphoneos-arm' if 'ROOTLESS' not in os.environ else 'iphoneos-arm64',
+        'Architecture': 'iphoneos-arm',
         'Depends': 'mobilesubstrate'  # This is a blind guess, maybe we can improve this logic?
     }
 
@@ -77,6 +77,9 @@ def main():
     if 'Maintainer' not in control:
         control['Maintainer'] = control['Author']
         dbwarn("Packager", 'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
+
+    if int(os.environ["rootless"]) == 1:
+        control['Architecture'] = 'iphoneos-arm64'
 
     # print(defs.update(control))
     # print(control)

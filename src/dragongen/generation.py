@@ -136,6 +136,10 @@ class Generator(object):
                 # type they used.
                 raise ex
 
+        # Load rootless config
+        if int(os.environ['rootless']) == 1:
+            project_dict.update(get_default_section_dict('Rootless'))
+
         # Apply the set of variables the user included on this module
         project_dict.update(module_variables)
         # Apply the module name
@@ -441,6 +445,9 @@ class Generator(object):
             ___,
             Var('internalreleaseflags') if _RELEASE_BUILD else Var('internaldbgflags'),
             Var('releaseflags') if _RELEASE_BUILD else Var('dbgflags'),
+            ___,
+            Var('rootless_prefix'),
+            Var('rpathflags'),
             ___,
             Var('theosshim'),
             Var('internalcflags'),

@@ -67,6 +67,13 @@ create_package()
     else
         python3 -m dragongen.control DragonMake ./$DRAGON_DIR/_/DEBIAN/control
     fi
+    if [[ $rootless == 1 ]]; then
+        tmp=$(mktemp -d)
+        find $DRAGON_DIR/_/ -mindepth 1 -maxdepth 1 ! -name 'DEBIAN' -exec mv {} $tmp \;
+        mkdir -p $DRAGON_DIR/_/$PkgPrefix
+        mv $tmp/* $DRAGON_DIR/_/$PkgPrefix
+        rm -r $tmp
+    fi
     du -d 0 $DRAGON_DIR/_ | xargs -I '{}' echo 'Installed-Size: {}' | cut -d ' ' -f 1,2 >> $DRAGON_DIR/_/DEBIAN/control
     chmod -R 0755 $DRAGON_DIR/_/DEBIAN/*
     mkdir -p $DRAGON_DIR/packages
