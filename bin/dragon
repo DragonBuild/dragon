@@ -117,7 +117,7 @@ while ! [[ -z $1 ]]; do
         # --------
         # Commands
         # --------
-        u | update | upgrade )            source $TOOLPATH/upgrader
+        up | update | upgrade )            source $TOOLPATH/upgrader
                                 drexit
                                 ;;
         rs | respring )         python3 -m dragon.device run sbreload
