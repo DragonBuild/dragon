@@ -48,8 +48,8 @@ InternalDefaults:
   internalreleaseflags: '-DNDEBUG'
   internalcflags: '$cinclude $debug $fwSearch $cflags $btarg -O$optim $sysroot $header_includes $arc $triple $theosshim $macros $prefix $warnings $modulesinternal $internaldbgflags $internalreleaseflags $dbgflags $releaseflags'
   internalswiftflags: '-color-diagnostics -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -g -L/usr/lib/swift -swift-version 5 -module-name $name'
-  internalfflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
-  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs'
+  internalfflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags'
+  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags'
   internalsigntarget: '$signdir/$build_target_file.unsigned'
   internalsymtarget: '$signdir/$build_target_file.unsym'
   pwd: '.'
@@ -58,4 +58,4 @@ InternalDefaults:
 Rootless:
   rootless_prefix: '/var/jb'
   rpathflags: '-rpath $rootless_prefix/Library/Frameworks -rpath $rootless_prefix/usr/lib'
-  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $libs $rpathflags'
+  internalldflags: '$internalcflags $typeldflags $frameworks $libs $libflags $lopts $libSearch $ldflags $rpathflags'
