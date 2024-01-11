@@ -11,7 +11,7 @@
 	<br>
 	<br>
 	<a href="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml">
-		<image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg">
+		<image src="https://github.com/dragonbuild/dragon/actions/workflows/tests.yml/badge.svg?branch=master">
 	</a>
 	<a href="https://dragon.cynder.me">
 		<image src="https://readthedocs.org/projects/dragon/badge/?version=latest">
@@ -60,7 +60,7 @@ pip3 install --force-reinstall dragon
 
 <p align=center>
 <img src=".github/vri.png" alt="vri" width=110px>
-</p> 
+</p>
 <p align=center>
 a project by cynder
 </p>
