@@ -308,12 +308,15 @@ class Generator(object):
             for ftype in (f for f in FILE_RULES if FILE_RULES[f] is not None and f in filedict):
                 ruleid = f'{FILE_RULES[ftype]}'
                 for f in standardize_file_list(subdir, filedict[ftype]):
+                    # if file type has a rule
                     if ruleid is not None:
-                        # if file type has a rule
                         name = os.path.split(f)[1]
-                        rule_list.append(Rule(ruleid + f'{a}', rules(ruleid, 'desc', replace={'{arch}' : f'{a}'}), rules(ruleid, 'cmd', replace={'{arch}' : f'{a}'})))
+                        rulename = ruleid + f'{a}'
+                        # if rule is not already defined
+                        if not any(r.name == rulename for r in rule_list):
+                            rule_list.append(Rule(rulename, rules(ruleid, 'desc', replace={'{arch}' : f'{a}'}), rules(ruleid, 'cmd', replace={'{arch}' : f'{a}'})))
                         arch_specific_object_files.append(f'$builddir/{a}/{name}.o')
-                        build_state.append(Build(f'$builddir/{a}/{name}.o', ruleid + f'{a}', f))
+                        build_state.append(Build(f'$builddir/{a}/{name}.o', rulename, f))
 
                     LINKER_FLAGS = {  # Don't link objc if not needed
                         'objc': ['-lobjc'],
