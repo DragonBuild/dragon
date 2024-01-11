@@ -1,6 +1,5 @@
 import os, os.path
 import subprocess
-import sys
 
 
 def system_with_output(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):

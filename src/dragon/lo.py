@@ -1,8 +1,7 @@
 from ruyaml import YAML
 import platform
 from urllib import request
-import json, os, shutil, ssl, sys, tarfile
-import click
+import json, os, ssl, sys, tarfile
 import urllib.request
 from tqdm import tqdm
 from dragon.util import dprintline, OutputColors, OutputWeight
@@ -60,7 +59,7 @@ def fetch():
             metadata = yaml.load(fd)
             version = metadata['version']
             if version == response['tag_name']:
-                log(f'Latest LLVM-ObjCS build already installed')
+                log('Latest LLVM-ObjCS build already installed')
                 return
     for asset in response['assets']:
         n = asset['name']

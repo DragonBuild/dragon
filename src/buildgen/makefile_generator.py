@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import re, textwrap
+import textwrap
 from .writer import Writer
 
 

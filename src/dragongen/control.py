@@ -68,7 +68,7 @@ def main():
     if 'Package' not in control:
         control['Package'] = f'com.yourcompany.{control["Name"].lower()}'
         # Warn for this too, it's fairly important
-        dbwarn("Packager", f'No "id:" key in DragonMake, creating default based on `Name:` key')
+        dbwarn("Packager", 'No "id:" key in DragonMake, creating default based on `Name:` key')
 
     if 'Author' not in control:
         control['Author'] = os.getlogin()
@@ -76,7 +76,7 @@ def main():
 
     if 'Maintainer' not in control:
         control['Maintainer'] = control['Author']
-        dbwarn("Packager", f'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
+        dbwarn("Packager", 'No "Maintainer:" key in DragonMake, creating default based on `Author:` key')
 
     # print(defs.update(control))
     # print(control)

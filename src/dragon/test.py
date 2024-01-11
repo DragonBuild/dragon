@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import subprocess, sys, os, timeit, time, yaml
-from pprint import pprint
+import subprocess, sys, os, timeit, yaml
 from math import sin, cos, radians
 
 TestDict = yaml.safe_load(open(os.environ['DRAGON_ROOT_DIR'] + '/internal/tests.yml'))
@@ -73,7 +72,7 @@ def main():
         tests[category] = cattests
         times[category] = cattimes
 
-    print(f'\n\n---\n')
+    print('\n\n---\n')
 
     os.system('uname -a')
 
