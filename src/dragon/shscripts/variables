@@ -7,12 +7,10 @@ export build=0
 export gen=0
 export clean=0
 export exportt=0
-export only=0
 export norm=0
 export debug=0
 export debugproc=""
 export ddebug=0
-export flutter=0
 export DRAGON_DPKG=1
 export DRAGON_POSTINST=0
 
