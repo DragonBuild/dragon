@@ -20,6 +20,7 @@ export simtarg=0
 
 export release=0
 export rootless=0
+export PkgPrefix=""
 
 export ToolchainPath=""
 export ToolchainPrefix=""

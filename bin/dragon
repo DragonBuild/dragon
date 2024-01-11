@@ -137,6 +137,7 @@ while ! [[ -z $1 ]]; do
         r | release )           release=1
                                 ;;
         ro | rootless )         rootless=1
+                                PkgPrefix="/var/jb"
                                 ;;
         relink )                rm -r "$DRAGON_DATA_DIR/sign/"
                                 ;;

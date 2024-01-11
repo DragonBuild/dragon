@@ -20,6 +20,7 @@ Types:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
       build_target_file: '$dragon_data_dir/$stagedir/$location$name.dylib'
       lopts: '-dynamiclib -ggdb -framework CydiaSubstrate'
+      ldflags: '-install_name @rpath/$name.dylib'
       frameworks:
         - UIKit
       stage2:
@@ -31,6 +32,7 @@ Types:
       libs:
         - 'substrate'
       lopts: '-dynamiclib -ggdb -framework Preferences'
+      ldflags: '-install_name $install_location/$name'
       frameworks:
         - UIKit
       stage2:
@@ -42,6 +44,7 @@ Types:
       install_location: '/Library/$name/'
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.bundle/$name'
       lopts: '-dynamiclib -ggdb'
+      ldflags: '-install_name $install_location/$name.bundle/$name'
       frameworks:
         - UIKit
       stage2:
@@ -53,6 +56,7 @@ Types:
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
       public_headers: '$dragon_root_dir/include/'
       lopts: '-dynamiclib -ggdb'
+      ldflags: '-install_name @rpath/$name.framework/$name'
       frameworks:
         - Foundation
       stage2:
@@ -79,6 +83,7 @@ Types:
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.dylib'
       ldflags: '-install_name $location$name.dylib'
       lopts: '-dynamiclib -ggdb'
+      ldflags: '-install_name @rpath/$name.dylib'
       stage2:
         - 'true;'
   cli:
