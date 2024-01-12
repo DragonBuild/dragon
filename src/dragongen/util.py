@@ -35,6 +35,7 @@ def classify(filedict: dict) -> dict:
     return {key: value for (key, value) in filedict.items() if value != []}
 
 
+# NOTE: currently unused; see src/dragongen/generation.py's main()
 # this was supposed to be a really small function, i dont know what happened ;-;
 def interpret_theos_makefile(file: object, root: object = True) -> dict:
     project = {}
