@@ -251,8 +251,12 @@ class TheosMakefileProcessor:
 
         self.project['name'] = self.control['Name']
 
+        # TODO: this does nothing atm since Theos projects don't generater DragonMakes
+        # which are queried in bin/dragon for icmd else 'sbreload'
         if 'INSTALL_TARGET_PROCESSES' in self.root_makefile.variables:
             self.project['icmd'] = 'killall -9 ' + self.root_makefile.variables['INSTALL_TARGET_PROCESSES']
+        else:
+            self.project['icmd'] = 'sbreload'
 
         self._process_makefile(self.root_makefile)
         # print(self.project, file=sys.stderr)
