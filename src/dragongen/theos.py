@@ -178,7 +178,9 @@ class TheosMakefile(Makefile):
             self.variables[variable] = self.variables[variable].replace('$(', '$$(')
             if variable == 'ARCHS':
                 self.module['archs'] = self.variables[variable].split(' ')
-            if variable.endswith('_NAME'):
+            elif variable == 'TARGET':
+                self.module['targetvers'] = self.variables[variable].split(':')[-1]
+            elif variable.endswith('_NAME'):
                 self.module_name = self.variables[variable]
             elif variable.endswith('_FILES'):
                 self.module['files'] = self.variables[variable].split(' ')
