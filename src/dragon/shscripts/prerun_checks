@@ -40,8 +40,10 @@ if [[ $PLATFORM == Darwin ]]; then
 			# need ninja built specifically for iOS
 			if python3 -c "import ninja" &> /dev/null; then
 				python3 -m pip uninstall -y ninja
-				sudo apt update --allow-insecure-repositories
-				sudo apt install -y ninja
+				if ! dpkg -l ninja &> /dev/null; then
+					sudo apt update --allow-insecure-repositories
+					sudo apt install -y ninja
+				fi
 			fi
 
 			if ! [[ -x $(command -v clang) ]]; then
