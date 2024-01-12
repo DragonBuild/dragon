@@ -321,23 +321,19 @@ class Generator(object):
                         'objc': ['-lobjc'],
                         'objcxx': ['-lobjc'],
                     }
+
                     if ftype in LINKER_FLAGS:
                         for flag in LINKER_FLAGS[ftype]:
                             linker_conds.add(flag)
+
+            # Linker rules and build statements
+            cmd = rules('link', 'cmd', replace={'{arch}' : f'{a}'}) + ' ' + ' '.join(linker_conds)
             if self.project_variables['type'] == 'static':
-                # Linker rules and build statements
                 cmd = rules('archive', 'cmd') + ' ' + ' '.join(linker_conds)
-                rule_list.append(Rule(f'link{a}', rules('link', 'desc', replace={'{arch}' : f'{a}'}), cmd))
-                build_state.append(Build(f'$builddir/$name.{a}',
-                                         f'link{a}',
-                                         arch_specific_object_files))
-            else:
-                # Linker rules and build statements
-                cmd = rules('link', 'cmd', replace={'{arch}' : f'{a}'}) + ' ' + ' '.join(linker_conds)
-                rule_list.append(Rule(f'link{a}', rules('link', 'desc', replace={'{arch}' : f'{a}'}), cmd))
-                build_state.append(Build(f'$builddir/$name.{a}',
-                                         f'link{a}',
-                                         arch_specific_object_files))
+            rule_list.append(Rule(f'link{a}', rules('link', 'desc', replace={'{arch}' : f'{a}'}), cmd))
+            build_state.append(Build(f'$builddir/$name.{a}',
+                                        f'link{a}',
+                                        arch_specific_object_files))
 
         build_state.extend([
             # lipo if needed, else use a dummy rule to rename it to what the next rule expects
