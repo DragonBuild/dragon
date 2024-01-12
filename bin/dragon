@@ -84,8 +84,7 @@ while ! [[ -z $1 ]]; do
                                 ;;
         sim | simulator )       export simtarg=1
                                 ;;
-        i | install )           gen=1
-                                install=1
+        i | install )           install=1
                                 ;;
         debug )                 debug=1
                                 shift
