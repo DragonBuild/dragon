@@ -4,17 +4,23 @@ Types:
   app:
     variables:
       install_location: '/Applications/'
-      target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
+      build_target_file: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
+      stage2:
+        - 'cp -R Resources/* $dragon_data_dir/$stagedir/$location/$name.app/'
   application:
     variables:
       install_location: '/Applications/'
-      target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
+      build_target_file: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
+      stage2:
+        - 'cp -R Resources/* $dragon_data_dir/$stagedir/$location/$name.app/'
   tweak-jailed:
     variables:
       install_location: '/Applications/'
-      target: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
+      build_target_file: '$dragon_data_dir/$stagedir/$location/$name.app/$name'
       embed-libs:
         - CydiaSubstrate
+      stage2:
+        - 'cp -R Resources/* $dragon_data_dir/$stagedir/$location/$name.app/'
   tweak:
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries/'
@@ -38,7 +44,7 @@ Types:
       stage2:
         - 'mkdir -p $dragon_data_dir/_/Library/PreferenceLoader/Preferences/'
         - 'cp entry.plist $dragon_data_dir/_/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
-        - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
+        - 'cp -R Resources/* $dragon_data_dir/$stagedir/$location'
   bundle:
     variables:
       install_location: '/Library/$name/'
@@ -49,7 +55,12 @@ Types:
         - UIKit
       stage2:
         - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location/$name.bundle/'
-
+  resource-bundle:
+    variables:
+      install_location: '/Library/$name/$name.bundle/'
+      build_target_file: 'build.ninja'
+      stage2:
+        - 'true;'
   framework:
     variables:
       install_location: '/Library/Frameworks/$name.framework'
@@ -60,32 +71,12 @@ Types:
       frameworks:
         - Foundation
       stage2:
-        - 'cp -R Resources/ $dragon_data_dir/$stagedir/$location'
+        - 'cp -R Resources/* $dragon_data_dir/$stagedir/$location'
         - 'cp -R $dragon_data_dir/$stagedir$location $dragon_root_dir/frameworks/$name.framework'
         - 'if ! [ -z "$public_headers" ]; then
            mkdir -p $dragon_data_dir/$stagedir/$location/Headers;
            cp $public_headers $dragon_data_dir/$stagedir/$location/Headers;
            fi'
-  resource-bundle:
-    variables:
-      install_location: '/Library/$name/$name.bundle/'
-      build_target_file: 'build.ninja'
-      stage2:
-        - 'true;'
-  stage:
-    variables:
-      build_target_file: 'build.ninja'
-      stage2:
-        - 'true;'
-  library:
-    variables:
-      install_location: '/usr/lib'
-      build_target_file: '$dragon_data_dir/$stagedir/$location/$name.dylib'
-      ldflags: '-install_name $location$name.dylib'
-      lopts: '-dynamiclib -ggdb'
-      ldflags: '-install_name @rpath/$name.dylib'
-      stage2:
-        - 'true;'
   cli:
     variables:
       install_location: '/usr/bin'
@@ -101,15 +92,26 @@ Types:
   tool:
     variables:
       install_location: '/usr/bin'
-      lopts: ''
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name'
+      stage2:
+        - 'true;'
+  library:
+    variables:
+      install_location: '/usr/lib'
+      build_target_file: '$dragon_data_dir/$stagedir/$location/$name.dylib'
+      ldflags: '-install_name @rpath/$name.dylib'
+      lopts: '-dynamiclib -ggdb'
       stage2:
         - 'true;'
   static:
     variables:
       install_location: '/usr/lib'
-      lopts: ''
       build_target_file: '$dragon_data_dir/$stagedir/$location/$name.a'
+      stage2:
+        - 'true;'
+  stage:
+    variables:
+      build_target_file: 'build.ninja'
       stage2:
         - 'true;'
   raw:
