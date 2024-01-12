@@ -280,6 +280,10 @@ class Generator(object):
         filedict = classify({key: self.project_variables[key] for key in FILE_RULES})
         linker_conds = set()
 
+        # switch to cxx for pp files (auto-links ++ stdlib)
+        if any("cxx" in ftype for ftype in filedict):
+            self.project_variables["ld"] = self.project_variables["cxx"]
+
         # Deal with logos preprocessing
         if 'logos_files' in filedict:
             for f in standardize_file_list(subdir, filedict['logos_files']):
@@ -295,6 +299,8 @@ class Generator(object):
                     build_state.append(Build(f'$builddir/logos/{name}.mm', 'logos', f))
                     filedict.setdefault('objcxx_files', [])
                     filedict['objcxx_files'].append(f'$builddir/logos/{name}.mm')
+                    # switch to cxx for pp files (auto-links ++ stdlib)
+                    self.project_variables["ld"] = self.project_variables["cxx"]
 
         # Deal with compilation
         archs = self.project_variables['archs']
