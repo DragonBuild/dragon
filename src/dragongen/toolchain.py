@@ -42,10 +42,10 @@ class Toolchain:
                 return None
 
         tc = cls()
-        tc.ass = tc_dir + 'clang'
         tc.clang = tc_dir + 'clang'
         tc.clangpp = tc_dir + 'clang++'
-        tc.ld = tc_dir + 'clang++'
+        tc.ass = tc.clang
+        tc.ld = tc.clang
         tc.codesign = 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
         # FIXME: hardcoded while I wait on a real distribution of llvm-objcs
@@ -70,10 +70,10 @@ class Toolchain:
             return None
 
         tc = cls()
-        tc.ass = tc_dir + 'clang'
         tc.clang = tc_dir + 'clang'
         tc.clangpp = tc_dir + 'clang++'
-        tc.ld = tc_dir + 'clang++'
+        tc.ass = tc.clang
+        tc.ld = tc.clang
         tc.codesign = tc_dir + 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
         tc.lipo = tc_dir + 'lipo'
