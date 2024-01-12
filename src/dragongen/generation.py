@@ -13,7 +13,7 @@ any remaining or new travesties are my own fabrications.
 
 """
 
-import traceback, platform, yaml
+import traceback, platform, yaml, termios, tty
 from collections import namedtuple
 from datetime import datetime
 from typing import TextIO
