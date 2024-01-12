@@ -31,7 +31,7 @@ if [[ $PLATFORM == Darwin ]]; then
 		fi
 	# iOS
 	else
-		if [[ -f /.procursus_strapped ]]; then
+		if [[ -f /.procursus_strapped || -f /var/jb/.procursus_strapped ]]; then
 			if ! [[ -x $(command -v sudo) ]]; then
 				prefix_print "Please install sudo before proceeding."
 				drexit 1
