@@ -420,30 +420,16 @@ class Module:
         elif type == 'prefs':
             self.variables['prefix'] = get_input('Class name prefix (three or more characters unique to this project)',
                                                  self.name)
-            if not os.path.exists(proj_root + os.path.sep + 'layout'):
-                os.mkdir(proj_root + os.path.sep + 'layout')
-            if not os.path.exists(proj_root + os.path.sep + 'layout' + os.path.sep + 'Library'):
-                os.mkdir(proj_root + os.path.sep + 'layout' + os.path.sep + 'Library')
-            if not os.path.exists(
-                    proj_root + os.path.sep + 'layout' + os.path.sep + 'Library' + os.path.sep + 'PreferenceLoader'):
-                os.mkdir(
-                    proj_root + os.path.sep + 'layout' + os.path.sep + 'Library' + os.path.sep + 'PreferenceLoader')
-            if not os.path.exists(
-                    proj_root + os.path.sep + 'layout' + os.path.sep + 'Library' + os.path.sep + 'PreferenceLoader' + os.path.sep + 'Preferences'):
-                os.mkdir(
-                    proj_root + os.path.sep + 'layout' + os.path.sep + 'Library' + os.path.sep + 'PreferenceLoader' + os.path.sep + 'Preferences')
-            with open(
-                    proj_root + os.path.sep + 'layout' + os.path.sep + 'Library' + os.path.sep + 'PreferenceLoader' + os.path.sep + 'Preferences' + os.path.sep + self.name + '.plist',
-                    'w') as out:
-                out.write(Prefs_LPLP_NamePlist.format(self.name, self.variables['prefix'], self.name))
+            layoutPath = os.path.join(proj_root, 'layout', 'Library', 'PreferenceLoader', 'Preferences')
+                if not os.path.exists(layoutPath):
+                    os.makedirs(layoutPath, exist_ok=True)
+                    with open(os.path.join(layoutPath, self.name + '.plist'), 'w') as out:
+                        out.write(Prefs_LPLP_NamePlist.format(self.name, self.variables['prefix'], self.name))
             if not os.path.exists('Resources'):
                 os.mkdir('Resources')
-            with open('Resources/icon.png', 'wb') as out:
-                out.write(b'')
-            with open('Resources/icon@2x.png', 'wb') as out:
-                out.write(b'')
-            with open('Resources/icon@3x.png', 'wb') as out:
-                out.write(b'')
+            for f in ['icon.png', 'icon@2x.png', 'icon@3x.png']:
+                with open(os.path.join('Resources', f), 'wb') as out:
+                    out.write(b'')
             with open('Resources/Info.plist', 'w') as out:
                 out.write(Prefs_R_InfoPlist.format(self.name, self.variables['id'], self.variables['prefix']))
             with open('Resources/Root.plist', 'w') as out:
