@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import subprocess, sys, os, timeit, yaml
+import shutil, subprocess, sys, os, timeit, yaml
 from math import sin, cos, radians
 
 TestDict = yaml.safe_load(open(os.environ['DRAGON_ROOT_DIR'] + '/internal/tests.yml'))
@@ -36,9 +36,9 @@ def main():
 
     }
     testing_dir = os.environ['DRAGON_ROOT_DIR'] + '/testing/'
-    if len(os.environ['DRAGON_ROOT_DIR']) > 0:
-        system('rm -rf ' + testing_dir)
-    system('mkdir -p ' + testing_dir)
+    if os.path.isdir(testing_dir):
+        shutil.rmtree(testing_dir)
+    os.makedirs(testing_dir, exist_ok=True)
     os.chdir(testing_dir)
 
     # print('Doing Benchmarks')
@@ -68,7 +68,7 @@ def main():
             cattimes[dirName] = s
             os.chdir(testing_dir)
             if passed:
-                system(f'rm -rf {dirName}', sys.stdout, sys.stderr)
+                shutil.rmtree(dirName)
         tests[category] = cattests
         times[category] = cattimes
 
