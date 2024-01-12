@@ -421,10 +421,10 @@ class Module:
             self.variables['prefix'] = get_input('Class name prefix (three or more characters unique to this project)',
                                                  self.name)
             layoutPath = os.path.join(proj_root, 'layout', 'Library', 'PreferenceLoader', 'Preferences')
-                if not os.path.exists(layoutPath):
-                    os.makedirs(layoutPath, exist_ok=True)
-                    with open(os.path.join(layoutPath, self.name + '.plist'), 'w') as out:
-                        out.write(Prefs_LPLP_NamePlist.format(self.name, self.variables['prefix'], self.name))
+            if not os.path.exists(layoutPath):
+                os.makedirs(layoutPath, exist_ok=True)
+            with open(os.path.join(layoutPath, self.name + '.plist'), 'w') as out:
+                out.write(Prefs_LPLP_NamePlist.format(self.name, self.variables['prefix'], self.name))
             if not os.path.exists('Resources'):
                 os.mkdir('Resources')
             for f in ['icon.png', 'icon@2x.png', 'icon@3x.png']:
