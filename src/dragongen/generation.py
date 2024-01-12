@@ -344,16 +344,16 @@ class Generator(object):
                                         arch_specific_object_files))
 
         build_state.extend([
-            # lipo if needed, else use a dummy rule to rename it to what the next rule expects
-            # the dummy rule could be optimized out, but its probably more developmentally clear
+            # lipo if needed, else use a copy rule to rename it to what the next rule expects
+            # the copy rule could be optimized out, but its probably more developmentally clear
             # to have it there anyways /shrug
             Build('$internalsymtarget',
-                  'lipo' if len(self.project_variables['archs']) > 1 else 'dummy',
+                  'lipo' if len(self.project_variables['archs']) > 1 else 'copy',
                   [f'$builddir/$name.{a}' for a in self.project_variables['archs']]),
             # Debug symbols
             Build('$internalsigntarget', 'debug', '$internalsymtarget'),
             # Codesign
-            Build('$build_target_file', 'sign', '$internalsigntarget'),
+            Build('$build_target_file', 'dummy' if self.project_variables['type'] == 'static' else 'sign', '$internalsigntarget'),
             # Stage commands (these are actually ran at a different point in the 'runner')
             Build('stage', 'stage', 'build.ninja'),
         ])
@@ -361,6 +361,13 @@ class Generator(object):
         # Fix used_rules, TODO: maybe this could be optimized elsewhere?
         if len(self.project_variables['archs']) <= 1:
             used_rules.remove("lipo")
+            used_rules.add("copy")
+
+        if self.project_variables['type'] == 'static':
+            # use a dummy rule to rename it to what the next rule expects
+            # the dummy rule could be optimized out, but its probably more developmentally clear
+            # to have it there anyways /shrug
+            used_rules.remove("sign")
             used_rules.add("dummy")
 
         rule_list.extend(get_generic_rule(r) for r in used_rules)

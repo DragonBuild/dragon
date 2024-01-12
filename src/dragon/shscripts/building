@@ -69,7 +69,7 @@ build()
         ninja -t compdb > compile_commands.json
     fi
 
-    cp -R layout/* $DRAGON_DIR/_/ 2>/dev/null
+    cp -R $projroot/layout/* layout/* $DRAGON_DIR/_/ 2>/dev/null
 
     # mv build.ninja $DRAGON_DIR/ninja # Was this renamed "ninja" for use elsewhere?
     mv build.ninja $DRAGON_DIR/build.ninja

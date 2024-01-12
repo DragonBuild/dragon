@@ -337,6 +337,16 @@ FWK_name_h = """// Umbrella header for {}.
 // Don’t forget to also add them to {} in your Makefile!
 """
 
+CLI_ents_plist = """<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>platform-application</key>
+    <true/>
+    <key>com.apple.private.security.container-required</key>
+    <false/>
+</dict>
+</plist>
+"""
 
 class Project:
     def __init__(self, root_directory):
@@ -402,6 +412,13 @@ class Module:
                 'executables': get_input('Comma separated list of processes to target', 'SpringBoard').split(', ')}
             self.variables['files'] = [f'{self.name}.x']
             with open(f'{self.name}.x', 'w') as out:
+                out.write('// Insert your code here!\n')
+        elif type == 'cli':
+            self.variables['entfile'] = 'ents.plist'
+            with open('ents.plist', 'w') as out:
+                out.write(CLI_ents_plist)
+            self.variables['files'] = [f'{self.name}.m']
+            with open(f'{self.name}.m', 'w') as out:
                 out.write('// Insert your code here!\n')
         elif type == 'framework':
             if not os.path.exists('Resources'):
