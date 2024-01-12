@@ -1,16 +1,5 @@
-import os, os.path
-import subprocess
-
-
-def system_with_output(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
-    proc = subprocess.Popen("" + cmd,
-                            stdout=stdout,
-                            stderr=stderr,
-                            shell=True,
-                            universal_newlines=True)
-    std_out, std_err = proc.communicate()
-    return proc.returncode, std_out, std_err
-
+import os
+from shared.util import system_with_output
 
 class Toolchain:
     def __init__(self):

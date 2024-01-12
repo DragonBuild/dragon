@@ -12,50 +12,9 @@ https://github.com/DragonBuild/dragon
 
 '''
 
-import os, sys, yaml, subprocess, socket
+import os, sys, yaml, socket
 from shared.util import dbstate, dbwarn, dberror
-
-
-def system(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
-    proc = subprocess.Popen("" + cmd,
-                            stdout=stdout,
-                            stderr=stderr,
-                            shell=True,
-                            universal_newlines=True)
-    std_out, std_err = proc.communicate()
-    # print(proc.returncode)
-    return proc.returncode  # , std_out, std_err
-
-
-def system_with_output(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
-    proc = subprocess.Popen("" + cmd,
-                            stdout=stdout,
-                            stderr=stderr,
-                            shell=True,
-                            universal_newlines=True)
-    std_out, std_err = proc.communicate()
-    return proc.returncode, std_out, std_err
-
-
-def system_pipe_output(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
-    process = subprocess.Popen(cmd,
-                          stdout=stdout,
-                          stderr=stderr,
-                          shell=True,
-                          universal_newlines=True)
-
-    while True:
-        realtime_output = process.stdout.readline()
-        realtime_err = process.stderr.readline()
-
-        if realtime_output == '' and realtime_err == '' and process.poll() is not None:
-            break
-
-        if realtime_output:
-            print(realtime_output.strip(), flush=True)
-        if realtime_err:
-            print(realtime_err.strip(), flush=True, file=sys.stderr)
-
+from shared.util import system, system_with_output, system_pipe_output
 
 class DeviceShell:
     @staticmethod

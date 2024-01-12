@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import shutil, subprocess, sys, os, timeit, yaml
+import shutil, sys, os, timeit, yaml
 from math import sin, cos, radians
+from shared.util import system
 
 TestDict = yaml.safe_load(open(os.environ['DRAGON_ROOT_DIR'] + '/internal/tests.yml'))
 projects = TestDict['ProjectTests']
@@ -14,18 +15,6 @@ def bench():
             angle = radians(dex)
             product *= sin(angle) ** 2 + cos(angle) ** 2
     return product
-
-
-
-def system(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
-    proc = subprocess.Popen("" + cmd,
-                            stdout=stdout,
-                            stderr=stderr,
-                            shell=True,
-                            universal_newlines=True)
-    std_out, std_err = proc.communicate()
-    # print(proc.returncode)
-    return proc.returncode  # , std_out, std_err
 
 
 def main():
