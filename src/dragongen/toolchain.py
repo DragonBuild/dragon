@@ -3,14 +3,15 @@ from shared.util import system_with_output
 
 class Toolchain:
     def __init__(self):
-        self.ass = ""
-        self.clang = ""
-        self.clangpp = ""
-        self.ld = ""
-        self.codesign = ""
-        self.dsym = ""
-        self.lipo = ""
-        self.tapi = ""
+        self.clang = "clang"
+        self.clangpp = "clang++"
+        self.ass = self.clang
+        self.ld = self.clang
+        self.codesign = "ldid"
+        self.dsym = "dsymutil"
+        self.plutil = "plutil"
+        self.lipo = "lipo"
+        self.tapi = "tapi"
 
     @classmethod
     def locate_macos_toolchain(cls, use_objcs: bool):
@@ -35,7 +36,6 @@ class Toolchain:
         tc.clangpp = tc_dir + 'clang++'
         tc.ass = tc.clang
         tc.ld = tc.clang
-        tc.codesign = 'ldid'
         tc.dsym = tc_dir + 'dsymutil'
         # FIXME: hardcoded while I wait on a real distribution of llvm-objcs
         if use_objcs:

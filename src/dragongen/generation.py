@@ -193,11 +193,18 @@ class Generator(object):
         # Specify toolchain paths
         use_objcs = 'objcs' in project_dict
 
-        if platform.platform().startswith('macOS'):
-            toolchain = Toolchain.locate_macos_toolchain(use_objcs)
+        sys = platform.system()
+        if sys == 'Darwin':
+            plat = platform.platform()
+            if 'iP' in plat:
+                toolchain = Toolchain()
+            else:
+                toolchain = Toolchain.locate_macos_toolchain(use_objcs)
         # elif WINDOWS IS NOT A REAL OPERATING SYSTEM ::::)
-        else:
+        elif sys == 'Linux':
             toolchain = Toolchain.locate_linux_toolchain(use_objcs)
+        else:
+            toolchain = Toolchain()
 
         if toolchain is None:
             dberror("Dragon Gen", "Could not locate any usable toolchain or even determine the existence of clang.")
@@ -552,6 +559,7 @@ def handle(ex: Exception):
         else:
             dberror("Dragon Gen", "Exiting...")
     except Exception:
+        dberror("Dragon Gen", f'tty/termios unavailable: {ex}')
         dberror("Dragon Gen", "Exiting...")
 
     print('export DRAGONGEN_FAILURE=1')
