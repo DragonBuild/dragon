@@ -10,9 +10,8 @@ fi
 
 TOOLPATH=$(python3 -c 'from dragon.util import tool_path; print(tool_path())')
 
-# Load in colors and basic functions
+# Load in basic functions
 source $TOOLPATH/util
-source $TOOLPATH/dragoncolors
 
 # Run setup wizard if dragon root dir is empty or nonexistent
 if [[ -z "$(ls -A $DRAGON_ROOT_DIR 2> /dev/null)" ]]; then
