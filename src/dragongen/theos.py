@@ -195,12 +195,16 @@ class TheosMakefile(Makefile):
                 self.module['frameworks'] = self.variables[variable].split(' ')
             elif variable.endswith('_PRIVATE_FRAMEWORKS'):
                 self.module['frameworks'] += self.variables[variable].split(' ')
+            elif variable.endswith('_EXTRA_FRAMEWORKS'):
+                self.module['frameworks'] += self.variables[variable].split(' ')
             elif variable.endswith('_CFLAGS'):
                 self.module['cflags'] = self.variables[variable]
             elif variable.endswith('_CXXFLAGS'):
                 self.module['cxxflags'] = self.variables[variable]
             elif variable.endswith('_LDFLAGS'):
                 self.module['ldflags'] = self.variables[variable]
+            elif variable.endswith('_CODESIGN_FLAGS'):
+                self.module['entflag'] = self.variables[variable]
             elif variable.endswith('_INSTALL_PATH'):
                 path = self.variables[variable]
                 self.module['install_location'] = path
@@ -209,6 +213,9 @@ class TheosMakefile(Makefile):
                     self.type = TheosMakefileType.PREFS
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
+
+        if 'cflags' in self.module and '-fobjc-arc' in self.module['cflags']:
+            arc = True
 
         files = []
         if 'files' in self.module:
