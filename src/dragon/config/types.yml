@@ -6,13 +6,13 @@ Types:
       install_location: '/Applications'
       build_target_file: '$dragon_data_dir/$stagedir$location/$name.app/$name'
       stage2:
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.app/'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.app/'
   application:
     variables:
       install_location: '/Applications'
       build_target_file: '$dragon_data_dir/$stagedir$location/$name.app/$name'
       stage2:
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.app/'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.app/'
   tweak-jailed:
     variables:
       install_location: '/Applications'
@@ -20,7 +20,7 @@ Types:
       embed-libs:
         - CydiaSubstrate
       stage2:
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.app/'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.app/'
   tweak:
     variables:
       install_location: '/Library/MobileSubstrate/DynamicLibraries'
@@ -44,7 +44,7 @@ Types:
       stage2:
         - 'mkdir -p $dragon_data_dir/$stagedir/Library/PreferenceLoader/Preferences/'
         - 'cp entry.plist $dragon_data_dir/stagedir/Library/PreferenceLoader/Preferences/$name.plist 2> /dev/null'
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.bundle'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.bundle'
   bundle:
     variables:
       install_location: '/Library'
@@ -54,7 +54,7 @@ Types:
       frameworks:
         - UIKit
       stage2:
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.bundle/'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.bundle/'
   resource-bundle:
     variables:
       install_location: '/Library/$name/$name.bundle/'
@@ -71,7 +71,7 @@ Types:
       frameworks:
         - Foundation
       stage2:
-        - 'cp -R Resources/* $dragon_data_dir/$stagedir$location/$name.framework'
+        - 'cp -R $resource_dir/* $dragon_data_dir/$stagedir$location/$name.framework'
         - 'cp -R $dragon_data_dir/$stagedir$location/$name.framework $dragon_root_dir/frameworks/$name.framework'
         - 'if ! [ -z "$public_headers" ]; then
            mkdir -p $dragon_data_dir/$stagedir$location/$name.framework/Headers;
