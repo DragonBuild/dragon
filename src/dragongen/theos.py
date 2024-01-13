@@ -247,9 +247,14 @@ class TheosMakefileProcessor:
         with open('Makefile', 'r') as makefile:
             self.root_makefile = TheosMakefile(makefile.read())
 
-        with open('control', 'r') as control:
-            yaml = YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
-            self.control = yaml.load(control)
+        if os.path.exists('control'):
+            with open('control', 'r') as control:
+                yaml = YAML(typ='safe')  # default, if not specfied, is 'rt' (round-trip)
+                self.control = yaml.load(control)
+        elif os.path.exists('layout/DEBIAN/control'):
+            with open('layout/DEBIAN/control', 'r') as control:
+                yaml = YAML(typ='safe')
+                self.control = yaml.load(control)
 
         self.project['name'] = self.control['Name']
 
