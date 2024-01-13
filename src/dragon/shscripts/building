@@ -1,19 +1,34 @@
 #!/usr/bin/env bash
 
+get_name()
+{
+    if [[ $1 == "." ]]; then
+        i=$(basename $PWD)
+    else
+        i=$1
+    fi
+    echo "$i"
+}
+
 clean_dir()
 {
-    prefix_print "Cleaning $1"
-    if [[ -z $DRAGON_DIR ]];  then
-      drexit_reason "nil DRAGON_DIR"
+    DNAME=$(get_name $1)
+    pushd $DNAME &> /dev/null
+    if ! [[ -f $DRAGON_DIR/.clean ]]; then
+        prefix_print "Cleaning $DNAME"
+        if [[ -z $DRAGON_DIR ]];  then
+        drexit_reason "nil DRAGON_DIR"
+        fi
+        if [[ -f $DRAGON_DIR/DragonMake ]]; then
+            cp $DRAGON_DIR/DragonMake .DragonMake
+        fi
+        rm -rf $DRAGON_DIR/*
+        if [[ -f .DragonMake ]]; then
+            mv .DragonMake $DRAGON_DIR/DragonMake
+        fi
+        touch $DRAGON_DIR/.clean
     fi
-    if [[ -f $DRAGON_DIR/DragonMake ]]; then
-        cp $DRAGON_DIR/DragonMake .DragonMake
-    fi
-    rm -rf $DRAGON_DIR/*
-    if [[ -f .DragonMake ]]; then
-        mv .DragonMake $DRAGON_DIR/DragonMake
-    fi
-    touch $DRAGON_DIR/.clean
+    popd &> /dev/null
 }
 
 validate_objcs()
@@ -35,19 +50,10 @@ build()
 
     python3 -m dragongen.cliutils needsobjcs && validate_objcs
 
-    if [[ $1 == "." ]]; then
-        DNAME=${TWEAK_NAME}
-    else
-        DNAME=$1
-    fi
-
-    if [[ $clean -eq 1 && ! -f $DRAGON_DIR/.clean ]]; then
-        clean_dir $DNAME
-    fi
-
     mkdir -p $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/modules
 
-    prefix_print "Building ${DNAME}"
+    DNAME=$(get_name $1)
+    prefix_print "Building $DNAME"
 
     if ! [[ -e build.ninja ]]; then
         mv "${i}.ninja" build.ninja
