@@ -23,13 +23,13 @@ def setup_wizard():
     for repo in ('lib', 'include', 'frameworks', 'sdks', 'src'):
         if os.path.isdir(repo) and not os.path.isdir(f'{repo}/.git'):
             shutil.rmtree(repo)
-            os.system(f'git clone --depth=1 --recursive https://github.com/DragonBuild/{repo}')
+            os.system(f'git clone --recursive https://github.com/DragonBuild/{repo}')
         elif os.path.isdir(repo) and os.path.isdir(f'{repo}/.git'):
             os.chdir(repo)
             os.system('git pull origin $(git rev-parse --abbrev-ref HEAD)')
             os.chdir(dragon_root_dir)
         else:
-            os.system(f'git clone --depth=1 --recursive https://github.com/DragonBuild/{repo}')
+            os.system(f'git clone --recursive https://github.com/DragonBuild/{repo}')
 
     log('Deploying internal configuration')
     try:
