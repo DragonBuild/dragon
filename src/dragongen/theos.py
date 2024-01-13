@@ -227,7 +227,9 @@ class TheosMakefile(Makefile):
                     self.module['targetvers'] = ver
 
             if variable == 'SYSROOT':
-                self.module['sysroot'] = self.variables[variable]
+                sysroot = self.variables[variable]
+                if os.path.exists(sysroot):
+                    self.module['sysroot'] = sysroot
 
         files = []
         if 'files' in self.module:
