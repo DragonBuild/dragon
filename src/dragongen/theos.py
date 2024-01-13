@@ -135,6 +135,8 @@ class TheosMakefileType(Enum):
     LIBRARY = 2
     APPLICATION = 3
     FRAMEWORK = 4
+    TOOL = 5
+    PREFS = 6
 
 
 class TheosMakefile(Makefile):
@@ -158,7 +160,7 @@ class TheosMakefile(Makefile):
             if 'aggregate.mk' in included:
                 self.has_subprojects = True
             if 'bundle.mk' in included:
-                self.module['type'] = 'prefs'
+                self.module['type'] = 'bundle'
                 self.type = TheosMakefileType.BUNDLE
             if 'library.mk' in included:
                 self.module['type'] = 'library'
@@ -169,6 +171,9 @@ class TheosMakefile(Makefile):
             if 'framework.mk' in included:
                 self.module['type'] = 'framework'
                 self.type = TheosMakefileType.FRAMEWORK
+            if 'tool.mk' in included:
+                self.module['type'] = 'tool'
+                self.type = TheosMakefileType.TOOL
 
         for variable in self.variables:
             self.variables[variable] = self.variables[variable].replace('$(THEOS_STAGING_DIR)', '$dragon_data_dir/_')
@@ -194,9 +199,12 @@ class TheosMakefile(Makefile):
                 self.module['cxxflags'] = self.variables[variable]
             elif variable.endswith('_LDFLAGS'):
                 self.module['ldflags'] = self.variables[variable]
-            # This borks prefs installs # TODO: figure out why
-            # elif variable.endswith('_INSTALL_PATH'):
-            # self.module['install_location'] = self.variables[variable]
+            elif variable.endswith('_INSTALL_PATH'):
+                path = self.variables[variable]
+                self.module['install_location'] = path
+                if 'PreferenceBundles' in path:
+                    self.module['type'] = 'prefs'
+                    self.type = TheosMakefileType.PREFS
             elif variable.endswith('_LIBRARIES'):
                 self.module['libs'] = self.variables[variable].split(' ')
 
