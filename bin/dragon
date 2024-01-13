@@ -56,7 +56,6 @@ fi
 
 while ! [[ -z $1 ]]; do
     case $1 in
-
         # --------
         # Set Variables
         # --------
@@ -95,7 +94,8 @@ while ! [[ -z $1 ]]; do
                                 set -xv
                                 export DGEN_DEBUG=1
                                 ;;
-        c | clean )             clean=1
+        c | clean )             gen=1
+                                clean=1
                                 ;;
         vn )                    NINJA_ARGS="-v"
                                 ;;
@@ -152,37 +152,59 @@ while ! [[ -z $1 ]]; do
     shift
 done
 
+
+# --------
+# Generate project info
+# --------
+if [[ $gen -eq 1 ]]; then
+    # Invoke the generator
+    # shellcheck disable=SC2154
+    rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
+    mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
+
+    generate
+
+    if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
+        cleanbuildfail
+    fi
+fi
+
+
+get_subprojs()
+{
+    set -f
+    # If there's more than one project in the root directory we need to iterate by name.
+    # Relying on generator to obtain project info
+    # shellcheck disable=SC2207
+    subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
+    set +f
+    for i in "${subsb[@]}"; do
+        echo "$i"
+    done
+}
+
+
+# --------
+# Clean project(s)
+# --------
+if [[ $clean -eq 1 ]]; then
+    # clean subproj build dir(s)
+    get_subprojs | while read -r i; do
+        clean_dir $i
+    done
+    # ensure clean primary build dir
+    clean_dir .
+fi
+
+
 # --------
 # Build, then package (if needed)
 # --------
 if [[ $build -eq 1 ]]; then
-    # shellcheck disable=SC2154
-    # Invoke the generator
-    if [[ $gen -eq 1 ]]; then
-        rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
-        mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
-
-        generate
-
-        if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
-            cleanbuildfail
-        fi
-    fi
-
-    set -f
-    # If there's more than one project in the root directory we need to iterate by name.
-    # shellcheck disable=SC2207
-    subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
-    set +f
-
     mkdir -p "$DRAGON_DATA_DIR"
     cp DragonMake "$DRAGON_DATA_DIR/DragonMake" 2> /dev/null
 
-    if [[ $clean -eq 1 && ! -f $DRAGON_DATA_DIR/.clean ]]; then
-        clean_dir $PWD
-    fi
-
-    for i in "${subsb[@]}"; do
+    get_subprojs | while read -r i; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
         if [[ -d $i ]]; then
@@ -202,17 +224,6 @@ if [[ $build -eq 1 ]]; then
 
     if [[ $norm -eq 0 ]]; then
         find . -name '*.ninja' -type f -delete
-    fi
-else
-    if [[ $gen -eq 1 ]]; then
-        rm -rf "$DRAGON_DATA_DIR/ninja/build.ninja" 2>/dev/null
-        mkdir -p "$DRAGON_DATA_DIR/"{ninja,modules}
-
-        generate
-
-        if [[ $DRAGONGEN_FAILURE -eq 1 ]]; then
-            cleanbuildfail
-        fi
     fi
 fi
 
@@ -236,6 +247,7 @@ if [[ $install -eq 1 && $DRAGON_DPKG -eq 1 ]]; then
     python3 -m dragon.device run ${INSTALL_CMD} || drexit
 fi
 
+
 # --------
 # On-device debugging
 # --------
@@ -245,6 +257,7 @@ if [[ $debug -eq 1 ]]; then
     ssh -p $DRBPORT root@$DRBIP "command -v lldb || apt install lldb" || drexit
     ssh -p $DRBPORT root@$DRBIP "lldb -n $debugproc || killall lldb" || drexit
 fi
+
 
 rm -rf "$DRAGON_DATA_DIR/packages" > /dev/null
 set +xv
