@@ -178,6 +178,10 @@ if [[ $build -eq 1 ]]; then
     mkdir -p "$DRAGON_DATA_DIR"
     cp DragonMake "$DRAGON_DATA_DIR/DragonMake" 2> /dev/null
 
+    if [[ $clean -eq 1 && ! -f $DRAGON_DATA_DIR/.clean ]]; then
+        clean_dir $PWD
+    fi
+
     for i in "${subsb[@]}"; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
