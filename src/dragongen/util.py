@@ -88,6 +88,13 @@ def interpret_theos_makefile(file: object, root: object = True) -> dict:
     finally:
         file.close()
 
+    if root:
+        project['name'] = os.path.basename(os.getcwd())
+        if 'INSTALL_TARGET_PROCESS' in variables:
+            project['icmd'] = 'killall -9 ' + variables['INSTALL_TARGET_PROCESS']
+        else:
+            project['icmd'] = 'sbreload'
+
     if os.environ['DGEN_DEBUG']:
         print("\n\n", file=sys.stderr)
         print("module type:" + str(module_type), file=sys.stderr)
