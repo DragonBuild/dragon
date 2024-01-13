@@ -155,7 +155,7 @@ class TheosMakefile(Makefile):
         for included in self.includes:
             if 'tweak.mk' in included:
                 self.type = TheosMakefileType.TWEAK
-                self.module['frameworks'] = ['Foundation', 'UIKit']  # :/
+                self.module['frameworks'] = ['UIKit']  # :/
                 self.module['type'] = 'tweak'
             if 'aggregate.mk' in included:
                 self.has_subprojects = True
