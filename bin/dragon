@@ -104,7 +104,6 @@ while ! [[ -z $1 ]]; do
                                 ;;
         vg )                    export DGEN_DEBUG=1
                                 ;;
-
         lo | objcs )            shift
                                 python3 -m dragon.lo $*
                                 drexit

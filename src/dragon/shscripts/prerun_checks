@@ -105,10 +105,7 @@ elif [[ ${PLATFORM,,} == linux ]]; then
 				prefix_print "Additional dependencies may also be required depending on what your distro provides."
 				;;
 		esac
-
-		curl -LO https://github.com/L1ghtmann/llvm-project/releases/download/test-e99a150/iOSToolchain.tar.xz
-		tar -xvf iOSToolchain.tar.xz -C $DRAGON_ROOT_DIR/toolchain/
-		rm iOSToolchain.tar.xz
+		curl -sL https://github.com/L1ghtmann/llvm-project/releases/download/test-e99a150/iOSToolchain.tar.xz | tar -xJvf - -C $DRAGON_ROOT_DIR/toolchain/
 	elif ! [[ -x $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/ldid ]]; then
 		prefix_print "You appear to be missing ldid, but have the toolchain. Not sure how we got here honestly ..."
 		prefix_print "Please build or download ldid from https://github.com/ProcursusTeam/ldid and place it in $DRAGON_ROOT_DIR/toolchain/linux/iphone/bin/."
