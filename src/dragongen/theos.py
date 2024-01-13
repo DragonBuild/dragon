@@ -197,6 +197,8 @@ class TheosMakefile(Makefile):
                 self.module['frameworks'] += self.variables[variable].split(' ')
             elif variable.endswith('_EXTRA_FRAMEWORKS'):
                 self.module['frameworks'] += self.variables[variable].split(' ')
+            elif variable.endswith('_LIBRARIES'):
+                self.module['libs'] = self.variables[variable].split(' ')
             elif variable.endswith('_CFLAGS'):
                 self.module['cflags'] = self.variables[variable]
             elif variable.endswith('_CXXFLAGS'):
@@ -211,8 +213,8 @@ class TheosMakefile(Makefile):
                 if 'PreferenceBundles' in path:
                     self.module['type'] = 'prefs'
                     self.type = TheosMakefileType.PREFS
-            elif variable.endswith('_LIBRARIES'):
-                self.module['libs'] = self.variables[variable].split(' ')
+            elif variable.endswith('_LINKAGE_TYPE') and self.variables[variable] == 'static':
+                    self.module['type'] = 'static'
 
         if 'cflags' in self.module and '-fobjc-arc' in self.module['cflags']:
             arc = True
