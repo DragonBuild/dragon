@@ -184,7 +184,9 @@ class TheosMakefile(Makefile):
             if variable == 'ARCHS':
                 self.module['archs'] = self.variables[variable].split(' ')
             elif variable == 'TARGET':
-                self.module['targetvers'] = self.variables[variable].split(':')[-1]
+                ver = self.variables[variable].split(':')[-1]
+                if float(ver) >= 9.0:
+                    self.module['targetvers'] = ver
             elif variable.endswith('_NAME'):
                 self.module_name = self.variables[variable]
             elif variable.endswith('_FILES'):
