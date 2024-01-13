@@ -181,43 +181,53 @@ class TheosMakefile(Makefile):
             self.variables[variable] = self.variables[variable].replace('$(ECHO_NOTHING)', '')
             self.variables[variable] = self.variables[variable].replace('$(ECHO_END)', '')
             self.variables[variable] = self.variables[variable].replace('$(', '$$(')
-            if variable == 'ARCHS':
-                self.module['archs'] = self.variables[variable].split(' ')
-            elif variable == 'TARGET':
-                ver = self.variables[variable].split(':')[-1]
+
+            # TODO: '_SWIFTFLAGS'
+            suffix_to_key = {
+                '_ARCHS': 'archs',
+                '_FILES': 'files',
+                '_FRAMEWORKS': 'frameworks',
+                '_LIBRARIES': 'libs',
+                '_CFLAGS': 'cflags',
+                '_CXXFLAGS': 'cxxflags',
+                '_CCFLAGS': 'cxxflags',
+                '_LDFLAGS': 'ldflags',
+                '_CODESIGN_FLAGS': 'entflag',
+                '_INSTALL_PATH': 'install_location',
+                '_LINKAGE_TYPE': 'type',
+                '_RESOURCE_DIRS': 'resource_dir',
+                '_PUBLIC_HEADERS': 'public_headers'
+            }
+
+            for suffix, key in suffix_to_key.items():
+                if variable.endswith(suffix):
+                    if key in self.module and isinstance(self.module[key], list):
+                        self.module[key] += self.variables[variable].split(' ')
+                    else:
+                        lists = ['_ARCHS', '_FILES', '_FRAMEWORKS', '_LIBRARIES']
+                        self.module[key] = self.variables[variable].split(' ') if suffix in lists else self.variables[variable]
+
+            # Handle special cases
+            if variable.endswith('_NAME'):
+                self.module_name = self.variables[variable]
+
+            if variable.endswith('_CFLAGS') and '-fobjc-arc' in self.variables[variable]:
+                self.module['arc'] = True
+
+            if variable.endswith('_INSTALL_PATH') and 'PreferenceBundles' in self.variables[variable]:
+                self.module['type'] = 'prefs'
+                self.type = TheosMakefileType.PREFS
+
+            if variable.endswith('_LINKAGE_TYPE') and self.variables[variable] == 'static':
+                self.module['type'] = 'static'
+
+            if variable == 'TARGET' or variable == 'TARGET_OS_DEPLOYMENT_VERSION':
+                ver = self.variables[variable].split(':')[-1] if variable == 'TARGET' else self.variables[variable]
                 if float(ver) >= 9.0:
                     self.module['targetvers'] = ver
-            elif variable.endswith('_NAME'):
-                self.module_name = self.variables[variable]
-            elif variable.endswith('_FILES'):
-                self.module['files'] = self.variables[variable].split(' ')
-            elif variable.endswith('_FRAMEWORKS'):
-                self.module['frameworks'] = self.variables[variable].split(' ')
-            elif variable.endswith('_PRIVATE_FRAMEWORKS'):
-                self.module['frameworks'] += self.variables[variable].split(' ')
-            elif variable.endswith('_EXTRA_FRAMEWORKS'):
-                self.module['frameworks'] += self.variables[variable].split(' ')
-            elif variable.endswith('_LIBRARIES'):
-                self.module['libs'] = self.variables[variable].split(' ')
-            elif variable.endswith('_CFLAGS'):
-                self.module['cflags'] = self.variables[variable]
-            elif variable.endswith('_CXXFLAGS'):
-                self.module['cxxflags'] = self.variables[variable]
-            elif variable.endswith('_LDFLAGS'):
-                self.module['ldflags'] = self.variables[variable]
-            elif variable.endswith('_CODESIGN_FLAGS'):
-                self.module['entflag'] = self.variables[variable]
-            elif variable.endswith('_INSTALL_PATH'):
-                path = self.variables[variable]
-                self.module['install_location'] = path
-                if 'PreferenceBundles' in path:
-                    self.module['type'] = 'prefs'
-                    self.type = TheosMakefileType.PREFS
-            elif variable.endswith('_LINKAGE_TYPE') and self.variables[variable] == 'static':
-                    self.module['type'] = 'static'
 
-        if 'cflags' in self.module and '-fobjc-arc' in self.module['cflags']:
-            arc = True
+            if variable == 'SYSROOT':
+                self.module['sysroot'] = self.variables[variable]
 
         files = []
         if 'files' in self.module:
