@@ -177,9 +177,12 @@ get_subprojs()
     # Relying on generator to obtain project info
     # shellcheck disable=SC2207
     subsb=($(python3 -c "print('${project_dirs}' if ('${project_dirs}'.count('.')<2) else '${project_names}')"))
+    proj_names=($(python3 -c "print('${project_names}')"))
     set +f
+    index=0
     for i in "${subsb[@]}"; do
-        echo "$i"
+        echo "$i ${proj_names[$index]}"
+        ((index++))
     done
 }
 
@@ -189,11 +192,11 @@ get_subprojs()
 # --------
 if [[ $clean -eq 1 ]]; then
     # clean subproj build dir(s)
-    get_subprojs | while read -r i; do
-        clean_dir $i
+    get_subprojs | while read -r i j; do
+        clean_dir $i $j
     done
     # ensure clean primary build dir
-    clean_dir .
+    clean_dir . $(basename $PWD)
 fi
 
 
@@ -204,14 +207,14 @@ if [[ $build -eq 1 ]]; then
     mkdir -p "$DRAGON_DATA_DIR"
     cp DragonMake "$DRAGON_DATA_DIR/DragonMake" 2> /dev/null
 
-    get_subprojs | while read -r i; do
+    get_subprojs | while read -r i j; do
         # Copy the DragonMake into the subproject's build directory
         # Primarily for bundle filter gen, right now.
         if [[ -d $i ]]; then
             mkdir -p "$i/$DRAGON_DIR/"
             cp DragonMake "$i/$DRAGON_DIR/DragonMake" 2> /dev/null
         fi
-        build $i
+        build $i $j
     done
 
     find . -name '.clean' -type f -delete

@@ -1,21 +1,13 @@
 #!/usr/bin/env bash
 
-get_name()
-{
-    if [[ $1 == "." ]]; then
-        i=$(basename $PWD)
-    else
-        i=$1
-    fi
-    echo "$i"
-}
 
 clean_dir()
 {
-    DNAME=$(get_name $1)
+    DNAME=$1
+    PROJ=$2
     pushd $DNAME &> /dev/null
     if [[ -d $DRAGON_DIR && ! -f $DRAGON_DIR/.clean ]]; then
-        prefix_print "Cleaning $DNAME"
+        prefix_print "Cleaning $PROJ"
         if [[ -z $DRAGON_DIR ]];  then
         drexit_reason "nil DRAGON_DIR"
         fi
@@ -52,8 +44,9 @@ build()
 
     mkdir -p $DRAGON_DIR/_/.dragonbuilding $DRAGON_DIR/modules
 
-    DNAME=$(get_name $1)
-    prefix_print "Building $DNAME"
+    DNAME=$1
+    PROJ=$2
+    prefix_print "Building $PROJ"
 
     if ! [[ -e build.ninja ]]; then
         mv "${i}.ninja" build.ninja
@@ -79,7 +72,7 @@ build()
 
     # mv build.ninja $DRAGON_DIR/ninja # Was this renamed "ninja" for use elsewhere?
     mv build.ninja $DRAGON_DIR/build.ninja
-    if [[ $1 == "." ]]; then
+    if [[ $DNAME == "." ]]; then
         true
     else
         cp -R $DRAGON_DIR/_ "$DRAGON_DATA_DIR" 2>/dev/null
